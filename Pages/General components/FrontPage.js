@@ -45,21 +45,21 @@ export const FrontPage = () => {
       <View style={styles.frontView}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('PickModule')}>
+          onPress={() => navigation.navigate('Pick module')}>
           <Text style={styles.text}>Learn</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.frontView}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('PickTopic')}>
+          onPress={() => navigation.navigate('Pick topic')}>
           <Text style={styles.text}>Read</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.frontView}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('PickForum')}>
+          onPress={() => navigation.navigate('Pick subject')}>
           <Text style={styles.text}>Talk to peers</Text>
         </TouchableOpacity>
       </View>
