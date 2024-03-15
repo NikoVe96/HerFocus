@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   TextInput,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {useNavigation} from '@react-navigation/native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -46,7 +46,7 @@ const SignUp = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require('../../Assets/images/Logo lightmode.png')}
+        source={require('../../Assets/images/logo-light-nb.png')}
         style={styles.image}></Image>
       <TextInput
         placeholder="Name"
