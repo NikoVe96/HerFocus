@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require('../../Assets/images/logo-light-nb.png')}
+        source={require('../../Assets/images/Logo lightmode.png')}
         style={styles.image}></Image>
       <Text style={styles.text}>Forgot your password?</Text>
       <Text style={styles.text}>No worries, it happens!</Text>
@@ -43,7 +43,7 @@ const ForgotPassword = () => {
         style={styles.form}></TextInput>
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => {}}
+        onPress={() => { }}
         title=" Reset password"
         titleColor="#000000">
         <Text style={styles.btnText}>Reset password</Text>

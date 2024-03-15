@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
-import BottomNavigation from '../../Navigation/BottomNavigation';
+import { useNavigation } from '@react-navigation/native';
 
 // Component for "hello user", maybe we can put it in a component for itself it is should be reused
 export const HelloUser = () => {

@@ -1,12 +1,12 @@
 import { Text, View } from "react-native";
 
-export const PickModule = () => {
+export const UserSettings = () => {
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <Text>Module page</Text>
+            <Text>Settings page</Text>
         </View>
     );
 
 }
 
-export default PickModule;
+export default UserSettings;
