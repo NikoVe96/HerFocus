@@ -16,12 +16,12 @@ const LogIn = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async navigation => {
     setError('');
     try {
       const user = await Parse.User.logIn(email, password);
       console.log('Success! User ID:', user.id);
-      navigation.navigate('Home');
+      navigation.navigate('Front page');
     } catch (error) {
       console.error('Error while logging in user', error);
       setError('Wrong email or password!');
@@ -53,14 +53,14 @@ const LogIn = ({navigation}) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => handleLogin()}
+        onPress={() => handleLogin(navigation)}
         title=" Login"
         titleColor="#000000">
         <Text style={styles.btnText}>Login</Text>
       </TouchableOpacity>
       <Text>Don't have an account?</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Sign up')}
         style={styles.createBtn}
         title="Create one">
         <Text style={styles.btnText}>Create one</Text>
