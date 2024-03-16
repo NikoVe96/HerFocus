@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 // Component for "hello user", maybe we can put it in a component for itself it is should be reused
 export const HelloUser = () => {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
     color: 'black',
     marginTop: 20,
     marginBottom: 10,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
     color: 'black',
     marginBottom: 15,
   },
