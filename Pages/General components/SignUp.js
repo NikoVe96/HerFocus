@@ -21,7 +21,6 @@ const SignUp = () => {
   const navigation = useNavigation();
 
   const handleSignup = async () => {
-    console.log('pressed');
     if (password !== confirmPassword) {
       console.log('Error' + error.message);
       setError('The passwords do not match, try again! 🙂');
@@ -36,11 +35,9 @@ const SignUp = () => {
 
     try {
       await user.signUp();
-      navigation.navigate('Daily Overview');
+      navigation.navigate('Login');
       console.log('pressed');
-    } catch (error) {
-      console.log('Error: ' + error.message);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -90,7 +87,7 @@ const SignUp = () => {
         <Text style={styles.btnText}>Sign up</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.signUpBtn} title="Login">
-        <Text style={styles.btnText}>Login</Text>
+        <Text style={styles.btnText}>Back to login</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
