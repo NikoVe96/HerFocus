@@ -144,7 +144,7 @@ function CustomDrawerContent({ navigation }) {
                 </TouchableOpacity>
             </AccordionItem>
             <View style={styles.accordContainer}>
-                <TouchableOpacity style={styles.accordHeader}>
+                <TouchableOpacity style={styles.accordHeader} onPress={() => navigation.navigate('Login')}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <FontAwesomeIcon icon={faRightFromBracket} size={20} style={{ marginRight: 10 }} />
                         <Text style={styles.accordTitle}>Log out</Text>
@@ -163,13 +163,13 @@ function SideMenu() {
                 header: props => <TopNavigation {...props} />,
             }}
             drawerContent={(props) => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
             <Drawer.Screen name="Add routine" component={AddRoutine}></Drawer.Screen>
             <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
             <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
             <Drawer.Screen name="Contact information" component={ContactInformation}></Drawer.Screen>
             <Drawer.Screen name="Calendar" component={CalendarOverview}></Drawer.Screen>
             <Drawer.Screen name="Forgot password" component={ForgotPassword}></Drawer.Screen>
-            <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
             <Drawer.Screen name="Login" component={LogIn}></Drawer.Screen>
             <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
             <Drawer.Screen name="Sign up" component={SignUp}></Drawer.Screen>

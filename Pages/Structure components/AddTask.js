@@ -1,11 +1,12 @@
-import { View, TouchableOpacity, Image, Text, TextInput, Button, Alert } from "react-native";
+import { View, TouchableOpacity, Image, Text, TextInput, Button, Alert, List, SafeAreaView } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
+import { ScrollView } from "react-native-gesture-handler";
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -19,31 +20,70 @@ export const AddTask = ({ navigation }) => {
     const [taskDate, setTaskDate] = useState('');
     const [taskStartTime, setStartTime] = useState(null);
     const [taskEndTime, setEndTime] = useState(null);
-    const [user, setUser] = useState('');
+    const [username, setUsername] = useState('');
+    const [ID, setID] = useState('');
     // query routines in list from database
-    const [routines, setRoutines] = useState([
-        { label: 'Morning routine', value: 'morning routine' },
-        { label: 'Evening routine', value: 'evening routine' },
-        { label: 'Clean kitchen', value: 'clean kitchen' },
-        { label: 'Shop for dinner', value: 'shop for dinner' },
-        { label: <View style={{ marginHorizontal: 10, backgroundColor: 'lightblue', padding: 5, width: 330 }}><Text style={{ fontWeight: 'bold', fontSize: 18 }}>+ Add a new routine</Text></View>, value: 'new routine' }
-    ]);
+    const [routines, setRoutines] = useState([]);
     // + add button at the end to add new routine
     const [open, setOpen] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
+    const [newRoutine, setNewRoutine] = useState('');
+
+    useEffect(() => {
+        async function getCurrentUser() {
+            if (username === '') {
+                const currentUser = await Parse.User.currentAsync();
+                if (currentUser !== null) {
+                    setUsername(currentUser.getUsername());
+                    setID(currentUser.id);
+                    routineList();
+                }
+            }
+        }
+        getCurrentUser();
+    }, [username]);
+
+    async function routineList() {
+        let UserRoutineQuery = new Parse.Query('Routine');
+        UserRoutineQuery.contains('user', ID);
+        let Results = await UserRoutineQuery.find();
+
+        const routinesData = Results.map(result => ({
+            key: result.id,
+            label: result.get('name'),
+            value: result.get('name')
+        }));
+
+        routinesData.push({
+            label: '+ Add a new routine',
+            value: 'new routine',
+        });
+        setRoutines(routinesData);
+    }
+
+    async function NewRoutineAdded() {
+        let UserRoutineQuery = new Parse.Query('Routine');
+        UserRoutineQuery.contains('user', ID);
+        UserRoutineQuery.ascending('createdAt')
+        UserRoutineQuery.first();
+        let Results = await UserRoutineQuery.find();
+        setNewRoutine(Results);
+    }
 
     async function newTask() {
         try {
             const newTask = new Parse.Object('Task');
+
+            //If routine chosen, fill
+
             newTask.set('name', taskName);
             newTask.set('connectedRoutine', taskRoutine);
             newTask.set('date', taskDate);
             newTask.set('startTime', taskStartTime);
             newTask.set('endTime', taskEndTime);
-            // Implement user data retrieval
-            //newTask.set('user', user);
+            newTask.set('user', username);
             // If time, add recurring option
             await newTask.save();
             console.log('Success: task saved')
@@ -77,7 +117,6 @@ export const AddTask = ({ navigation }) => {
 
     const handleStartTimeConfirm = (date) => {
         // Change so only time is shown instead of date
-        // There's an error so it chooses the wrong time (an hour less than chosen)
         setStartTime(date)
         hideStartTimePicker();
     };
@@ -105,12 +144,11 @@ export const AddTask = ({ navigation }) => {
     }
 
     return (
-        <>
-            <View style={{ JustifyContent: 'center', backgroundColor: 'white', alignItems: 'center', padding: 10 }}>
+        <SafeAreaView style={{ justifyContent: 'space-between', alignContent: 'stretch' }}>
+            <View style={{ backgroundColor: 'white', alignItems: 'center', padding: 10 }}>
                 <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Add new task </Text>
             </View>
             <View style={{
-                flex: 1,
                 alignContent: 'center',
                 justifyContent: 'space-around',
                 padding: 16,
@@ -123,30 +161,33 @@ export const AddTask = ({ navigation }) => {
                         style={{ padding: 8, backgroundColor: 'white' }}
                         onChangeText={text => setTaskName(text)}
                         value={taskName}
-                    // When editing text, everything is pushed together and makes an ugly layout
                     />
                 </View>
                 <View>
                     <Text style={{ marginVertical: 16 }}>
                         Connect a routine
                     </Text>
+
                     <DropDownPicker
+                        // Consider using a select list instead, to get a search function
+                        style={{ marginVertical: 5 }}
                         open={open}
                         value={taskRoutine}
                         items={routines}
                         setOpen={setOpen}
-                        setValue={(taskRoutine) => setTaskRoutine(taskRoutine)}
-                        setItems={setRoutines}
+                        // Make a query that retrieves the latest routine to display
+                        setValue={(value) => setTaskRoutine(value)}
                         placeholder='Choose a routine'
-                        multiple={false}
                         onChangeValue={(value) => {
                             if (value === 'new routine') {
                                 navigation.navigate('Add routine');
+                                NewRoutineAdded();
                             }
+                            setTaskRoutine(value)
                         }}
                     />
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                     <TouchableOpacity
                         style={{ backgroundColor: 'lightblue', justifyContent: 'center', padding: 5, width: 150, height: 40, alignItems: 'center' }}
                         onPress={showStartTimePicker}>
@@ -163,7 +204,7 @@ export const AddTask = ({ navigation }) => {
                         {taskStartTime === null ? 'Start time: ' : `Start time: ${taskStartTime}`}
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                     <TouchableOpacity
                         style={{ backgroundColor: 'lightblue', justifyContent: 'center', padding: 5, width: 150, height: 40, alignItems: 'center' }}
                         onPress={showEndTimePicker}>
@@ -180,7 +221,7 @@ export const AddTask = ({ navigation }) => {
                         {taskEndTime === null ? 'End time: ' : `End time: ${taskEndTime}`}
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                     <TouchableOpacity
                         style={{ backgroundColor: 'lightblue', justifyContent: 'center', padding: 5, width: 150, height: 40, alignItems: 'center' }}
                         onPress={showDatePicker}>
@@ -200,13 +241,13 @@ export const AddTask = ({ navigation }) => {
                     </Text>
                 </View>
             </View>
-            <View style={{ flex: 0.3, justifyContent: 'flex-end', padding: 10, alignItems: 'center' }}>
+            <View style={{ justifyContent: 'flex-end', padding: 10, alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'lightblue', padding: 5, width: 350, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} onPress={newTask}>
                     <FontAwesomeIcon icon={faPlusSquare} size={30} style={{ marginHorizontal: 10 }} />
                     <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Add new task</Text>
                 </TouchableOpacity>
             </View>
-        </>
+        </SafeAreaView>
     );
 }
 

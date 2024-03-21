@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-const LogIn = ({navigation}) => {
+const LogIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,7 +21,7 @@ const LogIn = ({navigation}) => {
     try {
       const user = await Parse.User.logIn(email, password);
       console.log('Success! User ID:', user.id);
-      navigation.navigate('Home');
+      navigation.navigate('Front page');
     } catch (error) {
       console.error('Error while logging in user', error);
       setError('Wrong email or password!');
@@ -60,7 +60,7 @@ const LogIn = ({navigation}) => {
       </TouchableOpacity>
       <Text>Don't have an account?</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('Sign up')}
         style={styles.createBtn}
         title="Create one">
         <Text style={styles.btnText}>Create one</Text>

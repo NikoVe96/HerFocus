@@ -31,6 +31,10 @@ npm i react-native-dropdown-picker
 npm i react-native-modal-datetime-picker @react-native-community/datetimepicker
 npm install react-native-modal
 
+npm i expo-random
+
+npm install react-native-calendars
+ 
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
