@@ -1,14 +1,320 @@
-import { Text, View } from "react-native";
+import React, { useEffect, useState, useMemo, Component } from 'react';
+import { Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView, StyleSheet, Dimensions, Pressable } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Parse from 'parse/react-native';
+import { Calendar, ExpandableCalendar, WeekCalendar } from 'react-native-calendars';
+import Modal from "react-native-modal";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faPenToSquare, faPlusSquare, faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
+import { faStopwatch, faTrashCan, faCircleArrowRight, faCakeCandles, faEgg } from '@fortawesome/free-solid-svg-icons';
+import RadioGroup from 'react-native-radio-buttons-group';
+import CalendarStrip from 'react-native-calendar-strip';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
+Parse.setAsyncStorage(AsyncStorage);
+Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
+Parse.serverURL = 'https://parseapi.back4app.com/'
 
 export const CalendarOverview = () => {
 
+    const [isAddStepModalVisible, setStepModalVisible] = useState(false);
+    const [dayTasksArray, setDayTasksArray] = useState([]);
+    const [selectedId, setSelectedId] = useState();
+    const [username, setUsername] = useState('');
+    const dayArray = [
+        { taskName: 'Make breakfast', taskTime: '8.00-8.30', taskType: 'Personal chore', icon: faStopwatch, color: 'pink' },
+        { taskName: 'Get ready for work', taskTime: '8.40-9.00', taskType: 'Personal chore', icon: faStopwatch, color: 'pink' },
+        { taskName: 'Bike to work', taskTime: '9.10-9.30', taskType: 'Work', icon: faStopwatch, color: 'lightgreen' },
+        { taskName: 'Meet with Julie', taskTime: '16.00-18.00', taskType: 'Event', icon: faStopwatch, color: 'purple' },
+        { taskName: 'Clean kicthen', taskTime: '20.00-20.30', taskType: 'House chore', icon: faStopwatch, color: 'lightyellow' },
+    ];
+
+    const allDayArray = [
+        { taskName: "Dad's birthday", icon: faCakeCandles, color: 'red' },
+        { taskName: "Påske", icon: faEgg, color: 'yellow' },
+    ];
+    const houseChores = { key: 'houseChores', color: 'blue' }
+    const event = { key: 'event', color: 'green' }
+    const birthday = { key: 'birthday', color: 'red' }
+    const relaxing = { key: 'relaxing', color: 'yellow' }
+    const marked = {
+        '2024-03-22': { dots: [houseChores, birthday] },
+        '2024-03-23': { dots: [houseChores, event, birthday] },
+        '2024-03-24': { dots: [event, relaxing] },
+    };
+    const width = Dimensions.get('window').width;
+    const [checked, setChecked] = useState(false);
+
+    useEffect(() => {
+        async function getCurrentUser() {
+            if (username === '') {
+                const currentUser = await Parse.User.currentAsync();
+                if (currentUser !== null) {
+                    setUsername(currentUser.getUsername());
+                }
+            }
+        }
+        getCurrentUser();
+        setSelectedId('day');
+        //dayTasks();
+    }, [username]);
+
+    const showDayModal = () => {
+        setStepModalVisible(true);
+    }
+
+    const hideDayModel = () => {
+        setStepModalVisible(false);
+    }
+
+    async function dayTasks() {
+        const taskQuery = new Parse.Query('Task');
+        taskQuery.contains('Mar 23');
+        const Results = taskQuery.find();
+        setDayTasksArray(Results);
+    }
+
+    const radioButtons = useMemo(() => ([
+        {
+            id: 'month', // acts as primary key, should be unique and non-empty string
+            label: 'Month',
+            value: 'month',
+            size: 30,
+        },
+        {
+            id: 'day',
+            label: 'Day',
+            value: 'day',
+            size: 30,
+        }
+    ]), []);
+
+    const handleCheckboxPress = () => {
+        setChecked(prev => {
+            return !prev
+        })
+    }
+
+    function calendarLayout() {
+        if (selectedId === 'month') {
+            return (
+                <Calendar
+                    showWeekNumbers={true}
+                    firstDay={1}
+                    headerStyle={{ backgroundColor: 'lightblue' }}
+                    enableSwipeMonths={true}
+                    onDayPress={showDayModal}
+                    style={{ padding: 15, marginVertical: 20 }}
+                    markingType='multi-dot'
+                    markedDates={marked}
+                >
+                </Calendar>
+            );
+        } else if (selectedId === 'day') {
+            return (
+                <View>
+                    <CalendarStrip
+                        calendarAnimation={{ type: 'sequence', duration: 30 }}
+                        daySelectionAnimation={{ type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white' }}
+                        style={{ height: 100, padding: 5, marginTop: 20, marginHorizontal: 10, borderWidth: 1, borderColor: 'lightblue', borderTopRightRadius: 10, borderTopLeftRadius: 10 }}
+                        calendarHeaderStyle={{ color: 'white', fontSize: 20 }}
+                        calendarColor={'lightblue'}
+                        dateNumberStyle={{ color: 'white', fontSize: 18 }}
+                        dateNameStyle={{ color: 'white', fontSize: 12 }}
+                        highlightDateNumberStyle={{ color: 'blue', fontSize: 18 }}
+                        highlightDateNameStyle={{ color: 'blue', fontSize: 12 }}
+                        iconContainer={{ flex: 0.1 }}>
+                    </CalendarStrip>
+                    {/* <Carousel
+                        style={{ marginVertical: 10 }}
+                        width={width}
+                        height={width / 2}
+                        autoPlay={false}
+                        data={[...new Array(2).keys()]}
+                        onSnapToItem={(index) => console.log('current index:', index)}
+                        renderItem={({ index }) => (
+                            <View style={{ height: 300, padding: 10, backgroundColor: 'lightgrey' }}>
+                                <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center' }}> Up next</Text>
+                            </View>
+                        )}
+                        />*/}
+                    <View style={{ backgroundColor: 'lightgrey', borderWidth: 1, borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderColor: 'lightgrey', marginHorizontal: 10 }}>
+                        <View style={{ alignItems: 'center', marginVertical: 10, flexDirection: 'row', justifyContent: 'center', marginHorizontal: 10 }}>
+                            <View style={{ flex: 6 }}>
+                                <Text style={{ fontSize: 24, textAlign: 'center' }}>Plan of the day</Text>
+                            </View>
+                        </View>
+                        <ScrollView style={{ height: 250 }}>
+                            {dayArray.map((item, index) => (
+                                <View key={index} style={{ flexDirection: 'row' }}>
+                                    <BouncyCheckbox
+                                        size={30}
+                                        fillColor="black"
+                                        unfillColor="#FFFFFF"
+                                        iconStyle={{ borderColor: "black" }}
+                                        innerIconStyle={{ borderWidth: 2 }}
+                                        textStyle={{ fontFamily: "JosefinSans-Regular" }}
+                                        onPress={(isChecked) => { }}
+                                        style={{ marginHorizontal: 10, flex: 0.5 }}
+                                    />
+                                    <View style={{ flex: 7, alignItems: 'center', padding: 2, borderWidth: 1, padding: 5, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.color }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <FontAwesomeIcon icon={item.icon} size={18} style={{ marginHorizontal: 5 }}></FontAwesomeIcon>
+                                            <Text style={{ marginHorizontal: 1, fontSize: 14 }}>{item.taskTime}</Text>
+                                        </View>
+                                        <Text style={{ fontSize: 24, marginHorizontal: 5 }}>|</Text>
+                                        <Text style={{ fontSize: 18 }}>{item.taskName}</Text>
+                                    </View>
+                                </View>
+                            ))}
+                            <View style={{ borderWidth: 1, marginHorizontal: 15, marginVertical: 20, backgroundColor: 'black', width: 250, alignSelf: 'center' }}></View>
+                            {allDayArray.map((item, index) => (
+                                <View key={index} style={{ alignItems: 'center', padding: 2, borderWidth: 1, padding: 5, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.color }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <FontAwesomeIcon icon={item.icon} size={18} style={{ marginHorizontal: 5 }}></FontAwesomeIcon>
+                                        <Text style={{ marginHorizontal: 1, fontSize: 18 }}>{item.taskTime}</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 24, marginHorizontal: 5 }}>|</Text>
+                                    <Text style={{ fontSize: 18 }}>{item.taskName}</Text>
+
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View >
+                </View >
+            );
+        }
+    }
+
+
+
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <Text>Calendar page</Text>
-        </View>
+        <SafeAreaView>
+            <View style={{ alignContent: 'stretch', justifyContent: 'center' }}>
+                <View style={{ alignContent: 'stretch', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+                    <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Calendar page</Text>
+                </View>
+                <View style={{ borderWidth: 1, marginHorizontal: 15, marginBottom: 20, backgroundColor: 'black' }}></View>
+                <RadioGroup
+                    radioButtons={radioButtons}
+                    onPress={setSelectedId}
+                    selectedId={selectedId}
+                    layout='row'
+                    containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+                    size={30}
+                />
+                <View>
+                    {calendarLayout()}
+                </View>
+                <Modal
+                    isVisible={isAddStepModalVisible}
+                    onBackdropPress={() => setStepModalVisible(false)}
+                    style={{}}>
+                    <View style={{ backgroundColor: 'white', alignItems: 'center' }}>
+                        <View>
+                            <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Tasks and events on DATE </Text>
+                        </View>
+                        <View style={{ borderWidth: 1, backgroundColor: 'black', borderRadius: 50, width: 300, marginBottom: 20 }}></View>
+                        <View style={{ flexDirection: 'row', padding: 5, marginHorizontal: 5 }}>
+                            <Text style={{ flex: 1, fontSize: 18, fontWeight: 'bold' }}>Task type</Text>
+                            <Text style={{ flex: 1, fontSize: 18, fontWeight: 'bold' }}>Task name</Text>
+                            <Text style={{ flex: 1, fontSize: 18, fontWeight: 'bold' }}>Task time</Text>
+                        </View>
+                        <ScrollView style={{ height: 300, padding: 10, backgroundColor: 'lightgrey' }}>
+                            {dayArray.map((item, index) => (
+                                <View key={index} style={{ justifyContent: 'center', padding: 2 }}>
+                                    <View style={{ flexDirection: 'row', padding: 5, marginHorizontal: 5 }}>
+                                        <View style={{ flex: 1, borderWidth: 1, borderColor: 'white', borderRadius: 20, marginHorizontal: 5, backgroundColor: 'white', padding: 2, alignItems: 'center' }}>
+                                            <Text
+                                                style={{ fontSize: 16, padding: 2 }}
+                                            >{`${item.taskType}`} </Text>
+                                        </View>
+                                        <View style={{ flex: 1, borderWidth: 1, borderColor: 'white', borderRadius: 20, marginHorizontal: 5, backgroundColor: 'white', padding: 2, alignItems: 'center' }}>
+                                            <Text
+                                            >{`${item.taskName}`} </Text>
+                                        </View>
+                                        <View
+                                            style={{ flexDirection: 'row', backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', padding: 2, flex: 0.5, borderWidth: 1, borderColor: 'white', borderRadius: 20, marginHorizontal: 5 }}>
+                                            <FontAwesomeIcon icon={faStopwatch} size={20} />
+                                            <Text
+                                            >{`${item.taskTime}`} </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ borderWidth: 1, backgroundColor: 'black', width: 300, alignSelf: 'center' }}></View>
+                                </View>
+                            ))}
+                        </ScrollView>
+                        <View>
+                            <TouchableOpacity style={{ backgroundColor: 'lightblue', padding: 5, marginVertical: 20 }} onPress={hideDayModel}>
+                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }}>
+                        <FontAwesomeIcon icon={faPlusSquare} size={26} style={{ marginRight: 10 }}></FontAwesomeIcon>
+                        <Text style={{ fontSize: 18 }}>Add new task</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }}>
+                        <FontAwesomeIcon icon={faPlusSquare} size={26} style={{ marginRight: 10 }}></FontAwesomeIcon>
+                        <Text style={{ fontSize: 18 }}>Add new event</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </SafeAreaView>
     );
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    wrapper: {},
+    slide1: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'red'
+    },
+    slide2: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'orange'
+    },
+    slide3: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'lightblue'
+    },
+    slide4: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'blue'
+    },
+    slide5: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'lightgreen'
+    },
+    image: {
+        width: 50,
+        height: 50,
+        margin: 20
+    },
+    text: {
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold'
+    }
+});
 
 export default CalendarOverview;
