@@ -36,6 +36,7 @@ import {FavoritePosts} from '../Pages/Forum/FavoritePosts';
 import FavoriteArticles from '../Pages/Knowledge base/FavoriteArticles';
 import AppHistory from '../Pages/General components/AppHistory';
 import ContactInformation from '../Pages/General components/ContactInformation';
+import Forum from '../Pages/Forum/Forum';
 import {useNavigation} from '@react-navigation/native';
 import Parse from 'parse/react-native';
 
@@ -375,6 +376,7 @@ function SideMenu() {
       <Drawer.Screen
         name="Favorite articles"
         component={FavoriteArticles}></Drawer.Screen>
+      <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

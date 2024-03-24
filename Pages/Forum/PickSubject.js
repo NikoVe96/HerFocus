@@ -17,25 +17,40 @@ export const PickSubject = () => {
         <View style={styles.knowledgeView}>
           <TouchableOpacity
             style={styles.button}
-            //   onPress={() => navigation.navigate('')}
-          >
-            <Text style={styles.text}>... will come</Text>
+            onPress={() =>
+              navigation.navigate('Forum', {
+                forumTitle: 'Family',
+                forumDescription:
+                  'With this forum the aim is to foster a supportive and informative environment where we can all share experiences, challenges, and triumphs related to family.',
+              })
+            }>
+            <Text style={styles.text}>Family</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.knowledgeView}>
           <TouchableOpacity
             style={styles.button}
-            //   onPress={() => navigation.navigate('')}
-          >
-            <Text style={styles.text}>... will come</Text>
+            onPress={() =>
+              navigation.navigate('Forum', {
+                forumTitle: 'Relationships',
+                forumDescription:
+                  'Relationships can sometimes be complicated when you have ADHD, and in this forum you can share tips, frustrations etc. when dealing with relationships.',
+              })
+            }>
+            <Text style={styles.text}>Relationships</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.knowledgeView}>
           <TouchableOpacity
             style={styles.button}
-            //   onPress={() => navigation.navigate('')}
-          >
-            <Text style={styles.text}>... will come</Text>
+            onPress={() =>
+              navigation.navigate('Forum', {
+                forumTitle: 'Medicin',
+                forumDescription:
+                  'Medicin can be a difficult topic to talk about. Please keep the medicin in this forum, and remember to contact a doctor if necessary.',
+              })
+            }>
+            <Text style={styles.text}>Medicin</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.knowledgeView}>
