@@ -31,6 +31,15 @@ npm i react-native-dropdown-picker
 npm i react-native-modal-datetime-picker @react-native-community/datetimepicker
 npm install react-native-modal
 
+npm i react-native-radio-buttons-group
+npm install react-native-calendars
+npm i react-native-calendar-strip
+
+npm i react-native-reanimated-carousel
+
+npm i react-native-bouncy-checkbox
+
+
 npm install react-native-circular-progress-indicator
 npm install react-native-bouncy-checkbox
 npm i react-native-progress
