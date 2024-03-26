@@ -19,7 +19,7 @@ class MainActivity : ReactActivity() {
    */
   @Override
   protected String getMainComponentName() {
-    return "X";
+    return "main";
   }
 
   /**
