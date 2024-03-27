@@ -1,18 +1,35 @@
 import React from 'react';
 import {Text, SafeAreaView, View, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Feed from './Feed';
 import WritePost from './WritePost';
+import Parse from 'parse/react-native';
 
 export const Forum = () => {
   const [posts, setPosts] = useState([]);
   const route = useRoute();
   const {forumTitle, forumDescription} = route.params;
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const query = new Parse.Query('Post');
+      try {
+        const Posts = await query.find();
+        setPosts(Posts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const handlePost = postContent => {
-    setPosts([postContent, ...posts]);
+    const newPosts = [postContent, ...posts];
+    setPosts(newPosts);
+    console.log(newPosts);
   };
 
   return (
@@ -39,7 +56,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginTop: 30,
+    marginTop: 25,
   },
   descContainer: {
     marginTop: 20,

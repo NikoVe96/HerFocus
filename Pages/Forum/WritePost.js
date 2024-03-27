@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -27,20 +25,19 @@ function WritePost(props) {
       } else {
         console.log('Error fetching user data');
       }
-      return currentUser;
     }
     getCurrentUser();
   }, []);
 
   const handlePost = async () => {
-    console.log('button pressed');
-    setPostedPost(post);
-    const Post = new Parse.Object('Post');
-    Post.set('postContent', post);
-    Post.set('userId', Parse.User.current());
+    const Post = Parse.Object.extend('Post');
+    const newPost = new Post();
+    newPost.set('postContent', post);
+    newPost.set('userObjectId', Parse.User.current());
+    newPost.set('userId', userId);
 
     try {
-      await Post.save();
+      await newPost.save();
       console.log('Post saved successfully!');
     } catch (error) {
       console.error('Error saving post:', error);
