@@ -8,31 +8,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useState} from 'react';
-import Post from './Post';
+import Comment from './Comment';
 import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
-const Feed = ({posts: propPosts}) => {
-  const [posts, setPosts] = useState([]);
+const CommentSection = ({comments: propComments}) => {
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    setPosts(propPosts);
-  }, [propPosts]);
+    setComments(propComments);
+  }, [propComments]);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.seperator}></View>
       <View style={styles.feedContent}>
         {posts.map((post, index) => (
-          <Post
+          <Comment
             key={index}
             postedBy={post.get('username')}
             daysAgo={Math.round(
               (new Date().getTime() - new Date(post.createdAt).getTime()) /
                 (1000 * 3600 * 24),
             )}
-            postContent={post.get('postContent')}></Post>
+            postContent={post.get('postContent')}></Comment>
         ))}
       </View>
     </ScrollView>
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Feed;
+export default CommentSection;

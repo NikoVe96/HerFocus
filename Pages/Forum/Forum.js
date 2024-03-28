@@ -1,33 +1,35 @@
-import React from "react";
-import { Text, SafeAreaView, View, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
-import Feed from "./Feed";
-import WritePost from "./WritePost";
-import Parse from "parse/react-native";
+import React from 'react';
+import {Text, SafeAreaView, View, StyleSheet} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {useState, useEffect} from 'react';
+import {useRoute} from '@react-navigation/native';
+import Feed from './Feed';
+import WritePost from './WritePost';
+import WriteComment from './WriteComment';
+import Parse from 'parse/react-native';
 
 export const Forum = () => {
   const [posts, setPosts] = useState([]);
   const route = useRoute();
-  const { forumTitle, forumDescription } = route.params;
+  const {forumTitle, forumDescription} = route.params;
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const query = new Parse.Query("Post");
-      query.descending("createdAt");
+      const query = new Parse.Query('Post');
+      query.equalTo('forumTitle', forumTitle);
+      query.descending('createdAt');
       try {
         let result = await query.find();
         setPosts(result);
       } catch (error) {
-        console.error("Error fetching posts", error);
+        console.error('Error fetching posts', error);
       }
     };
     fetchPosts();
   }, []);
 
-  const handleNewPost = (newPost) => {
-    setPosts((currentPosts) => [newPost, ...currentPosts]);
+  const handleNewPost = newPost => {
+    setPosts(currentPosts => [newPost, ...currentPosts]);
   };
 
   return (
@@ -49,8 +51,8 @@ export const Forum = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 30,
@@ -61,15 +63,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 340,
     marginLeft: 17,
-    alignSelf: "flex-start",
-    backgroundColor: "#AFB1B6",
-    borderColor: "#000000",
+    alignSelf: 'flex-start',
+    backgroundColor: '#AFB1B6',
+    borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
   },
   description: {
     fontSize: 14,
-    color: "black",
+    color: 'black',
     padding: 10,
   },
 });

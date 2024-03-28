@@ -1,59 +1,65 @@
-import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
-const Comment = () => {
-  const [comment, setComment] = useState('');
-
+const Comment = (commentedBy, daysAgo, commentContent) => {
   return (
     <View style={styles.commentContainer}>
-      <TextInput style={styles.writeComment}></TextInput>
-      <TouchableOpacity
-        style={styles.createComment}
-        placeholder="Write a comment..."
-        placeholderTextColor="black"
-        multiline={true}
-        inputStyle={{
-          paddingHorizontal: 10,
-          marginLeft: 10,
-          textAlignVertical: 'top',
-        }}>
-        <FontAwesomeIcon icon={faPaperPlane} style={styles.icon} size={25} />
-      </TouchableOpacity>
+      <View style={styles.userInfo}>
+        <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
+        <View>
+          <Text style={styles.user}>{commentedBy}</Text>
+        </View>
+      </View>
+      <View style={styles.comment}>
+        <Text style={styles.commentText}>{commentContent}</Text>
+        <Text style={styles.when}>Posted {daysAgo} days ago</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    transform: [{rotate: '50deg'}],
+  userInfo: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginLeft: 10,
+  },
+  user: {
+    color: 'black',
+    marginLeft: 10,
+    fontSize: 15,
+  },
+  when: {
+    color: 'black',
+    marginLeft: 10,
+    fontSize: 10,
   },
   commentContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  writeComment: {
-    height: 30,
-    width: 290,
-    backgroundColor: '#FFFFFF',
+    width: 350,
+    alignSelf: 'center',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
+    backgroundColor: '#AFB1B6',
+    marginBottom: 20,
   },
-  createComment: {
-    paddingLeft: 5,
-    marginBottom: 5,
+  comment: {
+    alignSelf: 'flex-start',
+    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    width: 325,
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: '#D9D9D9',
+  },
+  commentText: {
+    color: 'black',
+    fontSize: 15,
+    padding: 10,
   },
 });
 
