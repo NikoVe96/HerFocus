@@ -20,6 +20,7 @@ export const HelloUser = () => {
         if (currentUser !== null) {
           setUsername(currentUser.getUsername());
         }
+        console.log(currentUser);
       }
     }
     getCurrentUser();

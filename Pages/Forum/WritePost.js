@@ -5,44 +5,44 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-} from 'react-native';
-import {useEffect, useState} from 'react';
-import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+} from "react-native";
+import { useEffect, useState } from "react";
+import Parse from "parse/react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function WritePost(props) {
-  const [post, setPost] = useState('');
-  const [postedPost, setPostedPost] = useState('');
-  const [username, setUsername] = useState('');
+  const [post, setPost] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     async function getCurrentUser() {
       const currentUser = Parse.User.current();
       if (currentUser !== null) {
-        const username = currentUser.get('username');
+        const username = currentUser.get("username");
         setUsername(username);
       } else {
-        console.log('Error fetching user data');
+        console.log("Error fetching user data");
       }
     }
     getCurrentUser();
   }, []);
 
   const handlePost = async () => {
-    const Post = Parse.Object.extend('Post');
+    const Post = Parse.Object.extend("Post");
     const newPost = new Post();
-    newPost.set('postContent', post);
-    newPost.set('userObjectId', Parse.User.current());
-    newPost.set('userId', userId);
+    newPost.set("postContent", post);
+    newPost.set("userObjectId", Parse.User.current());
+    newPost.set("username", username);
 
     try {
-      await newPost.save();
-      console.log('Post saved successfully!');
+      const result = await newPost.save();
+      console.log("Post saved successfully!");
+      props.onNewPost(result);
     } catch (error) {
-      console.error('Error saving post:', error);
+      console.error("Error saving post:", error);
     }
-    setPost('');
+    setPost("");
   };
 
   return (
@@ -58,9 +58,10 @@ function WritePost(props) {
           inputStyle={{
             paddingHorizontal: 10,
             marginLeft: 10,
-            textAlignVertical: 'top',
+            textAlignVertical: "top",
           }}
-          onChangeText={setPost}></TextInput>
+          onChangeText={setPost}
+        ></TextInput>
       </View>
       <TouchableOpacity onPress={() => handlePost()} style={styles.postBtn}>
         <Text style={styles.btnText}>Post</Text>
@@ -71,34 +72,34 @@ function WritePost(props) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   userContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   icon: {
-    color: 'grey',
+    color: "grey",
     marginTop: 15,
   },
   writePost: {
     width: 280,
     height: 70,
     marginLeft: 20,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#FFF6ED',
+    backgroundColor: "#FFF6ED",
   },
   postBtn: {
     width: 280,
     height: 30,
     marginLeft: 55,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1,
-    borderRadius: 8,
-    backgroundColor: '#61646B',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: "#61646B",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
   },
   btnText: {

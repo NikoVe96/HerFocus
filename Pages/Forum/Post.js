@@ -1,45 +1,75 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {TextInput} from 'react-native-gesture-handler';
-import {useState} from 'react';
-import WritePost from './WritePost';
-import Parse from 'parse/react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Comment from "./Comment";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Post = ({postedBy, daysAgo, postContent}) => {
+const Post = ({ postedBy, daysAgo, postContent }) => {
   return (
-    <View style={styles.holder}>
-      <Text style={styles.user}></Text>
-      <Text style={styles.when}></Text>
-      <View style={styles.postContainer}>
-        <Text style={styles.post}></Text>
+    <View style={styles.postContainer}>
+      <View style={styles.userInfo}>
+        <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
+        <View>
+          <Text style={styles.user}>{postedBy}</Text>
+          <Text style={styles.when}>Posted {daysAgo} days ago</Text>
+        </View>
       </View>
+      <View style={styles.post}>
+        <Text style={styles.postText}>{postContent}</Text>
+      </View>
+      <View style={styles.seperator}></View>
+      <Comment></Comment>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  user: {},
-  when: {},
-  postContainer: {
-    alignSelf: 'flex-start',
+  userInfo: {
+    flexDirection: "row",
     marginTop: 10,
-    marginBottom: 10,
-    width: 300,
-    backgroundColor: 'blue',
+    marginLeft: 10,
+  },
+  user: {
+    color: "black",
+    marginLeft: 10,
+    fontSize: 15,
+  },
+  when: {
+    color: "black",
+    marginLeft: 10,
+    fontSize: 10,
+  },
+  postContainer: {
+    width: 350,
+    alignSelf: "center",
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "#AFB1B6",
+    marginBottom: 20,
   },
   post: {
-    color: 'black',
-    fontSize: 20,
-    padding: 10,
+    alignSelf: "flex-start",
+    marginTop: 10,
+    marginLeft: 10,
     marginBottom: 10,
+    width: 325,
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "#D9D9D9",
+  },
+  postText: {
+    color: "black",
+    fontSize: 15,
+    padding: 10,
+  },
+  seperator: {
+    width: 320,
+    marginLeft: 15,
+    height: 1,
+    marginBottom: 15,
+    backgroundColor: "black",
   },
 });
 

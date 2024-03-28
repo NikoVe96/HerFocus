@@ -1,0 +1,16 @@
+
+
+
+        // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const query = new Parse.Query('Post');
+  //     query.descending('createdAt');
+  //     try {
+  //       let result = await query.find();
+  //       setPosts(result);
+  //     } catch (error) {
+  //       console.error('Error fetching posts', error);
+  //     }
+  //   };
+  //   fetchPosts();
+  // }, []);
