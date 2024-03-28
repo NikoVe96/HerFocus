@@ -48,6 +48,9 @@ npm i react-native-progress
 npm i expo-random
 
 npm install react-native-calendars
+
+npm i react-native-emoji-selector
+npm install --save react-native-emoji-modal
  
 ## Step 1: Start the Metro Server
 

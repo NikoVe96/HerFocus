@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, Component } from 'react';
 import { SafeAreaView, Text, View, Dimensions, ScrollView } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPenToSquare, faPlusSquare, faFloppyDisk, faFaceTired } from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare, faPlusSquare, faFloppyDisk, faFaceTired, faFaceSmileBeam } from "@fortawesome/free-regular-svg-icons";
 import { faStopwatch, faTrashCan, faCircleArrowRight, faSpinner, faShoppingCart, faKitchenSet } from '@fortawesome/free-solid-svg-icons';
 import Carousel from "react-native-reanimated-carousel";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,14 +28,12 @@ export const DailyOverview = () => {
     ];
     const width = Dimensions.get('window').width;
     const [username, setUsername] = useState('');
-    const nextUpArray = [
-        { taskName: 'Shop for dinner', taskTime: 35, taskType: 'House chore', icon: faShoppingCart },
-        { taskName: 'Cook dinner', taskTime: 100, taskType: 'House chore', icon: faKitchenSet },
-    ];
-    const [taskProgress, setTaskProgress] = useState('85');
-    const [currentDate, setCurrentDate] = useState();
+    const [taskProgress, setTaskProgress] = useState();
+    const [currentDate, setCurrentDate] = useState('');
     const [ID, setID] = useState('');
-    const [taskArray, setTaskArray] = useState([]);
+    const [remainingTasksArray, setRemainingTasks] = useState([]);
+    const [completedTasksArray, setCompletedTasks] = useState([]);
+    const [bouncyCheck, setBouncyCheck] = useState(false);
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -49,12 +47,25 @@ export const DailyOverview = () => {
         }
         getCurrentUser();
         todayDate();
-        todayTasks();
+        remainingTasks();
+        completedTasks();
+        taskPercentage();
     }, [username]);
 
     const taskCompleted = async function (task) {
         task.set('completed', true);
         await task.save();
+        remainingTasks();
+        completedTasks();
+        setBouncyCheck(false);
+    }
+
+    const taskPercentage = async function () {
+        if (completedTasksArray.length == 0) {
+            setTaskProgress(0);
+        } else {
+            setTaskProgress(((completedTasksArray.length / (remainingTasksArray.length + completedTasksArray.length)) * 100).toFixed(0))
+        }
     }
 
     function timeInHours(taskTime) {
@@ -113,17 +124,28 @@ export const DailyOverview = () => {
                 break;
         }
         const year = today.getFullYear();
-        fullDay = month + ' ' + day + ' ' + year
+        fullDay = day + ' ' + month + ' ' + year;
         setCurrentDate(fullDay);
     }
 
-    async function todayTasks() {
+    async function remainingTasks() {
         let TaskQuery = new Parse.Query('Task');
         TaskQuery.contains('user', ID);
         TaskQuery.contains('date', currentDate);
+        TaskQuery.equalTo('completed', false);
+        TaskQuery.ascending('startTime')
         let Results = await TaskQuery.find();
-        setTaskArray(Results);
-        console.log(taskArray);
+        setRemainingTasks(Results);
+    }
+
+    async function completedTasks() {
+        let TaskQuery = new Parse.Query('Task');
+        TaskQuery.contains('user', ID);
+        TaskQuery.contains('date', currentDate);
+        TaskQuery.equalTo('completed', true);
+        TaskQuery.ascending('startTime')
+        let Results = await TaskQuery.find();
+        setCompletedTasks(Results);
     }
 
     return (
@@ -156,68 +178,84 @@ export const DailyOverview = () => {
                     <View style={{
                         flex: 1,
                     }}>
-                        <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 1</Text>
-
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <FontAwesomeIcon icon={nextUpArray[0].icon} size={35} />
-                            <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{nextUpArray[0].taskName}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
-                            <FontAwesomeIcon icon={faStopwatch} size={20} />
-                            {nextUpArray[0].taskTime >= 60
-                                ? <Text style={{ fontSize: 18, marginHorizontal: 10 }}>{nextUpArray[0].taskTime / 60} hours</Text>
-                                : <Text style={{ fontSize: 18, marginHorizontal: 10 }}>{nextUpArray[0].taskTime} min</Text>}
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
-                                <BouncyCheckbox
-                                    size={25}
-                                    fillColor="black"
-                                    unfillColor="#FFFFFF"
-                                    iconStyle={{ borderColor: "black" }}
-                                    innerIconStyle={{ borderWidth: 2 }}
-                                    onPress={(isChecked) => { taskCompleted(nextUpArray[0]) }}
-                                    style={{}}
-                                />
-                                <Text style={{ fontSize: 18 }}>Completed?</Text>
+                        {remainingTasksArray.length === 0 ? (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>Loading...</Text>
                             </View>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <FontAwesomeIcon icon={faFaceTired} size={25} />
-                                <Text style={{ fontSize: 18, marginLeft: 12 }}>Hit the wall?</Text>
-                            </TouchableOpacity>
-                        </View>
+                        ) : (
+                            <>
+                                <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 1</Text>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                    <FontAwesomeIcon icon={faFaceSmileBeam} size={35} />
+                                    <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{remainingTasksArray[0].get('name')}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
+                                    <FontAwesomeIcon icon={faStopwatch} size={20} style={{ marginHorizontal: 5 }} />
+                                    <Text>From {remainingTasksArray[0].get('startTime')} to {remainingTasksArray[0].get('endTime')}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
+                                        <BouncyCheckbox
+                                            size={25}
+                                            fillColor="black"
+                                            unfillColor="#FFFFFF"
+                                            iconStyle={{ borderColor: "black" }}
+                                            innerIconStyle={{ borderWidth: 2 }}
+                                            onPress={(isChecked) => { taskCompleted(remainingTasksArray[0]) }}
+                                            isChecked={bouncyCheck}
+                                        />
+                                        <Text style={{ fontSize: 18 }}>Completed?</Text>
+                                    </View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <FontAwesomeIcon icon={faFaceTired} size={25} />
+                                        <Text style={{ fontSize: 18, marginLeft: 12 }}>Hit the wall?</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        )}
+
                     </View>
                     <View style={{
                         flex: 1,
 
                     }}>
-                        <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 2</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <FontAwesomeIcon icon={nextUpArray[1].icon} size={35} />
-                            <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{nextUpArray[1].taskName}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
-                            <FontAwesomeIcon icon={faStopwatch} size={20} />
-                            {timeInHours(nextUpArray[1].taskTime)}
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
-                                <BouncyCheckbox
-                                    size={25}
-                                    fillColor="black"
-                                    unfillColor="#FFFFFF"
-                                    iconStyle={{ borderColor: "black" }}
-                                    innerIconStyle={{ borderWidth: 2 }}
-                                    onPress={(isChecked) => { taskCompleted(nextUpArray[0]) }}
-                                    style={{}}
-                                />
-                                <Text style={{ fontSize: 18 }}>Completed?</Text>
+                        {remainingTasksArray.length === 0 ? (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>Loading...</Text>
                             </View>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <FontAwesomeIcon icon={faFaceTired} size={25} />
-                                <Text style={{ fontSize: 18, marginLeft: 12 }}>Hit the wall?</Text>
-                            </TouchableOpacity>
-                        </View>
+                        ) : (
+                            <>
+                                <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 2</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                    <FontAwesomeIcon icon={faFaceSmileBeam} size={35} />
+                                    <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{remainingTasksArray[1].get('name')}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
+                                    <FontAwesomeIcon icon={faStopwatch} size={20} />
+                                    <Text>From {remainingTasksArray[1].get('startTime')} to {remainingTasksArray[1].get('endTime')}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
+                                        <BouncyCheckbox
+                                            size={25}
+                                            fillColor="black"
+                                            unfillColor="#FFFFFF"
+                                            iconStyle={{ borderColor: "black" }}
+                                            innerIconStyle={{ borderWidth: 2 }}
+                                            onPress={(isChecked) => { taskCompleted(remainingTasksArray[1]) }}
+                                            style={{}}
+                                        />
+                                        <Text style={{ fontSize: 18 }}>Completed?</Text>
+                                    </View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                        <FontAwesomeIcon icon={faFaceTired} size={25} />
+                                        <Text style={{ fontSize: 18, marginLeft: 12 }}>Hit the wall?</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        )}
+
                     </View>
                 </Swiper>
             </View>
