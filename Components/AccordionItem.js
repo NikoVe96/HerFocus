@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { useTheme } from '@react-navigation/native';
 
 function AccordionItem({ children, title, icon }) {
     const [expanded, setExpanded] = useState(false);
+    const { colors } = useTheme();
 
     function toggleItem() {
         setExpanded(!expanded);
@@ -16,10 +18,10 @@ function AccordionItem({ children, title, icon }) {
         <View style={styles.accordContainer}>
             <TouchableOpacity style={styles.accordHeader} onPress={toggleItem}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <FontAwesomeIcon icon={icon} size={20} style={{ marginRight: 10 }} />
-                    <Text style={styles.accordTitle}>{title}</Text>
+                    <FontAwesomeIcon icon={icon} size={20} color={colors.primary} style={{ marginRight: 10 }} />
+                    <Text style={[styles.accordTitle, { color: colors.primary }]}>{title}</Text>
                 </View>
-                <FontAwesomeIcon icon={faCaretDown} />
+                <FontAwesomeIcon icon={faCaretDown} color={colors.primary} />
             </TouchableOpacity>
             {expanded && body}
         </View>
@@ -36,14 +38,15 @@ const styles = StyleSheet.create({
     },
     accordHeader: {
         padding: 12,
-        backgroundColor: 'lightblue',
         color: '#eee',
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginVertical: 5,
     },
     accordTitle: {
-        fontSize: 20,
+        fontSize: 22,
+        fontWeight: 'bold'
     },
     accordBody: {
         padding: 12
