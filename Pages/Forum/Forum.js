@@ -16,7 +16,7 @@ export const Forum = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const query = new Parse.Query('Post');
-      query.equalTo('forumTitle', forumTitle);
+      // query.equalTo('forumTitle', forumTitle);
       query.descending('createdAt');
       try {
         let result = await query.find();

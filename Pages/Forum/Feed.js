@@ -10,15 +10,23 @@ import {
 import {useState} from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from '@react-navigation/native';
 
-const Feed = ({posts: propPosts}) => {
+const Feed = () => {
   const [posts, setPosts] = useState([]);
+  const navigation = useNavigation();
+
+  async function postQuery() {
+    let posts = new Parse.Query('Post');
+    posts.contains('forumTitle', 'Family');
+    const results = await posts.find();
+    setPosts(results);
+    console.log(results);
+  }
 
   useEffect(() => {
-    setPosts(propPosts);
-  }, [propPosts]);
+    postQuery();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -27,12 +35,14 @@ const Feed = ({posts: propPosts}) => {
         {posts.map((post, index) => (
           <Post
             key={index}
+            post={post}
             postedBy={post.get('username')}
             daysAgo={Math.round(
               (new Date().getTime() - new Date(post.createdAt).getTime()) /
                 (1000 * 3600 * 24),
             )}
-            postContent={post.get('postContent')}></Post>
+            postContent={post.get('postContent')}
+            numberOfComments={post.numberOfComments}></Post>
         ))}
       </View>
     </ScrollView>

@@ -17,3 +17,20 @@
 
 
         <WriteComment></WriteComment>
+
+
+
+
+        try {
+      const result = await newComment.save();
+      console.log('Comment saved successfully!');
+      const Post = Parse.Object.extend('Post');
+      const query = new Parse.Query(Post);
+      const post = await query.get(postId);
+      
+      props.onNewComment(result);
+    } catch (error) {
+      console.error('Error saving Comment:', error);
+    }
+    setComment('');
+  

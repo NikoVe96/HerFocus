@@ -39,6 +39,7 @@ import ContactInformation from '../Pages/General components/ContactInformation';
 import Forum from '../Pages/Forum/Forum';
 import {useNavigation} from '@react-navigation/native';
 import Parse from 'parse/react-native';
+import IndividualPost from '../Pages/Forum/IndividualPost';
 
 const Drawer = createDrawerNavigator();
 
@@ -377,6 +378,9 @@ function SideMenu() {
         name="Favorite articles"
         component={FavoriteArticles}></Drawer.Screen>
       <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
+      <Drawer.Screen
+        name="IndividualPost"
+        component={IndividualPost}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

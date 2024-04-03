@@ -14,7 +14,7 @@ import {faUser} from '@fortawesome/free-solid-svg-icons';
 function WritePost(props) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
-  const [forumTitle, setForumTitle] = useState('');
+  //const [forumTitle, setForumTitle] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -35,7 +35,7 @@ function WritePost(props) {
     newPost.set('postContent', post);
     newPost.set('userObjectId', Parse.User.current());
     newPost.set('username', username);
-    newPost.set('forumTitle', forumTitle);
+    //newPost.set('forumTitle', forumTitle);
 
     try {
       const result = await newPost.save();

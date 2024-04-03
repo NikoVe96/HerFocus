@@ -4,7 +4,7 @@ import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
-function WriteComment(props) {
+function WriteComment({postId}) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
 
@@ -24,14 +24,19 @@ function WriteComment(props) {
   const handleComment = async () => {
     const Comment = Parse.Object.extend('Comment');
     const newComment = new Comment();
+
+    const Post = Parse.Object.extend('Post');
+    const post = new Post();
+    post.id = postId;
+
     newComment.set('commentContent', comment);
     newComment.set('userObjectId', Parse.User.current());
     newComment.set('username', username);
+    newComment.set('postId', postId);
 
     try {
-      const result = await newComment.save();
+      await newComment.save();
       console.log('Comment saved successfully!');
-      props.onNewComment(result);
     } catch (error) {
       console.error('Error saving Comment:', error);
     }

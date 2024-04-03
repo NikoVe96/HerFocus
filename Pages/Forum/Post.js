@@ -1,30 +1,45 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import WriteComment from './WriteComment';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faUser, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import Parse from 'parse/react-native';
+import CommentSection from './CommentSection';
 
-const Post = ({postedBy, daysAgo, postContent}) => {
-  const [comments, setComments] = useState([]);
+const Post = ({
+  postId,
+  postedBy,
+  daysAgo,
+  postContent,
+  individualPostClickCallback,
+}) => {
+  const navigation = useNavigation();
+  const [numberOfComments, setCommentCount] = useState(0);
+  let IndividualPost;
+
+  function handlePostClick(individualPost) {
+    navigation.navigate('IndividualPost', (individualPost = {individualPost}));
+  }
+
+  async function getPost() {
+    let post = new Parse.Query('Post');
+    post.equalTo('objectId', postId);
+    const results = await post.find();
+    IndividualPost = results[0];
+  }
 
   useEffect(() => {
-    const fetchComments = async () => {
-      const query = new Parse.Query('Comment');
-      query.descending('createdAt');
-      try {
-        let result = await query.find();
-        setComments(result);
-      } catch (error) {
-        console.error('Error fetching comments', error);
-      }
-    };
-    fetchComments();
+    getPost();
   }, []);
 
-  const handleNewComment = newComment => {
-    setComments(currentComments => [newComment, ...currentComments]);
+  const fetchCommentCount = async () => {
+    const Post = Parse.Object.extend('Post');
+    const query = new Parse.Query(Post);
+    const post = await query.get(id);
+    const updatedCommentCount = post.get('numberOfComments');
+    setCommentCount(updatedCommentCount);
   };
 
   return (
@@ -39,8 +54,13 @@ const Post = ({postedBy, daysAgo, postContent}) => {
       <View style={styles.post}>
         <Text style={styles.postText}>{postContent}</Text>
       </View>
-      <View style={styles.seperator}></View>
-      <WriteComment onNewComment={handleNewComment}></WriteComment>
+      <View style={styles.comments}>
+        <TouchableOpacity onPress={() => handlePostClick(postId)}>
+          <FontAwesomeIcon icon={faPaperPlane} style={styles.icon2} size={15} />
+          <Text>Comment</Text>
+        </TouchableOpacity>
+        <Text>{numberOfComments} comments</Text>
+      </View>
     </View>
   );
 };
@@ -86,12 +106,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 10,
   },
-  seperator: {
-    width: 320,
-    marginLeft: 15,
-    height: 1,
-    marginBottom: 15,
-    backgroundColor: 'black',
+  comments: {
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  icon2: {
+    transform: [{rotate: '50deg'}],
   },
 });
 
