@@ -2,23 +2,23 @@ import Parse from 'parse/react-native';
 import CommentSection from './CommentSection';
 import WriteComment from './WriteComment';
 import Post from './Post';
-import {useRoute} from '@react-navigation/native';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useEffect, useState} from 'react';
+import { useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
 
-function IndividualPost({route}) {
-  const {individualPost} = route.params;
+function IndividualPost({ route }) {
+  const { postObject } = route.params;
   const [postedBy, setPostedBy] = useState('');
   const [postContent, setPostContent] = useState('');
   const [numberOfComments, setCommentCount] = useState(0);
 
   useEffect(() => {
-    //console.log('post ID:', individualPost.id);
-    const fetchPost = async () => {
+    console.log('post: ', postObject);
+    /*const fetchPost = async () => {
       try {
         const Post = Parse.Object.extend('Post');
         const query = new Parse.Query(Post);
-        const post = await query.get(individualPost.get(objectd));
+        const post = await query.get(post.get(objectd));
         if (post) {
           setPostedBy(post.get('username'));
           setPostContent(post.get('postContent'));
@@ -31,8 +31,8 @@ function IndividualPost({route}) {
 
     if (individualPost) {
       fetchPost();
-    }
-  }, [individualPost]);
+    }*/
+  }, []);
 
   // const fetchCommentCount = async () => {
   //   const Post = Parse.Object.extend('Post');
@@ -44,25 +44,23 @@ function IndividualPost({route}) {
 
   const handleCommentPosted = () => {
     setIsCommenting(false);
-    fetchCommentCount();
+    //fetchCommentCount();
   };
 
   return (
     <View style={styles.postContainer}>
       <Post
-        postedBy={postedBy}
-        postContent={postContent}
-        numberOfComments={numberOfComments}
+        postObject={postObject}
         individualPostClickCallback={() =>
-          handleAddCommentClick(individualPost)
+          handleAddCommentClick(postObject)
         }
       />
       <CommentSection
-        postId={individualPost}
-        numberOfComments={numberOfComments}
+        postId={postObject.objectId}
+        numberOfComments={postObject.numberOfComments}
       />
       <WriteComment
-        postId={individualPost}
+        postId={postObject.objectId}
         onCommentPosted={handleCommentPosted}
       />
     </View>

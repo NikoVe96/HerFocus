@@ -1,37 +1,31 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import WriteComment from './WriteComment';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import CommentSection from './CommentSection';
 
-const Post = ({
-  postId,
-  postedBy,
-  daysAgo,
-  postContent,
-  individualPostClickCallback,
-}) => {
+const Post = ({ postObject }) => {
   const navigation = useNavigation();
-  const [numberOfComments, setCommentCount] = useState(0);
-  let IndividualPost;
+  const [commentCount, setCommentCount] = useState(postObject.get('numberOfComments'));
+  let daysAgo = Math.round((new Date().getTime() - new Date(postObject.get('createdAt')).getTime()) / (1000 * 3600 * 24));
 
-  function handlePostClick(individualPost) {
-    navigation.navigate('IndividualPost', (individualPost = {individualPost}));
+  function handlePostClick() {
+    navigation.navigate('IndividualPost', { postObject: postObject });
   }
 
   async function getPost() {
     let post = new Parse.Query('Post');
-    post.equalTo('objectId', postId);
+    post.equalTo('objectId', postObject.objectID);
     const results = await post.find();
     IndividualPost = results[0];
   }
 
   useEffect(() => {
-    getPost();
+    console.log(postObject);
   }, []);
 
   const fetchCommentCount = async () => {
@@ -47,19 +41,19 @@ const Post = ({
       <View style={styles.userInfo}>
         <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
         <View>
-          <Text style={styles.user}>{postedBy}</Text>
+          <Text style={styles.user}>{postObject.get('username')}</Text>
           <Text style={styles.when}>Posted {daysAgo} days ago</Text>
         </View>
       </View>
       <View style={styles.post}>
-        <Text style={styles.postText}>{postContent}</Text>
+        <Text style={styles.postText}>{postObject.get('postContent')}</Text>
       </View>
       <View style={styles.comments}>
-        <TouchableOpacity onPress={() => handlePostClick(postId)}>
+        <TouchableOpacity onPress={() => handlePostClick()}>
           <FontAwesomeIcon icon={faPaperPlane} style={styles.icon2} size={15} />
           <Text>Comment</Text>
         </TouchableOpacity>
-        <Text>{numberOfComments} comments</Text>
+        <Text>{commentCount} comments</Text>
       </View>
     </View>
   );
@@ -112,7 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icon2: {
-    transform: [{rotate: '50deg'}],
+    transform: [{ rotate: '50deg' }],
   },
 });
 

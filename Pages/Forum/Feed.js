@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,18 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {useState} from 'react';
+import { useState } from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const Feed = () => {
+const Feed = ({ forumTitle }) => {
   const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
 
   async function postQuery() {
     let posts = new Parse.Query('Post');
-    posts.contains('forumTitle', 'Family');
+    posts.contains('forumTitle', forumTitle);
     const results = await posts.find();
     setPosts(results);
     console.log(results);
@@ -26,24 +26,20 @@ const Feed = () => {
 
   useEffect(() => {
     postQuery();
-  }, []);
+  }, [forumTitle]);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.seperator}></View>
       <View style={styles.feedContent}>
-        {posts.map((post, index) => (
+        {posts.length == 0 ? (
+          <Text>Loading posts...</Text>
+        ) : (posts.map((post, index) => (
           <Post
             key={index}
-            post={post}
-            postedBy={post.get('username')}
-            daysAgo={Math.round(
-              (new Date().getTime() - new Date(post.createdAt).getTime()) /
-                (1000 * 3600 * 24),
-            )}
-            postContent={post.get('postContent')}
-            numberOfComments={post.numberOfComments}></Post>
-        ))}
+            postObject={post}>
+          </Post>
+        )))}
       </View>
     </ScrollView>
   );

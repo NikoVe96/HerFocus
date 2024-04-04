@@ -6,18 +6,19 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function WritePost(props) {
+function WritePost({ forumTitle }) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
   //const [forumTitle, setForumTitle] = useState('');
 
   useEffect(() => {
-    async function getCurrentUser() {
+    console.log(forumTitle);
+    /*async function getCurrentUser() {
       const currentUser = Parse.User.current();
       if (currentUser !== null) {
         const username = currentUser.get('username');
@@ -26,7 +27,7 @@ function WritePost(props) {
         console.log('Error fetching user data');
       }
     }
-    getCurrentUser();
+    getCurrentUser();*/
   }, []);
 
   const handlePost = async () => {
