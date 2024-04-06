@@ -1,25 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigation from './Navigation/BottomNav';
 import SideMenu from './Navigation/SideMenu';
 import { NavigationContainer, DefaultTheme, useTheme } from '@react-navigation/native';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, Button } from 'react-native';
 import Parse from 'parse/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
 Parse.serverURL = 'https://parseapi.back4app.com/'
 
-const YellowTheme = {
+const PastelTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    light: '#FFEABF',
-    primary: '#DC9B18',
-    background: '#FFF6ED',
+    light: '#D9E4EC',
+    primary: '#FFD3DA',
+    background: '#FFFAE2',
+    card: '#BFFCD1',
+    text: 'black',
+    border: '#FFD3DA',
+    notification: '#D9E4EC',
+    icons: '#BFFCD1'
+  },
+};
+
+const PurpleTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    light: '#D9E4EC',
+    primary: '#FFD3DA',
+    background: '#FFFAE2',
+    card: '#BFFCD1',
+    text: 'black',
+    border: '#FFD3DA',
+    notification: '#D9E4EC',
+  },
+};
+
+const RedTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    light: '#F19C9B',
+    primary: '#D33F49',
+    background: '#FFEBEE',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',
@@ -27,13 +59,13 @@ const YellowTheme = {
   },
 };
 
-const BlueTheme = {
+const YellowTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    light: '#68669D',
-    primary: '#131227',
-    background: '#393751',
+    light: '#F19C9B',
+    primary: '#D33F49',
+    background: '#FFEBEE',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',
@@ -55,13 +87,55 @@ const GreenTheme = {
   },
 };
 
-const RedTheme = {
+const BlueTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    light: '#F19C9B',
-    primary: '#D33F49',
-    background: '#FFEBEE',
+    light: '#68669D',
+    primary: '#131227',
+    background: '#393751',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
+const DarkBlueTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    light: '#71CA81',
+    primary: '#0F9D58',
+    background: '#C8E6C9',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
+const DarkTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    light: '#71CA81',
+    primary: '#0F9D58',
+    background: '#C8E6C9',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
+const NeutralTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    light: '#71CA81',
+    primary: '#0F9D58',
+    background: '#C8E6C9',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',
@@ -70,17 +144,89 @@ const RedTheme = {
 };
 
 const themes = {
-  yellow: YellowTheme,
-  blue: BlueTheme,
-  green: GreenTheme,
+  pastel: PastelTheme,
+  purple: PurpleTheme,
   red: RedTheme,
+  yellow: YellowTheme,
+  green: GreenTheme,
+  blue: BlueTheme,
+  darkblue: DarkBlueTheme,
+  dark: DarkTheme,
+  neutral: NeutralTheme,
   default: DefaultTheme,
 };
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+// Can use this function below or use Expo's Push Notification Tool from: https://expo.dev/notifications
+async function sendPushNotification(expoPushToken) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'Original Title',
+    body: 'And here is the body!',
+    data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = await Notifications.getExpoPushTokenAsync({
+      projectId: Constants.expoConfig.extra.eas.projectId,
+    });
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token.data;
+}
 
 function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   useEffect(() => {
     const getTheme = async () => {
@@ -96,6 +242,21 @@ function App() {
       }
     };
 
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+
     getTheme();
   }, []);
 
@@ -105,7 +266,6 @@ function App() {
     const Result = await themeQ.find();
     const chosenTheme = (Result[0].get('theme'));
     //setTheme(themes[chosenTheme]);
-
   }
 
   return (
@@ -113,6 +273,12 @@ function App() {
       <NavigationContainer theme={theme}>
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
+          <Button
+            title="Press to Send Notification"
+            onPress={async () => {
+              await sendPushNotification(expoPushToken);
+            }}
+          />
           <BottomNavigation />
         </SafeAreaView>
       </NavigationContainer>
