@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ScrollView,
+  Image,
 } from 'react-native';
 import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -15,6 +17,7 @@ import {
   faImage,
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
+import PickAvatar from './PickAvatar';
 
 export const Profile = () => {
   const [username, setUsername] = useState('');
@@ -30,18 +33,22 @@ export const Profile = () => {
           setUsername(currentUser.getUsername());
           setEmail(currentUser.getEmail());
           setName(currentUser.get('name'));
+          setAvatar(currentUser.get('avatar'));
         }
       }
     }
     getCurrentUser();
-  }, [email]);
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <View>
+    <ScrollView style={styles.container}>
+      <View style={styles.userNameContainer}>
+        <View style={styles.styling}></View>
         <Text style={styles.user}>{username}</Text>
+        <View style={styles.avatar}>
+          <Image icon={faUser} style={styles.avatar} size={30} />
+        </View>
       </View>
-      <FontAwesomeIcon icon={faUser} style={styles.avatar} size={30} />
       <View style={styles.seperator}></View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
@@ -82,21 +89,32 @@ export const Profile = () => {
       <View style={styles.seperator}></View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
-        <Text style={styles.userInfo}> Pick avatar </Text>
+        <Text style={styles.userInfo}> Change avatar </Text>
       </View>
-    </View>
+      <PickAvatar></PickAvatar>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF6ED',
-    flex: 1,
+  },
+  userNameContainer: {
+    zIndex: 1,
+    alignItems: 'center',
+  },
+  styling: {
+    width: '100%',
+    height: 100,
+    backgroundColor: '#DC9B18',
+    borderBottomEndRadius: 100,
+    borderBottomStartRadius: 100,
   },
   avatar: {
-    marginBottom: 20,
     alignItems: 'center',
-    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 20,
   },
   user: {
     paddingLeft: 60,
@@ -104,14 +122,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     color: 'black',
-    marginTop: 30,
-    marginBottom: 30,
+    zIndex: 2,
+    position: 'absolute',
+    marginTop: 50,
   },
   seperator: {
     width: '100%',
     height: 1,
     marginBottom: 20,
-    backgroundColor: 'black',
+    backgroundColor: '#DC9B18',
   },
   userInfo: {
     fontSize: 20,
@@ -125,9 +144,11 @@ const styles = StyleSheet.create({
   },
   icons: {
     marginLeft: 30,
+    marginBottom: 20,
   },
   iconEdit: {
     marginRight: 20,
+    marginBottom: 20,
   },
 });
 
