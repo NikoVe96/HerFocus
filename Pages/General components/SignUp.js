@@ -13,6 +13,7 @@ import Parse from 'parse/react-native';
 import {useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import PickAvatar from './PickAvatar';
+import getAvatarImage from './AvatarUtils';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -23,6 +24,10 @@ const SignUp = () => {
   const [error, setError] = useState('');
   let [avatar, setAvatar] = useState('');
   const navigation = useNavigation();
+
+  const handleAvatarSelect = selectedAvatar => {
+    setAvatar(selectedAvatar);
+  };
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
@@ -37,6 +42,7 @@ const SignUp = () => {
     user.set('email', email);
     user.set('password', password);
     user.set('avatar', avatar);
+    console.log(avatar);
 
     try {
       await user.signUp();
@@ -85,7 +91,9 @@ const SignUp = () => {
           style={styles.form}></TextInput>
         <Text style={styles.avatar}> Pick an avatar </Text>
         <View style={styles.avatarMargin}>
-          <PickAvatar></PickAvatar>
+          <PickAvatar
+            onAvatarSelect={handleAvatarSelect}
+            isSignUp={true}></PickAvatar>
         </View>
         <TouchableOpacity
           style={styles.signUpBtn}

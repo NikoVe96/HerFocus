@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
   View,
   TouchableOpacity,
   ScrollView,
@@ -18,12 +17,13 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import PickAvatar from './PickAvatar';
+import getAvatarImage from './AvatarUtils';
 
 export const Profile = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  let [avatar, setAvatar] = useState('default');
+  let [avatar, setAvatar] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -40,13 +40,20 @@ export const Profile = () => {
     getCurrentUser();
   }, []);
 
+  const handleAvatarSelect = selectedAvatar => {
+    setAvatar(selectedAvatar);
+  };
+
+  const avatarImageSource = getAvatarImage(avatar);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.userNameContainer}>
         <View style={styles.styling}></View>
         <Text style={styles.user}>{username}</Text>
+        <Image source={avatarImageSource} style={styles.avatarImage} />
         <View style={styles.avatar}>
-          <Image icon={faUser} style={styles.avatar} size={30} />
+          <View style={styles.avatar} size={30}></View>
         </View>
       </View>
       <View style={styles.seperator}></View>
@@ -91,7 +98,7 @@ export const Profile = () => {
         <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
         <Text style={styles.userInfo}> Change avatar </Text>
       </View>
-      <PickAvatar></PickAvatar>
+      <PickAvatar onAvatarSelect={handleAvatarSelect}></PickAvatar>
     </ScrollView>
   );
 };
@@ -103,6 +110,11 @@ const styles = StyleSheet.create({
   userNameContainer: {
     zIndex: 1,
     alignItems: 'center',
+  },
+  avatarImage: {
+    marginTop: 10,
+    width: 60,
+    height: 60,
   },
   styling: {
     width: '100%',

@@ -1,4 +1,11 @@
 {
   "name": "HerFocus",
-  "displayName": "HerFocus"
+  "displayName": "HerFocus",
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "This app needs to access devices on your local network."
+      }
+    }
+  }
 }
