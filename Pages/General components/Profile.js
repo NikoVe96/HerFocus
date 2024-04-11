@@ -98,7 +98,9 @@ export const Profile = () => {
         <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
         <Text style={styles.userInfo}> Change avatar </Text>
       </View>
-      <PickAvatar onAvatarSelect={handleAvatarSelect}></PickAvatar>
+      <PickAvatar
+        onAvatarSelect={handleAvatarSelect}
+        PickedAvatar={avatar}></PickAvatar>
     </ScrollView>
   );
 };

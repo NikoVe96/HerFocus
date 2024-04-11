@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import Parse from 'parse/react-native';
 
-export const PickAvatar = ({onAvatarSelect, isSignedUp}) => {
+export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   const handleAvatarSelect = async avatarSelection => {
     console.log('clicked', avatarSelection);
     onAvatarSelect(avatarSelection);
@@ -20,12 +20,17 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp}) => {
     }
   };
 
+  const pickedAvatar = avatarSelection => ({
+    ...styles.images,
+    borderColor: avatarSelection === selectedAvatar ? 'black' : 'transparent',
+    borderWidth: avatarSelection === selectedAvatar ? 2 : 0,
+  });
+
   return (
     <View style={styles.avatars}>
       <TouchableOpacity
-        onPress={() => {
-          handleAvatarSelect('Avatar1');
-        }}>
+        onPress={() => handleAvatarSelect('Avatar1')}
+        style={pickedAvatar('Avatar1')}>
         <Image
           source={require('../../Assets/images/Avatar1.png')}
           style={styles.images}></Image>

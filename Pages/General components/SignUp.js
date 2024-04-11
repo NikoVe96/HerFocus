@@ -13,7 +13,6 @@ import Parse from 'parse/react-native';
 import {useNavigation} from '@react-navigation/native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import PickAvatar from './PickAvatar';
-import getAvatarImage from './AvatarUtils';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -25,7 +24,7 @@ const SignUp = () => {
   let [avatar, setAvatar] = useState('');
   const navigation = useNavigation();
 
-  const handleAvatarSelect = selectedAvatar => {
+  const handleAvatarSelect = ({selectedAvatar}) => {
     setAvatar(selectedAvatar);
   };
 
@@ -93,6 +92,7 @@ const SignUp = () => {
         <View style={styles.avatarMargin}>
           <PickAvatar
             onAvatarSelect={handleAvatarSelect}
+            pickedAvatar={avatar}
             isSignUp={true}></PickAvatar>
         </View>
         <TouchableOpacity
