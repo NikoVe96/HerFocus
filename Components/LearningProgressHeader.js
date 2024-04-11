@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
-const LearningProgressHeader = ({ progress, moduleLength }) => {
+const LearningProgressHeader = ({ progress, moduleLength, subject, description, image }) => {
     const navigation = useNavigation();
 
     const progressAnim = progress.interpolate({
@@ -22,7 +22,7 @@ const LearningProgressHeader = ({ progress, moduleLength }) => {
                 {
                     text: 'Exit',
                     onPress: () => {
-                        navigation.navigate('Planning module')
+                        navigation.navigate('Module overview', { subject: subject, image: image, description: description })
                     },
                 },
             ],
@@ -59,7 +59,7 @@ const LearningProgressHeader = ({ progress, moduleLength }) => {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1,
+        flex: 0.6,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'lightgrey'

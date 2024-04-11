@@ -18,6 +18,10 @@ export const PickModule = () => {
   const navigation = useNavigation();
   const [progress, setProgress] = useState('0%');
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+  const moduleSubjects = [
+    { subject: 'Structure', description: 'In the structure learning module, you will learn how to...', image: require('../../Assets/images/planning_learning_module.png') },
+    { subject: 'Time management', description: 'In the time management learning module, you will learn how to...', image: require('../../Assets/images/planning_learning_module.png') }
+  ]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,7 +31,7 @@ export const PickModule = () => {
           <View style={styles.progessionBar}>
             <Text style={styles.text}>{progress}</Text>
           </View>
-          <TouchableOpacity style={styles.knowledgeView} onPress={() => navigation.navigate('Planning module')}>
+          <TouchableOpacity style={styles.knowledgeView} onPress={() => navigation.navigate('Module overview', { subject: moduleSubjects[0].subject, description: moduleSubjects[0].description, image: moduleSubjects[0].image })}>
             <Animated.Image
               source={require('../../Assets/images/planning_learning_module.png')}
               style={{ width: 110, height: 110 }}
@@ -42,7 +46,7 @@ export const PickModule = () => {
           <View style={styles.knowledgeView}>
             <TouchableOpacity
               style={styles.button}
-            //   onPress={() => navigation.navigate('')}
+              onPress={() => navigation.navigate('Module overview', { subject: 'Time management', description: timeManagementDesc })}
             >
               <Text style={styles.text}>... will come</Text>
             </TouchableOpacity>

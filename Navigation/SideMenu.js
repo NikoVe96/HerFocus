@@ -39,7 +39,8 @@ import ContactInformation from '../Pages/General components/ContactInformation';
 import { useNavigation } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Planning from '../Pages/Learning components/Learning Modules/Planning/Planning';
-import Module1 from '../Pages/Learning components/Learning Modules/Planning/Module1';
+import Module1, { Module } from '../Pages/Learning components/Learning Modules/Planning/Module';
+import ArticleOverview, { ModulesOverview } from '../Pages/Learning components/ModulesOverview';
 
 const Drawer = createDrawerNavigator();
 
@@ -378,8 +379,8 @@ function SideMenu() {
       <Drawer.Screen
         name="Favorite articles"
         component={FavoriteArticles}></Drawer.Screen>
-      <Drawer.Screen name='Planning module' component={Planning}></Drawer.Screen>
-      <Drawer.Screen name='Planning 1' component={Module1}></Drawer.Screen>
+      <Drawer.Screen name='Module overview' component={ModulesOverview}></Drawer.Screen>
+      <Drawer.Screen name='Module' component={Module}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }
