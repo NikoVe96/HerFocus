@@ -38,7 +38,7 @@ export const FrontPage = () => {
       <View style={styles.frontView}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Struture')}>
+          onPress={() => navigation.navigate('Structure front page')}>
           <Text style={styles.text}>Struture</Text>
         </TouchableOpacity>
       </View>

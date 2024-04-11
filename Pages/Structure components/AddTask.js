@@ -6,9 +6,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
-import EmojiSelector, { Categories }
-    from "react-native-emoji-selector";
-import EmojiModal from 'react-native-emoji-modal';
+import EmojiPicker, { emojiFromUtf16 } from "rn-emoji-picker"
+import { emojis } from "rn-emoji-picker/dist/data"
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -34,14 +33,16 @@ export const AddTask = ({ navigation }) => {
     const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
     const [newRoutine, setNewRoutine] = useState('');
+    const [color, setColor] = useState('');
+    const [recent, setRecent] = useState([]);
+    const [emojiModalVisible, setEmojiModalVisible] = useState(false);
+    const [emoji, setEmoji] = useState();
     const taskCategories = [
         { label: 'Mental health', value: 'mental health', color: 'lightgreen' },
         { label: 'House chore', value: 'house chores', color: 'pink' },
         { label: 'Personal chore', value: 'personal chore', color: 'lightyellow' },
         { label: 'Work related chores', value: 'work related chores', color: 'lavender' },
     ]
-    const [showPicker, setShowPicker] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState("");
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -96,7 +97,7 @@ export const AddTask = ({ navigation }) => {
             newTask.set('date', taskDate);
             newTask.set('startTime', taskStartTime);
             newTask.set('endTime', taskEndTime);
-            newTask.set('emoji', 'faSmileBeam');
+            newTask.set('emoji', emoji);
             newTask.set('user', currentUser);
             // If time, add recurring option
             await newTask.save();
@@ -174,7 +175,6 @@ export const AddTask = ({ navigation }) => {
     };
 
     const handleStartTimeConfirm = (date) => {
-        // Change so only time is shown instead of date
         setStartTime(date.getHours()
             + ':' + date.getMinutes())
         hideStartTimePicker();
@@ -189,24 +189,26 @@ export const AddTask = ({ navigation }) => {
     };
 
     const handleEndTimeConfirm = (date) => {
-        // Change so only time is shown instead of date
         setEndTime(date.getHours()
             + ':' + date.getMinutes())
         hideEndTimePicker();
     };
 
     function clearInput() {
-        setTaskName('')
-        setTaskRoutine('')
-        setStartTime(null)
-        setEndTime(null)
-        setTaskDate('')
+        setTaskName('');
+        setTaskRoutine('');
+        setStartTime(null);
+        setEndTime(null);
+        setTaskDate('');
     }
 
-    const handleEmojiSelect = (emoji) => {
-        setSelectedEmoji(emoji);
-        setShowPicker(false);
-    };
+    function showEmojiModal() {
+        setEmojiModalVisible(true);
+    }
+
+    function hideEmojiModal() {
+        setEmojiModalVisible(false);
+    }
 
     return (
         <SafeAreaView style={{ justifyContent: 'center' }}>
@@ -216,8 +218,8 @@ export const AddTask = ({ navigation }) => {
             </View>
             <View style={{
                 alignContent: 'center',
-                justifyContent: 'space-around',
-                padding: 16,
+
+                paddingHorizontal: 16,
             }}>
                 <View>
                     <Text style={{ marginVertical: 16 }}>
@@ -228,6 +230,17 @@ export const AddTask = ({ navigation }) => {
                         onChangeText={text => setTaskName(text)}
                         value={taskName}
                     />
+                </View>
+                <View>
+                    <Text style={{ marginVertical: 16 }} >Choose a color</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#FAEDCB' }}></TouchableOpacity>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#C9E4DE' }}></TouchableOpacity>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#C6DEF1' }}></TouchableOpacity>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#DBCDF0' }}></TouchableOpacity>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#FFADAD' }}></TouchableOpacity>
+                        <TouchableOpacity style={{ borderWidth: 1, borderRadius: 20, width: 40, height: 40, backgroundColor: '#FFD6A5' }}></TouchableOpacity>
+                    </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, marginHorizontal: 5 }}>
@@ -271,45 +284,40 @@ export const AddTask = ({ navigation }) => {
                         />
                     </View>
                 </View>
-                {/*   // Can't get this to work properly. The modal is just displaying white
-                <TouchableOpacity
-                    onPress={() => setShowPicker(true)}
-                    style={styles.pickerButton}
-                >
-                    <Text style={styles.buttonText}>
-                        Open Emoji Picker
-                    </Text>
-                </TouchableOpacity>
-                <View style={{ marginTop: 10 }}>
-                    {selectedEmoji !== "" && (
-                        <Text style={{ fontSize: 20 }}>
-                            Selected Emoji: {selectedEmoji}
-                        </Text>
-                    )}
+                <View style={{ marginVertical: 5, flexDirection: 'row' }}>
+                    <TouchableOpacity onPress={showEmojiModal} style={{ backgroundColor: 'lightblue', justifyContent: 'center', padding: 5, width: 150, height: 40, alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Emoji picker</Text>
+                    </TouchableOpacity>
+                    <Modal
+                        visible={emojiModalVisible}
+                        animationType="slide"
+                        transparent={true}
+                        onRequestClose={hideEmojiModal} // This is to handle the hardware back button on Android
+                    >
+                        <View style={styles.modalContainer}>
+                            <EmojiPicker
+                                emojis={emojis}
+                                recent={recent}
+                                loading={false}
+                                darkMode={false}
+                                perLine={6}
+                                onSelect={chosenEmoji => {
+                                    console.log(chosenEmoji);
+                                    setEmoji(chosenEmoji.emoji);
+                                    hideEmojiModal(); // Optionally close modal upon selection
+                                }}
+                                onChangeRecent={setRecent}
+                            // Add any additional props you need for EmojiPicker here
+                            />
+                            <TouchableOpacity style={{ backgroundColor: 'lightgrey', width: '100%', height: '8%', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>CLOSE</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
+                    <View style={{ padding: 10 }}></View>
+                    <Text>Emoji: {emoji}</Text>
                 </View>
 
-                <Modal
-                    visible={showPicker}
-                    animationType="slide"
-                    transparent={true}
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <EmojiSelector
-                                onEmojiSelected={handleEmojiSelect}
-                                category={Categories.all}
-                                showTabs={true}
-                                showSearchBar={true}
-                                showHistory={true}
-                                columns={8} // Adjust number of columns according to your preference
-                                placeholder="Search emoji..."
-                            />
-                        </View>
-                    </View>
-                </Modal>
-                    */}
-                <View style={{ padding: 10 }}>
-                </View>
                 <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                     <TouchableOpacity
                         style={{ backgroundColor: 'lightblue', justifyContent: 'center', padding: 5, width: 150, height: 40, alignItems: 'center' }}
@@ -392,13 +400,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
+        padding: 30
     },
     modalContent: {
         backgroundColor: "#fff",
         borderRadius: 10,
-        padding: 20,
-        width: "80%",
-        maxHeight: "80%",
+        padding: 10,
+        width: "150",
+        maxHeight: "100",
     },
 });
 
