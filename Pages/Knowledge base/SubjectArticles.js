@@ -11,9 +11,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const ArticlesDiagnosed = () => {
+export const ArticlesDiagnosed = ({ route }) => {
     const navigation = useNavigation();
     const [articlesList, setArticlesList] = useState([]);
+    const { subject } = route.params;
 
     useEffect(() => {
 
@@ -24,11 +25,13 @@ export const ArticlesDiagnosed = () => {
             Alert.alert('Could not load articles')
         }
 
-    }, []);
+        console.log(subject)
+
+    }, [subject]);
 
     async function articlesQuery() {
         let articles = new Parse.Query('Articles');
-        articles.contains('subject', 'Getting diagnosed with ADHD/ADD')
+        articles.contains('subject', subject)
         const Results = await articles.find();
         setArticlesList(Results);
     }

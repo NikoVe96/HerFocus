@@ -19,28 +19,28 @@ export const PickTopics = () => {
         <Text style={styles.title}>What would you like to read about?</Text>
         <TouchableOpacity
           style={styles.knowledgeView}
-          onPress={() => navigation.navigate('Articles diagnosed')}
+          onPress={() => navigation.navigate('Subject articles', { subject: 'diagnosis' })}
         >
           <Image source={require(`../../Assets/images/${testImage}`)} style={{ width: 70, height: 70 }} />
           <Text style={styles.text}>Getting diagnosed with ADHD/ADD</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.knowledgeView}
-        //   onPress={() => navigation.navigate('')}
+          onPress={() => navigation.navigate('Subject articles', { subject: 'women' })}
         >
           <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
           <Text style={styles.text}>Women and ADHD/ADD</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.knowledgeView}
-        //   onPress={() => navigation.navigate('')}
+          onPress={() => navigation.navigate('Subject articles', { subject: 'adhd' })}
         >
           <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
           <Text style={styles.text}>What is ADHD?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.knowledgeView}
-        //   onPress={() => navigation.navigate('')}
+          onPress={() => navigation.navigate('Subject articles', { subject: 'relationships' })}
         >
           <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
           <Text style={styles.text}>Relationships and ADHD</Text>

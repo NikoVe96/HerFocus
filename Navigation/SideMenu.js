@@ -36,12 +36,8 @@ import { FavoritePosts } from '../Pages/Forum/FavoritePosts';
 import FavoriteArticles from '../Pages/Knowledge base/FavoriteArticles';
 import AppHistory from '../Pages/General components/AppHistory';
 import ContactInformation from '../Pages/General components/ContactInformation';
-import { useNavigation } from '@react-navigation/native';
 import Parse from 'parse/react-native';
-import ArticlesDiagnosed from '../Pages/Knowledge base/ArticlesDiagnosed';
-import ArticlesRelationships from '../Pages/Knowledge base/ArticlesRelationships';
-import ArticlesWomen from '../Pages/Knowledge base/ArticlesWomen';
-import ArticlesADHD from '../Pages/Knowledge base/ArticlesADHD';
+import SubjectArticles from '../Pages/Knowledge base/SubjectArticles';
 import ViewArticle from '../Pages/Knowledge base/ViewArticle';
 
 const Drawer = createDrawerNavigator();
@@ -381,17 +377,8 @@ function SideMenu() {
         name="Favorite articles"
         component={FavoriteArticles}></Drawer.Screen>
       <Drawer.Screen
-        name="Articles diagnosed"
-        component={ArticlesDiagnosed}></Drawer.Screen>
-      <Drawer.Screen
-        name="Articles relationships"
-        component={ArticlesRelationships}></Drawer.Screen>
-      <Drawer.Screen
-        name="Articles women"
-        component={ArticlesWomen}></Drawer.Screen>
-      <Drawer.Screen
-        name="Articles adhd"
-        component={ArticlesADHD}></Drawer.Screen>
+        name="Subject articles"
+        component={SubjectArticles}></Drawer.Screen>
       <Drawer.Screen
         name="View article"
         component={ViewArticle}></Drawer.Screen>
