@@ -6,19 +6,18 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-function WritePost({forumTitle}) {
+function WritePost({ forumTitle, onNewPost }) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
   //const [forumTitle, setForumTitle] = useState('');
 
   useEffect(() => {
-    console.log(forumTitle);
-    /*async function getCurrentUser() {
+    async function getCurrentUser() {
       const currentUser = Parse.User.current();
       if (currentUser !== null) {
         const username = currentUser.get('username');
@@ -27,21 +26,22 @@ function WritePost({forumTitle}) {
         console.log('Error fetching user data');
       }
     }
-    getCurrentUser();*/
-  }, []);
+    getCurrentUser();
+  }, [forumTitle]);
 
   const handlePost = async () => {
-    const Post = Parse.Object.extend('Post');
-    const newPost = new Post();
-    newPost.set('postContent', post);
-    newPost.set('userObjectId', Parse.User.current());
-    newPost.set('username', username);
-    //newPost.set('forumTitle', forumTitle);
+    const Post = new Parse.Object('Post');
+
+    Post.set('postContent', post);
+    Post.set('userObjectId', Parse.User.current());
+    Post.set('username', username);
+    Post.set('forumTitle', forumTitle);
+    Post.set('numberOfComments', 0);
 
     try {
-      const result = await newPost.save();
+      const result = await Post.save();
       console.log('Post saved successfully!');
-      // props.onNewPost(result);
+      onNewPost(result);
     } catch (error) {
       console.error('Error saving post:', error);
     }

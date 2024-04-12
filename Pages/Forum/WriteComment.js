@@ -1,16 +1,15 @@
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-function WriteComment({postId}) {
+function WriteComment({ postId, onNewComment }) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
-      console.log(postId);
       const currentUser = Parse.User.current();
       if (currentUser !== null) {
         const username = currentUser.get('username');
@@ -31,7 +30,8 @@ function WriteComment({postId}) {
     newComment.set('postIdentifier', postId);
 
     try {
-      await newComment.save();
+      const result = await newComment.save();
+      onNewComment(result);
       console.log('Comment saved successfully');
       postId.increment('numberOfComments');
       await postId.save();
@@ -67,7 +67,7 @@ function WriteComment({postId}) {
 
 const styles = StyleSheet.create({
   icon: {
-    transform: [{rotate: '50deg'}],
+    transform: [{ rotate: '50deg' }],
   },
   commentContainer: {
     flexDirection: 'row',

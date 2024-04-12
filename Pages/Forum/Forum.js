@@ -1,24 +1,34 @@
 import React from 'react';
-import {Text, SafeAreaView, View, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useState, useEffect} from 'react';
-import {useRoute} from '@react-navigation/native';
+import { Text, SafeAreaView, View, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
 import Feed from './Feed';
 import WritePost from './WritePost';
 import WriteComment from './WriteComment';
 import Parse from 'parse/react-native';
 
-export const Forum = ({route}) => {
+export const Forum = ({ route }) => {
   const [posts, setPosts] = useState([]);
-  const {forumTitle, forumDescription} = route.params;
+  const { forumTitle, forumDescription } = route.params;
 
   useEffect(() => {
-    console.log(forumTitle);
+    postQuery();
   }, [forumTitle]);
 
-  const handleNewPost = newPost => {
-    setPosts(currentPosts => [newPost, ...currentPosts]);
+
+  function handleNewPost() {
+    //setPosts(currentPosts => [newPost, ...currentPosts]);
+    postQuery();
   };
+
+  async function postQuery() {
+    let posts = new Parse.Query('Post');
+    posts.contains('forumTitle', forumTitle);
+    posts.descending('createdAt');
+    const results = await posts.find();
+    setPosts(results);
+  }
 
   return (
     <SafeAreaView>
@@ -29,8 +39,8 @@ export const Forum = ({route}) => {
             <Text style={styles.description}>{forumDescription}</Text>
           </View>
         </View>
-        <WritePost onNewPost={handleNewPost}></WritePost>
-        <Feed forumTitle={forumTitle} />
+        <WritePost onNewPost={handleNewPost} forumTitle={forumTitle}></WritePost>
+        <Feed forumTitle={forumTitle} posts={posts} />
       </ScrollView>
     </SafeAreaView>
   );

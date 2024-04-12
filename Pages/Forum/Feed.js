@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,25 +7,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {useState} from 'react';
+import { useState } from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const Feed = ({forumTitle}) => {
-  const [posts, setPosts] = useState([]);
-  const navigation = useNavigation();
-
-  async function postQuery() {
-    let posts = new Parse.Query('Post');
-    posts.contains('forumTitle', forumTitle);
-    const results = await posts.find();
-    setPosts(results);
-  }
-
-  useEffect(() => {
-    postQuery();
-  }, [forumTitle]);
+const Feed = ({ forumTitle, posts }) => {
+  //const [posts, setPosts] = useState([]);
 
   return (
     <ScrollView style={styles.container}>

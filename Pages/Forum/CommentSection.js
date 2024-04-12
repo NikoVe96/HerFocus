@@ -1,43 +1,24 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import {useState} from 'react';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { useState } from 'react';
 import Comment from './Comment';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const CommentSection = ({postId, numberOfComments}) => {
-  const [allComments, setAllComments] = useState([]);
-
-  useEffect(() => {
-    console.log('Rendering comments...');
-    console.log('postID: ', {postId});
-    async function fetchComments() {
-      try {
-        let query = new Parse.Query('Comment');
-        query.equalTo('postIdentifier', postId);
-        query.descending('createdAt');
-        const results = await query.find();
-        console.log(results);
-        setAllComments(results);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    }
-    console.log(allComments);
-    fetchComments();
-  }, [postId]);
+const CommentSection = ({ comments }) => {
 
   return (
-    <SafeAreaView>
-      <View style={styles.seperator}></View>
-      <ScrollView style={styles.container}>
+
+
+    <ScrollView>
+      <View style={styles.container}>
         <View style={styles.sectionContent}>
-          {allComments.length == 0 ? (
+          {comments.length == 0 ? (
             <Text>Loading comments..</Text>
           ) : (
-            allComments.map((comment, commentId) => (
+            comments.map((comment, commentId) => (
               <View key={commentId} style={styles.commentContainer}>
                 <View style={styles.userInfo}>
                   <FontAwesomeIcon
@@ -53,7 +34,7 @@ const CommentSection = ({postId, numberOfComments}) => {
                   {Math.round(
                     (new Date().getTime() -
                       new Date(comment.createdAt).getTime()) /
-                      (1000 * 3600 * 24),
+                    (1000 * 3600 * 24),
                   )}
                 </Text>
                 <View style={styles.comment}>
@@ -65,15 +46,19 @@ const CommentSection = ({postId, numberOfComments}) => {
             ))
           )}
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 20,
-    marginBottom: 200,
+    marginBottom: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   seperator: {
     width: 320,
