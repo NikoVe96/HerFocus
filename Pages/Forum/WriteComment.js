@@ -10,6 +10,7 @@ function WriteComment({postId}) {
 
   useEffect(() => {
     async function getCurrentUser() {
+      console.log(postId);
       const currentUser = Parse.User.current();
       if (currentUser !== null) {
         const username = currentUser.get('username');
@@ -22,23 +23,21 @@ function WriteComment({postId}) {
   }, []);
 
   const handleComment = async () => {
-    const Comment = Parse.Object.extend('Comment');
-    const newComment = new Comment();
-
-    const Post = Parse.Object.extend('Post');
-    const post = new Post();
-    post.id = postId;
+    const newComment = new Parse.Object('Comment');
 
     newComment.set('commentContent', comment);
     newComment.set('userObjectId', Parse.User.current());
     newComment.set('username', username);
-    newComment.set('postId', postId);
+    newComment.set('postIdentifier', postId);
 
     try {
       await newComment.save();
-      console.log('Comment saved successfully!');
+      console.log('Comment saved successfully');
+      postId.increment('numberOfComments');
+      await postId.save();
+      console.log('Post commentCount incremented!');
     } catch (error) {
-      console.error('Error saving Comment:', error);
+      console.error('Error saving comment:', error);
     }
     setComment('');
   };
@@ -49,6 +48,7 @@ function WriteComment({postId}) {
         style={styles.writeComment}
         placeholder="Write a comment..."
         placeholderTextColor="#8C8C8C"
+        value={comment}
         multiline={true}
         inputStyle={{
           paddingHorizontal: 10,

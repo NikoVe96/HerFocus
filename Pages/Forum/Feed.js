@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const Feed = ({ forumTitle }) => {
+const Feed = ({forumTitle}) => {
   const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
 
@@ -21,7 +21,6 @@ const Feed = ({ forumTitle }) => {
     posts.contains('forumTitle', forumTitle);
     const results = await posts.find();
     setPosts(results);
-    console.log(results);
   }
 
   useEffect(() => {
@@ -34,12 +33,11 @@ const Feed = ({ forumTitle }) => {
       <View style={styles.feedContent}>
         {posts.length == 0 ? (
           <Text>Loading posts...</Text>
-        ) : (posts.map((post, index) => (
-          <Post
-            key={index}
-            postObject={post}>
-          </Post>
-        )))}
+        ) : (
+          posts.map((post, index) => (
+            <Post key={index} postObject={post}></Post>
+          ))
+        )}
       </View>
     </ScrollView>
   );

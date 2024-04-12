@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
 
-function WritePost({ forumTitle }) {
+function WritePost({forumTitle}) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
   //const [forumTitle, setForumTitle] = useState('');
@@ -41,7 +41,7 @@ function WritePost({ forumTitle }) {
     try {
       const result = await newPost.save();
       console.log('Post saved successfully!');
-      props.onNewPost(result);
+      // props.onNewPost(result);
     } catch (error) {
       console.error('Error saving post:', error);
     }
@@ -51,7 +51,7 @@ function WritePost({ forumTitle }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userContainer}>
-        <FontAwesomeIcon icon={faUser} style={styles.icon} size={35} />
+        {/* { <FontAwesomeIcon icon={faUser} style={styles.icon} size={35} />} */}
         <TextInput
           style={styles.writePost}
           placeholder="Write a post..."

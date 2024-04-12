@@ -34,3 +34,43 @@
     }
     setComment('');
   
+
+
+
+    // const handleComment = async () => {
+  //   const Comment = Parse.Object.extend('Comment');
+  //   const newComment = new Comment();
+
+  //   const Post = Parse.Object.extend('Post');
+  //   const post = new Post();
+  //   post.objectId = postId;
+
+  //   newComment.set('commentContent', comment);
+  //   newComment.set('userObjectId', Parse.User.current());
+  //   newComment.set('username', username);
+  //   newComment.set('postId', postId);
+
+  //   try {
+  //     await newComment.save();
+  //     console.log('Comment saved successfully!');
+  //   } catch (error) {
+  //     console.error('Error saving Comment:', error);
+  //   }
+  //   setComment('');
+  // };
+
+
+
+
+  // useEffect(() => {
+  //   async function getCurrentUser() {
+  //     const currentUser = Parse.User.current();
+  //     if (currentUser !== null) {
+  //       const username = currentUser.get('username');
+  //       setUsername(username);
+  //     } else {
+  //       console.log('Error fetching user data');
+  //     }
+  //   }
+  //   getCurrentUser();
+  // }, []);
