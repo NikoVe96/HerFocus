@@ -54,11 +54,21 @@ const Post = ({postObject}) => {
         <Text style={styles.postText}>{postObject.get('postContent')}</Text>
       </View>
       <View style={styles.comments}>
-        <TouchableOpacity onPress={() => handlePostClick()}>
-          <FontAwesomeIcon icon={faPaperPlane} style={styles.icon2} size={15} />
-          <Text>Comment</Text>
-        </TouchableOpacity>
-        <Text>{postObject.get('numberOfComments')} comments</Text>
+        <View style={styles.addComment}>
+          <TouchableOpacity onPress={() => handlePostClick()}>
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              style={styles.icon2}
+              size={15}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handlePostClick()}>
+            <Text style={styles.text}>comment</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.numberComments}>
+          <Text>{postObject.get('numberOfComments')} comments</Text>
+        </View>
       </View>
     </View>
   );
@@ -107,11 +117,18 @@ const styles = StyleSheet.create({
   },
   comments: {
     flexDirection: 'row',
-    marginLeft: 10,
+    justifyContent: 'space-between',
+    marginLeft: 15,
+    marginRight: 20,
     marginBottom: 10,
   },
   icon2: {
     transform: [{rotate: '50deg'}],
+    marginRight: 10,
+  },
+  addComment: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });
 

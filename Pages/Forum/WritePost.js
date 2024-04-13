@@ -6,15 +6,14 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
 
-function WritePost({ forumTitle, onNewPost }) {
+function WritePost({forumTitle, onNewPost}) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
-  //const [forumTitle, setForumTitle] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -51,10 +50,9 @@ function WritePost({ forumTitle, onNewPost }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.userContainer}>
-        {/* { <FontAwesomeIcon icon={faUser} style={styles.icon} size={35} />} */}
         <TextInput
           style={styles.writePost}
-          placeholder="Write a post..."
+          placeholder="Skriv et opslag..."
           placeholderTextColor="#8C8C8C"
           multiline={true}
           value={post}

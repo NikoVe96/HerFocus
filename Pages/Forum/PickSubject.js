@@ -13,18 +13,18 @@ export const PickSubject = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>Pick a forum to interact with</Text>
+        <Text style={styles.title}>Vælg et forum at interagere med</Text>
         <View style={styles.knowledgeView}>
           <TouchableOpacity
             style={styles.button}
             onPress={() =>
               navigation.navigate('Forum', {
-                forumTitle: 'Family',
+                forumTitle: 'Familie',
                 forumDescription:
-                  'With this forum the aim is to foster a supportive and informative environment where we can all share experiences, challenges, and triumphs related to family.',
+                  'I dette forum kan vi alle dele erfaringer, udfordringer og triumfer relateret til familierelationer.',
               })
             }>
-            <Text style={styles.text}>Family</Text>
+            <Text style={styles.text}>Familie</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.knowledgeView}>
@@ -32,9 +32,9 @@ export const PickSubject = () => {
             style={styles.button}
             onPress={() =>
               navigation.navigate('Forum', {
-                forumTitle: 'Relationships',
+                forumTitle: 'Relationer',
                 forumDescription:
-                  'Relationships can sometimes be complicated when you have ADHD, and in this forum you can share tips, frustrations etc. when dealing with relationships.',
+                  'Relationer kan nogle gange være komplicerede, når man har ADHD. I dette forum kan du dele tips, frustrationer osv., der har med relationer at gøre.',
               })
             }>
             <Text style={styles.text}>Relationships</Text>
@@ -47,10 +47,23 @@ export const PickSubject = () => {
               navigation.navigate('Forum', {
                 forumTitle: 'Medicin',
                 forumDescription:
-                  'Medicin can be a difficult topic to talk about. Please keep the medicin in this forum, and remember to contact a doctor if necessary.',
+                  'Medicin kan være et svært emne at tale om. Hold venligst medicinensnakken til dette forum, og husk at kontakte en læge, hvis det er nødvendigt.',
               })
             }>
             <Text style={styles.text}>Medicin</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.knowledgeView}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate('Forum', {
+                forumTitle: 'Gode tips',
+                forumDescription:
+                  'Det er altid rart at lære af andres gode erfaringer. Her kan du dele dine gode tips, men også lære hvad der hjælper for andre.',
+              })
+            }>
+            <Text style={styles.text}>Gode tips</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

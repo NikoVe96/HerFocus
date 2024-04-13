@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { useState } from 'react';
+import {useState} from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const Feed = ({ forumTitle, posts }) => {
+const Feed = ({forumTitle, posts}) => {
   //const [posts, setPosts] = useState([]);
 
   return (
@@ -20,7 +20,7 @@ const Feed = ({ forumTitle, posts }) => {
       <View style={styles.seperator}></View>
       <View style={styles.feedContent}>
         {posts.length == 0 ? (
-          <Text>Loading posts...</Text>
+          <Text></Text>
         ) : (
           posts.map((post, index) => (
             <Post key={index} postObject={post}></Post>
