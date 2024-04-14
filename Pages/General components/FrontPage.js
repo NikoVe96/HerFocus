@@ -5,6 +5,9 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ScrollView,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import Parse from 'parse/react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -25,45 +28,67 @@ export const HelloUser = () => {
     getCurrentUser();
   }, [username]);
 
-  return <Text style={styles.helloUser}>Hi, {username}!</Text>;
+  return <Text style={styles.helloUser}>Hej, {username}!</Text>;
 };
 
 export const FrontPage = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HelloUser />
-      <Text style={styles.title}>What would you like to do today?</Text>
-      <View style={styles.frontView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Struture')}>
-          <Text style={styles.text}>Struture</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.frontView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Pick module')}>
-          <Text style={styles.text}>Learn</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.frontView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Pick topic')}>
-          <Text style={styles.text}>Read</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.frontView}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('Pick subject')}>
-          <Text style={styles.text}>Talk to peers</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <HelloUser />
+        <Text style={styles.title}>Hvad vil du gerne lave i dag?</Text>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <ImageBackground
+            source={require('../../Assets/images/Struktur.png')}
+            style={styles.images}
+            resizeMode="cover">
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Struture')}>
+              <Text style={styles.text}>Strukturere</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <ImageBackground
+            source={require('../../Assets/images/Learning2.png')}
+            style={styles.images}
+            resizeMode="cover">
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Pick module')}>
+              <Text style={styles.text}>Lære</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <ImageBackground
+            source={require('../../Assets/images/Forums2.png')}
+            style={styles.images}
+            resizeMode="cover">
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Pick subject')}>
+              <Text style={styles.text}>Snakke med andre</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <ImageBackground
+            source={require('../../Assets/images/Reading.png')}
+            style={styles.images}
+            resizeMode="cover">
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('Pick topic')}>
+              <Text style={styles.text}>Læse i vidensbanken</Text>
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -72,16 +97,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF6ED',
     flex: 1,
+    marginBottom: 30,
   },
   frontView: {
     width: 330,
-    height: 90,
-    backgroundColor: '#FFFFFF',
+    height: 140,
     marginTop: 10,
     alignItems: 'center',
-    borderColor: '#000000',
+  },
+  shadowProp: {
+    shadowColor: '#443939',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+  },
+  images: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    overflow: 'hidden',
+    borderRadius: 15,
     borderWidth: 1,
-    borderRadius: 8,
   },
   helloUser: {
     paddingLeft: 60,
@@ -103,11 +139,11 @@ const styles = StyleSheet.create({
   button: {
     width: 210,
     height: 30,
-    backgroundColor: '#61646B',
+    backgroundColor: '#FFEABF',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    marginTop: 50,
+    marginTop: 100,
     justifyContent: 'center',
   },
   text: {
