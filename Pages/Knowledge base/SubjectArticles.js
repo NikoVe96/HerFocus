@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Markdown from 'react-native-markdown-display';
 
 export const ArticlesDiagnosed = ({ route }) => {
     const navigation = useNavigation();
@@ -50,7 +50,7 @@ export const ArticlesDiagnosed = ({ route }) => {
                     <TouchableOpacity key={index} style={styles.knowledgeView} onPress={() => readArticle(item)}>
                         <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>{item.get('title')}</Text>
                         <View style={{ borderWidth: 1, backgroundColor: 'black', width: 250, marginVertical: 5 }}></View>
-                        <Text numberOfLines={2}>{item.get('text')}</Text>
+                        <Text numberOfLines={3} style={{ fontStyle: 'italic' }}>{item.get('text').replaceAll(/#|-|>|/gi, '')}</Text>
                     </TouchableOpacity>
                 ))
                 )
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         borderColor: '#000000',
         borderWidth: 1,
         borderRadius: 8,
-        padding: 5
+        padding: 10
     },
     title: {
         paddingLeft: 60,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     text: {
         color: 'black',
         textAlign: 'center',
-
         fontSize: 18,
     },
 });
