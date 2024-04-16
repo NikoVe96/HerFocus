@@ -39,7 +39,7 @@ import ContactInformation from '../Pages/General components/ContactInformation';
 import { useNavigation } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Planning from '../Pages/Learning components/Learning Modules/Planning/Planning';
-import Module1, { Module } from '../Pages/Learning components/Learning Modules/Planning/Module';
+import Module1, { Module } from '../Pages/Learning components/Module';
 import ArticleOverview, { ModulesOverview } from '../Pages/Learning components/ModulesOverview';
 
 const Drawer = createDrawerNavigator();

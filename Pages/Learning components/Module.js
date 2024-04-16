@@ -1,10 +1,10 @@
 import { SafeAreaView, Text, View, Image, Dimensions, Animated, TouchableOpacity, StyleSheet, TextInput, ScrollView } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
 import Swiper from 'react-native-swiper';
-import LearningProgressHeader from "../../../../Components/LearningProgressHeader";
+import LearningProgressHeader from "../../Components/LearningProgressHeader";
 import { useNavigation } from "@react-navigation/native";
 import Parse from 'parse/react-native';
-import Quiz from '../../../../Components/Quiz'
+import Quiz from '../../Components/Quiz'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,7 +14,7 @@ export const Module = ({ route }) => {
     const [progress, setProgress] = useState(new Animated.Value(1));
     const moduleLength = 7;
     const navigation = useNavigation();
-    const { module, subject, description, image } = route.params;
+    const { module, subject, description, image, onNewCompletion } = route.params;
     const [introduction, setIntro] = useState('');
     const [questions, setQuestions] = useState([]);
     const [keyPoints, setKeyPoints] = useState([]);
@@ -53,7 +53,17 @@ export const Module = ({ route }) => {
     }
 
     async function handleCompletion() {
-        module.set()
+        const currentUser = await Parse.User.currentAsync();
+        let query = new Parse.Query('Settings')
+        query.contains('user', currentUser.id);
+        const result = await query.first();
+
+        const moduleName = `${module.get('name')} ${module.get('subject')}`;
+        result.addUnique('modulesCompleted', moduleName);
+        result.save();
+
+        onNewCompletion();
+
         navigation.navigate('Module overview', { subject: subject, image: image, description: description })
     }
 
@@ -75,7 +85,7 @@ export const Module = ({ route }) => {
                 >
                     <ScrollView style={{ flex: 1 }}>
                         <Image
-                            source={require('../../../../Assets/images/frustrated_woman.png')}
+                            source={require('../../Assets/images/frustrated_woman.png')}
                             style={{ width: width, height: 250 }}
                         ></Image>
                         <View style={styles.textContainer}>
@@ -95,7 +105,7 @@ export const Module = ({ route }) => {
                     </ScrollView>
                     <ScrollView style={{ flex: 1 }}>
                         <Image
-                            source={require('../../../../Assets/images/frustrated_woman.png')}
+                            source={require('../../Assets/images/frustrated_woman.png')}
                             style={{ width: width, height: 250 }}
                         ></Image>
                         <View style={styles.textContainer}>
@@ -117,7 +127,7 @@ export const Module = ({ route }) => {
                     </ScrollView>
                     <ScrollView style={{ flex: 1 }}>
                         <Image
-                            source={require('../../../../Assets/images/frustrated_woman.png')}
+                            source={require('../../Assets/images/frustrated_woman.png')}
                             style={{ width: width, height: 250 }}
                         ></Image>
                         <View style={styles.textContainer}>
@@ -140,7 +150,7 @@ export const Module = ({ route }) => {
                     <ScrollView style={{ flex: 1 }}>
                         <View >
                             <Image
-                                source={require('../../../../Assets/images/quiz.png')}
+                                source={require('../../Assets/images/quiz.png')}
                                 style={{ width: width, height: 250 }}
                                 sharedTransitionTag="structure"></Image>
                             <Text style={styles.takeawayHeader}>Let's take a quiz to help you remember!</Text>
@@ -162,7 +172,7 @@ export const Module = ({ route }) => {
                     <ScrollView style={{ flex: 1 }}>
                         <View style={{ alignItems: 'center' }}>
                             <Image
-                                source={require('../../../../Assets/images/notebook_planning.png')}
+                                source={require('../../Assets/images/notebook_planning.png')}
                                 style={{ width: width, height: 250 }}
                             ></Image>
                             <Text style={styles.takeawayHeader}>Here are {keyPoints.length} key takeaways from this module</Text>
@@ -191,7 +201,7 @@ export const Module = ({ route }) => {
                     <ScrollView style={{ flex: 1 }}>
                         <View style={{ alignItems: 'center' }}>
                             <Image
-                                source={require('../../../../Assets/images/planning_exercise.png')}
+                                source={require('../../Assets/images/planning_exercise.png')}
                                 style={{ width: width, height: 250 }}
                             ></Image>
                             <Text style={styles.takeawayHeader}>Write down your weekly tasks</Text>
@@ -212,7 +222,7 @@ export const Module = ({ route }) => {
                     </ScrollView>
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Image
-                            source={require('../../../../Assets/images/fireworks.png')}
+                            source={require('../../Assets/images/fireworks.png')}
                             style={{ width: width, height: 250 }}
                         ></Image>
                         <Text style={styles.takeawayHeader}>Congratulations! </Text>
