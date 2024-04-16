@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 25,
-    marginLeft: 10,
   },
   seperator: {
     height: 1,
