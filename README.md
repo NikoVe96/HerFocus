@@ -33,6 +33,27 @@ npm install react-native-modal
 
 npm install react-native-get-random-values
 
+npm i react-native-radio-buttons-group
+npm install react-native-calendars
+npm i react-native-calendar-strip
+
+npm i react-native-reanimated-carousel
+
+npm i react-native-bouncy-checkbox
+
+
+npm install react-native-circular-progress-indicator
+npm install react-native-bouncy-checkbox
+npm i react-native-progress
+
+
+npm i expo-random
+
+npm install react-native-calendars
+
+npm i react-native-emoji-selector
+npm install --save react-native-emoji-modal
+ 
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.

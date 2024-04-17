@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -6,10 +6,11 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -35,61 +36,63 @@ const SignUp = () => {
 
     try {
       await user.signUp();
-      navigation.navigate('Login');
+      navigation.navigate('Daily overview');
       console.log('pressed');
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Image
-        source={require('../../Assets/images/logo-light-nb.png')}
-        style={styles.image}></Image>
-      <TextInput
-        placeholder="Name"
-        placeholderTextColor="#8C8C8C"
-        value={name}
-        onChangeText={text => setName(text)}
-        style={styles.form}></TextInput>
-      <TextInput
-        placeholder="Username"
-        placeholderTextColor="#8C8C8C"
-        value={username}
-        onChangeText={text => setUsername(text)}
-        style={styles.form}></TextInput>
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor="#8C8C8C"
-        value={email}
-        onChangeText={text => setEmail(text)}
-        style={styles.form}></TextInput>
-      <TextInput
-        placeholder="Password"
-        placeholderTextColor="#8C8C8C"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry={true}
-        style={styles.form}></TextInput>
-      <TextInput
-        placeholder="Confirm password"
-        placeholderTextColor="#8C8C8C"
-        value={confirmPassword}
-        onChangeText={text => setConfirmPassword(text)}
-        secureTextEntry={true}
-        style={styles.form}></TextInput>
-      <TouchableOpacity
-        style={styles.signUpBtn}
-        onPress={() => {
-          handleSignup();
-        }}
-        title=" Sign up"
-        titleColor="#000000">
-        <Text style={styles.btnText}>Sign up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.signUpBtn} title="Login">
-        <Text style={styles.btnText}>Back to login</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <ScrollView style={{ backgroundColor: '#FFF6ED' }}>
+      <SafeAreaView style={styles.container}>
+        <Image
+          source={require('../../Assets/images/logo-light-nb.png')}
+          style={styles.image}></Image>
+        <TextInput
+          placeholder="Name"
+          placeholderTextColor="#8C8C8C"
+          value={name}
+          onChangeText={text => setName(text)}
+          style={styles.form}></TextInput>
+        <TextInput
+          placeholder="Username"
+          placeholderTextColor="#8C8C8C"
+          value={username}
+          onChangeText={text => setUsername(text)}
+          style={styles.form}></TextInput>
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor="#8C8C8C"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.form}></TextInput>
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor="#8C8C8C"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          secureTextEntry={true}
+          style={styles.form}></TextInput>
+        <TextInput
+          placeholder="Confirm password"
+          placeholderTextColor="#8C8C8C"
+          value={confirmPassword}
+          onChangeText={text => setConfirmPassword(text)}
+          secureTextEntry={true}
+          style={styles.form}></TextInput>
+        <TouchableOpacity
+          style={styles.signUpBtn}
+          onPress={() => {
+            handleSignup();
+          }}
+          title=" Sign up"
+          titleColor="#000000">
+          <Text style={styles.btnText}>Sign up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.signUpBtn} title="Login">
+          <Text style={styles.btnText}>Login</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 

@@ -14,35 +14,22 @@ Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL9
 Parse.serverURL = 'https://parseapi.back4app.com/'
 
 
-export const AddTask = ({ navigation }) => {
+export const AddEvent = ({ navigation }) => {
 
-    const [taskName, setTaskName] = useState('');
-    const [taskRoutine, setTaskRoutine] = useState('');
-    const [taskDate, setTaskDate] = useState('');
-    const [taskStartTime, setStartTime] = useState('');
-    const [taskEndTime, setEndTime] = useState('');
-    const [taskCategory, setTaskCategory] = useState('');
+    const [eventName, setEventName] = useState('');
+    const [eventDate, setEventDate] = useState('');
+    const [eventStartTime, setStartTime] = useState('');
+    const [eventEndTime, setEndTime] = useState('');
     const [username, setUsername] = useState('');
     const [ID, setID] = useState('');
-    // query routines in list from database
-    const [routines, setRoutines] = useState([]);
-    // + add button at the end to add new routine
-    const [openRoutine, setOpenRoutine] = useState(false);
-    const [openCategory, setOpenCategory] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
-    const [newRoutine, setNewRoutine] = useState('');
-    const [taskColor, setTaskColor] = useState('');
     const [recent, setRecent] = useState([]);
     const [emojiModalVisible, setEmojiModalVisible] = useState(false);
     const [emoji, setEmoji] = useState();
-    const taskCategories = [
-        { label: 'Mental health', value: 'mental health', color: 'lightgreen' },
-        { label: 'House chore', value: 'house chores', color: 'pink' },
-        { label: 'Personal chore', value: 'personal chore', color: 'lightyellow' },
-        { label: 'Work related chores', value: 'work related chores', color: 'lavender' },
-    ];
+    const [eventColor, setEventColor] = useState('');
+
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -51,62 +38,31 @@ export const AddTask = ({ navigation }) => {
                 if (currentUser !== null) {
                     setUsername(currentUser.getUsername());
                     setID(currentUser.id);
-                    routineList();
                 }
             }
         }
         getCurrentUser();
     }, [username]);
 
-    async function routineList() {
-        let UserRoutineQuery = new Parse.Query('Routine');
-        UserRoutineQuery.contains('user', ID);
-        let Results = await UserRoutineQuery.find();
-
-        const routinesData = Results.map(result => ({
-            key: result.id,
-            label: result.get('name'),
-            value: result.get('name')
-        }));
-
-        routinesData.push({
-            label: '+ Add a new routine',
-            value: 'new routine',
-        });
-        setRoutines(routinesData);
-    }
-
-    async function NewRoutineAdded() {
-        let UserRoutineQuery = new Parse.Query('Routine');
-        UserRoutineQuery.contains('user', ID);
-        UserRoutineQuery.descending('createdAt')
-        UserRoutineQuery.first();
-        let Results = await UserRoutineQuery.find();
-        setNewRoutine(Results);
-    }
-
-    async function newTask() {
+    async function newEvent() {
         try {
-            const newTask = new Parse.Object('Task');
+            const newEvent = new Parse.Object('Events');
             const currentUser = await Parse.User.currentAsync();
 
-            //If routine chosen, fill
-
-            newTask.set('name', taskName);
-            newTask.set('connectedRoutine', taskRoutine);
-            newTask.set('date', taskDate);
-            newTask.set('startTime', taskStartTime);
-            newTask.set('endTime', taskEndTime);
-            newTask.set('emoji', emoji);
-            newTask.set('user', currentUser);
-            newTask.set('color', taskColor);
+            newEvent.set('name', eventName);
+            newEvent.set('date', eventDate);
+            newEvent.set('startTime', eventStartTime);
+            newEvent.set('endTime', eventEndTime);
+            newEvent.set('emoji', emoji);
+            newEvent.set('user', currentUser);
+            newEvent.set('color', eventColor);
             // If time, add recurring option
-            await newTask.save();
-            console.log('Success: task saved')
-            Alert.alert('A new task has been added to your calendar!')
+            await newEvent.save();
+            console.log('Success: event saved')
+            Alert.alert('A new event has been added to your calendar!')
             clearInput();
         } catch (error) {
-            console.log('Error saving new task: ', error);
+            console.log('Error saving new event: ', error);
         }
     }
 
@@ -161,7 +117,7 @@ export const AddTask = ({ navigation }) => {
             default:
                 break;
         }
-        setTaskDate(date.getDate()
+        setEventDate(date.getDate()
             + ' ' + month
             + ' ' + date.getFullYear())
         hideDatePicker();
@@ -196,11 +152,12 @@ export const AddTask = ({ navigation }) => {
     };
 
     function clearInput() {
-        setTaskName('');
-        setTaskRoutine('');
+        setEventName('');
         setStartTime(null);
         setEndTime(null);
-        setTaskDate('');
+        setEventDate('');
+        setEmoji('');
+        setEventColor('');
     }
 
     function showEmojiModal() {
@@ -212,17 +169,17 @@ export const AddTask = ({ navigation }) => {
     }
 
     function handleColorPick(color) {
-        if (color == taskColor) {
-            setTaskColor('');
+        if (color == eventColor) {
+            setEventColor('');
         } else {
-            setTaskColor(color);
+            setEventColor(color);
         }
     }
 
     return (
         <SafeAreaView style={{ justifyContent: 'center' }}>
             <View style={{ alignItems: 'center', padding: 10 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Add new task </Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Add new event </Text>
                 <View style={{ borderWidth: 1, borderColor: 'black', width: 300, alignSelf: 'center', marginTop: 10 }}></View>
             </View>
             <View style={{
@@ -232,12 +189,12 @@ export const AddTask = ({ navigation }) => {
             }}>
                 <View>
                     <Text style={{ marginVertical: 16 }}>
-                        Name your task
+                        Name your event
                     </Text>
                     <TextInput
                         style={{ padding: 8, backgroundColor: 'white' }}
-                        onChangeText={text => setTaskName(text)}
-                        value={taskName}
+                        onChangeText={text => setEventName(text)}
+                        value={eventName}
                     />
                 </View>
                 <View>
@@ -245,95 +202,53 @@ export const AddTask = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                         <TouchableOpacity
                             style={{
-                                borderWidth: taskColor === 'yellow' ? 1.5 : 1,
-                                borderRadius: taskColor === 'yellow' ? 30 : 20,
-                                width: taskColor === 'yellow' ? 45 : 40,
-                                height: taskColor === 'yellow' ? 45 : 40,
+                                borderWidth: eventColor === 'yellow' ? 1.5 : 1,
+                                borderRadius: eventColor === 'yellow' ? 30 : 20,
+                                width: eventColor === 'yellow' ? 45 : 40,
+                                height: eventColor === 'yellow' ? 45 : 40,
                                 backgroundColor: '#FAEDCB'
                             }}
                             onPress={() => handleColorPick('yellow')}></TouchableOpacity>
                         <TouchableOpacity style={{
-                            borderWidth: taskColor === 'green' ? 1.5 : 1,
-                            borderRadius: taskColor === 'green' ? 30 : 20,
-                            width: taskColor === 'green' ? 45 : 40,
-                            height: taskColor === 'green' ? 45 : 40,
+                            borderWidth: eventColor === 'green' ? 1.5 : 1,
+                            borderRadius: eventColor === 'green' ? 30 : 20,
+                            width: eventColor === 'green' ? 45 : 40,
+                            height: eventColor === 'green' ? 45 : 40,
                             backgroundColor: '#C9E4DE'
                         }}
                             onPress={() => handleColorPick('green')}></TouchableOpacity>
                         <TouchableOpacity style={{
-                            borderWidth: taskColor === 'blue' ? 1.5 : 1,
-                            borderRadius: taskColor === 'blue' ? 30 : 20,
-                            width: taskColor === 'blue' ? 45 : 40,
-                            height: taskColor === 'blue' ? 45 : 40,
+                            borderWidth: eventColor === 'blue' ? 1.5 : 1,
+                            borderRadius: eventColor === 'blue' ? 30 : 20,
+                            width: eventColor === 'blue' ? 45 : 40,
+                            height: eventColor === 'blue' ? 45 : 40,
                             backgroundColor: '#C6DEF1'
                         }}
                             onPress={() => handleColorPick('blue')}></TouchableOpacity>
                         <TouchableOpacity style={{
-                            borderWidth: taskColor === 'purple' ? 1.5 : 1,
-                            borderRadius: taskColor === 'purple' ? 30 : 20,
-                            width: taskColor === 'purple' ? 45 : 40,
-                            height: taskColor === 'purple' ? 45 : 40,
+                            borderWidth: eventColor === 'purple' ? 1.5 : 1,
+                            borderRadius: eventColor === 'purple' ? 30 : 20,
+                            width: eventColor === 'purple' ? 45 : 40,
+                            height: eventColor === 'purple' ? 45 : 40,
                             backgroundColor: '#DBCDF0'
                         }}
                             onPress={() => handleColorPick('purple')}></TouchableOpacity>
                         <TouchableOpacity style={{
-                            borderWidth: taskColor === 'red' ? 1.5 : 1,
-                            borderRadius: taskColor === 'red' ? 30 : 20,
-                            width: taskColor === 'red' ? 45 : 40,
-                            height: taskColor === 'red' ? 45 : 40,
+                            borderWidth: eventColor === 'red' ? 1.5 : 1,
+                            borderRadius: eventColor === 'red' ? 30 : 20,
+                            width: eventColor === 'red' ? 45 : 40,
+                            height: eventColor === 'red' ? 45 : 40,
                             backgroundColor: '#FFADAD'
                         }}
                             onPress={() => handleColorPick('red')}></TouchableOpacity>
                         <TouchableOpacity style={{
-                            borderWidth: taskColor === 'orange' ? 1.5 : 1,
-                            borderRadius: taskColor === 'orange' ? 30 : 20,
-                            width: taskColor === 'orange' ? 45 : 40,
-                            height: taskColor === 'orange' ? 45 : 40,
+                            borderWidth: eventColor === 'orange' ? 1.5 : 1,
+                            borderRadius: eventColor === 'orange' ? 30 : 20,
+                            width: eventColor === 'orange' ? 45 : 40,
+                            height: eventColor === 'orange' ? 45 : 40,
                             backgroundColor: '#FFD6A5'
                         }}
                             onPress={() => handleColorPick('orange')}></TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={{ flex: 1, marginHorizontal: 5 }}>
-                        <Text style={{ marginVertical: 10 }}>
-                            Connect a routine
-                        </Text>
-                        <DropDownPicker
-                            // Consider using a select list instead, to get a search function
-                            style={{ marginVertical: 5 }}
-                            open={openRoutine}
-                            value={taskRoutine}
-                            items={routines}
-                            setOpen={setOpenRoutine}
-                            // Make a query that retrieves the latest routine to display
-                            setValue={(value) => setTaskRoutine(value)}
-                            placeholder='Choose a routine'
-                            onChangeValue={(value) => {
-                                if (value === 'new routine') {
-                                    navigation.navigate('Add routine');
-                                    NewRoutineAdded();
-                                }
-                                setTaskRoutine(value)
-                            }}
-                        />
-                    </View>
-                    <View style={{ flex: 1, marginHorizontal: 5 }}>
-                        <Text style={{ marginVertical: 10 }}>
-                            Task category
-                        </Text>
-                        <DropDownPicker
-                            style={{ marginVertical: 5 }}
-                            open={openCategory}
-                            value={taskCategory}
-                            items={taskCategories}
-                            setOpen={setOpenCategory}
-                            setValue={(value) => setTaskCategory(value)}
-                            placeholder='Choose a category'
-                            onChangeValue={(value) => {
-                                setTaskCategory(value)
-                            }}
-                        />
                     </View>
                 </View>
                 <View style={{ marginVertical: 5, flexDirection: 'row' }}>
@@ -360,7 +275,8 @@ export const AddTask = ({ navigation }) => {
                                 }}
                                 onChangeRecent={setRecent}
                             />
-                            <TouchableOpacity style={{ backgroundColor: 'lightgrey', width: '100%', height: '8%', justifyContent: 'center', alignItems: 'center' }} onPress={hideEmojiModal}>
+                            <TouchableOpacity style={{ backgroundColor: 'lightgrey', width: '100%', height: '8%', justifyContent: 'center', alignItems: 'center' }}
+                                onPress={hideEmojiModal}>
                                 <Text style={{ fontWeight: 'bold', fontSize: 24 }}>CLOSE</Text>
                             </TouchableOpacity>
                         </View>
@@ -383,7 +299,7 @@ export const AddTask = ({ navigation }) => {
                     />
                     <View style={{ padding: 10 }}></View>
                     <Text style={{ flex: 1 }}>
-                        {taskStartTime === null ? 'Start time: ' : `Start time: ${taskStartTime}`}
+                        {eventStartTime === null ? 'Start time: ' : `Start time: ${eventStartTime}`}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginVertical: 5 }}>
@@ -400,7 +316,7 @@ export const AddTask = ({ navigation }) => {
                     />
                     <View style={{ padding: 10 }}></View>
                     <Text style={{ flex: 1 }} >
-                        {taskEndTime === null ? 'End time: ' : `End time: ${taskEndTime}`}
+                        {eventEndTime === null ? 'End time: ' : `End time: ${eventEndTime}`}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginVertical: 5 }}>
@@ -419,12 +335,12 @@ export const AddTask = ({ navigation }) => {
                     <Text style={{ flex: 1 }}
                     // Insert if statement to test if value is null, if so, render text without variable
                     >
-                        {`Date: ${taskDate}`}
+                        {`Date: ${eventDate}`}
                     </Text>
                 </View>
             </View>
             <View style={{ justifyContent: 'flex-end', padding: 10, alignItems: 'center' }}>
-                <TouchableOpacity style={{ backgroundColor: 'lightblue', padding: 5, width: 350, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} onPress={newTask}>
+                <TouchableOpacity style={{ backgroundColor: 'lightblue', padding: 5, width: 350, alignItems: 'center', flexDirection: 'row', justifyContent: 'center' }} onPress={newEvent}>
                     <FontAwesomeIcon icon={faPlusSquare} size={30} style={{ marginHorizontal: 10 }} />
                     <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Add new task</Text>
                 </TouchableOpacity>
@@ -462,4 +378,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddTask;
+export default AddEvent;
