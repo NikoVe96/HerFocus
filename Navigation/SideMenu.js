@@ -39,6 +39,8 @@ import ContactInformation from '../Pages/General components/ContactInformation';
 import Parse from 'parse/react-native';
 import SubjectArticles from '../Pages/Knowledge base/SubjectArticles';
 import ViewArticle from '../Pages/Knowledge base/ViewArticle';
+import StructureFrontPage from "../Pages/Structure components/StructureFrontPage";
+import AddEvent from "../Pages/Structure components/AddEvent";
 
 const Drawer = createDrawerNavigator();
 
@@ -321,7 +323,7 @@ function CustomDrawerContent({ navigation }) {
       </AccordionItem>
       <View style={styles.accordContainer}>
         <TouchableOpacity
-          style={styles.accordHeader}
+          style={styles.accordHeader} onPress={() => navigation.navigate('Login')}
           onPress={() => handleLogout(navigation)}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <FontAwesomeIcon
