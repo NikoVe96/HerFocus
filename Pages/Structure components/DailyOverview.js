@@ -18,22 +18,14 @@ Parse.serverURL = 'https://parseapi.back4app.com/'
 
 export const DailyOverview = () => {
 
-    const testArray = [
-        { taskName: 'Make breakfast', taskTime: 5, taskType: 'Personal chore', icon: faStopwatch },
-        { taskName: 'Brush teeth', taskTime: 2, taskType: 'Personal chore', icon: faStopwatch },
-        { taskName: 'Bike to work', taskTime: 20, taskType: 'Work', icon: faStopwatch },
-        { taskName: 'Meet with Julie', taskTime: null, taskType: 'Event', icon: faStopwatch },
-        { taskName: "Dad's birthday", taskTime: null, taskType: 'Birthday', icon: faStopwatch },
-        { taskName: 'Clean kicthen', taskTime: 30, taskType: 'House chore', icon: faStopwatch },
-    ];
     const width = Dimensions.get('window').width;
     const [username, setUsername] = useState('');
-    const [taskProgress, setTaskProgress] = useState();
+    const [taskProgress, setTaskProgress] = useState(0);
     const [currentDate, setCurrentDate] = useState('');
     const [ID, setID] = useState('');
     const [remainingTasksArray, setRemainingTasks] = useState([]);
     const [completedTasksArray, setCompletedTasks] = useState([]);
-    const [bouncyCheck, setBouncyCheck] = useState(false);
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -49,33 +41,22 @@ export const DailyOverview = () => {
         todayDate();
         remainingTasks();
         completedTasks();
-        taskPercentage();
-    }, [username]);
+
+    }, []);
 
     const taskCompleted = async function (task) {
         task.set('completed', true);
         await task.save();
-        remainingTasks();
-        completedTasks();
-        setBouncyCheck(false);
+        const completed = await completedTasks();
+        const remaining = await remainingTasks();
+        taskPercentage(completed, remaining);
+        setChecked(false);
     }
 
-    const taskPercentage = async function () {
-        if (completedTasksArray.length == 0) {
-            setTaskProgress(0);
-        } else {
-            setTaskProgress(((completedTasksArray.length / (remainingTasksArray.length + completedTasksArray.length)) * 100).toFixed(0))
-        }
-    }
-
-    function timeInHours(taskTime) {
-        const remainder = taskTime % 60;
-        const divide = (taskTime - remainder) / 60;
-        if (divide == 1) {
-            return <Text style={{ fontSize: 18 }}>{divide} hour and {remainder} minutes</Text>
-        } else {
-            return <Text style={{ fontSize: 18 }}>{divide} hours and {remainder} minutes</Text>
-        }
+    const taskPercentage = async function (completedTasks, remainingTasks) {
+        const totalTasks = remainingTasks.length + completedTasks.length;
+        const completedPercentage = totalTasks > 0 ? (completedTasks.length / totalTasks * 100).toFixed(0) : 0;
+        setTaskProgress(completedPercentage);
     }
 
     function todayDate() {
@@ -136,6 +117,7 @@ export const DailyOverview = () => {
         TaskQuery.ascending('startTime')
         let Results = await TaskQuery.find();
         setRemainingTasks(Results);
+        return Results;
     }
 
     async function completedTasks() {
@@ -146,6 +128,7 @@ export const DailyOverview = () => {
         TaskQuery.ascending('startTime')
         let Results = await TaskQuery.find();
         setCompletedTasks(Results);
+        return Results;
     }
 
     return (
@@ -178,7 +161,7 @@ export const DailyOverview = () => {
                     <View style={{
                         flex: 1,
                     }}>
-                        {remainingTasksArray.length === 0 ? (
+                        {remainingTasksArray.length < 1 ? (
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text>Loading...</Text>
                             </View>
@@ -187,7 +170,7 @@ export const DailyOverview = () => {
                                 <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 1</Text>
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                    <FontAwesomeIcon icon={faFaceSmileBeam} size={35} />
+                                    <Text style={{ fontSize: 30 }}>{remainingTasksArray[0].get('emoji')}</Text>
                                     <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{remainingTasksArray[0].get('name')}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
@@ -197,13 +180,14 @@ export const DailyOverview = () => {
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
                                         <BouncyCheckbox
+                                            key={remainingTasksArray[0].id}
                                             size={25}
                                             fillColor="black"
                                             unfillColor="#FFFFFF"
                                             iconStyle={{ borderColor: "black" }}
                                             innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={(isChecked) => { taskCompleted(remainingTasksArray[0]) }}
-                                            isChecked={bouncyCheck}
+                                            onPress={() => taskCompleted(remainingTasksArray[0])}
+                                            isChecked={checked}
                                         />
                                         <Text style={{ fontSize: 18 }}>Completed?</Text>
                                     </View>
@@ -220,7 +204,7 @@ export const DailyOverview = () => {
                         flex: 1,
 
                     }}>
-                        {remainingTasksArray.length === 0 ? (
+                        {remainingTasksArray.length < 2 ? (
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text>Loading...</Text>
                             </View>
@@ -228,7 +212,7 @@ export const DailyOverview = () => {
                             <>
                                 <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Up next 2</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                    <FontAwesomeIcon icon={faFaceSmileBeam} size={35} />
+                                    <Text style={{ fontSize: 30 }}>{remainingTasksArray[0].get('emoji')}</Text>
                                     <Text style={{ fontSize: 24, marginHorizontal: 10 }}>{remainingTasksArray[1].get('name')}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
@@ -238,13 +222,14 @@ export const DailyOverview = () => {
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 30 }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
                                         <BouncyCheckbox
+                                            key={remainingTasksArray[1].id}
                                             size={25}
                                             fillColor="black"
                                             unfillColor="#FFFFFF"
                                             iconStyle={{ borderColor: "black" }}
                                             innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={(isChecked) => { taskCompleted(remainingTasksArray[1]) }}
-                                            style={{}}
+                                            onPress={() => { taskCompleted(remainingTasksArray[1]) }}
+                                            isChecked={checked}
                                         />
                                         <Text style={{ fontSize: 18 }}>Completed?</Text>
                                     </View>

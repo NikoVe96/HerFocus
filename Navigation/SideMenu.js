@@ -25,6 +25,7 @@ import FavoriteArticles from "../Pages/Knowledge base/FavoriteArticles";
 import AppHistory from "../Pages/General components/AppHistory";
 import ContactInformation from "../Pages/General components/ContactInformation";
 import StructureFrontPage from "../Pages/Structure components/StructureFrontPage";
+import AddEvent from "../Pages/Structure components/AddEvent";
 
 const Drawer = createDrawerNavigator();
 
@@ -182,6 +183,7 @@ function SideMenu() {
             <Drawer.Screen name="Favorite posts" component={FavoritePosts}></Drawer.Screen>
             <Drawer.Screen name="Favorite articles" component={FavoriteArticles}></Drawer.Screen>
             <Drawer.Screen name="Structure front page" component={StructureFrontPage}></Drawer.Screen>
+            <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
         </Drawer.Navigator>
     );
 }

@@ -15,7 +15,7 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
 Parse.serverURL = 'https://parseapi.back4app.com/'
 
-export const CalendarOverview = () => {
+export const CalendarOverview = ({ navigation }) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [dayTasksArray, setDayTasksArray] = useState([]);
@@ -26,15 +26,11 @@ export const CalendarOverview = () => {
         { taskName: "Dad's birthday", icon: faCakeCandles, color: 'red' },
         { taskName: "Påske", icon: faEgg, color: 'yellow' },
     ];
-    const houseChores = { key: 'houseChores', color: 'blue' }
-    const event = { key: 'event', color: 'green' }
-    const birthday = { key: 'birthday', color: 'red' }
-    const relaxing = { key: 'relaxing', color: 'yellow' }
-    const marked = {
+    /*const marked = {
         '2024-03-22': { dots: [houseChores, birthday] },
         '2024-03-23': { dots: [houseChores, event, birthday] },
         '2024-03-24': { dots: [event, relaxing] },
-    };
+    };*/
     const [markedDaysArray, setMarkedDaysArray] = useState([]);
     const width = Dimensions.get('window').width;
     const [checked, setChecked] = useState(false);
@@ -52,7 +48,7 @@ export const CalendarOverview = () => {
             }
         }
         getCurrentUser();
-        markedDays();
+        getMarkedDates();
     }, [username]);
 
     const showDayModal = (day) => {
@@ -119,14 +115,6 @@ export const CalendarOverview = () => {
         setDayTasksArray(Results);
     }
 
-    async function markedDays() {
-        let Marked = new Parse.Query('Task');
-        Marked.contains('user', ID);
-        Marked.include('date');
-        // The query doesn't work properly. I only want to save the dates, to make the dotted marks in the calendar
-        let Results = await Marked.find();
-    }
-
     const radioButtons = useMemo(() => ([
         {
             id: 'month',
@@ -148,6 +136,60 @@ export const CalendarOverview = () => {
         })
     }
 
+    async function getMarkedDates() {
+
+        let taskDaysQuery = new Parse.Query('Task');
+        taskDaysQuery.contains('user', ID);
+        taskDaysQuery.ascending('date');
+        const taskResults = await taskDaysQuery.find();
+
+        let eventDaysQuery = new Parse.Query('Events');
+        eventDaysQuery.contains('user', ID);
+        eventDaysQuery.ascending('date');
+        const eventResults = await eventDaysQuery.find();
+
+        // might be a better way to do this, but can't get the query.filter to work
+        let daysArray = [];
+        taskResults.forEach(element => {
+            if (!daysArray.includes(element.get('date'))) {
+                daysArray.push(element.get('date'));
+            }
+        });
+        eventResults.forEach(element => {
+            if (!daysArray.includes(element.get('date'))) {
+                daysArray.push(element.get('date'));
+            }
+        });
+
+        let marked = new Set();
+        daysArray.forEach(element => {
+            const dayEvents = getDayEvents(element);
+            marked.add({ element, dayEvents });
+            console.log(marked);
+        })
+
+        console.log(daysArray);
+    }
+
+    async function getDayEvents(day) {
+        let taskQuery = new Parse.Query('Task');
+        let eventQuery = new Parse.Query('Events');
+
+        taskQuery.contains('user', ID);
+        taskQuery.contains('date', day);
+        const tResult = await taskQuery.find();
+        console.log('Tasks: ' + tResult);
+
+        eventQuery.contains('user', ID);
+        eventQuery.contains('date', day);
+        const eResult = await eventQuery.find();
+        console.log('Events: ' + eResult);
+
+        let allEvents = [];
+        console.log('All events: ' + allEvents);
+        return allEvents;
+    }
+
     function calendarLayout() {
         if (selectedId === 'month') {
             return (
@@ -159,7 +201,7 @@ export const CalendarOverview = () => {
                     onDayPress={day => showDayModal(day)}
                     style={{ padding: 15, marginVertical: 20 }}
                     markingType='multi-dot'
-                    markedDates={marked}
+                //markedDates={marked}
                 >
                 </Calendar>
             );
@@ -289,11 +331,11 @@ export const CalendarOverview = () => {
                     </View>
                 </Modal>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }} onPress={() => navigation.navigate('Add task')}>
                         <FontAwesomeIcon icon={faPlusSquare} size={26} style={{ marginRight: 10 }}></FontAwesomeIcon>
                         <Text style={{ fontSize: 18 }}>Add new task</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: 'lightblue', padding: 10, alignItems: 'center', marginHorizontal: 5 }} onPress={() => navigation.navigate('Add event')}>
                         <FontAwesomeIcon icon={faPlusSquare} size={26} style={{ marginRight: 10 }}></FontAwesomeIcon>
                         <Text style={{ fontSize: 18 }}>Add new event</Text>
                     </TouchableOpacity>
