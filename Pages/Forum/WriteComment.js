@@ -1,10 +1,10 @@
 import Parse from 'parse/react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 
-function WriteComment({ postId, onNewComment }) {
+function WriteComment({postId, onNewComment}) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
 
@@ -46,7 +46,7 @@ function WriteComment({ postId, onNewComment }) {
     <View style={styles.commentContainer}>
       <TextInput
         style={styles.writeComment}
-        placeholder="Write a comment..."
+        placeholder="Skriv en kommentar..."
         placeholderTextColor="#8C8C8C"
         value={comment}
         multiline={true}
@@ -67,7 +67,7 @@ function WriteComment({ postId, onNewComment }) {
 
 const styles = StyleSheet.create({
   icon: {
-    transform: [{ rotate: '50deg' }],
+    transform: [{rotate: '50deg'}],
   },
   commentContainer: {
     flexDirection: 'row',

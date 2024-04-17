@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import { useState } from 'react';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {useState} from 'react';
 import Comment from './Comment';
 import Parse from 'parse/react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-const CommentSection = ({ comments }) => {
-
+const CommentSection = ({comments}) => {
   return (
-
-
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.sectionContent}>
           {comments.length == 0 ? (
-            <Text>Loading comments..</Text>
+            <Text></Text>
           ) : (
             comments.map((comment, commentId) => (
               <View key={commentId} style={styles.commentContainer}>
@@ -34,7 +31,7 @@ const CommentSection = ({ comments }) => {
                   {Math.round(
                     (new Date().getTime() -
                       new Date(comment.createdAt).getTime()) /
-                    (1000 * 3600 * 24),
+                      (1000 * 3600 * 24),
                   )}
                 </Text>
                 <View style={styles.comment}>
@@ -48,7 +45,6 @@ const CommentSection = ({ comments }) => {
         </View>
       </View>
     </ScrollView>
-
   );
 };
 
