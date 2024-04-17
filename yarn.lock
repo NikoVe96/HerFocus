@@ -4537,10 +4537,10 @@ expo-constants@^15.4.5, expo-constants@~15.4.0:
   dependencies:
     "@expo/config" "~8.5.0"
 
-expo-device@^5.9.3:
-  version "5.9.3"
-  resolved "https://registry.npmjs.org/expo-device/-/expo-device-5.9.3.tgz"
-  integrity sha512-azH5rz8krDZUJb/arqkcA6oZGaX2T5s4aaXIMFsDDzvq8TW0CttZZy2HFp6itmFdiKGdRpFX3/Gj0n6ZmPoJ/w==
+expo-device@^5.9.4:
+  version "5.9.4"
+  resolved "https://registry.npmjs.org/expo-device/-/expo-device-5.9.4.tgz"
+  integrity sha512-nleq3GghLWWJrj4YH8HiCumnTF/gy4zRd3jedCkO8lMKQg6R1yn3v0ch8NtgPDci749FkNzOtXx/vmFImQalwg==
   dependencies:
     ua-parser-js "^0.7.33"
 

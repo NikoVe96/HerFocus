@@ -273,12 +273,12 @@ function App() {
       <NavigationContainer theme={theme}>
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
-          <Button
+          {/*<Button
             title="Press to Send Notification"
             onPress={async () => {
               await sendPushNotification(expoPushToken);
             }}
-          />
+          />*/}
           <BottomNavigation />
         </SafeAreaView>
       </NavigationContainer>
