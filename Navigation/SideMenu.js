@@ -66,8 +66,6 @@ function CustomDrawerContent({ navigation }) {
       <AccordionItem title="Structure" icon={faListCheck}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Add routine')}>
           <FontAwesomeIcon
             icon={faCircle}
@@ -148,8 +146,6 @@ function CustomDrawerContent({ navigation }) {
           }}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Favorite posts')}>
           <FontAwesomeIcon
             icon={faCircle}
@@ -181,8 +177,6 @@ function CustomDrawerContent({ navigation }) {
           }}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
@@ -201,7 +195,6 @@ function CustomDrawerContent({ navigation }) {
             borderColor: 'grey',
           }}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faCircle}
@@ -223,41 +216,38 @@ function CustomDrawerContent({ navigation }) {
             borderColor: 'grey',
           }}></View>
         <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 30 }}>
-          <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 30 }}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              size={13}
-              color={colors.primary}
-              style={{ marginRight: 10 }}></FontAwesomeIcon>
-            <View>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 3</Text>
-              <Text style={{ fontSize: 18, color: colors.primary }}>Structuring your daily life </Text>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              borderWidth: 1,
-              marginHorizontal: 15,
-              marginVertical: 10,
-              borderColor: 'grey',
-            }}></View>
-          <TouchableOpacity
-            style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
-            style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
-            <FontAwesomeIcon
-              icon={faCircle}
-              size={13}
-              color={colors.primary}
-              style={{ marginRight: 10 }}></FontAwesomeIcon>
-            <View>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 4</Text>
-              <Text style={{ fontSize: 18, color: colors.primary }}>Long term goals </Text>
-            </View>
-          </TouchableOpacity>
+          <FontAwesomeIcon
+            icon={faCircle}
+            size={13}
+            color={colors.primary}
+            style={{ marginRight: 10 }}></FontAwesomeIcon>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 3</Text>
+            <Text style={{ fontSize: 18, color: colors.primary }}>Structuring your daily life </Text>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            borderWidth: 1,
+            marginHorizontal: 15,
+            marginVertical: 10,
+            borderColor: 'grey',
+          }}></View>
+        <TouchableOpacity
+          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
+          <FontAwesomeIcon
+            icon={faCircle}
+            size={13}
+            color={colors.primary}
+            style={{ marginRight: 10 }}></FontAwesomeIcon>
+          <View>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 4</Text>
+            <Text style={{ fontSize: 18, color: colors.primary }}>Long term goals </Text>
+          </View>
+        </TouchableOpacity>
       </AccordionItem>
       <AccordionItem title="Knowledge base" icon={faBrain}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick topic')}>
           <FontAwesomeIcon
@@ -276,7 +266,6 @@ function CustomDrawerContent({ navigation }) {
           }}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Favorite articles')}>
           <FontAwesomeIcon
             icon={faCircle}
@@ -291,15 +280,14 @@ function CustomDrawerContent({ navigation }) {
           style={styles.accordHeader}
           onPress={() => navigation.navigate('Profile')}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FontAwesomeIcon
-                icon={faUser}
-                size={20}
-                color={colors.primary}
-                style={{ marginRight: 10 }}
-              />
-              <Text style={[styles.accordTitle, { color: colors.primary }]}>Profile</Text>
-            </View>
+            <FontAwesomeIcon
+              icon={faUser}
+              size={20}
+              color={colors.primary}
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.accordTitle, { color: colors.primary }]}>Profile</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={styles.accordContainer}>
@@ -316,25 +304,10 @@ function CustomDrawerContent({ navigation }) {
             <Text style={[styles.accordTitle, { color: colors.primary }]}>Settings</Text>
           </View>
         </TouchableOpacity>
-        <View
-          style={{
-            borderWidth: 1,
-            marginHorizontal: 15,
-            marginVertical: 10,
-            borderColor: 'grey',
-          }}></View>
-        <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18 }}>Color theme</Text>
-        </TouchableOpacity>
-      </AccordionItem>
+
+      </View>
       <AccordionItem title="About us" icon={faUsers}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('App history')}>
           <FontAwesomeIcon
@@ -353,7 +326,6 @@ function CustomDrawerContent({ navigation }) {
           }}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Contact information')}>
           <FontAwesomeIcon
             icon={faCircle}
@@ -365,18 +337,17 @@ function CustomDrawerContent({ navigation }) {
       </AccordionItem>
       <View style={styles.accordContainer}>
         <TouchableOpacity
-          style={styles.accordHeader} onPress={() => navigation.navigate('Login')}
+          style={styles.accordHeader}
           onPress={() => handleLogout(navigation)}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                size={20}
-                color={colors.primary}
-                style={{ marginRight: 10 }}
-              />
-              <Text style={[styles.accordTitle, { color: colors.primary }]}>Log out</Text>
-            </View>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              size={20}
+              color={colors.primary}
+              style={{ marginRight: 10 }}
+            />
+            <Text style={[styles.accordTitle, { color: colors.primary }]}>Log out</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>
