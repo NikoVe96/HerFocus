@@ -6,11 +6,13 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  View,
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import PickAvatar from './PickAvatar';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -19,7 +21,12 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  let [avatar, setAvatar] = useState('');
   const navigation = useNavigation();
+
+  const handleAvatarSelect = ({ selectedAvatar }) => {
+    setAvatar(selectedAvatar);
+  };
 
   const handleSignup = async () => {
     if (password !== confirmPassword) {
@@ -33,6 +40,8 @@ const SignUp = () => {
     user.set('username', username);
     user.set('email', email);
     user.set('password', password);
+    user.set('avatar', avatar);
+    console.log(avatar);
 
     try {
       await user.signUp();
@@ -42,8 +51,8 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView style={{ backgroundColor: '#FFF6ED' }}>
-      <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View style={styles.view}>
         <Image
           source={require('../../Assets/images/logo-light-nb.png')}
           style={styles.image}></Image>
@@ -79,6 +88,13 @@ const SignUp = () => {
           onChangeText={text => setConfirmPassword(text)}
           secureTextEntry={true}
           style={styles.form}></TextInput>
+        <Text style={styles.avatar}> Pick an avatar </Text>
+        <View style={styles.avatarMargin}>
+          <PickAvatar
+            onAvatarSelect={handleAvatarSelect}
+            pickedAvatar={avatar}
+            isSignUp={true}></PickAvatar>
+        </View>
         <TouchableOpacity
           style={styles.signUpBtn}
           onPress={() => {
@@ -89,18 +105,20 @@ const SignUp = () => {
           <Text style={styles.btnText}>Sign up</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.signUpBtn} title="Login">
-          <Text style={styles.btnText}>Login</Text>
+          <Text style={styles.btnText}>Back to login</Text>
         </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     backgroundColor: '#FFF6ED',
     flex: 1,
+  },
+  view: {
+    alignItems: 'center',
   },
   image: {
     width: 320,
@@ -115,6 +133,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
   },
+  avatar: {
+    fontSize: 18,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  avatarMargin: {
+    marginLeft: 30,
+    marginRight: 10,
+  },
   signUpBtn: {
     width: 200,
     height: 30,
@@ -122,7 +149,8 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    marginTop: 30,
+    marginBottom: 10,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
