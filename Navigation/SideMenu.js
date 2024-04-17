@@ -45,6 +45,10 @@ import AddEvent from "../Pages/Structure components/AddEvent";
 import Planning from '../Pages/Learning components/Learning Modules/Planning/Planning';
 import Module1, { Module } from '../Pages/Learning components/Module';
 import ArticleOverview, { ModulesOverview } from '../Pages/Learning components/ModulesOverview';
+import Forum from '../Pages/Forum/Forum';
+import { useNavigation } from '@react-navigation/native';
+import Parse from 'parse/react-native';
+import IndividualPost from '../Pages/Forum/IndividualPost';
 
 const Drawer = createDrawerNavigator();
 
@@ -402,6 +406,10 @@ function SideMenu() {
         component={ViewArticle}></Drawer.Screen>
       <Drawer.Screen name='Module overview' component={ModulesOverview}></Drawer.Screen>
       <Drawer.Screen name='Module' component={Module}></Drawer.Screen>
+      <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
+      <Drawer.Screen
+        name="IndividualPost"
+        component={IndividualPost}></Drawer.Screen>
     </Drawer.Navigator>
 
   );
