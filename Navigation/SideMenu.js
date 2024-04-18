@@ -359,6 +359,7 @@ function SideMenu() {
   return (
     <Drawer.Navigator
       initialRouteName='Front page'
+      backBehavior="history"
       screenOptions={{
         drawerPosition: 'right',
         header: props => <TopNavigation {...props} />,
