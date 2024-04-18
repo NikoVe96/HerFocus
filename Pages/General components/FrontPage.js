@@ -37,7 +37,6 @@ export const HelloUser = () => {
       Hi, {username}!
     </Text>
   );
-  return <Text style={styles.helloUser}>Hej, {username}!</Text>;
 };
 
 export const FrontPage = () => {
@@ -50,52 +49,60 @@ export const FrontPage = () => {
         <HelloUser />
         <Text style={styles.title}>Hvad vil du gerne lave i dag?</Text>
         <View style={[styles.frontView, styles.shadowProp]}>
-          <ImageBackground
-            source={require('../../Assets/images/Struktur.png')}
-            style={styles.images}
-            resizeMode="cover">
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Structure')}>
-              <Text style={styles.text}>Strukturere</Text>
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={() => navigation.navigate('Structure')}>
+            <ImageBackground
+              source={require('../../Assets/images/Struktur.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Structure')}>
+                <Text style={styles.text}>Strukturere</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
         <View style={[styles.frontView, styles.shadowProp]}>
-          <ImageBackground
-            source={require('../../Assets/images/Learning2.png')}
-            style={styles.images}
-            resizeMode="cover">
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Pick module')}>
-              <Text style={styles.text}>Lære</Text>
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={() => navigation.navigate('Pick module')}>
+            <ImageBackground
+              source={require('../../Assets/images/Learning2.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Pick module')}>
+                <Text style={styles.text}>Lære</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
         <View style={[styles.frontView, styles.shadowProp]}>
-          <ImageBackground
-            source={require('../../Assets/images/Forums2.png')}
-            style={styles.images}
-            resizeMode="cover">
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Pick subject')}>
-              <Text style={styles.text}>Snakke med andre</Text>
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={() => navigation.navigate('Pick subject')}>
+            <ImageBackground
+              source={require('../../Assets/images/Forums2.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Pick subject')}>
+                <Text style={styles.text}>Snakke med andre</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
         <View style={[styles.frontView, styles.shadowProp]}>
-          <ImageBackground
-            source={require('../../Assets/images/Reading.png')}
-            style={styles.images}
-            resizeMode="cover">
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Pick topic')}>
-              <Text style={styles.text}>Læse i vidensbanken</Text>
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={() => navigation.navigate('Pick topic')}>
+            <ImageBackground
+              source={require('../../Assets/images/Reading.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Pick topic')}>
+                <Text style={styles.text}>Læse i vidensbanken</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ScrollView>
@@ -121,7 +128,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   images: {
-    width: '100%',
+    width: 320,
     height: '100%',
     alignItems: 'center',
     overflow: 'hidden',
