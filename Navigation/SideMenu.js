@@ -40,8 +40,8 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import SubjectArticles from '../Pages/Knowledge base/SubjectArticles';
 import ViewArticle from '../Pages/Knowledge base/ViewArticle';
-import StructureFrontPage from "../Pages/Structure components/StructureFrontPage";
-import AddEvent from "../Pages/Structure components/AddEvent";
+import StructureFrontPage from '../Pages/Structure components/StructureFrontPage';
+import AddEvent from '../Pages/Structure components/AddEvent';
 import Module from '../Pages/Learning components/Module';
 import ModulesOverview from '../Pages/Learning components/ModulesOverview';
 import Forum from '../Pages/Forum/Forum';
@@ -59,7 +59,6 @@ const handleLogout = async navigation => {
 };
 
 function CustomDrawerContent({ navigation }) {
-
   const { colors } = useTheme();
 
   return (
@@ -73,7 +72,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             style={{ marginRight: 10 }}
             color={colors.primary}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Add a new routine </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Add a new routine{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -90,7 +91,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             style={{ marginRight: 10 }}
             color={colors.primary}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Add a new task </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Add a new task{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -107,7 +110,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Calendar overview </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Calendar overview{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -124,7 +129,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Daily overview </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Daily overview{' '}
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <AccordionItem title="Forums" icon={faComments}>
@@ -136,7 +143,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Pick a subject </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Pick a subject{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -153,7 +162,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Favorite posts </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Favorite posts{' '}
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <AccordionItem title="Learning modules" icon={faGraduationCap}>
@@ -184,8 +195,13 @@ function CustomDrawerContent({ navigation }) {
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 1</Text>
-            <Text style={{ fontSize: 18, color: colors.primary }}>What is ADHD </Text>
+            <Text
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>
+              Module 1
+            </Text>
+            <Text style={{ fontSize: 18, color: colors.primary }}>
+              What is ADHD{' '}
+            </Text>
           </View>
         </TouchableOpacity>
         <View
@@ -203,7 +219,10 @@ function CustomDrawerContent({ navigation }) {
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 2</Text>
+            <Text
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>
+              Module 2
+            </Text>
             <Text style={{ fontSize: 18, color: colors.primary }}>
               how to handle getting overwhelmed{' '}
             </Text>
@@ -223,8 +242,13 @@ function CustomDrawerContent({ navigation }) {
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 3</Text>
-            <Text style={{ fontSize: 18, color: colors.primary }}>Structuring your daily life </Text>
+            <Text
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>
+              Module 3
+            </Text>
+            <Text style={{ fontSize: 18, color: colors.primary }}>
+              Structuring your daily life{' '}
+            </Text>
           </View>
         </TouchableOpacity>
         <View
@@ -242,8 +266,13 @@ function CustomDrawerContent({ navigation }) {
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>Module 4</Text>
-            <Text style={{ fontSize: 18, color: colors.primary }}>Long term goals </Text>
+            <Text
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.primary }}>
+              Module 4
+            </Text>
+            <Text style={{ fontSize: 18, color: colors.primary }}>
+              Long term goals{' '}
+            </Text>
           </View>
         </TouchableOpacity>
       </AccordionItem>
@@ -256,7 +285,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Pick a topic </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Pick a topic{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={{
@@ -273,7 +304,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Favorite articles </Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Favorite articles{' '}
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <View style={styles.accordContainer}>
@@ -287,7 +320,9 @@ function CustomDrawerContent({ navigation }) {
               color={colors.primary}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.primary }]}>Profile</Text>
+            <Text style={[styles.accordTitle, { color: colors.primary }]}>
+              Profile
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -302,10 +337,11 @@ function CustomDrawerContent({ navigation }) {
               color={colors.primary}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.primary }]}>Settings</Text>
+            <Text style={[styles.accordTitle, { color: colors.primary }]}>
+              Settings
+            </Text>
           </View>
         </TouchableOpacity>
-
       </View>
       <AccordionItem title="About us" icon={faUsers}>
         <TouchableOpacity
@@ -333,7 +369,9 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.primary}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.primary }}>Help and contact info</Text>
+          <Text style={{ fontSize: 18, color: colors.primary }}>
+            Help and contact info
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <View style={styles.accordContainer}>
@@ -347,7 +385,9 @@ function CustomDrawerContent({ navigation }) {
               color={colors.primary}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.primary }]}>Log out</Text>
+            <Text style={[styles.accordTitle, { color: colors.primary }]}>
+              Log out
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -402,8 +442,10 @@ function SideMenu() {
       <Drawer.Screen
         name="View article"
         component={ViewArticle}></Drawer.Screen>
-      <Drawer.Screen name='Module overview' component={ModulesOverview}></Drawer.Screen>
-      <Drawer.Screen name='Module' component={Module}></Drawer.Screen>
+      <Drawer.Screen
+        name="Module overview"
+        component={ModulesOverview}></Drawer.Screen>
+      <Drawer.Screen name="Module" component={Module}></Drawer.Screen>
       <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
       <Drawer.Screen
         name="IndividualPost"
@@ -412,7 +454,6 @@ function SideMenu() {
         name="Structure"
         component={StructureFrontPage}></Drawer.Screen>
     </Drawer.Navigator>
-
   );
 }
 
@@ -433,7 +474,7 @@ const styles = StyleSheet.create({
   },
   accordTitle: {
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   accordBody: {
     padding: 12,
