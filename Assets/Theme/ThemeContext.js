@@ -9,15 +9,15 @@ const PastelTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#D9E4EC',
-        primary: '#FFD3DA',
+        bars: '#FFD3DA',
         background: '#FFFAE2',
-        card: '#BFFCD1',
         text: 'black',
         border: '#FFD3DA',
         notification: '#D9E4EC',
-        icons: 'white',
-        buttons: '#BFFCD1'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#BFFCD1',
+        subButton: '#D9E4EC',
     },
 };
 
@@ -25,15 +25,15 @@ const PurpleTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#A47786',
-        primary: '#533440',
+        bars: '#533440',
         background: '#E8D5DE',
-        card: '#A47786',
-        text: 'white',
+        text: 'black',
         border: '#533440',
         notification: '#A47786',
-        icons: 'white',
-        buttons: '#A47786'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#A47786',
+        subButton: '#cc9dad',
     },
 };
 
@@ -41,15 +41,15 @@ const RedTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#FFF8F7',
-        primary: '#BF4C41',
+        bars: '#BF4C41',
         background: '#FFF8F7',
-        card: '#F7A399',
         text: 'black',
         border: '#BF4C41',
         notification: '#FFD2CD',
-        icons: 'white',
-        buttons: '#FFD2CD'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#F7A399',
+        subButton: '#FFD2CD',
     },
 };
 
@@ -57,15 +57,15 @@ const YellowTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#FFFCF9',
-        primary: '#DC9B18',
+        bars: '#DC9B18',
         background: '#FFFCF9',
-        card: '#FFEABF',
         text: 'black',
         border: '#DC9B18',
         notification: '#FFEABF',
-        icons: 'white',
-        buttons: '#DC9B18'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#DC9B18',
+        subButton: '#FFEABF',
     },
 };
 
@@ -73,15 +73,15 @@ const GreenTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#D0EDD5',
-        primary: '#2F5233',
+        Bars: '#2F5233',
         background: '#D0EDD5',
-        card: '#94C973',
         text: 'black',
         border: '#2F5233',
         notification: '#94C973',
-        icons: 'white',
-        buttons: '#2F5233'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#2F5233',
+        subButton: '#94C973',
     },
 };
 
@@ -89,15 +89,15 @@ const BlueTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#D9E4EC',
-        primary: '#6AABD2',
+        Bars: '#6AABD2',
         background: '#D9E4EC',
-        card: '#8BC5E8',
         text: 'black',
         border: '#274472',
         notification: '#8BC5E8',
-        icons: 'white',
-        buttons: '#274472'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#274472',
+        subButton: '#94C973',
     },
 };
 
@@ -105,15 +105,15 @@ const DarkBlueTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#393751',
-        primary: '#131227',
+        Bars: '#131227',
         background: '#393751',
-        card: '#68669D',
         text: 'white',
         border: '#131227',
         notification: '#68669D',
-        icons: 'white',
-        buttons: '#131227'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#131227',
+        subButton: '#68669D',
     },
 };
 
@@ -121,15 +121,15 @@ const DarkTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#252121',
-        primary: '#000000',
+        Bars: '#000000',
         background: '#252121',
-        card: '#4F4848',
         text: 'white',
         border: '#000000',
         notification: '#4F4848',
-        icons: 'white',
-        buttons: '#000000'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#000000',
+        subButton: '#4F4848',
     },
 };
 
@@ -137,15 +137,15 @@ const NeutralTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        light: '#EDE7DC',
         primary: '#CCAFA5',
         background: '#EDE7DC',
-        card: '#E7D2CC',
         text: 'black',
         border: '#CCAFA5',
         notification: '#E7D2CC',
-        icons: 'white',
-        buttons: '#CCAFA5'
+        iconLight: 'white',
+        iconDark: 'black',
+        mainButton: '#CCAFA5',
+        subButton: '#4F4848',
     },
 };
 

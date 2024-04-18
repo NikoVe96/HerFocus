@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBars, faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation, useTheme } from '@react-navigation/native';
 
-export const TopNavigation = () => {
+export const TopNavigation = ({ navigation: { goBack } }) => {
 
   const navigation = useNavigation();
   const { colors } = useTheme();
@@ -19,7 +19,7 @@ export const TopNavigation = () => {
         paddingHorizontal: 10,
         backgroundColor: colors.primary,
       }}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={() => goBack()}>
         <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.icons} />
       </TouchableOpacity>
       <View style={{ justifyContent: 'center' }}>
