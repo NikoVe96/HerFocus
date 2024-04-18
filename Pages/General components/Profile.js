@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faUser,
   faEnvelope,
@@ -57,7 +57,7 @@ export const Profile = () => {
         </View>
       </View>
       <View style={styles.seperator}></View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
         <Text style={styles.userInfo}> {name} </Text>
       </View>
@@ -94,7 +94,7 @@ export const Profile = () => {
         />
       </View>
       <View style={styles.seperator}></View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
         <Text style={styles.userInfo}> Change avatar </Text>
       </View>

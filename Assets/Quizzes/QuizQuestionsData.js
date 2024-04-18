@@ -1,5 +1,5 @@
 const data = {
-  Structure: {
+  'Struktur og planlægning': {
     1: [
       {
         question: 'What should you do when approaching a yellow traffic light?',

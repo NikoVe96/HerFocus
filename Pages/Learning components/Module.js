@@ -10,22 +10,24 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Swiper from 'react-native-swiper';
 import LearningProgressHeader from '../../Components/LearningProgressHeader';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Quiz from '../../Components/Quiz';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faChevronRight, faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-export const Module = ({route}) => {
+export const Module = ({ route }) => {
   const width = Dimensions.get('window').width;
   const [progress, setProgress] = useState(new Animated.Value(1));
   const moduleLength = 7;
   const navigation = useNavigation();
-  const {module, subject, description, image, onNewCompletion} = route.params;
-  const [introduction, setIntro] = useState('');
+  const { module, subject, description, image, onNewCompletion } = route.params;
+  const [intro1, setIntro1] = useState('');
+  const [intro2, setIntro2] = useState('');
+  const [intro3, setIntro3] = useState('');
   const [questions, setQuestions] = useState([]);
   const [keyPoints, setKeyPoints] = useState([]);
   const swiperRef = useRef(null);
@@ -44,15 +46,13 @@ export const Module = ({route}) => {
     if (swiperRef.current) {
       swiperRef.current.scrollTo(0);
     }
-    setIntro('');
-    setQuestions([]);
+    setIntro1('');
     setKeyPoints([]);
 
     moduleContent();
   }, [module]);
 
   async function retakeQuestions() {
-    setQuestions([]);
     console.log('button pressed');
   }
 
@@ -60,8 +60,11 @@ export const Module = ({route}) => {
     let query = new Parse.Query('LearningModuleContent');
     query.contains('module', module.id);
     const Results = await query.find();
-    setIntro(Results[0].get('introduction'));
-    setQuestions(Results[0].get('quizQuestions'));
+    console.log(Results)
+    setIntro1(Results[0].get('intro1'));
+    setIntro2(Results[0].get('intro2'));
+    setIntro3(Results[0].get('intro3'));
+    console.log(intro1, intro2, intro3)
     setKeyPoints(Results[0].get('keyPoints'));
   }
 
@@ -85,7 +88,7 @@ export const Module = ({route}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LearningProgressHeader
         progress={progress}
         moduleLength={moduleLength}
@@ -93,7 +96,7 @@ export const Module = ({route}) => {
         description={description}
         image={image}
       />
-      <View style={{flex: 8, backgroundColor: 'lightyellow'}}>
+      <View style={{ flex: 8, backgroundColor: 'lightyellow' }}>
         <Swiper
           loop={false}
           showsPagination={false}
@@ -111,20 +114,20 @@ export const Module = ({route}) => {
             borderRadius: 4,
             marginHorizontal: 4,
           }}
-          paginationStyle={{bottom: 10}}
+          paginationStyle={{ bottom: 10 }}
           onIndexChanged={index => handleSlide(index)}
           scrollEnabled={false}
-          buttonWrapperStyle={{alignItems: 'flex-start'}}
+          buttonWrapperStyle={{ alignItems: 'flex-start' }}
           ref={swiperRef}>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
-              style={{width: width, height: 250}}></Image>
+              style={{ width: width, height: 250 }}></Image>
             <View style={styles.textContainer}>
               <Text style={styles.takeawayHeader}>
                 Har du før været i denne situation?
               </Text>
-              <Text>{introduction}</Text>
+              <Text>{intro1}</Text>
             </View>
             <View
               style={{
@@ -133,7 +136,7 @@ export const Module = ({route}) => {
                 alignItems: 'baseline',
                 marginVertical: 20,
               }}>
-              <View style={{marginTop: 20, marginRight: 20}}></View>
+              <View style={{ marginTop: 20, marginRight: 20 }}></View>
               <TouchableOpacity
                 style={styles.swiperBtn}
                 onPress={() => swiperRef.current.scrollBy(1)}>
@@ -141,13 +144,13 @@ export const Module = ({route}) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
-              style={{width: width, height: 250}}></Image>
+              style={{ width: width, height: 250 }}></Image>
             <View style={styles.textContainer}>
               <Text style={styles.takeawayHeader}>Subject title...</Text>
-              <Text>{introduction}</Text>
+              <Text>{intro2}</Text>
             </View>
             <View
               style={{
@@ -168,13 +171,13 @@ export const Module = ({route}) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
-              style={{width: width, height: 250}}></Image>
+              style={{ width: width, height: 250 }}></Image>
             <View style={styles.textContainer}>
               <Text style={styles.takeawayHeader}>Subject title...</Text>
-              <Text>{introduction}</Text>
+              <Text>{intro3}</Text>
             </View>
             <View
               style={{
@@ -195,11 +198,11 @@ export const Module = ({route}) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <View>
               <Image
                 source={require('../../Assets/images/quiz.png')}
-                style={{width: width, height: 250}}
+                style={{ width: width, height: 250 }}
                 sharedTransitionTag="structure"></Image>
               <Text style={styles.takeawayHeader}>
                 Lad os tage en quiz for at hjælpe dig med at huske, hvad du har
@@ -235,11 +238,11 @@ export const Module = ({route}) => {
               </View>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/notebook_planning.png')}
-                style={{width: width, height: 250}}></Image>
+                style={{ width: width, height: 250 }}></Image>
               <Text style={styles.takeawayHeader}>
                 Her er der {keyPoints.length} takeaways fra dette modul
               </Text>
@@ -273,11 +276,11 @@ export const Module = ({route}) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/planning_exercise.png')}
-                style={{width: width, height: 250}}></Image>
+                style={{ width: width, height: 250 }}></Image>
               <Text style={styles.takeawayHeader}>
                 Skriv dine ugentlige tasks ned
               </Text>
@@ -302,10 +305,10 @@ export const Module = ({route}) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <View style={{flex: 1, alignItems: 'center'}}>
+          <View style={{ flex: 1, alignItems: 'center' }}>
             <Image
               source={require('../../Assets/images/fireworks.png')}
-              style={{width: width, height: 250}}></Image>
+              style={{ width: width, height: 250 }}></Image>
             <Text style={styles.takeawayHeader}>Tillykke! </Text>
             <Text>Du har lige færdiggjort dit første modul!</Text>
             <TouchableOpacity

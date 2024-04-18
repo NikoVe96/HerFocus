@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
   useColorScheme,
-  Appearance
+  Appearance,
   ScrollView,
   Image,
   ImageBackground,
@@ -52,7 +52,7 @@ export const FrontPage = () => {
             resizeMode="cover">
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('Struture')}>
+              onPress={() => navigation.navigate('Structure')}>
               <Text style={styles.text}>Strukturere</Text>
             </TouchableOpacity>
           </ImageBackground>
