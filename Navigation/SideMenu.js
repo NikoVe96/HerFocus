@@ -42,11 +42,8 @@ import SubjectArticles from '../Pages/Knowledge base/SubjectArticles';
 import ViewArticle from '../Pages/Knowledge base/ViewArticle';
 import StructureFrontPage from '../Pages/Structure components/StructureFrontPage';
 import AddEvent from '../Pages/Structure components/AddEvent';
-import Planning from '../Pages/Learning components/Learning Modules/Planning/Planning';
-import Module1, {Module} from '../Pages/Learning components/Module';
-import ArticleOverview, {
-  ModulesOverview,
-} from '../Pages/Learning components/ModulesOverview';
+import Module from '../Pages/Learning components/Module';
+import ModulesOverview from '../Pages/Learning components/ModulesOverview';
 import Forum from '../Pages/Forum/Forum';
 import IndividualPost from '../Pages/Forum/IndividualPost';
 
@@ -407,6 +404,7 @@ function SideMenu() {
         header: props => <TopNavigation {...props} />,
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
       <Drawer.Screen name="Add routine" component={AddRoutine}></Drawer.Screen>
       <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
       <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
@@ -419,7 +417,6 @@ function SideMenu() {
       <Drawer.Screen
         name="Forgot password"
         component={ForgotPassword}></Drawer.Screen>
-      <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
       <Drawer.Screen name="Login" component={LogIn}></Drawer.Screen>
       <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
       <Drawer.Screen name="Sign up" component={SignUp}></Drawer.Screen>
@@ -452,6 +449,9 @@ function SideMenu() {
       <Drawer.Screen
         name="IndividualPost"
         component={IndividualPost}></Drawer.Screen>
+      <Drawer.Screen
+        name="Structure"
+        component={StructureFrontPage}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

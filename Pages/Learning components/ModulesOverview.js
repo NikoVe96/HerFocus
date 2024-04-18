@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faDownLong, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
+import { useNavigation } from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faDownLong, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-export const ModulesOverview = ({route}) => {
-  const {subject, image, description} = route.params;
+export const ModulesOverview = ({ route }) => {
+  const { subject, image, description } = route.params;
   const [modules, setModules] = useState([]);
   const [completed, setCompleted] = useState([]);
   const navigation = useNavigation();
@@ -23,6 +23,7 @@ export const ModulesOverview = ({route}) => {
   useEffect(() => {
     modulesQuery();
     completedQuery();
+    console.log(subject)
   }, []);
 
   async function modulesQuery() {
@@ -50,14 +51,14 @@ export const ModulesOverview = ({route}) => {
       <Text style={styles.title}>{subject}</Text>
       <Image
         source={image}
-        style={{width: 100, height: 100, alignSelf: 'center'}}></Image>
+        style={{ width: 100, height: 100, alignSelf: 'center' }}></Image>
       <Text style={styles.description}>{description}</Text>
       <View style={styles.border}></View>
 
       <ScrollView>
-        <View style={{marginBottom: 200, marginTop: 30}}>
+        <View style={{ marginBottom: 200, marginTop: 30 }}>
           {modules.length == 0 ? (
-            <Text></Text>
+            <Text>Loading...</Text>
           ) : (
             modules.map((item, index) => {
               const moduleSignature = `${item.get('name')} ${item.get(
@@ -90,7 +91,7 @@ export const ModulesOverview = ({route}) => {
                           <Image
                             source={require('../../Assets/images/idea.png')}
                             style={styles.image}></Image>
-                          <View style={{width: 100}}>
+                          <View style={{ width: 100 }}>
                             <Text style={styles.moduleName}>
                               Module {item.get('name')}
                             </Text>
@@ -105,7 +106,7 @@ export const ModulesOverview = ({route}) => {
                   <FontAwesomeIcon
                     icon={faDownLong}
                     size={30}
-                    style={{marginVertical: 15}}
+                    style={{ marginVertical: 15 }}
                   />
                 </View>
               );
