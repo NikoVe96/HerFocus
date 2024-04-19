@@ -33,7 +33,7 @@ export const HelloUser = () => {
   }, [username]);
 
   return (
-    <Text style={[styles.helloUser, {color: colors.primary}]}>
+    <Text style={[styles.helloUser, {color: colors.text}]}>
       Hi, {username}!
     </Text>
   );
@@ -55,9 +55,11 @@ export const FrontPage = () => {
               style={styles.images}
               resizeMode="cover">
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, {backgroundColor: colors.subButton}]}
                 onPress={() => navigation.navigate('Structure')}>
-                <Text style={styles.text}>Strukturere</Text>
+                <Text style={[styles.text, {color: colors.text}]}>
+                  Planlægge
+                </Text>
               </TouchableOpacity>
             </ImageBackground>
           </TouchableOpacity>
@@ -69,9 +71,9 @@ export const FrontPage = () => {
               style={styles.images}
               resizeMode="cover">
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, {backgroundColor: colors.subButton}]}
                 onPress={() => navigation.navigate('Pick module')}>
-                <Text style={styles.text}>Lære</Text>
+                <Text style={[styles.text, {color: colors.text}]}>Lære</Text>
               </TouchableOpacity>
             </ImageBackground>
           </TouchableOpacity>
@@ -83,9 +85,11 @@ export const FrontPage = () => {
               style={styles.images}
               resizeMode="cover">
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, {backgroundColor: colors.subButton}]}
                 onPress={() => navigation.navigate('Pick subject')}>
-                <Text style={styles.text}>Snakke med andre</Text>
+                <Text style={[styles.text, {color: colors.text}]}>
+                  Snakke med andre
+                </Text>
               </TouchableOpacity>
             </ImageBackground>
           </TouchableOpacity>
@@ -97,9 +101,11 @@ export const FrontPage = () => {
               style={styles.images}
               resizeMode="cover">
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, {backgroundColor: colors.subButton}]}
                 onPress={() => navigation.navigate('Pick topic')}>
-                <Text style={styles.text}>Læse i vidensbanken</Text>
+                <Text style={[styles.text, {color: colors.text}]}>
+                  Læse i vidensbanken
+                </Text>
               </TouchableOpacity>
             </ImageBackground>
           </TouchableOpacity>
@@ -163,7 +169,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: 'white',
     textAlign: 'center',
     fontSize: 18,
   },
