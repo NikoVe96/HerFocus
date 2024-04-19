@@ -34,7 +34,7 @@ export const HelloUser = () => {
 
   return (
     <Text style={[styles.helloUser, {color: colors.text}]}>
-      Hi, {username}!
+      Hej, {username}!
     </Text>
   );
 };

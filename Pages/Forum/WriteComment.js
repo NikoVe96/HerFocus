@@ -3,10 +3,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 
 function WriteComment({postId, onNewComment}) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
+  const {colors} = useTheme();
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -59,7 +61,11 @@ function WriteComment({postId, onNewComment}) {
       <TouchableOpacity
         onPress={() => handleComment()}
         style={styles.createComment}>
-        <FontAwesomeIcon icon={faPaperPlane} style={styles.icon} size={25} />
+        <FontAwesomeIcon
+          icon={faPaperPlane}
+          style={[styles.icon, {color: colors.iconLight}]}
+          size={25}
+        />
       </TouchableOpacity>
     </View>
   );

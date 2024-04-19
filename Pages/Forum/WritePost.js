@@ -10,10 +10,12 @@ import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {useTheme} from '@react-navigation/native';
 
 function WritePost({forumTitle, onNewPost}) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
+  const {colors} = useTheme();
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -52,7 +54,7 @@ function WritePost({forumTitle, onNewPost}) {
       <View style={styles.userContainer}>
         <TextInput
           style={styles.writePost}
-          placeholder="Skriv et opslag..."
+          placeholder=" Skriv et opslag..."
           placeholderTextColor="#8C8C8C"
           multiline={true}
           value={post}
@@ -63,8 +65,10 @@ function WritePost({forumTitle, onNewPost}) {
           }}
           onChangeText={setPost}></TextInput>
       </View>
-      <TouchableOpacity onPress={() => handlePost()} style={styles.postBtn}>
-        <Text style={styles.btnText}>Post</Text>
+      <TouchableOpacity
+        onPress={() => handlePost()}
+        style={[styles.postBtn, {backgroundColor: colors.mainButton}]}>
+        <Text style={[styles.btnText, {color: colors.text}]}>Slå op</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -82,9 +86,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   writePost: {
-    width: 280,
+    width: 340,
     height: 70,
-    marginLeft: 20,
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
@@ -93,7 +96,6 @@ const styles = StyleSheet.create({
   postBtn: {
     width: 280,
     height: 30,
-    marginLeft: 55,
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 15,

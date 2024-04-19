@@ -6,8 +6,10 @@ import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useTheme} from '@react-navigation/native';
 
 const CommentSection = ({comments}) => {
+  const {colors} = useTheme();
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -16,7 +18,12 @@ const CommentSection = ({comments}) => {
             <Text></Text>
           ) : (
             comments.map((comment, commentId) => (
-              <View key={commentId} style={styles.commentContainer}>
+              <View
+                key={commentId}
+                style={[
+                  styles.commentContainer,
+                  {backgroundColor: colors.notification},
+                ]}>
                 <View style={styles.userInfo}>
                   <FontAwesomeIcon
                     icon={faUser}
@@ -24,18 +31,23 @@ const CommentSection = ({comments}) => {
                     size={30}
                   />
                   <View>
-                    <Text style={styles.user}>{comment.get('username')}</Text>
+                    <Text style={[styles.user, {color: colors.text}]}>
+                      {comment.get('username')}
+                    </Text>
+                    <Text style={[styles.when, {color: colors.text}]}>
+                      Tilføjet{' '}
+                      {Math.round(
+                        (new Date().getTime() -
+                          new Date(comment.createdAt).getTime()) /
+                          (1000 * 3600 * 24),
+                      )}{' '}
+                      dage siden
+                    </Text>
                   </View>
                 </View>
-                <Text>
-                  {Math.round(
-                    (new Date().getTime() -
-                      new Date(comment.createdAt).getTime()) /
-                      (1000 * 3600 * 24),
-                  )}
-                </Text>
-                <View style={styles.comment}>
-                  <Text style={styles.commentText}>
+                <View
+                  style={[styles.comment, {backgroundColor: colors.subButton}]}>
+                  <Text style={[styles.commentText, {color: colors.text}]}>
                     {comment.get('commentContent')}
                   </Text>
                 </View>
@@ -63,21 +75,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: 'black',
   },
-  sectionContent: {
-    color: 'black',
-  },
   userInfo: {
     flexDirection: 'row',
     marginTop: 10,
     marginLeft: 10,
   },
   user: {
-    color: 'black',
     marginLeft: 10,
     fontSize: 15,
   },
   when: {
-    color: 'black',
     marginLeft: 10,
     fontSize: 10,
   },
@@ -87,7 +94,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#AFB1B6',
     marginBottom: 20,
   },
   comment: {
@@ -99,10 +105,8 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#D9D9D9',
   },
   commentText: {
-    color: 'black',
     fontSize: 15,
     padding: 10,
   },

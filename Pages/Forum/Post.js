@@ -4,7 +4,7 @@ import WriteComment from './WriteComment';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import CommentSection from './CommentSection';
 
@@ -17,6 +17,7 @@ const Post = ({postObject}) => {
     (new Date().getTime() - new Date(postObject.get('createdAt')).getTime()) /
       (1000 * 3600 * 24),
   );
+  const {colors} = useTheme();
 
   function handlePostClick() {
     navigation.navigate('IndividualPost', {postObject: postObject});
@@ -42,32 +43,41 @@ const Post = ({postObject}) => {
   };
 
   return (
-    <View style={styles.postContainer}>
+    <View
+      style={[styles.postContainer, styles.shadowProp, {backgroundColor: colors.notification}]}>
       <View style={styles.userInfo}>
         <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
         <View>
-          <Text style={styles.user}>{postObject.get('username')}</Text>
-          <Text style={styles.when}>Posted {daysAgo} days ago</Text>
+          <Text style={[styles.user, {color: colors.text}]}>
+            {postObject.get('username')}
+          </Text>
+          <Text style={[styles.when, {color: colors.text}]}>
+            Tilføjet {daysAgo} dage siden
+          </Text>
         </View>
       </View>
-      <View style={styles.post}>
-        <Text style={styles.postText}>{postObject.get('postContent')}</Text>
+      <View style={[styles.post, {backgroundColor: colors.subButton}]}>
+        <Text style={[styles.postText, {color: colors.text}]}>
+          {postObject.get('postContent')}
+        </Text>
       </View>
       <View style={styles.comments}>
         <View style={styles.addComment}>
           <TouchableOpacity onPress={() => handlePostClick()}>
             <FontAwesomeIcon
               icon={faPaperPlane}
-              style={styles.icon2}
+              style={[styles.icon2, {color: colors.iconLight}]}
               size={15}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handlePostClick()}>
-            <Text style={styles.text}>comment</Text>
+            <Text style={[styles.text, {color: colors.text}]}>kommenter</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.numberComments}>
-          <Text>{postObject.get('numberOfComments')} comments</Text>
+          <Text style={{color: colors.text}}>
+            {postObject.get('numberOfComments')} comments
+          </Text>
         </View>
       </View>
     </View>
@@ -81,23 +91,24 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   user: {
-    color: 'black',
     marginLeft: 10,
     fontSize: 15,
   },
   when: {
-    color: 'black',
     marginLeft: 10,
     fontSize: 10,
   },
   postContainer: {
     width: 350,
     alignSelf: 'center',
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#AFB1B6',
     marginBottom: 20,
+  },
+   shadowProp: {
+    shadowColor: '#443939',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
   post: {
     alignSelf: 'flex-start',
@@ -108,7 +119,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#D9D9D9',
   },
   postText: {
     color: 'black',
