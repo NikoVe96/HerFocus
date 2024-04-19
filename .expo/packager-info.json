@@ -1,4 +1,7 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19000
+  "expoServerPort": 8082,
+  "packagerPort": 8082,
+  "expoServerNgrokUrl": "https://imqz678.emiliehb.herfocus.exp.direct",
+  "packagerNgrokUrl": "https://imqz678.emiliehb.herfocus.exp.direct",
+  "ngrokPid": 24441
 }
