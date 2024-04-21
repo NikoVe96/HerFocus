@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faDownLong, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,6 +19,12 @@ export const ModulesOverview = ({ route }) => {
   const [modules, setModules] = useState([]);
   const [completed, setCompleted] = useState([]);
   const navigation = useNavigation();
+  const { colors } = useTheme();
+  const moduleImages = {
+    '1 Struktur og planlægning': require('../../Assets/images/learning_think.png'),
+    '2 Struktur og planlægning': require('../../Assets/images/learning_goals.png'),
+    '3 Struktur og planlægning': require('../../Assets/images/learning_notebook.png'),
+  };
 
   useEffect(() => {
     modulesQuery();
@@ -48,22 +54,20 @@ export const ModulesOverview = ({ route }) => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>{subject}</Text>
-      <Image
-        source={image}
-        style={{ width: 100, height: 100, alignSelf: 'center' }}></Image>
-      <Text style={styles.description}>{description}</Text>
-      <View style={styles.border}></View>
-
       <ScrollView>
-        <View style={{ marginBottom: 200, marginTop: 30 }}>
+        <Text style={styles.title}>{subject}</Text>
+        <Image
+          source={image}
+          style={{ width: 200, height: 170, alignSelf: 'center' }}></Image>
+        <Text style={styles.description}>{description}</Text>
+        <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+        <View style={{ marginTop: 30 }}>
           {modules.length == 0 ? (
             <Text>Loading...</Text>
           ) : (
             modules.map((item, index) => {
-              const moduleSignature = `${item.get('name')} ${item.get(
-                'subject',
-              )}`;
+              const moduleSignature = `${item.get('name')} ${item.get('subject',)}`;
+              const moduleImage = moduleImages[moduleSignature]
               const isCompleted = completed.includes(moduleSignature);
               return (
                 <View key={index} style={styles.container}>
@@ -72,7 +76,7 @@ export const ModulesOverview = ({ route }) => {
                       <FontAwesomeIcon
                         icon={faCircleCheck}
                         size={30}
-                        color="green"
+                        color="#2F5233"
                         style={styles.progessionBar}
                       />
                     )}
@@ -86,14 +90,14 @@ export const ModulesOverview = ({ route }) => {
                           onNewCompletion: handleNewCompletion(),
                         })
                       }>
-                      <View style={styles.buttonParent}>
-                        <View style={styles.buttonGrad}>
+                      <View style={[styles.buttonParent, { backgroundColor: colors.mainButton }]}>
+                        <View style={[styles.buttonGrad, { backgroundColor: colors.subButton }]}>
                           <Image
-                            source={require('../../Assets/images/idea.png')}
+                            source={moduleImage}
                             style={styles.image}></Image>
                           <View style={{ width: 100 }}>
                             <Text style={styles.moduleName}>
-                              Module {item.get('name')}
+                              Modul {item.get('name')}
                             </Text>
                             <Text style={styles.moduleDesc}>
                               {item.get('description')}
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   description: {
-    fontSize: 18,
+    fontSize: 16,
     padding: 10,
     marginHorizontal: 10,
   },
@@ -138,6 +142,7 @@ const styles = StyleSheet.create({
     width: 300,
     marginVertical: 10,
     alignSelf: 'center',
+    borderRadius: 10
   },
   image: {
     height: 50,
@@ -169,17 +174,17 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   progessionBar: {
-    width: 40,
-    height: 40,
+    width: '20%',
+    height: '20%',
     justifyContent: 'center',
     backgroundColor: 'white',
-    borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 30,
     alignSelf: 'flex-end',
     position: 'absolute',
     zIndex: 5,
-    marginTop: -25,
+    top: '-20%',
+    right: '-3%'
   },
 });
 

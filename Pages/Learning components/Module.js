@@ -78,7 +78,7 @@ export const Module = ({ route }) => {
     result.addUnique('modulesCompleted', moduleName);
     result.save();
 
-    onNewCompletion();
+    onNewCompletion;
 
     navigation.navigate('Module overview', {
       subject: subject,

@@ -4,47 +4,107 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
-  Image
+  Image,
+  ImageBackground,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {useNavigation, useTheme} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const PickTopics = () => {
   const navigation = useNavigation();
   const testImage = 'no_picture.png';
+  const {colors} = useTheme();
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>What would you like to read about?</Text>
-        <TouchableOpacity
-          style={styles.knowledgeView}
-          onPress={() => navigation.navigate('Subject articles', { subject: 'diagnosis' })}
-        >
-          <Image source={require(`../../Assets/images/${testImage}`)} style={{ width: 70, height: 70 }} />
-          <Text style={styles.text}>Getting diagnosed with ADHD/ADD</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.knowledgeView}
-          onPress={() => navigation.navigate('Subject articles', { subject: 'women' })}
-        >
-          <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
-          <Text style={styles.text}>Women and ADHD/ADD</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.knowledgeView}
-          onPress={() => navigation.navigate('Subject articles', { subject: 'adhd' })}
-        >
-          <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
-          <Text style={styles.text}>What is ADHD?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.knowledgeView}
-          onPress={() => navigation.navigate('Subject articles', { subject: 'relationships' })}
-        >
-          <Image source={require('../../Assets/images/no_picture.png')} style={{ width: 70, height: 70 }} />
-          <Text style={styles.text}>Relationships and ADHD</Text>
-        </TouchableOpacity>
+        <Text style={styles.title}>Hvad vil du gerne læse om?</Text>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Subject articles', {subject: 'diagnosis'})
+            }>
+            <ImageBackground
+              source={require('../../Assets/images/Relations.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: colors.subButton}]}
+                onPress={() =>
+                  navigation.navigate('Subject articles', {
+                    subject: 'diagnosis',
+                  })
+                }>
+                <Text style={styles.text}>Getting diagnosed with ADHD/ADD</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Subject articles', {subject: 'women'})
+            }>
+            <ImageBackground
+              source={require('../../Assets/images/Relations.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: colors.subButton}]}
+                onPress={() =>
+                  navigation.navigate('Subject articles', {
+                    subject: 'women',
+                  })
+                }>
+                <Text style={styles.text}>Women and ADHD/ADD</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Subject articles', {subject: 'adhd'})
+            }>
+            <ImageBackground
+              source={require('../../Assets/images/Relations.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: colors.subButton}]}
+                onPress={() =>
+                  navigation.navigate('Subject articles', {
+                    subject: 'adhd',
+                  })
+                }>
+                <Text style={styles.text}>What is ADHD?</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.frontView, styles.shadowProp]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Subject articles', {
+                subject: 'relationships',
+              })
+            }>
+            <ImageBackground
+              source={require('../../Assets/images/Relations.png')}
+              style={styles.images}
+              resizeMode="cover">
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: colors.subButton}]}
+                onPress={() =>
+                  navigation.navigate('Subject articles', {
+                    subject: 'relationships',
+                  })
+                }>
+                <Text style={styles.text}>Relationships and ADHD</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -53,22 +113,30 @@ export const PickTopics = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#FFF6ED',
     flex: 1,
   },
   scrollView: {
     marginLeft: 11,
   },
-  knowledgeView: {
+  frontView: {
     width: 330,
-    height: 120,
-    backgroundColor: '#FFFFFF',
+    height: 140,
     marginTop: 10,
     alignItems: 'center',
-    borderColor: '#000000',
+  },
+  shadowProp: {
+    shadowColor: '#443939',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+  },
+  images: {
+    width: 320,
+    height: '100%',
+    alignItems: 'center',
+    overflow: 'hidden',
+    borderRadius: 15,
     borderWidth: 1,
-    borderRadius: 8,
-    padding: 10
   },
   title: {
     paddingLeft: 60,
@@ -80,20 +148,19 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   button: {
-    width: 210,
+    width: 260,
     height: 30,
-    backgroundColor: 'lightgrey',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
-    marginTop: 50,
+    marginTop: 100,
     justifyContent: 'center',
   },
   text: {
     color: 'black',
     textAlign: 'center',
 
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 
