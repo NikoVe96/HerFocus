@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import WriteComment from './WriteComment';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faPaperPlane, faTrash} from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Modal from 'react-native-modal';
+import getAvatarImage from '../General components/AvatarUtils';
 
 
 const Post = ({postObject, onDelete}) => {
@@ -21,6 +22,8 @@ const Post = ({postObject, onDelete}) => {
       (1000 * 3600 * 24),
   );
   const {colors} = useTheme();
+   const avatar = postObject.get('avatar');
+   const avatarImageSource = getAvatarImage(avatar);
 
   function handlePostClick() {
     navigation.navigate('IndividualPost', {postObject: postObject});
@@ -57,6 +60,7 @@ const Post = ({postObject, onDelete}) => {
      setModalVisible(false);
    };
 
+
   return (
     <View style={styles.container}>
       <View
@@ -67,8 +71,10 @@ const Post = ({postObject, onDelete}) => {
         ]}>
         <View style={styles.upperDisplay}>
           <View style={styles.userInfo}>
-            <FontAwesomeIcon icon={faUser} size={30} />
+            <Image source={avatarImageSource} style={styles.avatarImage}/>
             <View>
+            </View>
+            <View style={styles.userText}>
               <Text style={[styles.user, {color: colors.text}]}>
                 {postObject.get('username')}
               </Text>
@@ -97,8 +103,7 @@ const Post = ({postObject, onDelete}) => {
                   styles.modalContainer,
                   {backgroundColor: colors.light},
                 ]}>
-                <Text
-                  style={styles.modalTitle}>
+                <Text style={styles.modalTitle}>
                   Er du sikker på, at du vil slette dit opslag?
                 </Text>
                 <View style={{flexDirection: 'row', marginVertical: 10}}>
@@ -163,12 +168,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
   },
+  userText: {
+    marginTop: 5,
+    marginLeft: 5
+  },
   user: {
-    marginLeft: 10,
     fontSize: 15,
   },
   when: {
-    marginLeft: 10,
     fontSize: 10,
   },
   postContainer: {
@@ -247,6 +254,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  avatarImage:{
+    width: 40,
+    height: 40,
+  }
 });
 
 export default Post;

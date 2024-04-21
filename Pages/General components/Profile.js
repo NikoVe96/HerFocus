@@ -106,9 +106,6 @@ export const Profile = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFF6ED',
-  },
   userNameContainer: {
     zIndex: 1,
     alignItems: 'center',

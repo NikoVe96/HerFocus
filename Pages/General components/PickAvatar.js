@@ -22,8 +22,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
 
   const pickedAvatar = avatarSelection => ({
     ...styles.images,
-    borderColor: avatarSelection === selectedAvatar ? 'black' : 'transparent',
-    borderWidth: avatarSelection === selectedAvatar ? 2 : 0,
+    borderColor: avatarSelection === picked ? 'black' : 'transparent',
+    borderWidth: avatarSelection === picked ? 2 : 0,
   });
 
   return (
@@ -38,7 +38,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar2');
-        }}>
+        }}
+        style={pickedAvatar('Avatar2')}>
         <Image
           source={require('../../Assets/images/Avatar2.png')}
           style={styles.images}></Image>
