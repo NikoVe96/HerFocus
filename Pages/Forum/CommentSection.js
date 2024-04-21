@@ -1,11 +1,33 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import {faUser, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useTheme} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import Parse from 'parse/react-native';
 
 const CommentSection = ({comments}) => {
   const {colors} = useTheme();
+  const [username, setUsername] = useState('')
+
+
+ useEffect(() => {
+   async function getCurrentUser() {
+     const currentUser = await Parse.User.currentAsync();
+     setUsername(currentUser.getUsername());
+   }
+   getCurrentUser();
+ }, []);
+
+    const showModal = () => {
+      setModalVisible(true);
+    };
+
+    const hideModal = () => {
+      setModalVisible(false);
+    };
+
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -23,25 +45,41 @@ const CommentSection = ({comments}) => {
                   styles.shadowProp,
                   {backgroundColor: colors.notification},
                 ]}>
-                <View style={styles.userInfo}>
-                  <FontAwesomeIcon
-                    icon={faUser}
-                    style={styles.icon}
-                    size={30}
-                  />
-                  <View>
-                    <Text style={[styles.user, {color: colors.text}]}>
-                      {comment.get('username')}
-                    </Text>
-                    <Text style={[styles.when, {color: colors.text}]}>
-                      Tilføjet{' '}
-                      {Math.round(
-                        (new Date().getTime() -
-                          new Date(comment.createdAt).getTime()) /
-                          (1000 * 3600 * 24),
-                      )}{' '}
-                      dage siden
-                    </Text>
+                <View style={styles.upperDisplay}>
+                  <View style={styles.userInfo}>
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      style={styles.icon}
+                      size={30}
+                    />
+                    <View>
+                      <Text style={[styles.user, {color: colors.text}]}>
+                        {comment.get('username')}
+                      </Text>
+                      <Text style={[styles.when, {color: colors.text}]}>
+                        Tilføjet{' '}
+                        {Math.round(
+                          (new Date().getTime() -
+                            new Date(comment.createdAt).getTime()) /
+                            (1000 * 3600 * 24),
+                        )}{' '}
+                        dage siden
+                      </Text>
+                      {comment.get('username') == username ? (
+                        <TouchableOpacity onPress={showModal}>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            size={15}
+                            style={[
+                              styles.trashIcon,
+                              {color: colors.iconLight},
+                            ]}
+                          />
+                        </TouchableOpacity>
+                      ) : (
+                        <Text></Text>
+                      )}
+                    </View>
                   </View>
                 </View>
                 <View
@@ -80,6 +118,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 10,
   },
+  upperDisplay: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
   commentContainer: {
     width: '95%',
     alignSelf: 'center',
@@ -109,6 +151,40 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 1,
+  },
+  trashIcon: {
+    margin: 10,
+  },
+  modalContainer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalTextContainer1: {
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: 'darkred',
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalTextContainer2: {
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: 'green',
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalTitle: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

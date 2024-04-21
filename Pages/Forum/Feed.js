@@ -12,8 +12,13 @@ import Post from './Post';
 import Parse from 'parse/react-native';
 import {useNavigation, useTheme} from '@react-navigation/native';
 
-const Feed = ({forumTitle, posts}) => {
+const Feed = ({posts, setPosts}) => {
    const {colors} = useTheme();
+
+    const handleDeletePost = (postId) => {
+      const updatedPosts = posts.filter(post => post.id !== postId);
+      setPosts(updatedPosts); 
+    }
 
   return (
     <ScrollView style={styles.container}>
@@ -27,7 +32,8 @@ const Feed = ({forumTitle, posts}) => {
             <Text></Text>
           ) : (
             posts.map((post, index) => (
-              <Post style={styles.postSize} key={index} postObject={post}></Post>
+              <Post style={styles.postSize} key={post.id} postObject={post}
+              onDelete={handleDeletePost}></Post>
             ))
           )}
         </View>

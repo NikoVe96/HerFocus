@@ -2,14 +2,17 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import WriteComment from './WriteComment';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {faUser, faPaperPlane, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useEffect, useState} from 'react';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import Parse from 'parse/react-native';
-import CommentSection from './CommentSection';
+import Modal from 'react-native-modal';
 
-const Post = ({postObject}) => {
+
+const Post = ({postObject, onDelete}) => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
   const [commentCount, setCommentCount] = useState(
     postObject.get('numberOfComments'),
   );
@@ -23,24 +26,36 @@ const Post = ({postObject}) => {
     navigation.navigate('IndividualPost', {postObject: postObject});
   }
 
-  async function getPost() {
-    let post = new Parse.Query('Post');
-    post.equalTo('objectId', postObject.get('objectId'));
-    const results = await post.find();
-    console.log(results);
-    IndividualPost = results[0];
-  }
+    useEffect(() => {
+      async function getCurrentUser() {
+          const currentUser = await Parse.User.currentAsync();
+            setUsername(currentUser.getUsername());
+        }
+      getCurrentUser();
+    }, []);
+
+    const deletePost = async () => {
+      try {
+        await postObject.destroy();
+        onDelete(postObject.id); 
+      } catch (error) {
+        console.error('Failed to delete the post:', error);
+      }
+    };
+
 
   useEffect(() => {
     console.log(postObject.get('numberOfComments'));
   }, [postObject.get('numberOfComments')]);
 
-  const fetchCommentCount = async () => {
-    const query = new Parse.Query(Post);
-    const post = await query[0].get(id);
-    const updatedCommentCount = post.get('numberOfComments');
-    setCommentCount(updatedCommentCount);
-  };
+
+   const showModal = () => {
+     setModalVisible(true);
+   };
+
+   const hideModal = () => {
+     setModalVisible(false);
+   };
 
   return (
     <View style={styles.container}>
@@ -50,15 +65,56 @@ const Post = ({postObject}) => {
           styles.shadowProp,
           {backgroundColor: colors.notification},
         ]}>
-        <View style={styles.userInfo}>
-          <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
+        <View style={styles.upperDisplay}>
+          <View style={styles.userInfo}>
+            <FontAwesomeIcon icon={faUser} size={30} />
+            <View>
+              <Text style={[styles.user, {color: colors.text}]}>
+                {postObject.get('username')}
+              </Text>
+              <Text style={[styles.when, {color: colors.text}]}>
+                Tilføjet {daysAgo} dage siden
+              </Text>
+            </View>
+          </View>
           <View>
-            <Text style={[styles.user, {color: colors.text}]}>
-              {postObject.get('username')}
-            </Text>
-            <Text style={[styles.when, {color: colors.text}]}>
-              Tilføjet {daysAgo} dage siden
-            </Text>
+            {postObject.get('username') == username ? (
+              <TouchableOpacity onPress={showModal}>
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  size={15}
+                  style={[styles.trashIcon, {color: colors.iconLight}]}
+                />
+              </TouchableOpacity>
+            ) : (
+              <Text></Text>
+            )}
+            <Modal
+              isVisible={isModalVisible}
+              onBackdropPress={() => setModalVisible(false)}>
+              <View
+                style={[
+                  styles.modalContainer,
+                  {backgroundColor: colors.light},
+                ]}>
+                <Text
+                  style={styles.modalTitle}>
+                  Er du sikker på, at du vil slette dit opslag?
+                </Text>
+                <View style={{flexDirection: 'row', marginVertical: 10}}>
+                  <TouchableOpacity
+                    onPress={hideModal}
+                    style={styles.modalTextContainer1}>
+                    <Text style={styles.modalText}>Nej, det var en fejl</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={deletePost}
+                    style={styles.modalTextContainer2}>
+                    <Text style={styles.modalText}>Ja, slet mit opslag</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
         <View
@@ -84,11 +140,13 @@ const Post = ({postObject}) => {
               <Text style={[styles.text, {color: colors.text}]}>kommenter</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.numberComments}>
-            <Text style={{color: colors.text}}>
-              {postObject.get('numberOfComments')} kommentarer
-            </Text>
-          </View>
+          <TouchableOpacity onPress={() => handlePostClick()}>
+            <View style={styles.numberComments}>
+              <Text style={{color: colors.text}}>
+                {postObject.get('numberOfComments')} kommentarer
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -143,6 +201,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 10,
   },
+  upperDisplay: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  trashIcon: {
+    margin: 10,
+  },
   icon2: {
     transform: [{rotate: '50deg'}],
     marginRight: 10,
@@ -150,6 +215,37 @@ const styles = StyleSheet.create({
   addComment: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+  },
+  modalContainer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalTextContainer1: {
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: 'darkred',
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalTextContainer2: {
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: 'green',
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  modalTitle: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

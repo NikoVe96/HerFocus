@@ -44,7 +44,7 @@ export const Forum = ({route}) => {
         <WritePost
           onNewPost={handleNewPost}
           forumTitle={forumTitle}></WritePost>
-        <Feed forumTitle={forumTitle} posts={posts} />
+        <Feed forumTitle={forumTitle} posts={posts} setPosts={setPosts} />
       </ScrollView>
     </SafeAreaView>
   );
