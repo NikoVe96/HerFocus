@@ -67,7 +67,11 @@ function WritePost({forumTitle, onNewPost}) {
       </View>
       <TouchableOpacity
         onPress={() => handlePost()}
-        style={[styles.postBtn, {backgroundColor: colors.mainButton}]}>
+        style={[
+          styles.postBtn,
+          styles.shadowProp,
+          {backgroundColor: colors.mainButton},
+        ]}>
         <Text style={[styles.btnText, {color: colors.text}]}>Slå op</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -86,23 +90,24 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   writePost: {
-    width: 340,
+    width: '80%',
     height: 70,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
     backgroundColor: '#FFF6ED',
   },
   postBtn: {
-    width: 280,
+    width: '50%',
     height: 30,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 15,
-    backgroundColor: '#61646B',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+  },
+  shadowProp: {
+    shadowColor: '#443939',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
   btnText: {
     fontSize: 15,

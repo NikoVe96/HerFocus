@@ -47,7 +47,7 @@ export const FrontPage = () => {
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <HelloUser />
-        <Text style={styles.title}>Hvad vil du gerne lave i dag?</Text>
+        <Text style={[styles.title , {color: colors.text}]}>Hvad vil du gerne lave i dag?</Text>
         <View style={[styles.frontView, styles.shadowProp]}>
           <TouchableOpacity onPress={() => navigation.navigate('Structure')}>
             <ImageBackground
@@ -122,10 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   frontView: {
-    width: 330,
-    height: 140,
-    marginTop: 10,
-    alignItems: 'center',
+    width: '85%',
   },
   shadowProp: {
     shadowColor: '#443939',
@@ -134,12 +131,11 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   images: {
-    width: 320,
-    height: '100%',
     alignItems: 'center',
     overflow: 'hidden',
     borderRadius: 15,
     borderWidth: 1,
+    marginBottom: 15,
   },
   helloUser: {
     paddingLeft: 60,
@@ -166,6 +162,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     marginTop: 100,
+    marginBottom: 10,
     justifyContent: 'center',
   },
   text: {

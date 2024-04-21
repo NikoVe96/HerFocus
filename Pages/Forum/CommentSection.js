@@ -1,11 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import {useState} from 'react';
-import Comment from './Comment';
-import Parse from 'parse/react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from '@react-navigation/native';
 
 const CommentSection = ({comments}) => {
@@ -13,6 +9,8 @@ const CommentSection = ({comments}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <View
+          style={[styles.seperator, {backgroundColor: colors.border}]}></View>
         <View style={styles.sectionContent}>
           {comments.length == 0 ? (
             <Text></Text>
@@ -22,6 +20,7 @@ const CommentSection = ({comments}) => {
                 key={commentId}
                 style={[
                   styles.commentContainer,
+                  styles.shadowProp,
                   {backgroundColor: colors.notification},
                 ]}>
                 <View style={styles.userInfo}>
@@ -46,7 +45,11 @@ const CommentSection = ({comments}) => {
                   </View>
                 </View>
                 <View
-                  style={[styles.comment, {backgroundColor: colors.subButton}]}>
+                  style={[
+                    styles.comment,
+                    styles.shadowProp,
+                    {backgroundColor: colors.subButton},
+                  ]}>
                   <Text style={[styles.commentText, {color: colors.text}]}>
                     {comment.get('commentContent')}
                   </Text>
@@ -63,17 +66,6 @@ const CommentSection = ({comments}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    marginBottom: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  seperator: {
-    width: 320,
-    height: 1,
-    marginLeft: 15,
-    marginBottom: 20,
-    backgroundColor: 'black',
   },
   userInfo: {
     flexDirection: 'row',
@@ -89,26 +81,34 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   commentContainer: {
-    width: 350,
+    width: '95%',
     alignSelf: 'center',
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 20,
   },
   comment: {
-    alignSelf: 'flex-start',
+    width: '95%',
+    alignSelf: 'center',
     marginTop: 10,
-    marginLeft: 10,
     marginBottom: 10,
-    width: 325,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
   },
   commentText: {
     fontSize: 15,
     padding: 10,
+  },
+  seperator: {
+    alignSelf: 'center',
+    width: '90%',
+    height: 1,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  shadowProp: {
+    shadowColor: '#443939',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
 });
 

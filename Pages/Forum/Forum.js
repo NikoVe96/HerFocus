@@ -18,7 +18,6 @@ export const Forum = ({route}) => {
   }, [forumTitle]);
 
   function handleNewPost() {
-    //setPosts(currentPosts => [newPost, ...currentPosts]);
     postQuery();
   }
 
@@ -64,9 +63,7 @@ const styles = StyleSheet.create({
   descContainer: {
     marginTop: 20,
     marginBottom: 20,
-    width: 340,
-    marginLeft: 17,
-    alignSelf: 'flex-start',
+    width: '90%',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,

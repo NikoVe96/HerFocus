@@ -10,22 +10,27 @@ import {
 import {useState} from 'react';
 import Post from './Post';
 import Parse from 'parse/react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 
 const Feed = ({forumTitle, posts}) => {
-  //const [posts, setPosts] = useState([]);
+   const {colors} = useTheme();
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.seperator}></View>
-      <View style={styles.feedContent}>
-        {posts.length == 0 ? (
-          <Text></Text>
-        ) : (
-          posts.map((post, index) => (
-            <Post key={index} postObject={post}></Post>
-          ))
-        )}
+      <View style={styles.view}>
+        <View
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.border}]}></View>
+        <View style={styles.feedContent}>
+          {posts.length == 0 ? (
+            <Text></Text>
+          ) : (
+            posts.map((post, index) => (
+              <Post style={styles.postSize} key={index} postObject={post}></Post>
+            ))
+          )}
+        </View>
       </View>
     </ScrollView>
   );
@@ -36,11 +41,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   seperator: {
-    width: 310,
+    width: '80%',
+    alignSelf: 'center',
     height: 1,
-    marginLeft: 30,
     marginBottom: 20,
-    backgroundColor: 'black',
   },
 });
 

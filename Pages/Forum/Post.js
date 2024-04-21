@@ -43,41 +43,52 @@ const Post = ({postObject}) => {
   };
 
   return (
-    <View
-      style={[styles.postContainer, styles.shadowProp, {backgroundColor: colors.notification}]}>
-      <View style={styles.userInfo}>
-        <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
-        <View>
-          <Text style={[styles.user, {color: colors.text}]}>
-            {postObject.get('username')}
-          </Text>
-          <Text style={[styles.when, {color: colors.text}]}>
-            Tilføjet {daysAgo} dage siden
+    <View style={styles.container}>
+      <View
+        style={[
+          styles.postContainer,
+          styles.shadowProp,
+          {backgroundColor: colors.notification},
+        ]}>
+        <View style={styles.userInfo}>
+          <FontAwesomeIcon icon={faUser} style={styles.icon} size={30} />
+          <View>
+            <Text style={[styles.user, {color: colors.text}]}>
+              {postObject.get('username')}
+            </Text>
+            <Text style={[styles.when, {color: colors.text}]}>
+              Tilføjet {daysAgo} dage siden
+            </Text>
+          </View>
+        </View>
+        <View
+          style={[
+            styles.post,
+            styles.shadowProp,
+            {backgroundColor: colors.subButton},
+          ]}>
+          <Text style={[styles.postText, {color: colors.text}]}>
+            {postObject.get('postContent')}
           </Text>
         </View>
-      </View>
-      <View style={[styles.post, {backgroundColor: colors.subButton}]}>
-        <Text style={[styles.postText, {color: colors.text}]}>
-          {postObject.get('postContent')}
-        </Text>
-      </View>
-      <View style={styles.comments}>
-        <View style={styles.addComment}>
-          <TouchableOpacity onPress={() => handlePostClick()}>
-            <FontAwesomeIcon
-              icon={faPaperPlane}
-              style={[styles.icon2, {color: colors.iconLight}]}
-              size={15}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => handlePostClick()}>
-            <Text style={[styles.text, {color: colors.text}]}>kommenter</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.numberComments}>
-          <Text style={{color: colors.text}}>
-            {postObject.get('numberOfComments')} comments
-          </Text>
+        <View style={styles.comments}>
+          <View style={styles.addComment}>
+            <TouchableOpacity onPress={() => handlePostClick()}>
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                style={[styles.icon2, {color: colors.iconLight}]}
+                size={15}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handlePostClick()}>
+              <Text style={[styles.text, {color: colors.text}]}>kommenter</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.numberComments}>
+            <Text style={{color: colors.text}}>
+              {postObject.get('numberOfComments')} kommentarer
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -85,6 +96,10 @@ const Post = ({postObject}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+  },
   userInfo: {
     flexDirection: 'row',
     marginTop: 10,
@@ -99,29 +114,25 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   postContainer: {
-    width: 350,
-    alignSelf: 'center',
     borderRadius: 8,
     marginBottom: 20,
+    width: '95%',
+    alignSelf: 'center',
   },
-   shadowProp: {
+  shadowProp: {
     shadowColor: '#443939',
     shadowOffset: {width: 1, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
   post: {
-    alignSelf: 'flex-start',
     marginTop: 10,
-    marginLeft: 10,
+    alignSelf: 'center',
     marginBottom: 10,
-    width: 325,
-    borderColor: '#000000',
-    borderWidth: 1,
+    width: '95%',
     borderRadius: 8,
   },
   postText: {
-    color: 'black',
     fontSize: 15,
     padding: 10,
   },

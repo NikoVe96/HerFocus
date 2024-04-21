@@ -3,8 +3,16 @@ import CommentSection from './CommentSection';
 import WriteComment from './WriteComment';
 import Post from './Post';
 import { useRoute } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
+import {useTheme} from '@react-navigation/native';
 
 function IndividualPost({ route }) {
   const { postObject } = route.params;
@@ -12,6 +20,7 @@ function IndividualPost({ route }) {
   const [postContent, setPostContent] = useState('');
   const [numberOfComments, setCommentCount] = useState(0);
   const [allComments, setAllComments] = useState([]);
+  const {colors} = useTheme();
 
   useEffect(() => {
     fetchComments();
@@ -35,29 +44,32 @@ function IndividualPost({ route }) {
   }
 
   return (
-    <View style={styles.postContainer}>
-      <Post
-        postObject={postObject}
-        individualPostClickCallback={() => handleAddCommentClick(postObject)}
-      />
-      <WriteComment postId={postObject} onNewComment={handleNewComment} />
-      <View style={styles.seperator}></View>
-      <CommentSection comments={allComments} />
-    </View>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.postContainer}>
+          <Post
+          style={styles.post}
+            postObject={postObject}
+            individualPostClickCallback={() =>
+              handleAddCommentClick(postObject)
+            }
+          />
+          <WriteComment postId={postObject} onNewComment={handleNewComment} />
+          <CommentSection comments={allComments}/>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  postContainer: {
-    alignItems: 'center',
-    marginTop: 20,
+  container: {
+    flex: 1,
   },
-  seperator: {
-    width: 320,
-    height: 1,
-    marginLeft: 15,
-    marginBottom: 20,
-    backgroundColor: 'black',
+  postContainer: {
+    marginTop: 20,
+    width: '98%',
+    alignSelf: 'center',
   },
 });
 
