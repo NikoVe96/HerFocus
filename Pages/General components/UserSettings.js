@@ -61,7 +61,7 @@ export const UserSettings = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={{ justifyContent: 'center', padding: 10 }}>
+        <SafeAreaView style={{ justifyContent: 'center', paddingHorizontal: 10 }}>
             <ScrollView>
                 <Text style={{ fontSize: 30, fontWeight: 'bold', alignSelf: 'center', color: colors.text }}>Settings</Text>
                 <View style={{ borderWidth: 1, backgroundColor: colors.border, width: 300, marginBottom: 20, alignSelf: 'center', borderColor: colors.border, borderRadius: 10 }}></View>

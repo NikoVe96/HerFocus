@@ -16,7 +16,7 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
 Parse.serverURL = 'https://parseapi.back4app.com/'
 
-Notifications.setNotificationHandler({
+/* Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
@@ -77,16 +77,16 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token.data;
-}
+} */
 
 function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+  //const [expoPushToken, setExpoPushToken] = useState('');
+  //const [notification, setNotification] = useState(false);
+  //const notificationListener = useRef();
+  //const responseListener = useRef();
 
   useEffect(() => {
     const getTheme = async () => {
@@ -102,20 +102,20 @@ function App() {
       }
     };
 
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
+    /* registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+ 
+     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+       setNotification(notification);
+     });
+ 
+     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+       console.log(response);
+     });
+ 
+     return () => {
+       Notifications.removeNotificationSubscription(notificationListener.current);
+       Notifications.removeNotificationSubscription(responseListener.current);
+     }; */
 
     getTheme();
   }, []);

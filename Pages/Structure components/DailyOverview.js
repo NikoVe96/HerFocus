@@ -112,11 +112,11 @@ export const DailyOverview = () => {
                         : <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 10 }}>Du har klaret {taskProgress}% af dine opgaver i dag. Godt arbejde!</Text>}
                 <View style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
             </View>
-            <View style={[styles.upNext, { shadowColor: colors.border, borderColor: colors.mainButton, backgroundColor: colors.mainButton }]}>
+            <View style={[styles.upNext, { shadowColor: colors.border, borderColor: colors.subButton, backgroundColor: colors.subButton }]}>
                 <Swiper
                     loop={false}
                     showsPagination={true}
-                    dotStyle={{ backgroundColor: colors.subButton, width: 150, height: 8, borderRadius: 4, marginHorizontal: 4 }}
+                    dotStyle={{ backgroundColor: colors.mainButton, width: 150, height: 8, borderRadius: 4, marginHorizontal: 4 }}
                     activeDotStyle={{ backgroundColor: colors.border, width: 150, height: 8, borderRadius: 4, marginHorizontal: 4 }}
                     paginationStyle={{ bottom: 10 }}
                 >
@@ -144,9 +144,9 @@ export const DailyOverview = () => {
                                         <BouncyCheckbox
                                             key={remainingTasksArray[0].id}
                                             size={25}
-                                            fillColor={colors.border}
+                                            fillColor={colors.mainButton}
                                             unfillColor={colors.background}
-                                            iconStyle={{ borderColor: "black" }}
+                                            iconStyle={{ borderColor: colors.subButton }}
                                             innerIconStyle={{ borderWidth: 2 }}
                                             onPress={() => taskCompleted(remainingTasksArray[0])}
                                             isChecked={checked}

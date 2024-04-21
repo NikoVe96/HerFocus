@@ -11,20 +11,20 @@ export const BottomNavigation = () => {
     return (
         <View style={{ flexDirection: 'row', height: 60, backgroundColor: colors.bars }}>
             <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('Front page')}>
-                <FontAwesomeIcon icon={faHouse} size={25} color={colors.iconLight} />
-                <Text style={{ color: colors.iconLight, fontWeight: 'bold' }}> Home </Text>
+                <FontAwesomeIcon icon={faHouse} size={25} color={colors.iconDark} />
+                <Text style={{ color: colors.iconDark, fontWeight: 'bold' }}>Hjem</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('Add task')}>
-                <FontAwesomeIcon icon={faCirclePlus} size={25} color={colors.iconLight} />
-                <Text style={{ color: colors.iconLight, fontWeight: 'bold' }}> New task </Text>
+                <FontAwesomeIcon icon={faCirclePlus} size={25} color={colors.iconDark} />
+                <Text style={{ color: colors.iconDark, fontWeight: 'bold' }}>Ny to-do</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('Daily overview')}>
-                <FontAwesomeIcon icon={faSpinner} size={25} color={colors.iconLight} />
-                <Text style={{ color: colors.iconLight, fontWeight: 'bold' }}> Daily tasks </Text>
+                <FontAwesomeIcon icon={faSpinner} size={25} color={colors.iconDark} />
+                <Text style={{ color: colors.iconDark, fontWeight: 'bold' }}>I dag</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('Calendar')}>
-                <FontAwesomeIcon icon={faCalendar} size={25} color={colors.iconLight} />
-                <Text style={{ color: colors.iconLight, fontWeight: 'bold' }}> Calendar </Text>
+                <FontAwesomeIcon icon={faCalendar} size={25} color={colors.iconDark} />
+                <Text style={{ color: colors.iconDark, fontWeight: 'bold' }}>Kalender</Text>
             </TouchableOpacity>
         </View>
     );

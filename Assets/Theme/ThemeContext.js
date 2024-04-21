@@ -1,7 +1,7 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
-import {Text, TouchableOpacity, View, Alert} from 'react-native';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { Text, TouchableOpacity, View, Alert } from 'react-native';
 import Parse from 'parse/react-native';
-import {DefaultTheme} from '@react-navigation/native';
+import { DefaultTheme } from '@react-navigation/native';
 
 const ThemeContext = createContext();
 
@@ -64,7 +64,7 @@ const YellowTheme = {
     notification: '#FFEABF',
     iconLight: 'white',
     iconDark: 'black',
-    mainButton: '#DC9B18',
+    mainButton: '#F2C56B',
     subButton: '#FFEABF',
   },
 };
@@ -166,7 +166,7 @@ export function useThemeContext() {
   return useContext(ThemeContext);
 }
 
-export const ThemeProvider = ({children}) => {
+export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState();
   const [ID, setID] = useState('');
 
@@ -210,7 +210,7 @@ export const ThemeProvider = ({children}) => {
   };
 
   return (
-    <ThemeContext.Provider value={{theme, updateTheme}}>
+    <ThemeContext.Provider value={{ theme, updateTheme }}>
       {children}
     </ThemeContext.Provider>
   );
