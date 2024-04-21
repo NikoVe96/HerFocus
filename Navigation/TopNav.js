@@ -17,10 +17,10 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.bars,
       }}>
       <TouchableOpacity onPress={() => goBack()}>
-        <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.icons} />
+        <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.iconLight} />
       </TouchableOpacity>
       <View style={{ justifyContent: 'center' }}>
         <Image
@@ -29,7 +29,7 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
         />
       </View>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <FontAwesomeIcon icon={faBars} size={30} color={colors.icons} />
+        <FontAwesomeIcon icon={faBars} size={30} color={colors.iconLight} />
       </TouchableOpacity>
     </View>
   );
