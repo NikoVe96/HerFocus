@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,12 +12,12 @@ import {
   ImageBackground,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import {useNavigation, useTheme} from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 // Component for "hello user", maybe we can put it in a component for itself it is should be reused
 export const HelloUser = () => {
   const [username, setUsername] = useState('');
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -33,7 +33,7 @@ export const HelloUser = () => {
   }, [username]);
 
   return (
-    <Text style={[styles.helloUser, {color: colors.primary}]}>
+    <Text style={[styles.helloUser, { color: colors.primary }]}>
       Hi, {username}!
     </Text>
   );
@@ -42,7 +42,7 @@ export const HelloUser = () => {
 
 export const FrontPage = () => {
   const navigation = useNavigation();
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   return (
     <ScrollView>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: '#443939',
-    shadowOffset: {width: 1, height: 2},
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
