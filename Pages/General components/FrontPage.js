@@ -33,7 +33,11 @@ export const HelloUser = () => {
   }, [username]);
 
   return (
-    <Text style={[styles.helloUser, {color: colors.text}]}>
+    <Text
+      style={[
+        styles.helloUser,
+        {color: colors.text, fontSize: 20 * scaleFactor}
+      ]}>
       Hej, {username}!
     </Text>
   );
@@ -42,12 +46,18 @@ export const HelloUser = () => {
 export const FrontPage = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
+    const {width, height} = Dimensions.get('window');
+    const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <HelloUser />
-        <Text style={[styles.title, {color: colors.text}]}>
+        <Text
+          style={[
+            styles.title,
+            {color: colors.text, fontSize: 20 * scaleFactor}
+          ]}>
           Hvad vil du gerne lave i dag?
         </Text>
         <TouchableOpacity
@@ -63,8 +73,7 @@ export const FrontPage = () => {
                   height: 100,
                   marginTop: 10,
                   marginBottom: 10,
-                }}
-                sharedTransitionTag="structure"></Image>
+                }}></Image>
               <Text style={styles.text}>Planlægge</Text>
             </View>
           </View>
@@ -82,8 +91,8 @@ export const FrontPage = () => {
                   height: 100,
                   marginTop: 10,
                   marginBottom: 10,
-                }}
-                sharedTransitionTag="structure"></Image>
+                }}>
+                </Image>
               <Text style={styles.text}>Lære</Text>
             </View>
           </View>
@@ -102,8 +111,7 @@ export const FrontPage = () => {
                   height: 100,
                   marginTop: 10,
                   marginBottom: 10,
-                }}
-                sharedTransitionTag="structure"></Image>
+                }}></Image>
               <Text style={styles.text}>Snakke med andre</Text>
             </View>
           </View>
@@ -121,8 +129,7 @@ export const FrontPage = () => {
                   height: 100,
                   marginTop: 10,
                   marginBottom: 10,
-                }}
-                sharedTransitionTag="structure"></Image>
+                }}></Image>
               <Text style={styles.text}>Læse i vidensbanken</Text>
             </View>
           </View>
@@ -142,7 +149,6 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
-    fontSize: 22,
     marginTop: 20,
     marginBottom: 10,
   },
@@ -150,7 +156,6 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
-    fontSize: 22,
     marginBottom: 15,
   },
   text: {
