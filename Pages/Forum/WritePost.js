@@ -7,17 +7,17 @@ import {
   TextInput,
   Image
 } from 'react-native';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
-import {useTheme} from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useTheme } from '@react-navigation/native';
 
-function WritePost({forumTitle, onNewPost}) {
+function WritePost({ forumTitle, onNewPost }) {
   const [post, setPost] = useState('');
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('');
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -26,7 +26,7 @@ function WritePost({forumTitle, onNewPost}) {
         const username = currentUser.get('username');
         const avatar = currentUser.get('avatar');
         setUsername(username);
-        setAvatar(avatar); 
+        setAvatar(avatar);
       } else {
         console.log('Error fetching user data');
       }
@@ -75,9 +75,9 @@ function WritePost({forumTitle, onNewPost}) {
         style={[
           styles.postBtn,
           styles.shadowProp,
-          {backgroundColor: colors.mainButton},
+          { backgroundColor: colors.mainButton },
         ]}>
-        <Text style={[styles.btnText, {color: colors.text}]}>Slå op</Text>
+        <Text style={[styles.btnText, { color: colors.text }]}>Slå op</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 70,
     borderRadius: 8,
-    backgroundColor: '#FFF6ED',
+    backgroundColor: 'white',
   },
   postBtn: {
     width: '50%',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: '#443939',
-    shadowOffset: {width: 1, height: 2},
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   avatarImage: {
-    width: 10, 
+    width: 10,
     height: 10,
     marginRight: 10,
   },

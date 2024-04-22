@@ -58,7 +58,7 @@ const YellowTheme = {
   colors: {
     ...DefaultTheme.colors,
     bars: '#DC9B18',
-    background: '#FFFCF9',
+    background: '#FFF6ED',
     text: 'black',
     border: '#DC9B18',
     notification: '#FFEABF',

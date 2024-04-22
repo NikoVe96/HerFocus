@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import WriteComment from './WriteComment';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser, faPaperPlane, faTrash} from '@fortawesome/free-solid-svg-icons';
-import {useEffect, useState} from 'react';
-import {useNavigation, useTheme} from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser, faPaperPlane, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Modal from 'react-native-modal';
 import getAvatarImage from '../General components/AvatarUtils';
 
 
-const Post = ({postObject, onDelete}) => {
+const Post = ({ postObject, onDelete }) => {
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
@@ -19,32 +19,32 @@ const Post = ({postObject, onDelete}) => {
   );
   let daysAgo = Math.round(
     (new Date().getTime() - new Date(postObject.get('createdAt')).getTime()) /
-      (1000 * 3600 * 24),
+    (1000 * 3600 * 24),
   );
-  const {colors} = useTheme();
-   const avatar = postObject.get('avatar');
-   const avatarImageSource = getAvatarImage(avatar);
+  const { colors } = useTheme();
+  const avatar = postObject.get('avatar');
+  const avatarImageSource = getAvatarImage(avatar);
 
   function handlePostClick() {
-    navigation.navigate('IndividualPost', {postObject: postObject});
+    navigation.navigate('IndividualPost', { postObject: postObject });
   }
 
-    useEffect(() => {
-      async function getCurrentUser() {
-          const currentUser = await Parse.User.currentAsync();
-            setUsername(currentUser.getUsername());
-        }
-      getCurrentUser();
-    }, []);
+  useEffect(() => {
+    async function getCurrentUser() {
+      const currentUser = await Parse.User.currentAsync();
+      setUsername(currentUser.getUsername());
+    }
+    getCurrentUser();
+  }, []);
 
-    const deletePost = async () => {
-      try {
-        await postObject.destroy();
-        onDelete(postObject.id); 
-      } catch (error) {
-        console.error('Failed to delete the post:', error);
-      }
-    };
+  const deletePost = async () => {
+    try {
+      await postObject.destroy();
+      onDelete(postObject.id);
+    } catch (error) {
+      console.error('Failed to delete the post:', error);
+    }
+  };
 
 
   useEffect(() => {
@@ -52,13 +52,13 @@ const Post = ({postObject, onDelete}) => {
   }, [postObject.get('numberOfComments')]);
 
 
-   const showModal = () => {
-     setModalVisible(true);
-   };
+  const showModal = () => {
+    setModalVisible(true);
+  };
 
-   const hideModal = () => {
-     setModalVisible(false);
-   };
+  const hideModal = () => {
+    setModalVisible(false);
+  };
 
 
   return (
@@ -67,18 +67,18 @@ const Post = ({postObject, onDelete}) => {
         style={[
           styles.postContainer,
           styles.shadowProp,
-          {backgroundColor: colors.notification},
+          { backgroundColor: colors.mainButton },
         ]}>
         <View style={styles.upperDisplay}>
           <View style={styles.userInfo}>
-            <Image source={avatarImageSource} style={styles.avatarImage}/>
+            <Image source={avatarImageSource} style={styles.avatarImage} />
             <View>
             </View>
             <View style={styles.userText}>
-              <Text style={[styles.user, {color: colors.text}]}>
+              <Text style={[styles.user, { color: colors.text }]}>
                 {postObject.get('username')}
               </Text>
-              <Text style={[styles.when, {color: colors.text}]}>
+              <Text style={[styles.when, { color: colors.text }]}>
                 Tilføjet {daysAgo} dage siden
               </Text>
             </View>
@@ -89,7 +89,7 @@ const Post = ({postObject, onDelete}) => {
                 <FontAwesomeIcon
                   icon={faTrash}
                   size={15}
-                  style={[styles.trashIcon, {color: colors.iconLight}]}
+                  style={[styles.trashIcon, { color: colors.iconLight }]}
                 />
               </TouchableOpacity>
             ) : (
@@ -101,12 +101,12 @@ const Post = ({postObject, onDelete}) => {
               <View
                 style={[
                   styles.modalContainer,
-                  {backgroundColor: colors.light},
+                  { backgroundColor: colors.light },
                 ]}>
                 <Text style={styles.modalTitle}>
                   Er du sikker på, at du vil slette dit opslag?
                 </Text>
-                <View style={{flexDirection: 'row', marginVertical: 10}}>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                   <TouchableOpacity
                     onPress={hideModal}
                     style={styles.modalTextContainer1}>
@@ -126,9 +126,9 @@ const Post = ({postObject, onDelete}) => {
           style={[
             styles.post,
             styles.shadowProp,
-            {backgroundColor: colors.subButton},
+            { backgroundColor: colors.subButton },
           ]}>
-          <Text style={[styles.postText, {color: colors.text}]}>
+          <Text style={[styles.postText, { color: colors.text }]}>
             {postObject.get('postContent')}
           </Text>
         </View>
@@ -137,17 +137,17 @@ const Post = ({postObject, onDelete}) => {
             <TouchableOpacity onPress={() => handlePostClick()}>
               <FontAwesomeIcon
                 icon={faPaperPlane}
-                style={[styles.icon2, {color: colors.iconLight}]}
+                style={[styles.icon2, { color: colors.iconLight }]}
                 size={15}
               />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handlePostClick()}>
-              <Text style={[styles.text, {color: colors.text}]}>kommenter</Text>
+              <Text style={[styles.text, { color: colors.text }]}>kommenter</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => handlePostClick()}>
             <View style={styles.numberComments}>
-              <Text style={{color: colors.text}}>
+              <Text style={{ color: colors.text }}>
                 {postObject.get('numberOfComments')} kommentarer
               </Text>
             </View>
@@ -186,9 +186,10 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: '#443939',
-    shadowOffset: {width: 1, height: 2},
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
+    elevation: 10
   },
   post: {
     marginTop: 10,
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   icon2: {
-    transform: [{rotate: '50deg'}],
+    transform: [{ rotate: '50deg' }],
     marginRight: 10,
   },
   addComment: {
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  avatarImage:{
+  avatarImage: {
     width: 40,
     height: 40,
   }

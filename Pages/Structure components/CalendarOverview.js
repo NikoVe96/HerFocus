@@ -31,10 +31,11 @@ export const CalendarOverview = ({ navigation }) => {
     const [dayTasksArray, setDayTasksArray] = useState([]);
     const [selectedId, setSelectedId] = useState('month');
     const [username, setUsername] = useState('');
+    const { width, height } = Dimensions.get('window');
+    const scaleFactor = Math.min(width / 375, height / 667);
 
     const allDayArray = [
-        { taskName: "Dad's birthday", color: 'lightblue', emoji: '😝' },
-        { taskName: "Påske", color: 'lightyellow', emoji: '😝' },
+        { taskName: "Fars fødselsdag", color: 'lightblue', emoji: '🇩🇰' },
     ];
 
     /*const marked = {
@@ -43,7 +44,6 @@ export const CalendarOverview = ({ navigation }) => {
         '2024-03-24': { dots: [event, relaxing] },
     };*/
     const [markedDaysArray, setMarkedDaysArray] = useState([]);
-    const width = Dimensions.get('window').width;
     const [checked, setChecked] = useState(false);
     const [chosenDate, setChosenDate] = useState('');
     const [ID, setID] = useState('');
@@ -120,7 +120,7 @@ export const CalendarOverview = ({ navigation }) => {
 
     async function dayTasks(day) {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const month = monthNames[day.getMonth()];
+        const month = monthNames[day.month];
         fullDay = day.day + ' ' + month + ' ' + day.year;
         setChosenDate(fullDay);
 
@@ -187,18 +187,31 @@ export const CalendarOverview = ({ navigation }) => {
     function calendarLayout() {
         if (selectedId === 'month') {
             return (
-                <Calendar
-                    showWeekNumbers={true}
-                    firstDay={1}
-                    headerStyle={{ backgroundColor: colors.mainButton, borderWidth: 1, borderColor: colors.divider, borderRadius: 10, }}
-                    enableSwipeMonths={true}
-                    onDayPress={(day) => showDayModal(day)}
-                    style={{ padding: 20, marginVertical: 20, borderWidth: 1, marginHorizontal: 5, borderRadius: 10, borderColor: colors.border, shadowOffset: { width: 20, height: 20 } }}
-                    markingType='multi-dot'
-                    theme={{ selectedDayBackgroundColor: colors.mainButton, arrowColor: colors.bars, textSectionTitleColor: 'white', selectedDayTextColor: colors.background, dayTextColor: colors.border, monthTextColor: 'white', indicatorColor: colors.border, todayTextColor: colors.background, textMonthFontSize: 24, textDayFontSize: 18, textDayHeaderFontSize: 16, todayBackgroundColor: colors.mainButton }}
-                //markedDates={marked}
-                >
-                </Calendar>
+                <View style={{ height: 1000 }}>
+                    <Calendar
+                        showWeekNumbers={true}
+                        firstDay={1}
+                        headerStyle={{ backgroundColor: colors.mainButton, borderWidth: 1, borderColor: colors.mainButton, borderRadius: 10, }}
+                        enableSwipeMonths={true}
+                        onDayPress={(day) => showDayModal(day)}
+                        style={styles.calendar}
+                        markingType='multi-dot'
+                        theme={{
+                            selectedDayBackgroundColor: colors.mainButton,
+                            arrowColor: colors.bars,
+                            selectedDayTextColor: colors.background,
+                            dayTextColor: colors.border,
+                            indicatorColor: colors.border,
+                            todayTextColor: colors.background,
+                            textMonthFontSize: 24 * scaleFactor,
+                            textDayFontSize: 18 * scaleFactor,
+                            textDayHeaderFontSize: 16 * scaleFactor,
+                            todayBackgroundColor: colors.mainButton
+                        }}
+                    //markedDates={marked}
+                    >
+                    </Calendar>
+                </View>
             );
         } else if (selectedId === 'day') {
             return (
@@ -233,7 +246,7 @@ export const CalendarOverview = ({ navigation }) => {
                                     <View>
                                         {allDayArray.map((item, index) => (
                                             <View key={index} style={{ flex: 7, alignItems: 'center', borderWidth: 1, padding: 5, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.color, borderRadius: 10, borderColor: colors.border, }}>
-                                                <Text style={{ fontSize: 20, marginRight: 10, marginLeft: 5 }}>{item.emoji}</Text>
+                                                <Text style={{ fontSize: 20, marginRight: 10, marginLeft: 2 }}>{item.emoji}</Text>
                                                 <Text style={{ fontSize: 18 }}>{item.taskName}</Text>
                                             </View>
                                         ))}
@@ -247,7 +260,7 @@ export const CalendarOverview = ({ navigation }) => {
                                             <View key={index} style={{ flexDirection: 'row' }}>
                                                 <BouncyCheckbox
                                                     size={30}
-                                                    fillColor={colors.subButton}
+                                                    fillColor={colors.mainButton}
                                                     unfillColor="#FFFFFF"
                                                     iconStyle={{ borderColor: "black" }}
                                                     innerIconStyle={{ borderWidth: 2 }}
@@ -257,7 +270,7 @@ export const CalendarOverview = ({ navigation }) => {
                                                 />
                                                 <View style={{ flex: 7, alignItems: 'center', padding: 2, borderWidth: 1, padding: 5, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.get('color'), borderRadius: 10, borderColor: colors.border, }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                        <Text style={{ fontSize: 20, marginRight: 10, marginLeft: 5 }}>{item.get('emoji')}</Text>
+                                                        <Text style={{ fontSize: 20, marginRight: 10, }}>{item.get('emoji')}</Text>
                                                         <Text style={{ marginHorizontal: 1, fontSize: 14 }}>{item.get('startTime')} - {item.get('endTime')}</Text>
                                                     </View>
                                                     <Text style={{ fontSize: 24, marginHorizontal: 5 }}>|</Text>
@@ -282,9 +295,9 @@ export const CalendarOverview = ({ navigation }) => {
             <SafeAreaView >
                 <View style={{ alignContent: 'stretch', justifyContent: 'center' }}>
                     <View style={{ alignContent: 'stretch', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-                        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Calendar page</Text>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Kalender</Text>
                     </View>
-                    <View style={{ borderWidth: 1, marginHorizontal: 15, marginBottom: 20, backgroundColor: 'black' }}></View>
+                    <View style={{ borderWidth: 1, marginHorizontal: 15, marginBottom: 20, backgroundColor: colors.border, borderRadius: 10, borderColor: colors.border }}></View>
                     <RadioGroup
                         radioButtons={radioButtons}
                         onPress={setSelectedId}
@@ -293,7 +306,7 @@ export const CalendarOverview = ({ navigation }) => {
                         containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
                         size={30}
                     />
-                    <View>
+                    <View style={{ height: '80%' }}>
                         {calendarLayout()}
                     </View>
                     <Modal
@@ -349,9 +362,9 @@ export const CalendarOverview = ({ navigation }) => {
                             </View>
                         </View>
                     </Modal>
-
-                    <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'flex-end', marginHorizontal: 10, backgroundColor: colors.background, }}>
-                        <Menu style={{ margin: 10 }}>
+                    {/*
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, backgroundColor: colors.background, }}>
+                        <Menu style={{}}>
                             <MenuTrigger style={{ backgroundColor: colors.mainButton, padding: 10, borderWidth: 1, borderColor: colors.mainButton, borderRadius: 10, elevation: 10 }}
                             >
                                 <FontAwesomeIcon icon={faPlus} size={30} color={colors.border} />
@@ -373,6 +386,7 @@ export const CalendarOverview = ({ navigation }) => {
                             </MenuOptions>
                         </Menu>
                     </View>
+                                */}
                 </View>
             </SafeAreaView >
         </MenuProvider >
@@ -387,47 +401,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    wrapper: {},
-    slide1: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'red'
-    },
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'orange'
-    },
-    slide3: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'lightblue'
-    },
-    slide4: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'blue'
-    },
-    slide5: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'lightgreen'
-    },
-    image: {
-        width: 50,
-        height: 50,
-        margin: 20
-    },
-    text: {
-        color: '#fff',
-        fontSize: 30,
-        fontWeight: 'bold'
     },
     menuOptionStyle: {
         padding: 10,
@@ -450,6 +423,18 @@ const styles = StyleSheet.create({
         shadowRadius: 0,
         elevation: 0,
     },
+    calendar: {
+        padding: 20,
+        marginVertical: 20,
+        borderWidth: 1,
+        marginHorizontal: 5,
+        borderRadius: 10,
+        borderColor: 'white',
+        height: '80%'
+    },
+    calendarTheme: {
+        textSectionTitleColor: 'white',
+    }
 });
 
 export default CalendarOverview;

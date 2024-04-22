@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@react-navigation/native';
 
-function AccordionItem({ children, title, icon }) {
+function AccordionItem({ children, title, icon, emoji }) {
     const [expanded, setExpanded] = useState(false);
     const { colors } = useTheme();
 
@@ -18,7 +18,10 @@ function AccordionItem({ children, title, icon }) {
         <View style={styles.accordContainer}>
             <TouchableOpacity style={styles.accordHeader} onPress={toggleItem}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <FontAwesomeIcon icon={icon} size={20} color={colors.bars} style={{ marginRight: 10 }} />
+                    {icon !== null ?
+                        <FontAwesomeIcon icon={icon} size={20} color={colors.bars} style={{ marginRight: 10 }} />
+                        : <Text style={{ fontSize: 26, marginRight: 10 }}>{emoji}</Text>
+                    }
                     <Text style={[styles.accordTitle, { color: colors.bars }]}>{title}</Text>
                 </View>
                 <FontAwesomeIcon icon={faCaretDown} color={colors.bars} />
