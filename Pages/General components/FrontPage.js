@@ -5,11 +5,9 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
-  useColorScheme,
-  Appearance,
   ScrollView,
   Image,
-  ImageBackground,
+  Dimensions
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
@@ -18,6 +16,8 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 export const HelloUser = () => {
   const [username, setUsername] = useState('');
   const { colors } = useTheme();
+  const {width, height} = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -47,69 +47,86 @@ export const FrontPage = () => {
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <HelloUser />
-        <Text style={[styles.title , {color: colors.text}]}>Hvad vil du gerne lave i dag?</Text>
-        <View style={[styles.frontView, styles.shadowProp]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Structure')}>
-            <ImageBackground
-              source={require('../../Assets/images/Struktur.png')}
-              style={styles.images}
-              resizeMode="cover">
-              <TouchableOpacity
-                style={[styles.button, {backgroundColor: colors.subButton}]}
-                onPress={() => navigation.navigate('Structure')}>
-                <Text style={[styles.text, {color: colors.text}]}>
-                  Planlægge
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.frontView, styles.shadowProp]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Pick module')}>
-            <ImageBackground
-              source={require('../../Assets/images/Learning2.png')}
-              style={styles.images}
-              resizeMode="cover">
-              <TouchableOpacity
-                style={[styles.button, {backgroundColor: colors.subButton}]}
-                onPress={() => navigation.navigate('Pick module')}>
-                <Text style={[styles.text, {color: colors.text}]}>Lære</Text>
-              </TouchableOpacity>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.frontView, styles.shadowProp]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Pick subject')}>
-            <ImageBackground
-              source={require('../../Assets/images/Forums2.png')}
-              style={styles.images}
-              resizeMode="cover">
-              <TouchableOpacity
-                style={[styles.button, {backgroundColor: colors.subButton}]}
-                onPress={() => navigation.navigate('Pick subject')}>
-                <Text style={[styles.text, {color: colors.text}]}>
-                  Snakke med andre
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.frontView, styles.shadowProp]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Pick topic')}>
-            <ImageBackground
-              source={require('../../Assets/images/Reading.png')}
-              style={styles.images}
-              resizeMode="cover">
-              <TouchableOpacity
-                style={[styles.button, {backgroundColor: colors.subButton}]}
-                onPress={() => navigation.navigate('Pick topic')}>
-                <Text style={[styles.text, {color: colors.text}]}>
-                  Læse i vidensbanken
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
+        <Text style={[styles.title, {color: colors.text}]}>
+          Hvad vil du gerne lave i dag?
+        </Text>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Structure')}>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/2-removebg-preview.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+                sharedTransitionTag="structure"></Image>
+              <Text style={styles.text}>Planlægge</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Pick module')}>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/4-removebg-preview.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+                sharedTransitionTag="structure"></Image>
+              <Text style={styles.text}>Lære</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Pick subject')}>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/1-removebg-preview.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+                sharedTransitionTag="structure"></Image>
+              <Text style={styles.text}>Snakke med andre</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Pick topic')}>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/3-removebg-preview.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
+                sharedTransitionTag="structure"></Image>
+              <Text style={styles.text}>Læse i vidensbanken</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </SafeAreaView>
     </ScrollView>
   );
@@ -117,33 +134,15 @@ export const FrontPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     flex: 1,
     marginBottom: 30,
-  },
-  frontView: {
-    width: '85%',
-  },
-  shadowProp: {
-    shadowColor: '#443939',
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 10,
-  },
-  images: {
-    alignItems: 'center',
-    overflow: 'hidden',
-    borderRadius: 15,
-    borderWidth: 1,
-    marginBottom: 15,
+    width: '100%',
   },
   helloUser: {
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
     fontSize: 22,
-    color: 'black',
     marginTop: 20,
     marginBottom: 10,
   },
@@ -152,23 +151,33 @@ const styles = StyleSheet.create({
     paddingRight: 60,
     textAlign: 'center',
     fontSize: 22,
-    color: 'black',
     marginBottom: 15,
-  },
-  button: {
-    width: 210,
-    height: 30,
-    backgroundColor: '#FFEABF',
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginTop: 100,
-    marginBottom: 10,
-    justifyContent: 'center',
   },
   text: {
     textAlign: 'center',
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  buttonGrad: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+    position: 'absolute',
+    bottom: 5,
+    backgroundColor: '#FFEABF',
+    alignItems: 'center',
+  },
+  buttonParent: {
+    width: '90%',
+    height: 150,
+    borderRadius: 10,
+    backgroundColor: '#DC9B18',
+    alignSelf: 'center',
+    elevation: 10,
+    zIndex: 1,
+  },
+  press: {
+    marginBottom: 15,
   },
 });
 
