@@ -4,18 +4,19 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation, useTheme} from '@react-navigation/native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, { cloneElement, useEffect, useState } from 'react';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import Markdown from 'react-native-markdown-display';
 
-export const ArticlesDiagnosed = ({route}) => {
+export const ArticlesDiagnosed = ({ route }) => {
   const navigation = useNavigation();
   const [articlesList, setArticlesList] = useState([]);
-  const {subject} = route.params;
-  const {colors} = useTheme();
+  const { subject } = route.params;
+  const { colors } = useTheme();
 
   useEffect(() => {
     try {
@@ -36,7 +37,7 @@ export const ArticlesDiagnosed = ({route}) => {
   }
 
   const readArticle = article => {
-    navigation.navigate('View article', {article: article});
+    navigation.navigate('View article', { article: article });
   };
 
   return (
@@ -46,9 +47,10 @@ export const ArticlesDiagnosed = ({route}) => {
           <Text style={styles.title}>Her kan du vælge en artikel.</Text>
           <Text style={styles.title2}>God læsning!</Text>
           {articlesList.length == 0 ? (
-            <Text style={{textAlign: 'center', fontSize: 24}}>
-              Loading articles...
-            </Text>
+            <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+              <ActivityIndicator size={'large'} color={colors.border} />
+              <Text style={{ fontSize: 20 }}>Loader artikler ...</Text>
+            </View>
           ) : (
             articlesList.map((item, index) => (
               <TouchableOpacity
@@ -56,7 +58,7 @@ export const ArticlesDiagnosed = ({route}) => {
                 style={[
                   styles.knowledgeView,
                   styles.shadowProp,
-                  {backgroundColor: colors.subButton},
+                  { backgroundColor: colors.subButton },
                 ]}
                 onPress={() => readArticle(item)}>
                 <Text
@@ -74,7 +76,7 @@ export const ArticlesDiagnosed = ({route}) => {
                     width: 250,
                     marginVertical: 5,
                   }}></View>
-                <Text numberOfLines={3} style={{fontStyle: 'italic'}}>
+                <Text numberOfLines={3} style={{ fontStyle: 'italic' }}>
                   {item.get('text').replaceAll(/#|-|>|/gi, '')}
                 </Text>
               </TouchableOpacity>
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: '#443939',
-    shadowOffset: {width: 1, height: 2},
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },

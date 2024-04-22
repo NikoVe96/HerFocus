@@ -8,6 +8,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
@@ -63,7 +64,10 @@ export const ModulesOverview = ({ route }) => {
         <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
         <View style={{ marginTop: 30 }}>
           {modules.length == 0 ? (
-            <Text>Loading...</Text>
+            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+              <ActivityIndicator size={'large'} color={colors.border} />
+              <Text style={{ fontSize: 20 }}>Loader læringsmoduler ...</Text>
+            </View>
           ) : (
             modules.map((item, index) => {
               const moduleSignature = `${item.get('name')} ${item.get('subject',)}`;

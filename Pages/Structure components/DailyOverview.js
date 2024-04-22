@@ -125,7 +125,7 @@ export const DailyOverview = () => {
                     }}>
                         {remainingTasksArray.length < 1 ? (
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text>Loading...</Text>
+                                <Text style={{ fontSize: 24, textAlign: 'center' }}>Du har ikke noget på din to-do liste</Text>
                             </View>
                         ) : (
                             <>
@@ -166,7 +166,7 @@ export const DailyOverview = () => {
                     }}>
                         {remainingTasksArray.length < 2 ? (
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text>Loading...</Text>
+                                <Text style={{ fontSize: 24, textAlign: 'center' }}>Du har ikke noget på din to-do liste</Text>
                             </View>
                         ) : (
                             <>
