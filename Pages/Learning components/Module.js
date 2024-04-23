@@ -13,7 +13,7 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import Swiper from 'react-native-swiper';
 import LearningProgressHeader from '../../Components/LearningProgressHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Quiz from '../../Components/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -31,6 +31,7 @@ export const Module = ({ route }) => {
   const [questions, setQuestions] = useState([]);
   const [keyPoints, setKeyPoints] = useState([]);
   const swiperRef = useRef(null);
+  const { colors } = useTheme();
 
   const handleSlide = index => {
     Animated.parallel([
@@ -78,7 +79,7 @@ export const Module = ({ route }) => {
     result.addUnique('modulesCompleted', moduleName);
     result.save();
 
-    onNewCompletion;
+    //onNewCompletion;
 
     navigation.navigate('Module overview', {
       subject: subject,
@@ -96,28 +97,12 @@ export const Module = ({ route }) => {
         description={description}
         image={image}
       />
-      <View style={{ flex: 8, backgroundColor: 'lightyellow' }}>
+      <View style={{ flex: 8, backgroundColor: colors.background }}>
         <Swiper
           loop={false}
           showsPagination={false}
-          dotStyle={{
-            backgroundColor: 'rgba(0,0,0,.2)',
-            width: 70,
-            height: 8,
-            borderRadius: 4,
-            marginHorizontal: 4,
-          }}
-          activeDotStyle={{
-            backgroundColor: '#000',
-            width: 70,
-            height: 8,
-            borderRadius: 4,
-            marginHorizontal: 4,
-          }}
-          paginationStyle={{ bottom: 10 }}
           onIndexChanged={index => handleSlide(index)}
           scrollEnabled={false}
-          buttonWrapperStyle={{ alignItems: 'flex-start' }}
           ref={swiperRef}>
           <ScrollView style={{ flex: 1 }}>
             <Image
@@ -127,7 +112,7 @@ export const Module = ({ route }) => {
               <Text style={styles.takeawayHeader}>
                 Har du før været i denne situation?
               </Text>
-              <Text>{intro1}</Text>
+              <Text style={styles.text}>{intro1}</Text>
             </View>
             <View
               style={{
@@ -138,9 +123,9 @@ export const Module = ({ route }) => {
               }}>
               <View style={{ marginTop: 20, marginRight: 20 }}></View>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text>Næste</Text>
+                <Text style={{ fontSize: 20 }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -150,7 +135,7 @@ export const Module = ({ route }) => {
               style={{ width: width, height: 250 }}></Image>
             <View style={styles.textContainer}>
               <Text style={styles.takeawayHeader}>Subject title...</Text>
-              <Text>{intro2}</Text>
+              <Text style={styles.text}>{intro2}</Text>
             </View>
             <View
               style={{
@@ -160,14 +145,14 @@ export const Module = ({ route }) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text>Tilbage</Text>
+                <Text style={{ fontSize: 20 }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text>Næste</Text>
+                <Text style={{ fontSize: 20 }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -177,7 +162,7 @@ export const Module = ({ route }) => {
               style={{ width: width, height: 250 }}></Image>
             <View style={styles.textContainer}>
               <Text style={styles.takeawayHeader}>Subject title...</Text>
-              <Text>{intro3}</Text>
+              <Text style={styles.text}>{intro3}</Text>
             </View>
             <View
               style={{
@@ -187,14 +172,14 @@ export const Module = ({ route }) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text>Tilbage</Text>
+                <Text style={{ fontSize: 20 }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text>Næste</Text>
+                <Text style={{ fontSize: 20 }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -221,19 +206,14 @@ export const Module = ({ route }) => {
                   marginVertical: 20,
                 }}>
                 <TouchableOpacity
-                  style={styles.swiperBtn}
+                  style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                   onPress={() => swiperRef.current.scrollBy(-1)}>
-                  <Text>Tilbage</Text>
+                  <Text style={{ fontSize: 20 }}>Tilbage</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.swiperBtn}
-                  onPress={() => retakeQuestions()}>
-                  <Text>Tag quizzen igen</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.swiperBtn}
+                  style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                   onPress={() => swiperRef.current.scrollBy(1)}>
-                  <Text>Næste</Text>
+                  <Text style={{ fontSize: 20 }}>Næste</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -252,7 +232,7 @@ export const Module = ({ route }) => {
                     <Text style={styles.takeawayHeader}>
                       Takeaway {index + 1}
                     </Text>
-                    <Text>{item}</Text>
+                    <Text style={styles.text}>{item}</Text>
                   </View>
                 );
               })}
@@ -265,14 +245,14 @@ export const Module = ({ route }) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text>Tilbage</Text>
+                <Text style={{ fontSize: 20 }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text>Næste</Text>
+                <Text style={{ fontSize: 20 }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -281,10 +261,6 @@ export const Module = ({ route }) => {
               <Image
                 source={require('../../Assets/images/planning_exercise.png')}
                 style={{ width: width, height: 250 }}></Image>
-              <Text style={styles.takeawayHeader}>
-                Skriv dine ugentlige tasks ned
-              </Text>
-              <TextInput style={styles.textInput}></TextInput>
             </View>
             <View
               style={{
@@ -294,14 +270,14 @@ export const Module = ({ route }) => {
                 marginVertical: 20,
               }}>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text>Tilbage</Text>
+                <Text style={{ fontSize: 20 }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.swiperBtn}
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text>Næste</Text>
+                <Text style={{ fontSize: 20 }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -310,35 +286,44 @@ export const Module = ({ route }) => {
               source={require('../../Assets/images/fireworks.png')}
               style={{ width: width, height: 250 }}></Image>
             <Text style={styles.takeawayHeader}>Tillykke! </Text>
-            <Text>Du har lige færdiggjort dit første modul!</Text>
-            <TouchableOpacity
-              style={styles.swiperBtn}
-              onPress={() => swiperRef.current.scrollBy(-1)}>
-              <Text>Tilbage</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleCompletion()}>
-              <Text>Færdiggør modulet</Text>
-            </TouchableOpacity>
+            <Text style={styles.text}>Du har lige færdiggjort dit første modul!</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'baseline',
+                marginVertical: 20,
+              }}>
+              <TouchableOpacity
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => swiperRef.current.scrollBy(-1)}>
+                <Text style={{ fontSize: 20 }}>Tilbage</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => handleCompletion()}>
+                <Text style={{ fontSize: 20 }}>Færdiggør modulet</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Swiper>
-      </View>
-    </SafeAreaView>
+      </View >
+    </SafeAreaView >
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'grey',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
     margin: 10,
     width: 200,
+    borderWidth: 1,
+    borderRadius: 10,
+    elevation: 10
   },
   keyTakeaways: {
-    backgroundColor: 'lightgrey',
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
@@ -346,7 +331,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   takeawayHeader: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 5,
@@ -366,11 +351,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    backgroundColor: 'lightgrey',
+    elevation: 10,
   },
   swiperBtnText: {
     fontSize: 16,
   },
+  text: {
+    fontSize: 18,
+  }
 });
 
 export default Module;
