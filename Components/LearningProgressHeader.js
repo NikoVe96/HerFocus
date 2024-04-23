@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Animated, Alert, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 const LearningProgressHeader = ({ progress, moduleLength, subject, description, image }) => {
     const navigation = useNavigation();
+    const { colors } = useTheme();
 
     const progressAnim = progress.interpolate({
         inputRange: [0, moduleLength],
@@ -30,7 +31,7 @@ const LearningProgressHeader = ({ progress, moduleLength, subject, description, 
     };
 
     return (
-        <View style={styles.mainContainer}>
+        <View style={[styles.mainContainer, { backgroundColor: colors.background }]}>
             <View style={styles.closeButtonContainer}>
                 <TouchableOpacity
                     onPress={showExitLearningAlert}
@@ -39,13 +40,14 @@ const LearningProgressHeader = ({ progress, moduleLength, subject, description, 
                     <FontAwesomeIcon icon={faCircleXmark} size={25} />
                 </TouchableOpacity>
             </View>
-            <View style={styles.progressBar}>
+            <View style={[styles.progressBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
                 <Animated.View
                     style={[
                         {
                             height: 15,
                             borderRadius: 5,
-                            backgroundColor: "#EDA276" + "90",
+                            borderColor: colors.border,
+                            backgroundColor: colors.border + "90",
                         },
                         {
                             width: progressAnim,
@@ -62,7 +64,6 @@ const styles = StyleSheet.create({
         flex: 0.6,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'lightgrey'
     },
     closeButtonContainer: {
         marginHorizontal: 20,
@@ -74,16 +75,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         height: 15,
-        backgroundColor: '#FFFCF9',
-        elevation: 1,
+        elevation: 10,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: 'black',
         marginHorizontal: 10,
         alignItems: 'center'
     },
     progressBarFill: {
-        backgroundColor: '#FF6978',
     },
 });
 

@@ -107,11 +107,15 @@ export const ModulesOverview = ({ route }) => {
                       </View>
                     </TouchableOpacity>
                   </View>
-                  <FontAwesomeIcon
-                    icon={faDownLong}
-                    size={30}
-                    style={{ marginVertical: 15 }}
-                  />
+                  {index !== (modules.length - 1) ?
+                    <FontAwesomeIcon
+                      icon={faDownLong}
+                      size={30}
+                      style={{ marginVertical: 15 }}
+                    />
+                    : <Text></Text>
+                  }
+
                 </View>
               );
             })
