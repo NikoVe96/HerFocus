@@ -373,7 +373,7 @@ function CustomDrawerContent({ navigation }) {
 function SideMenu() {
   return (
     <Drawer.Navigator
-      initialRouteName='Login'
+      initialRouteName="Login"
       backBehavior="history"
       screenOptions={{
         drawerPosition: 'right',
@@ -392,10 +392,17 @@ function SideMenu() {
         component={CalendarOverview}></Drawer.Screen>
       <Drawer.Screen
         name="Forgot password"
-        component={ForgotPassword}></Drawer.Screen>
-      <Drawer.Screen name="Login" component={LogIn}></Drawer.Screen>
+        component={ForgotPassword}
+        options={{headerShown: false}}></Drawer.Screen>
+      <Drawer.Screen
+        name="Login"
+        component={LogIn}
+        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
-      <Drawer.Screen name="Sign up" component={SignUp}></Drawer.Screen>
+      <Drawer.Screen
+        name="Sign up"
+        component={SignUp}
+        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
       <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
       <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>
@@ -428,9 +435,7 @@ function SideMenu() {
       <Drawer.Screen
         name="Structure"
         component={StructureFrontPage}></Drawer.Screen>
-      <Drawer.Screen
-        name="Add event"
-        component={AddEvent}></Drawer.Screen>
+      <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }
