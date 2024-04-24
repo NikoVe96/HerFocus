@@ -39,7 +39,7 @@ const LogIn = ({ navigation }) => {
         secureTextEntry={true}></TextInput>
       <Text style={styles.errorText}>{error}</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('ForgotPassword')}
+        onPress={() => navigation.navigate('Forgot password')}
         style={styles.forgotpas}>
         <Text>Forgot password?</Text>
       </TouchableOpacity>

@@ -58,7 +58,6 @@ const ForgotPassword = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#FFF6ED',
     flex: 1,
   },
   image: {
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   form: {
-    backgroundColor: '#FFF6ED',
     width: 280,
     height: 30,
     marginTop: 20,
