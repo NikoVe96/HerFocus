@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import QuizQuestionsData from "../Assets/Quizzes/QuizQuestionsData";
 import QuizQuestions from "./QuizQuestions";
+import { useTheme } from "@react-navigation/native";
 
 const Quiz = ({ navigation, subject, module }) => {
     const Questions = QuizQuestionsData[subject][module];
@@ -15,6 +16,7 @@ const Quiz = ({ navigation, subject, module }) => {
     const [selectedOptions, setSelectedOptions] = useState(Array(Questions.length).fill(null));
     const [isCorrect, setIsCorrect] = useState(Array(Questions.length).fill(false));
     const [score, setScore] = useState(0);
+    const { colors } = useTheme();
 
     useEffect(() => {
         const newScore = selectedOptions.reduce((acc, option, index) => (
@@ -34,6 +36,12 @@ const Quiz = ({ navigation, subject, module }) => {
             newIsCorrect[questionIndex] = correct;
             setIsCorrect(newIsCorrect);
         }
+    };
+
+    const resetQuiz = () => {
+        setSelectedOptions(Array(Questions.length).fill(null));
+        setIsCorrect(Array(Questions.length).fill(false));
+        setScore(0);
     };
 
     return (
@@ -64,7 +72,14 @@ const Quiz = ({ navigation, subject, module }) => {
                     </View>
                 </View>
             ))}
-            <Text style={styles.scoreText}>You got {score} out of {Questions.length} questions correct</Text>
+            <View style={{ alignItems: 'center' }}>
+                <Text style={styles.scoreText}>You got {score} out of {Questions.length} questions correct</Text>
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                    onPress={() => resetQuiz()}>
+                    <Text style={{ fontSize: 20 }}>Tag quizzen igen</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -99,8 +114,16 @@ const styles = StyleSheet.create({
     scoreText: {
         fontSize: 18,
         color: "#333",
-        textAlign: "center",
         marginVertical: 20,
+    },
+    button: {
+        marginTop: 20,
+        marginRight: 20,
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 10,
+        width: '50%'
     },
 });
 export default Quiz;
