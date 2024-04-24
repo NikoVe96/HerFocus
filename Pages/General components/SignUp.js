@@ -111,6 +111,7 @@ const handleAvatarSelect = selectedAvatar => {
               password,
               confirmPassword,
               navigation,
+              avatar
             )
           }
           title=" Sign up"

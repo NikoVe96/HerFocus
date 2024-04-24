@@ -14,13 +14,21 @@ export const UserProvider = ({ children }) => {
     email,
     password,
     confirmPassword,
-    navigation
+    navigation,
+    avatar
   ) => {
+    setError('')
+    const userNameExist = new Parse.Query('User');
+    userNameExist.equalTo('username', username);
+    const userExists = await userNameExist.first(); 
+    if (userExists) {
+      setError('Dette brugernavn er allerede i brug, vælg et nyt');
+    }
       if (password !== confirmPassword) {
-        setError('Kodeordene er ikke ens, prøv igen 🙂');
+        setError('Kodeordene er ikke ens, prøv igen');
         return;
       }
-
+      
     const user = new Parse.User();
     user.set('name', name);
     user.set('username', username);
