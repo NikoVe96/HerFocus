@@ -11,6 +11,7 @@ import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { UserProvider } from './Components/UserContext';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -148,9 +149,11 @@ function App() {
 
 function AppWrapper() {
   return (
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 

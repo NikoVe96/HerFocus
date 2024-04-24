@@ -11,26 +11,28 @@ import {
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
+import { useUser } from '../../Components/UserContext';
 
 // Component for "hello user", maybe we can put it in a component for itself it is should be reused
 export const HelloUser = () => {
-  const [username, setUsername] = useState('');
+  const {username} = useUser();
   const { colors } = useTheme();
   const {width, height} = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
 
-  useEffect(() => {
-    async function getCurrentUser() {
-      if (username === '') {
-        const currentUser = await Parse.User.currentAsync();
-        if (currentUser !== null) {
-          setUsername(currentUser.getUsername());
-        }
-        console.log(currentUser);
-      }
-    }
-    getCurrentUser();
-  }, [username]);
+
+  // useEffect(() => {
+  //   async function getCurrentUser() {
+  //     if (username === '') {
+  //       const currentUser = await Parse.User.currentAsync();
+  //       if (currentUser !== null) {
+  //         setUsername(currentUser.getUsername());
+  //       }
+  //       console.log(currentUser);
+  //     }
+  //   }
+  //   getCurrentUser();
+  // }, );
 
   return (
     <Text

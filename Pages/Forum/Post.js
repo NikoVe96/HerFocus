@@ -67,7 +67,7 @@ const Post = ({postObject, onDelete}) => {
         style={[
           styles.postContainer,
           styles.shadowProp,
-          {backgroundColor: colors.notification},
+          {backgroundColor: colors.mainButton},
         ]}>
         <View style={styles.upperDisplay}>
           <View style={styles.userInfo}>

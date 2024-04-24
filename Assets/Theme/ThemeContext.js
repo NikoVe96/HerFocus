@@ -178,6 +178,7 @@ export const ThemeProvider = ({ children }) => {
           setID(currentUser.id);
           let themeQ = new Parse.Query('Settings');
           themeQ.contains('user', ID);
+          console.log(ID); 
           const Result = await themeQ.find();
           const chosenTheme = Result[0].get('theme');
           setTheme(themes[chosenTheme] || themes.yellow);
@@ -205,6 +206,7 @@ export const ThemeProvider = ({ children }) => {
       }
     } else {
       Alert.alert('Settings not found for this user');
+      console.log(ID); 
     }
     setTheme(themes[newThemeName] || themes.yellow);
   };

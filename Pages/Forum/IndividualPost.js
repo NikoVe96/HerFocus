@@ -48,14 +48,14 @@ function IndividualPost({ route }) {
       <SafeAreaView style={styles.container}>
         <View style={styles.postContainer}>
           <Post
-          style={styles.post}
+            style={styles.post}
             postObject={postObject}
             individualPostClickCallback={() =>
               handleAddCommentClick(postObject)
             }
           />
           <WriteComment postId={postObject} onNewComment={handleNewComment} />
-          <CommentSection comments={allComments}/>
+          <CommentSection comments={allComments} setComments={fetchComments} />
         </View>
       </SafeAreaView>
     </ScrollView>

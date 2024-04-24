@@ -1,32 +1,59 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity, Image} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useTheme} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
+import getAvatarImage from '../General components/AvatarUtils';
+import Modal from 'react-native-modal';
 
-const CommentSection = ({comments}) => {
+const CommentSection = ({comments, setComments}) => {
   const {colors} = useTheme();
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState('');
+   const [currentCommentId, setCurrentCommentId] = useState(null); 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const avatarImageSource = getAvatarImage(avatar);
 
+  useEffect(() => {
+    async function getCurrentUser() {
+      const currentUser = await Parse.User.currentAsync();
+      setUsername(currentUser.getUsername());
+      setAvatar(currentUser.get('avatar'));
+    }
+    getCurrentUser();
+  }, []);
 
- useEffect(() => {
-   async function getCurrentUser() {
-     const currentUser = await Parse.User.currentAsync();
-     setUsername(currentUser.getUsername());
-   }
-   getCurrentUser();
- }, []);
+  const showModal = (commentId) => {
+    setCurrentCommentId(commentId);
+    setModalVisible(true);
+    
+  };
 
-    const showModal = () => {
-      setModalVisible(true);
-    };
+  const hideModal = () => {
+    setModalVisible(false);
+  };
 
-    const hideModal = () => {
-      setModalVisible(false);
-    };
+  async function deleteComment (commentId) {
+    console.log('commentID: ' + commentId);
+    let query = new Parse.Query('Comment');
+    query.equalTo('objectId', commentId);
+    const result = await query.first();
+    console.log('result: ' + result);
+    try {
+      await result.destroy();
+      handleDeleteComment();
+    } catch (error) {
+      console.error('Failed to delete the comment:', error);
+    }
+    hideModal();
+  };
 
+  const handleDeleteComment = commentId => {
+    const updatedComments = comments.filter(comment => comment.id !== commentId);
+    setComments(updatedComments);
+  };
 
   return (
     <ScrollView>
@@ -43,14 +70,13 @@ const CommentSection = ({comments}) => {
                 style={[
                   styles.commentContainer,
                   styles.shadowProp,
-                  {backgroundColor: colors.notification},
+                  {backgroundColor: colors.mainButton},
                 ]}>
                 <View style={styles.upperDisplay}>
                   <View style={styles.userInfo}>
-                    <FontAwesomeIcon
-                      icon={faUser}
-                      style={styles.icon}
-                      size={30}
+                    <Image
+                      source={avatarImageSource}
+                      style={styles.avatarImage}
                     />
                     <View>
                       <Text style={[styles.user, {color: colors.text}]}>
@@ -65,22 +91,48 @@ const CommentSection = ({comments}) => {
                         )}{' '}
                         dage siden
                       </Text>
-                      {comment.get('username') == username ? (
-                        <TouchableOpacity onPress={showModal}>
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            size={15}
-                            style={[
-                              styles.trashIcon,
-                              {color: colors.iconLight},
-                            ]}
-                          />
-                        </TouchableOpacity>
-                      ) : (
-                        <Text></Text>
-                      )}
                     </View>
                   </View>
+                  {comment.get('username') == username ? (
+                    <TouchableOpacity onPress={() => showModal()}>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        size={15}
+                        style={[styles.trashIcon, {color: colors.iconLight}]}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <Text></Text>
+                  )}
+                  <Modal
+                    isVisible={isModalVisible}
+                    onBackdropPress={() => setModalVisible(false)}>
+                    <View
+                      style={[
+                        styles.modalContainer,
+                        {backgroundColor: colors.light},
+                      ]}>
+                      <Text style={styles.modalTitle}>
+                        Er du sikker på, at du vil slette din kommentar?
+                      </Text>
+                      <View style={{flexDirection: 'row', marginVertical: 10}}>
+                        <TouchableOpacity
+                          onPress={hideModal}
+                          style={styles.modalTextContainer1}>
+                          <Text style={styles.modalText}>
+                            Nej, det var en fejl
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => deleteComment(comment.id)}
+                          style={styles.modalTextContainer2}>
+                          <Text style={styles.modalText}>
+                            Ja, slet min kommentar
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Modal>
                 </View>
                 <View
                   style={[
@@ -185,6 +237,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
   },
 });
 

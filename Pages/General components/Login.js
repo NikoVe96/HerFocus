@@ -8,25 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useUser } from '../../Components/UserContext';
 
 const LogIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+   const {colors} = useTheme();
+   const {handleLogin, error} = useUser(); 
 
-  const handleLogin = async navigation => {
-    setError('');
-    try {
-      const user = await Parse.User.logIn(email, password);
-      console.log('Success! User ID:', user.id);
-      navigation.navigate('Front page');
-    } catch (error) {
-      console.error('Error while logging in user', error);
-      setError('Wrong email or password!');
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,14 +37,15 @@ const LogIn = ({ navigation }) => {
         onChangeText={text => setPassword(text)}
         style={styles.form}
         secureTextEntry={true}></TextInput>
+      <Text style={styles.errorText}>{error}</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate('ForgotPassword')}
         style={styles.forgotpas}>
         <Text>Forgot password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => handleLogin(navigation)}
+        style={[styles.loginBtn, {backgroundColor: colors.mainButton}]}
+        onPress={() => handleLogin(email, password, navigation)}
         title=" Login"
         titleColor="#000000">
         <Text style={styles.btnText}>Login</Text>
@@ -61,7 +53,7 @@ const LogIn = ({ navigation }) => {
       <Text>Don't have an account?</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate('Sign up')}
-        style={styles.createBtn}
+        style={[styles.createBtn, {backgroundColor: colors.subButton}]}
         title="Create one">
         <Text style={styles.btnText}>Create one</Text>
       </TouchableOpacity>
@@ -72,8 +64,8 @@ const LogIn = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#FFF6ED',
     flex: 1,
+    marginBottom: 200,
   },
   image: {
     width: 320,
@@ -81,7 +73,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   form: {
-    backgroundColor: '#FFF6ED',
     width: 280,
     height: 30,
     marginTop: 20,
@@ -99,7 +90,6 @@ const styles = StyleSheet.create({
   loginBtn: {
     width: 200,
     height: 30,
-    backgroundColor: '#DC9B18',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
@@ -113,13 +103,15 @@ const styles = StyleSheet.create({
   createBtn: {
     width: 130,
     height: 30,
-    backgroundColor: '#FFEABF',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 15,
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  errorText: {
+    color: 'red',
   },
 });
 

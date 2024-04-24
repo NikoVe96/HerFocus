@@ -4,7 +4,6 @@ import Parse from 'parse/react-native';
 
 export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   const handleAvatarSelect = async avatarSelection => {
-    console.log('clicked', avatarSelection);
     onAvatarSelect(avatarSelection);
     if (!isSignedUp) {
       const currentUser = await Parse.User.currentAsync();
@@ -20,11 +19,14 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
     }
   };
 
-  const pickedAvatar = avatarSelection => ({
-    ...styles.images,
-    borderColor: avatarSelection === picked ? 'black' : 'transparent',
-    borderWidth: avatarSelection === picked ? 2 : 0,
-  });
+  const pickedAvatar = avatarSelection => {
+    console.log('Current picked avatar:', picked);
+    return {
+      ...styles.images,
+      backgroundColor: avatarSelection === picked ? 'black' : 'transparent',
+      borderRadius: avatarSelection === picked ? 30 : 0,
+    };
+  };
 
   return (
     <View style={styles.avatars}>
@@ -47,7 +49,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar3');
-        }}>
+        }}
+        style={pickedAvatar('Avatar3')}>
         <Image
           source={require('../../Assets/images/Avatar3.png')}
           style={styles.images}></Image>
@@ -55,7 +58,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar4');
-        }}>
+        }}
+        style={pickedAvatar('Avatar4')}>
         <Image
           source={require('../../Assets/images/Avatar4.png')}
           style={styles.images}></Image>
@@ -63,7 +67,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar5');
-        }}>
+        }}
+        style={pickedAvatar('Avatar5')}>
         <Image
           source={require('../../Assets/images/Avatar5.png')}
           style={styles.images}></Image>
@@ -71,7 +76,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar6');
-        }}>
+        }}
+        style={pickedAvatar('Avatar6')}>
         <Image
           source={require('../../Assets/images/Avatar6.png')}
           style={styles.images}></Image>
@@ -79,7 +85,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar7');
-        }}>
+        }}
+        style={pickedAvatar('Avatar7')}>
         <Image
           source={require('../../Assets/images/Avatar7.png')}
           style={styles.images}></Image>
@@ -87,7 +94,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar8');
-        }}>
+        }}
+        style={pickedAvatar('Avatar8')}>
         <Image
           source={require('../../Assets/images/Avatar8.png')}
           style={styles.images}></Image>
@@ -95,7 +103,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar9');
-        }}>
+        }}
+        style={pickedAvatar('Avatar9')}>
         <Image
           source={require('../../Assets/images/Avatar9.png')}
           style={styles.images}></Image>
@@ -103,7 +112,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar10');
-        }}>
+        }}
+        style={pickedAvatar('Avatar10')}>
         <Image
           source={require('../../Assets/images/Avatar10.png')}
           style={styles.images}></Image>
@@ -111,7 +121,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar11');
-        }}>
+        }}
+        style={pickedAvatar('Avatar11')}>
         <Image
           source={require('../../Assets/images/Avatar11.png')}
           style={styles.images}></Image>
@@ -119,7 +130,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar12');
-        }}>
+        }}
+        style={pickedAvatar('Avatar12')}>
         <Image
           source={require('../../Assets/images/Avatar12.png')}
           style={styles.images}></Image>
@@ -127,7 +139,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar13');
-        }}>
+        }}
+        style={pickedAvatar('Avatar13')}>
         <Image
           source={require('../../Assets/images/Avatar13.png')}
           style={styles.images}></Image>
@@ -135,7 +148,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar14');
-        }}>
+        }}
+        style={pickedAvatar('Avatar14')}>
         <Image
           source={require('../../Assets/images/Avatar14.png')}
           style={styles.images}></Image>
@@ -143,7 +157,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar15');
-        }}>
+        }}
+        style={pickedAvatar('Avatar15')}>
         <Image
           source={require('../../Assets/images/Avatar15.png')}
           style={styles.images}></Image>
@@ -151,7 +166,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar16');
-        }}>
+        }}
+        style={pickedAvatar('Avatar16')}>
         <Image
           source={require('../../Assets/images/Avatar16.png')}
           style={styles.images}></Image>
@@ -159,7 +175,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       <TouchableOpacity
         onPress={() => {
           handleAvatarSelect('Avatar17');
-        }}>
+        }}
+        style={pickedAvatar('Avatar17')}>
         <Image
           source={require('../../Assets/images/Avatar17.png')}
           style={styles.images}></Image>
@@ -176,7 +193,7 @@ const styles = StyleSheet.create({
   images: {
     width: 50,
     height: 50,
-    margin: 5,
+    marginBottom: 5,
   },
 });
 

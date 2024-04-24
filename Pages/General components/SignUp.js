@@ -10,9 +10,10 @@ import {
   View,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import PickAvatar from './PickAvatar';
+import {useUser} from '../../Components/UserContext';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -20,35 +21,39 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
   let [avatar, setAvatar] = useState('');
   const navigation = useNavigation();
+  const {colors} = useTheme();
+  const {handleSignup, error} = useUser(); 
+   
 
-  const handleAvatarSelect = ({ selectedAvatar }) => {
-    setAvatar(selectedAvatar);
-  };
+const handleAvatarSelect = selectedAvatar => {
+  setAvatar(selectedAvatar);
+};
 
-  const handleSignup = async () => {
-    if (password !== confirmPassword) {
-      console.log('Error' + error.message);
-      setError('The passwords do not match, try again! 🙂');
-      return;
-    }
+  // const handleSignup = async () => {
+  //   if(email)
+  //   if (password !== confirmPassword) {
+  //     console.log('Error' + error.message);
+  //     setError('Kodeordene er ikke ens, prøv igen 🙂');
+  //     return;
+  //   }
 
-    const user = new Parse.User();
-    user.set('name', name);
-    user.set('username', username);
-    user.set('email', email);
-    user.set('password', password);
-    user.set('avatar', avatar);
-    console.log(avatar);
+  //   const user = new Parse.User();
+  //   user.set('name', name);
+  //   user.set('username', username);
+  //   user.set('email', email);
+  //   user.set('password', password);
+  //   user.set('avatar', avatar);
+  //   console.log(avatar);
 
-    try {
-      await user.signUp();
-      navigation.navigate('Daily overview');
-      console.log('pressed');
-    } catch (error) { }
-  };
+  //   try {
+  //     await user.signUp();
+  //     navigation.navigate('Login');
+  //     console.log('pressed');
+  //   } catch (error) { }
+  // };
+
 
   return (
     <ScrollView style={styles.container}>
@@ -57,13 +62,13 @@ const SignUp = () => {
           source={require('../../Assets/images/logo-light-nb.png')}
           style={styles.image}></Image>
         <TextInput
-          placeholder="Name"
+          placeholder="Navn"
           placeholderTextColor="#8C8C8C"
           value={name}
           onChangeText={text => setName(text)}
           style={styles.form}></TextInput>
         <TextInput
-          placeholder="Username"
+          placeholder="Brugernavn"
           placeholderTextColor="#8C8C8C"
           value={username}
           onChangeText={text => setUsername(text)}
@@ -75,37 +80,47 @@ const SignUp = () => {
           onChangeText={text => setEmail(text)}
           style={styles.form}></TextInput>
         <TextInput
-          placeholder="Password"
+          placeholder="Kodeord"
           placeholderTextColor="#8C8C8C"
           value={password}
           onChangeText={text => setPassword(text)}
           secureTextEntry={true}
           style={styles.form}></TextInput>
         <TextInput
-          placeholder="Confirm password"
+          placeholder="Bekræft kodeord"
           placeholderTextColor="#8C8C8C"
           value={confirmPassword}
           onChangeText={text => setConfirmPassword(text)}
           secureTextEntry={true}
           style={styles.form}></TextInput>
-        <Text style={styles.avatar}> Pick an avatar </Text>
+        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.avatar}> Vælg en avatar </Text>
         <View style={styles.avatarMargin}>
           <PickAvatar
             onAvatarSelect={handleAvatarSelect}
-            pickedAvatar={avatar}
+            picked={avatar}
             isSignUp={true}></PickAvatar>
         </View>
         <TouchableOpacity
-          style={styles.signUpBtn}
-          onPress={() => {
-            handleSignup();
-          }}
+          style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}
+          onPress={() =>
+            handleSignup(
+              name,
+              username,
+              email,
+              password,
+              confirmPassword,
+              navigation,
+            )
+          }
           title=" Sign up"
           titleColor="#000000">
-          <Text style={styles.btnText}>Sign up</Text>
+          <Text style={styles.btnText}>Lav en profil</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpBtn} title="Login">
-          <Text style={styles.btnText}>Back to login</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Login')}
+          style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}>
+          <Text style={styles.btnText}>Tilbage login</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -114,7 +129,6 @@ const SignUp = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF6ED',
     flex: 1,
   },
   view: {
@@ -126,7 +140,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   form: {
-    backgroundColor: '#FFF6ED',
     width: 280,
     height: 30,
     marginTop: 20,
@@ -135,17 +148,16 @@ const styles = StyleSheet.create({
   },
   avatar: {
     fontSize: 18,
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 10,
   },
   avatarMargin: {
     marginLeft: 30,
-    marginRight: 10,
+    marginRight: 20,
   },
   signUpBtn: {
     width: 200,
     height: 30,
-    backgroundColor: '#DC9B18',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
@@ -156,6 +168,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 15,
+  },
+  errorText: {
+    color: 'red',
   },
 });
 

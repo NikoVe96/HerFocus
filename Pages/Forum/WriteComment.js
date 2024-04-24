@@ -8,6 +8,7 @@ import {useTheme} from '@react-navigation/native';
 function WriteComment({postId, onNewComment}) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState('');
   const {colors} = useTheme();
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function WriteComment({postId, onNewComment}) {
     newComment.set('userObjectId', Parse.User.current());
     newComment.set('username', username);
     newComment.set('postIdentifier', postId);
+    newComment.set('avatar', avatar);
 
     try {
       const result = await newComment.save();
@@ -63,7 +65,7 @@ function WriteComment({postId, onNewComment}) {
         style={styles.createComment}>
         <FontAwesomeIcon
           icon={faPaperPlane}
-          style={[styles.icon, {color: colors.iconLight}]}
+          style={[styles.icon, {color: colors.iconDark}]}
           size={25}
         />
       </TouchableOpacity>
