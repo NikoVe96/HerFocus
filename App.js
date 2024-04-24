@@ -141,7 +141,7 @@ function App() {
               await sendPushNotification(expoPushToken);
             }}
           />*/}
-          <BottomNavigation />
+           {/* <BottomNavigation /> */}
         </SafeAreaView>
       </NavigationContainer>
     </GestureHandlerRootView>

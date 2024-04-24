@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
+import BottomNavigation from '../../Navigation/BottomNav';
+
 
 export const PickTopics = () => {
   const navigation = useNavigation();
@@ -106,6 +108,7 @@ export const PickTopics = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 };

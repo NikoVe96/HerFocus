@@ -9,6 +9,7 @@ import Parse from 'parse/react-native';
 import EmojiPicker, { emojiFromUtf16 } from "rn-emoji-picker"
 import { emojis } from "rn-emoji-picker/dist/data"
 import { useTheme } from "@react-navigation/native";
+import BottomNavigation from '../../Navigation/BottomNav';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -151,192 +152,248 @@ export const AddEvent = () => {
     }
 
     return (
-        <SafeAreaView style={{ justifyContent: 'center' }}>
-            <View style={{ alignItems: 'center', padding: 10 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Tilføj et nyt event </Text>
-                <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
-            </View>
-            <View style={{
-                alignContent: 'center',
-                paddingHorizontal: 16,
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView>
+          <View style={{alignItems: 'center', padding: 10}}>
+            <Text style={{fontSize: 24, fontWeight: 'bold'}}>
+              {' '}
+              Tilføj et nyt event{' '}
+            </Text>
+            <View
+              style={[
+                styles.border,
+                {backgroundColor: colors.border, borderColor: colors.border},
+              ]}></View>
+          </View>
+          <View
+            style={{
+              alignContent: 'center',
+              paddingHorizontal: 16,
             }}>
-                <View>
-                    <Text style={styles.text}>
-                        Hvad skal dit event hedde?
-                    </Text>
-                    <TextInput
-                        style={styles.textInput}
-                        onChangeText={text => setEventName(text)}
-                        value={eventName}
-                    />
-                </View>
-                <View style={{ marginTop: 10, marginBottom: 30 }}>
-                    <Text style={styles.text} >Vælg en farve</Text>
-                    <View style={styles.colorOptions}>
-                        <TouchableOpacity
-                            style={{
-                                borderWidth: eventColor === '#FAEDCB' ? 1.5 : 1,
-                                borderRadius: eventColor === '#FAEDCB' ? 30 : 20,
-                                width: eventColor === '#FAEDCB' ? 45 : 40,
-                                height: eventColor === '#FAEDCB' ? 45 : 40,
-                                backgroundColor: '#FAEDCB',
-                                borderColor: colors.border,
-                            }}
-                            onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderWidth: eventColor === '#C9E4DE' ? 1.5 : 1,
-                            borderRadius: eventColor === '#C9E4DE' ? 30 : 20,
-                            width: eventColor === '#C9E4DE' ? 45 : 40,
-                            height: eventColor === '#C9E4DE' ? 45 : 40,
-                            backgroundColor: '#C9E4DE',
-                            borderColor: colors.border,
-                        }}
-                            onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderWidth: eventColor === '#C6DEF1' ? 1.5 : 1,
-                            borderRadius: eventColor === '#C6DEF1' ? 30 : 20,
-                            width: eventColor === '#C6DEF1' ? 45 : 40,
-                            height: eventColor === '#C6DEF1' ? 45 : 40,
-                            backgroundColor: '#C6DEF1',
-                            borderColor: colors.border,
-                        }}
-                            onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderWidth: eventColor === '#DBCDF0' ? 1.5 : 1,
-                            borderRadius: eventColor === '#DBCDF0' ? 30 : 20,
-                            width: eventColor === '#DBCDF0' ? 45 : 40,
-                            height: eventColor === '#DBCDF0' ? 45 : 40,
-                            backgroundColor: '#DBCDF0',
-                            borderColor: colors.border,
-                        }}
-                            onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderWidth: eventColor === '#FFADAD' ? 1.5 : 1,
-                            borderRadius: eventColor === '#FFADAD' ? 30 : 20,
-                            width: eventColor === '#FFADAD' ? 45 : 40,
-                            height: eventColor === '#FFADAD' ? 45 : 40,
-                            backgroundColor: '#FFADAD',
-                            borderColor: colors.border,
-                        }}
-                            onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
-                        <TouchableOpacity style={{
-                            borderWidth: eventColor === '#FFD6A5' ? 1.5 : 1,
-                            borderRadius: eventColor === '#FFD6A5' ? 30 : 20,
-                            width: eventColor === '#FFD6A5' ? 45 : 40,
-                            height: eventColor === '#FFD6A5' ? 45 : 40,
-                            backgroundColor: '#FFD6A5',
-                            borderColor: colors.border,
-                        }}
-                            onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{ marginVertical: 5, flexDirection: 'row' }}>
-                    <View style={styles.rowView}>
-                        <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}>
-                            <Text style={styles.buttonText}>Emoji</Text>
-                        </TouchableOpacity>
-                        <Modal
-                            visible={emojiModalVisible}
-                            animationType="slide"
-                            transparent={true}
-                            onRequestClose={hideEmojiModal}
-
-                        >
-                            <View style={styles.modalContainer}>
-                                <View style={[styles.emojiPickerContainer, { backgroundColor: colors.background }]}>
-                                    <EmojiPicker
-                                        emojis={emojis}
-                                        recent={recent}
-                                        loading={false}
-                                        darkMode={false}
-                                        perLine={6}
-                                        onSelect={chosenEmoji => {
-                                            console.log(chosenEmoji);
-                                            setEmoji(chosenEmoji.emoji);
-                                            hideEmojiModal();
-                                        }}
-                                        onChangeRecent={setRecent}
-                                        backgroundColor={colors.background}
-                                    />
-
-                                </View>
-                                <TouchableOpacity style={[styles.modalButton, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={hideEmojiModal}>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>LUK</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Modal>
-                    </View>
-                    <View style={[styles.rowView, { alignItems: 'center' }]}>
-                        <Text style={{ fontSize: 26 }}> {emoji}</Text>
-                    </View>
-                </View>
-                <View style={{ flexDirection: 'row', marginVertical: 2 }}>
-                    <View style={styles.rowView}>
-                        <TouchableOpacity
-                            style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
-                            onPress={showStartTimePicker}>
-                            <Text style={styles.buttonText}>Start tidspunkt</Text>
-                        </TouchableOpacity>
-                        <DateTimePickerModal
-                            isVisible={isStartTimePickerVisible}
-                            mode="time"
-                            onConfirm={handleStartTimeConfirm}
-                            onCancel={hideStartTimePicker}
-                        />
-                    </View>
-                    <View style={[styles.rowView, { alignItems: 'center' }]}>
-                        <Text style={[styles.text, { fontWeight: 'bold' }]}>
-                            {eventStartTime === null ? '' : `${eventStartTime}`}
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ flexDirection: 'row', marginVertical: 2 }}>
-                    <View style={styles.rowView}>
-                        <TouchableOpacity
-                            style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
-                            onPress={showEndTimePicker}>
-                            <Text style={styles.buttonText}>Slut tidspunkt</Text>
-                        </TouchableOpacity>
-                        <DateTimePickerModal
-                            isVisible={isEndTimePickerVisible}
-                            mode="time"
-                            onConfirm={handleEndTimeConfirm}
-                            onCancel={hideEndTimePicker}
-                        />
-                    </View>
-                    <View style={[styles.rowView, { alignItems: 'center' }]}>
-                        <Text style={[styles.text, { fontWeight: 'bold' }]} >
-                            {eventEndTime === null ? '' : `${eventEndTime}`}
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ flexDirection: 'row', marginVertical: 5 }}>
-                    <View style={styles.rowView}>
-                        <TouchableOpacity
-                            style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
-                            onPress={showDatePicker}>
-                            <Text style={styles.buttonText}>Dato</Text>
-                        </TouchableOpacity>
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            onConfirm={handleDateConfirm}
-                            onCancel={hideDatePicker}
-                        />
-                    </View>
-                    <View style={[styles.rowView, { alignItems: 'center' }]}>
-                        <Text style={[styles.text, { fontWeight: 'bold' }]}
-                        // Insert if statement to test if value is null, if so, render text without variable
-                        >
-                            {`${eventDate}`}
-                        </Text>
-                    </View>
-                </View>
+            <View>
+              <Text style={styles.text}>Hvad skal dit event hedde?</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={text => setEventName(text)}
+                value={eventName}
+              />
             </View>
-            <TouchableOpacity style={[styles.Button, { backgroundColor: colors.mainButton }]} onPress={newEvent}>
-                <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Tilføj nyt event</Text>
-            </TouchableOpacity>
-        </SafeAreaView>
+            <View style={{marginTop: 10, marginBottom: 30}}>
+              <Text style={styles.text}>Vælg en farve</Text>
+              <View style={styles.colorOptions}>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#FAEDCB' ? 1.5 : 1,
+                    borderRadius: eventColor === '#FAEDCB' ? 30 : 20,
+                    width: eventColor === '#FAEDCB' ? 45 : 40,
+                    height: eventColor === '#FAEDCB' ? 45 : 40,
+                    backgroundColor: '#FAEDCB',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#C9E4DE' ? 1.5 : 1,
+                    borderRadius: eventColor === '#C9E4DE' ? 30 : 20,
+                    width: eventColor === '#C9E4DE' ? 45 : 40,
+                    height: eventColor === '#C9E4DE' ? 45 : 40,
+                    backgroundColor: '#C9E4DE',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#C6DEF1' ? 1.5 : 1,
+                    borderRadius: eventColor === '#C6DEF1' ? 30 : 20,
+                    width: eventColor === '#C6DEF1' ? 45 : 40,
+                    height: eventColor === '#C6DEF1' ? 45 : 40,
+                    backgroundColor: '#C6DEF1',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#DBCDF0' ? 1.5 : 1,
+                    borderRadius: eventColor === '#DBCDF0' ? 30 : 20,
+                    width: eventColor === '#DBCDF0' ? 45 : 40,
+                    height: eventColor === '#DBCDF0' ? 45 : 40,
+                    backgroundColor: '#DBCDF0',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#FFADAD' ? 1.5 : 1,
+                    borderRadius: eventColor === '#FFADAD' ? 30 : 20,
+                    width: eventColor === '#FFADAD' ? 45 : 40,
+                    height: eventColor === '#FFADAD' ? 45 : 40,
+                    backgroundColor: '#FFADAD',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: eventColor === '#FFD6A5' ? 1.5 : 1,
+                    borderRadius: eventColor === '#FFD6A5' ? 30 : 20,
+                    width: eventColor === '#FFD6A5' ? 45 : 40,
+                    height: eventColor === '#FFD6A5' ? 45 : 40,
+                    backgroundColor: '#FFD6A5',
+                    borderColor: colors.border,
+                  }}
+                  onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
+              </View>
+            </View>
+            <View style={{marginVertical: 5, flexDirection: 'row'}}>
+              <View style={styles.rowView}>
+                <TouchableOpacity
+                  onPress={showEmojiModal}
+                  style={[
+                    styles.buttonSmall,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.border,
+                    },
+                  ]}>
+                  <Text style={styles.buttonText}>Emoji</Text>
+                </TouchableOpacity>
+                <Modal
+                  visible={emojiModalVisible}
+                  animationType="slide"
+                  transparent={true}
+                  onRequestClose={hideEmojiModal}>
+                  <View style={styles.modalContainer}>
+                    <View
+                      style={[
+                        styles.emojiPickerContainer,
+                        {backgroundColor: colors.background},
+                      ]}>
+                      <EmojiPicker
+                        emojis={emojis}
+                        recent={recent}
+                        loading={false}
+                        darkMode={false}
+                        perLine={6}
+                        onSelect={chosenEmoji => {
+                          console.log(chosenEmoji);
+                          setEmoji(chosenEmoji.emoji);
+                          hideEmojiModal();
+                        }}
+                        onChangeRecent={setRecent}
+                        backgroundColor={colors.background}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      style={[
+                        styles.modalButton,
+                        {
+                          backgroundColor: colors.mainButton,
+                          borderColor: colors.mainButton,
+                        },
+                      ]}
+                      onPress={hideEmojiModal}>
+                      <Text style={{fontWeight: 'bold', fontSize: 24}}>
+                        LUK
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Modal>
+              </View>
+              <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <Text style={{fontSize: 26}}> {emoji}</Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View style={styles.rowView}>
+                <TouchableOpacity
+                  style={[
+                    styles.buttonSmall,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.border,
+                    },
+                  ]}
+                  onPress={showStartTimePicker}>
+                  <Text style={styles.buttonText}>Start tidspunkt</Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  isVisible={isStartTimePickerVisible}
+                  mode="time"
+                  onConfirm={handleStartTimeConfirm}
+                  onCancel={hideStartTimePicker}
+                />
+              </View>
+              <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                  {eventStartTime === null ? '' : `${eventStartTime}`}
+                </Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View style={styles.rowView}>
+                <TouchableOpacity
+                  style={[
+                    styles.buttonSmall,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.border,
+                    },
+                  ]}
+                  onPress={showEndTimePicker}>
+                  <Text style={styles.buttonText}>Slut tidspunkt</Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  isVisible={isEndTimePickerVisible}
+                  mode="time"
+                  onConfirm={handleEndTimeConfirm}
+                  onCancel={hideEndTimePicker}
+                />
+              </View>
+              <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                  {eventEndTime === null ? '' : `${eventEndTime}`}
+                </Text>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={styles.rowView}>
+                <TouchableOpacity
+                  style={[
+                    styles.buttonSmall,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.border,
+                    },
+                  ]}
+                  onPress={showDatePicker}>
+                  <Text style={styles.buttonText}>Dato</Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleDateConfirm}
+                  onCancel={hideDatePicker}
+                />
+              </View>
+              <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <Text
+                  style={[styles.text, {fontWeight: 'bold'}]}
+                  // Insert if statement to test if value is null, if so, render text without variable
+                >
+                  {`${eventDate}`}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={[styles.Button, {backgroundColor: colors.mainButton}]}
+            onPress={newEvent}>
+            <Text style={{fontSize: 26, fontWeight: 'bold'}}>
+              Tilføj nyt event
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+        <BottomNavigation />
+      </SafeAreaView>
     );
 }
 
@@ -350,7 +407,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderWidth: 1,
         marginTop: '25%',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     buttonSmall: {
         justifyContent: 'center',

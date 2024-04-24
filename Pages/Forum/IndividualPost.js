@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import {useTheme} from '@react-navigation/native';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 function IndividualPost({ route }) {
   const { postObject } = route.params;
@@ -44,8 +45,8 @@ function IndividualPost({ route }) {
   }
 
   return (
-    <ScrollView>
       <SafeAreaView style={styles.container}>
+    <ScrollView>
         <View style={styles.postContainer}>
           <Post
             style={styles.post}
@@ -57,8 +58,9 @@ function IndividualPost({ route }) {
           <WriteComment postId={postObject} onNewComment={handleNewComment} />
           <CommentSection comments={allComments} setComments={fetchComments} />
         </View>
-      </SafeAreaView>
     </ScrollView>
+      <BottomNavigation />
+      </SafeAreaView>
   );
 }
 

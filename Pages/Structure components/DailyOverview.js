@@ -11,6 +11,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Swiper from 'react-native-swiper';
 import { useTheme } from '@react-navigation/native';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -91,120 +92,245 @@ export const DailyOverview = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 24, textAlign: 'center', marginVertical: 10 }}>Hvordan har du det i dag {username}?</Text>
-                <View style={{ alignItems: 'center' }}>
-                    <CircularProgress
-                        value={taskProgress}
-                        inActiveStrokeColor={colors.subButton}
-                        inActiveStrokeOpacity={0.3}
-                        progressValueColor={colors.mainButton}
-                        valueSuffix={'%'}
-                        activeStrokeColor={colors.border}
-                        activeStrokeSecondaryColor={colors.subButton}
-                        radius={90}
-                    />
-                </View>
-                {taskProgress == 0 ?
-                    <Text style={styles.text}>Velkommen til en ny dag. Check din første to-do af for at få en god start på dagen!</Text>
-                    : taskProgress == 100 ? <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 10 }}>Du har klaret alle dine to-do's i dag. Godt arbejde! Nu kan du holde fri med god samvittighed.</Text>
-                        : <Text style={{ fontSize: 18, textAlign: 'center', marginVertical: 10 }}>Du har klaret {taskProgress}% af dine opgaver i dag. Godt arbejde!</Text>}
-                <View style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView>
+          <View style={{flex: 1}}>
+            <Text
+              style={{fontSize: 24, textAlign: 'center', marginVertical: 10}}>
+              Hvordan har du det i dag {username}?
+            </Text>
+            <View style={{alignItems: 'center'}}>
+              <CircularProgress
+                value={taskProgress}
+                inActiveStrokeColor={colors.subButton}
+                inActiveStrokeOpacity={0.3}
+                progressValueColor={colors.mainButton}
+                valueSuffix={'%'}
+                activeStrokeColor={colors.border}
+                activeStrokeSecondaryColor={colors.subButton}
+                radius={90}
+              />
             </View>
-            <View style={[styles.upNext, { shadowColor: colors.border, borderColor: colors.subButton, backgroundColor: colors.subButton }]}>
-                <Swiper
-                    loop={false}
-                    showsPagination={true}
-                    dotStyle={{ backgroundColor: colors.mainButton, width: 150, height: 8, borderRadius: 4, marginHorizontal: 4 }}
-                    activeDotStyle={{ backgroundColor: colors.border, width: 150, height: 8, borderRadius: 4, marginHorizontal: 4 }}
-                    paginationStyle={{ bottom: 10 }}
-                >
-                    <View style={{
-                        flex: 1,
+            {taskProgress == 0 ? (
+              <Text style={styles.text}>
+                Velkommen til en ny dag. Check din første to-do af for at få en
+                god start på dagen!
+              </Text>
+            ) : taskProgress == 100 ? (
+              <Text
+                style={{fontSize: 18, textAlign: 'center', marginVertical: 10}}>
+                Du har klaret alle dine to-do's i dag. Godt arbejde! Nu kan du
+                holde fri med god samvittighed.
+              </Text>
+            ) : (
+              <Text
+                style={{fontSize: 18, textAlign: 'center', marginVertical: 10}}>
+                Du har klaret {taskProgress}% af dine opgaver i dag. Godt
+                arbejde!
+              </Text>
+            )}
+            <View
+              style={[
+                styles.divider,
+                {backgroundColor: colors.border, borderColor: colors.border},
+              ]}></View>
+          </View>
+          <View
+            style={[
+              styles.upNext,
+              {
+                shadowColor: colors.border,
+                borderColor: colors.subButton,
+                backgroundColor: colors.subButton,
+              },
+            ]}>
+            <Swiper
+              loop={false}
+              showsPagination={true}
+              dotStyle={{
+                backgroundColor: colors.mainButton,
+                width: 150,
+                height: 8,
+                borderRadius: 4,
+                marginHorizontal: 4,
+              }}
+              activeDotStyle={{
+                backgroundColor: colors.border,
+                width: 150,
+                height: 8,
+                borderRadius: 4,
+                marginHorizontal: 4,
+              }}
+              paginationStyle={{bottom: 10}}>
+              <View
+                style={{
+                  flex: 1,
+                }}>
+                {remainingTasksArray.length < 1 ? (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                        {remainingTasksArray.length < 1 ? (
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text>Loading...</Text>
-                            </View>
-                        ) : (
-                            <>
-                                <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Næste to-do</Text>
+                    <Text>Loading...</Text>
+                  </View>
+                ) : (
+                  <>
+                    <Text
+                      style={{
+                        fontSize: 28,
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                        marginVertical: 10,
+                        marginBottom: 30,
+                      }}>
+                      Næste to-do
+                    </Text>
 
-                                <View style={styles.rowView}>
-                                    <Text style={{ fontSize: 36 }}>{remainingTasksArray[0].get('emoji')}</Text>
-                                    <Text style={{ fontSize: 26, marginHorizontal: 10 }}>{remainingTasksArray[0].get('name')}</Text>
-                                </View>
-                                <View style={styles.rowView}>
-                                    <FontAwesomeIcon icon={faStopwatch} size={25} style={{ marginHorizontal: 5 }} color={colors.border} />
-                                    <Text style={{ fontSize: 18 }}>Fra {remainingTasksArray[0].get('startTime')} til {remainingTasksArray[0].get('endTime')}</Text>
-                                </View>
-                                <View style={styles.rowView}>
-                                    <View style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
-                                        <BouncyCheckbox
-                                            key={remainingTasksArray[0].id}
-                                            size={25}
-                                            fillColor={colors.mainButton}
-                                            unfillColor={colors.background}
-                                            iconStyle={{ borderColor: colors.subButton }}
-                                            innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={() => taskCompleted(remainingTasksArray[0])}
-                                            isChecked={checked}
-                                        />
-                                        <Text style={{ fontSize: 18 }}>Fuldført?</Text>
-                                    </View>
-                                    <TouchableOpacity style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
-                                        <FontAwesomeIcon icon={faFaceTired} size={25} color={colors.border} />
-                                        <Text style={{ fontSize: 18, marginLeft: 12 }}>Ramt væggen?</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </>
-                        )}
+                    <View style={styles.rowView}>
+                      <Text style={{fontSize: 36}}>
+                        {remainingTasksArray[0].get('emoji')}
+                      </Text>
+                      <Text style={{fontSize: 26, marginHorizontal: 10}}>
+                        {remainingTasksArray[0].get('name')}
+                      </Text>
                     </View>
-                    <View style={{
-                        flex: 1,
+                    <View style={styles.rowView}>
+                      <FontAwesomeIcon
+                        icon={faStopwatch}
+                        size={25}
+                        style={{marginHorizontal: 5}}
+                        color={colors.border}
+                      />
+                      <Text style={{fontSize: 18}}>
+                        Fra {remainingTasksArray[0].get('startTime')} til{' '}
+                        {remainingTasksArray[0].get('endTime')}
+                      </Text>
+                    </View>
+                    <View style={styles.rowView}>
+                      <View
+                        style={[
+                          styles.rowView,
+                          {marginHorizontal: 15, flex: 1},
+                        ]}>
+                        <BouncyCheckbox
+                          key={remainingTasksArray[0].id}
+                          size={25}
+                          fillColor={colors.mainButton}
+                          unfillColor={colors.background}
+                          iconStyle={{borderColor: colors.subButton}}
+                          innerIconStyle={{borderWidth: 2}}
+                          onPress={() => taskCompleted(remainingTasksArray[0])}
+                          isChecked={checked}
+                        />
+                        <Text style={{fontSize: 18}}>Fuldført?</Text>
+                      </View>
+                      <TouchableOpacity
+                        style={[
+                          styles.rowView,
+                          {marginHorizontal: 15, flex: 1},
+                        ]}>
+                        <FontAwesomeIcon
+                          icon={faFaceTired}
+                          size={25}
+                          color={colors.border}
+                        />
+                        <Text style={{fontSize: 18, marginLeft: 12}}>
+                          Ramt væggen?
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                )}
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                }}>
+                {remainingTasksArray.length < 2 ? (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                        {remainingTasksArray.length < 2 ? (
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text>Loading...</Text>
-                            </View>
-                        ) : (
-                            <>
-                                <Text style={{ fontSize: 28, fontWeight: 'bold', alignSelf: 'center', marginVertical: 10, marginBottom: 30 }}>Næste to-do</Text>
+                    <Text>Loading...</Text>
+                  </View>
+                ) : (
+                  <>
+                    <Text
+                      style={{
+                        fontSize: 28,
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                        marginVertical: 10,
+                        marginBottom: 30,
+                      }}>
+                      Næste to-do
+                    </Text>
 
-                                <View style={styles.rowView}>
-                                    <Text style={{ fontSize: 36 }}>{remainingTasksArray[1].get('emoji')}</Text>
-                                    <Text style={{ fontSize: 26, marginHorizontal: 10 }}>{remainingTasksArray[1].get('name')}</Text>
-                                </View>
-                                <View style={styles.rowView}>
-                                    <FontAwesomeIcon icon={faStopwatch} size={25} style={{ marginHorizontal: 5 }} color={colors.border} />
-                                    <Text style={{ fontSize: 18 }}>Fra {remainingTasksArray[1].get('startTime')} til {remainingTasksArray[1].get('endTime')}</Text>
-                                </View>
-                                <View style={styles.rowView}>
-                                    <View style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
-                                        <BouncyCheckbox
-                                            key={remainingTasksArray[0].id}
-                                            size={25}
-                                            fillColor={colors.border}
-                                            unfillColor={colors.background}
-                                            iconStyle={{ borderColor: "black" }}
-                                            innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={() => taskCompleted(remainingTasksArray[1])}
-                                            isChecked={checked}
-                                        />
-                                        <Text style={{ fontSize: 18 }}>Fuldført?</Text>
-                                    </View>
-                                    <TouchableOpacity style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
-                                        <FontAwesomeIcon icon={faFaceTired} size={25} color={colors.border} />
-                                        <Text style={{ fontSize: 18, marginLeft: 12 }}>Ramt væggen?</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </>
-                        )}
+                    <View style={styles.rowView}>
+                      <Text style={{fontSize: 36}}>
+                        {remainingTasksArray[1].get('emoji')}
+                      </Text>
+                      <Text style={{fontSize: 26, marginHorizontal: 10}}>
+                        {remainingTasksArray[1].get('name')}
+                      </Text>
                     </View>
-                </Swiper>
-            </View>
-        </SafeAreaView>
+                    <View style={styles.rowView}>
+                      <FontAwesomeIcon
+                        icon={faStopwatch}
+                        size={25}
+                        style={{marginHorizontal: 5}}
+                        color={colors.border}
+                      />
+                      <Text style={{fontSize: 18}}>
+                        Fra {remainingTasksArray[1].get('startTime')} til{' '}
+                        {remainingTasksArray[1].get('endTime')}
+                      </Text>
+                    </View>
+                    <View style={styles.rowView}>
+                      <View
+                        style={[
+                          styles.rowView,
+                          {marginHorizontal: 15, flex: 1},
+                        ]}>
+                        <BouncyCheckbox
+                          key={remainingTasksArray[0].id}
+                          size={25}
+                          fillColor={colors.border}
+                          unfillColor={colors.background}
+                          iconStyle={{borderColor: 'black'}}
+                          innerIconStyle={{borderWidth: 2}}
+                          onPress={() => taskCompleted(remainingTasksArray[1])}
+                          isChecked={checked}
+                        />
+                        <Text style={{fontSize: 18}}>Fuldført?</Text>
+                      </View>
+                      <TouchableOpacity
+                        style={[
+                          styles.rowView,
+                          {marginHorizontal: 15, flex: 1},
+                        ]}>
+                        <FontAwesomeIcon
+                          icon={faFaceTired}
+                          size={25}
+                          color={colors.border}
+                        />
+                        <Text style={{fontSize: 18, marginLeft: 12}}>
+                          Ramt væggen?
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                )}
+              </View>
+            </Swiper>
+          </View>
+        </ScrollView>
+        <BottomNavigation />
+      </SafeAreaView>
     );
 
 }

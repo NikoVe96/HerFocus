@@ -19,6 +19,8 @@ import {
 import PickAvatar from './PickAvatar';
 import getAvatarImage from './AvatarUtils';
 import { useTheme} from '@react-navigation/native';
+import BottomNavigation from '../../Navigation/BottomNav';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const Profile = () => {
   const [username, setUsername] = useState('');
@@ -49,73 +51,91 @@ const handleAvatarSelect = selectedAvatar => {
   const avatarImageSource = getAvatarImage(avatar);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.userNameContainer}>
-        <View
-          style={[styles.styling, {backgroundColor: colors.mainButton}]}></View>
-        <Text style={styles.user}>{username}</Text>
-        <Image source={avatarImageSource} style={styles.avatarImage} />
-        <View style={styles.avatar}>
-          <View style={styles.avatar} size={30}></View>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.userNameContainer}>
+          <View
+            style={[
+              styles.styling,
+              {backgroundColor: colors.bars},
+            ]}></View>
+          <Text style={styles.user}>{username}</Text>
+          <Image source={avatarImageSource} style={styles.avatarImage} />
+          <View style={styles.avatar}>
+            <View style={styles.avatar} size={30}></View>
+          </View>
         </View>
-      </View>
-      <View style={styles.seperator}></View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
-        <Text style={styles.userInfo}> {name} </Text>
-      </View>
-      <View
-        style={[styles.seperator, {backgroundColor: colors.mainButton}]}></View>
-      <View style={styles.userContainer}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={30} />
-          <Text style={styles.userInfo}>{email} </Text>
+        <View style={styles.seperator}></View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
+          <Text style={styles.userInfo}> {name} </Text>
         </View>
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          style={styles.iconEdit}
-          size={30}
-        />
-      </View>
-      <View
-        style={[styles.seperator, {backgroundColor: colors.mainButton}]}></View>
-      <View style={styles.userContainer}>
         <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <FontAwesomeIcon icon={faLock} style={styles.icons} size={30} />
-          <Text style={styles.userInfo}> ************* </Text>
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.mainButton},
+          ]}></View>
+        <View style={styles.userContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={30} />
+            <Text style={styles.userInfo}>{email} </Text>
+          </View>
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            style={styles.iconEdit}
+            size={30}
+          />
         </View>
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          style={styles.iconEdit}
-          size={30}
-        />
-      </View>
-      <View
-        style={[styles.seperator, {backgroundColor: colors.mainButton}]}></View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
-        <Text style={styles.userInfo}> Skift avatar </Text>
-      </View>
-      <View style={styles.changeAvatar}>
-        <PickAvatar
-          onAvatarSelect={handleAvatarSelect}
-          picked={avatar}></PickAvatar>
-      </View>
-    </ScrollView>
+        <View
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.mainButton},
+          ]}></View>
+        <View style={styles.userContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <FontAwesomeIcon icon={faLock} style={styles.icons} size={30} />
+            <Text style={styles.userInfo}> ************* </Text>
+          </View>
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            style={styles.iconEdit}
+            size={30}
+          />
+        </View>
+        <View
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.mainButton},
+          ]}></View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
+          <Text style={styles.userInfo}> Skift avatar </Text>
+        </View>
+        <View style={styles.changeAvatar}>
+          <PickAvatar
+            onAvatarSelect={handleAvatarSelect}
+            picked={avatar}></PickAvatar>
+        </View>
+      </ScrollView>
+      <BottomNavigation />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 0 
+  },
   userNameContainer: {
-    zIndex: 1,
     alignItems: 'center',
   },
   avatarImage: {
@@ -125,7 +145,7 @@ const styles = StyleSheet.create({
   },
   styling: {
     width: '100%',
-    height: 100,
+    height: 80,
     borderBottomEndRadius: 100,
     borderBottomStartRadius: 100,
   },
@@ -142,7 +162,7 @@ const styles = StyleSheet.create({
     color: 'black',
     zIndex: 2,
     position: 'absolute',
-    marginTop: 50,
+    marginTop: 40,
   },
   seperator: {
     width: '100%',
@@ -167,9 +187,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 20,
   },
-  changeAvatar:{
+  changeAvatar: {
     marginLeft: 10,
-  }
+  },
 });
 
 export default Profile;

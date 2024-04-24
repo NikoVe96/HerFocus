@@ -20,7 +20,6 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   };
 
   const pickedAvatar = avatarSelection => {
-    console.log('Current picked avatar:', picked);
     return {
       ...styles.images,
       backgroundColor: avatarSelection === picked ? 'black' : 'transparent',

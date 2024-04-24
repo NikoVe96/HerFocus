@@ -1,6 +1,7 @@
 import {Link} from '@react-navigation/native';
 import {SafeAreaView, ScrollView, Text, View, Linking} from 'react-native';
 import Markdown from 'react-native-markdown-display';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const ViewArticle = ({route}) => {
   const {article} = route.params;
@@ -10,8 +11,8 @@ export const ViewArticle = ({route}) => {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView style={{padding: 20, marginBottom: 20}}>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView style={{padding: 20}}>
         <Text
           style={{
             fontSize: 32,
@@ -71,6 +72,7 @@ export const ViewArticle = ({route}) => {
           </Text>
         </View>
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 };

@@ -7,6 +7,7 @@ import Feed from './Feed';
 import WritePost from './WritePost';
 import WriteComment from './WriteComment';
 import Parse from 'parse/react-native';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const Forum = ({route}) => {
   const [posts, setPosts] = useState([]);
@@ -30,9 +31,9 @@ export const Forum = ({route}) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <View style={styles.container}>
+        <View>
           <Text style={[styles.title, {color: colors.text}]}>{forumTitle}</Text>
           <View
             style={[styles.descContainer, {backgroundColor: colors.subButton}]}>
@@ -46,6 +47,7 @@ export const Forum = ({route}) => {
           forumTitle={forumTitle}></WritePost>
         <Feed forumTitle={forumTitle} posts={posts} setPosts={setPosts} />
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 };
@@ -53,14 +55,14 @@ export const Forum = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   title: {
     fontSize: 30,
     marginTop: 25,
+    alignSelf: 'center'
   },
   descContainer: {
+    alignSelf: 'center',
     marginTop: 20,
     marginBottom: 20,
     width: '90%',

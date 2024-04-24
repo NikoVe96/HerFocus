@@ -10,6 +10,7 @@ import {useNavigation, useTheme} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import Markdown from 'react-native-markdown-display';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const ArticlesDiagnosed = ({route}) => {
   const navigation = useNavigation();
@@ -40,49 +41,48 @@ export const ArticlesDiagnosed = ({route}) => {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.title}>Her kan du vælge en artikel.</Text>
-          <Text style={styles.title2}>God læsning!</Text>
-          {articlesList.length == 0 ? (
-            <Text style={{textAlign: 'center', fontSize: 24}}>
-              Loading articles...
-            </Text>
-          ) : (
-            articlesList.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.knowledgeView,
-                  styles.shadowProp,
-                  {backgroundColor: colors.subButton},
-                ]}
-                onPress={() => readArticle(item)}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    textAlign: 'center',
-                  }}>
-                  {item.get('title')}
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    backgroundColor: 'black',
-                    width: 250,
-                    marginVertical: 5,
-                  }}></View>
-                <Text numberOfLines={3} style={{fontStyle: 'italic'}}>
-                  {item.get('text').replaceAll(/#|-|>|/gi, '')}
-                </Text>
-              </TouchableOpacity>
-            ))
-          )}
-        </ScrollView>
-      </SafeAreaView>
-    </ScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView>
+        <Text style={styles.title}>Her kan du vælge en artikel.</Text>
+        <Text style={styles.title2}>God læsning!</Text>
+        {articlesList.length == 0 ? (
+          <Text style={{textAlign: 'center', fontSize: 24}}>
+            Loading articles...
+          </Text>
+        ) : (
+          articlesList.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.knowledgeView,
+                styles.shadowProp,
+                {backgroundColor: colors.subButton},
+              ]}
+              onPress={() => readArticle(item)}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  textAlign: 'center',
+                }}>
+                {item.get('title')}
+              </Text>
+              <View
+                style={{
+                  borderWidth: 1,
+                  backgroundColor: 'black',
+                  width: 250,
+                  marginVertical: 5,
+                }}></View>
+              <Text numberOfLines={3} style={{fontStyle: 'italic'}}>
+                {item.get('text').replaceAll(/#|-|>|/gi, '')}
+              </Text>
+            </TouchableOpacity>
+          ))
+        )}
+      </ScrollView>
+      <BottomNavigation />
+    </SafeAreaView>
   );
 };
 
@@ -97,9 +97,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   knowledgeView: {
-    width: 330,
+    width: '90%',
     height: 120,
-    backgroundColor: '#FFFFFF',
     marginTop: 10,
     alignItems: 'center',
     borderColor: '#000000',
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 3,
+    alignSelf: 'center',
   },
   shadowProp: {
     shadowColor: '#443939',

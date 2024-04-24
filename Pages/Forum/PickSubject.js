@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const PickSubject = () => {
   const navigation = useNavigation();
@@ -18,8 +19,8 @@ export const PickSubject = () => {
    const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
-    <ScrollView>
       <View style={styles.container}>
+    <ScrollView>
         <Text
           style={[
             styles.title,
@@ -75,66 +76,65 @@ export const PickSubject = () => {
             </View>
           </View>
         </TouchableOpacity>
-     
-      <TouchableOpacity
-        style={styles.press}
-        onPress={() =>
-          navigation.navigate('Forum', {
-            forumTitle: 'Medicin',
-            forumDescription:
-              'Medicin kan være et svært emne at tale om. Hold venligst medicinensnakken til dette forum, og husk at kontakte en læge, hvis det er nødvendigt.',
-          })
-        }>
-        <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
-          <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
-            <Image
-              source={require('../../Assets/images/Medicin.png')}
-              style={{
-                width: 100,
-                height: 100,
-                marginTop: 10,
-                marginBottom: 10,
-              }}></Image>
-            <Text style={styles.text}>Medicin</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.press}
-        onPress={() =>
-          navigation.navigate('Forum', {
-            forumTitle: 'Gode tips',
-            forumDescription:
-              'Det er altid rart at lære af andres gode erfaringer. Her kan du dele dine gode tips, men også lære hvad der hjælper for andre.',
-          })
-        }>
-        <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
-          <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
-            <Image
-              source={require('../../Assets/images/Tips.png')}
-              style={{
-                width: 100,
-                height: 100,
-                marginTop: 10,
-                marginBottom: 10,
-              }}></Image>
-            <Text style={styles.text}>Gode tips</Text>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Medicin',
+              forumDescription:
+                'Medicin kan være et svært emne at tale om. Hold venligst medicinensnakken til dette forum, og husk at kontakte en læge, hvis det er nødvendigt.',
+            })
+          }>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/Medicin.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}></Image>
+              <Text style={styles.text}>Medicin</Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
-         </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Gode tips',
+              forumDescription:
+                'Det er altid rart at lære af andres gode erfaringer. Her kan du dele dine gode tips, men også lære hvad der hjælper for andre.',
+            })
+          }>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/Tips.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}></Image>
+              <Text style={styles.text}>Gode tips</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
     </ScrollView>
+      <BottomNavigation />
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 30,
-    width: '100%',
   },
   title: {
     textAlign: 'center',

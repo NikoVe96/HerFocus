@@ -27,6 +27,7 @@ import {
   faKitchenSet,
 } from '@fortawesome/free-solid-svg-icons';
 import Parse from 'parse/react-native';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const PickModule = () => {
   const navigation = useNavigation();
@@ -94,12 +95,21 @@ export const PickModule = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>Hvad vil du gerne lære om i dag?</Text>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{structuringProgress}%</Text>
+        <View style={{marginVertical: 20}}>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              {structuringProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -109,11 +119,16 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
+            <View
+              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+              <View
+                style={[
+                  styles.buttonGrad,
+                  {backgroundColor: colors.mainButton},
+                ]}>
                 <Animated.Image
                   source={require('../../Assets/images/learning_notebook.png')}
-                  style={{ width: 120, height: 100, marginTop: 5 }}
+                  style={{width: 120, height: 100, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
                 <Text style={styles.text}>
                   Planlægning og strukturering af hverdagen
@@ -122,9 +137,18 @@ export const PickModule = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{procrastinationProgress}%</Text>
+        <View style={{marginVertical: 20}}>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              {procrastinationProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -134,22 +158,34 @@ export const PickModule = () => {
                 image: moduleSubjects[1].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
+            <View
+              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+              <View
+                style={[
+                  styles.buttonGrad,
+                  {backgroundColor: colors.mainButton},
+                ]}>
                 <Animated.Image
                   source={require('../../Assets/images/learning_hourglass.png')}
-                  style={{ width: 60, height: 95, marginTop: 5 }}
+                  style={{width: 60, height: 95, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Overkom overspringshandlinger
-                </Text>
+                <Text style={styles.text}>Overkom overspringshandlinger</Text>
               </View>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{relationsProgress}%</Text>
+        <View style={{marginVertical: 20}}>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              {relationsProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -159,27 +195,30 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
+            <View
+              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+              <View
+                style={[
+                  styles.buttonGrad,
+                  {backgroundColor: colors.mainButton},
+                ]}>
                 <Animated.Image
                   source={require('../../Assets/images/learning_relations.png')}
-                  style={{ width: 140, height: 95, marginTop: 5 }}
+                  style={{width: 140, height: 95, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Forbedr dine sociale relationer
-                </Text>
+                <Text style={styles.text}>Forbedr dine sociale relationer</Text>
               </View>
             </View>
           </TouchableOpacity>
         </View>
       </ScrollView>
+        <BottomNavigation />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
   },
   scrollView: {
     paddingBottom: 20,
