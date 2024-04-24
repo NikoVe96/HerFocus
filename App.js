@@ -13,6 +13,7 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { UserProvider } from './Components/UserContext';
 
+
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
 Parse.serverURL = 'https://parseapi.back4app.com/'

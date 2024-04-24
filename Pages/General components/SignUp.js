@@ -56,89 +56,91 @@ const handleAvatarSelect = selectedAvatar => {
 
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.view}>
-        <Image
-          source={require('../../Assets/images/logo-light-nb.png')}
-          style={styles.image}></Image>
-        <TextInput
-          placeholder="Navn"
-          placeholderTextColor="#8C8C8C"
-          value={name}
-          onChangeText={text => setName(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Brugernavn"
-          placeholderTextColor="#8C8C8C"
-          value={username}
-          onChangeText={text => setUsername(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor="#8C8C8C"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Kodeord"
-          placeholderTextColor="#8C8C8C"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry={true}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Bekræft kodeord"
-          placeholderTextColor="#8C8C8C"
-          value={confirmPassword}
-          onChangeText={text => setConfirmPassword(text)}
-          secureTextEntry={true}
-          style={styles.form}></TextInput>
-        <Text style={styles.errorText}>{error}</Text>
-        <Text style={styles.avatar}> Vælg en avatar </Text>
-        <View style={styles.avatarMargin}>
-          <PickAvatar
-            onAvatarSelect={handleAvatarSelect}
-            picked={avatar}
-            isSignUp={true}></PickAvatar>
+        <SafeAreaView >
+    <ScrollView>
+        <View style={styles.container}>
+          <Image
+            source={require('../../Assets/images/logo-light-nb.png')}
+            style={styles.image}></Image>
+          <TextInput
+            placeholder="Navn"
+            placeholderTextColor="#8C8C8C"
+            value={name}
+            onChangeText={text => setName(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Brugernavn"
+            placeholderTextColor="#8C8C8C"
+            value={username}
+            onChangeText={text => setUsername(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#8C8C8C"
+            value={email}
+            onChangeText={text => setEmail(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Kodeord"
+            placeholderTextColor="#8C8C8C"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry={true}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Bekræft kodeord"
+            placeholderTextColor="#8C8C8C"
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
+            secureTextEntry={true}
+            style={styles.form}></TextInput>
+          <Text style={styles.errorText}>{error}</Text>
+          <Text style={styles.avatar}> Vælg en avatar </Text>
+          <View style={styles.avatarMargin}>
+            <PickAvatar
+              onAvatarSelect={handleAvatarSelect}
+              picked={avatar}
+              isSignUp={true}></PickAvatar>
+          </View>
+          <TouchableOpacity
+            style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}
+            onPress={() =>
+              handleSignup(
+                name,
+                username,
+                email,
+                password,
+                confirmPassword,
+                navigation,
+                avatar,
+              )
+            }
+            title=" Sign up"
+            titleColor="#000000">
+            <Text style={styles.btnText}>Lav en profil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}>
+            <Text style={styles.btnText}>Tilbage til login</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}
-          onPress={() =>
-            handleSignup(
-              name,
-              username,
-              email,
-              password,
-              confirmPassword,
-              navigation,
-              avatar
-            )
-          }
-          title=" Sign up"
-          titleColor="#000000">
-          <Text style={styles.btnText}>Lav en profil</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
-          style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}>
-          <Text style={styles.btnText}>Tilbage login</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  view: {
     alignItems: 'center',
+    marginBottom: '40%',
   },
   image: {
-    width: 320,
-    height: 130,
-    marginTop: 50,
+    width: '80%',
+    height: '20%',
+    marginTop: 30,
+    marginBottom: 10,
   },
   form: {
     width: 280,
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   signUpBtn: {
-    width: 200,
+    width: '60%',
     height: 30,
     borderColor: '#000000',
     borderWidth: 1,

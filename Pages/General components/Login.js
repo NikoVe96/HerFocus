@@ -11,6 +11,7 @@ import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useUser } from '../../Components/UserContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const LogIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -20,44 +21,46 @@ const LogIn = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Image
-        source={require('../../Assets/images/logo-light-nb.png')}
-        style={styles.image}></Image>
-      <TextInput
-        placeholder="email"
-        placeholderTextColor="#8C8C8C"
-        value={email}
-        onChangeText={text => setEmail(text)}
-        style={styles.form}></TextInput>
-      <TextInput
-        placeholder="password"
-        placeholderTextColor="#8C8C8C"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        style={styles.form}
-        secureTextEntry={true}></TextInput>
-      <Text style={styles.errorText}>{error}</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Forgot password')}
-        style={styles.forgotpas}>
-        <Text>Forgot password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.loginBtn, {backgroundColor: colors.mainButton}]}
-        onPress={() => handleLogin(email, password, navigation)}
-        title=" Login"
-        titleColor="#000000">
-        <Text style={styles.btnText}>Login</Text>
-      </TouchableOpacity>
-      <Text>Don't have an account?</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Sign up')}
-        style={[styles.createBtn, {backgroundColor: colors.subButton}]}
-        title="Create one">
-        <Text style={styles.btnText}>Create one</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <Image
+          source={require('../../Assets/images/logo-light-nb.png')}
+          style={styles.image}></Image>
+        <TextInput
+          placeholder="email"
+          placeholderTextColor="#8C8C8C"
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.form}></TextInput>
+        <TextInput
+          placeholder="kodeord"
+          placeholderTextColor="#8C8C8C"
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={styles.form}
+          secureTextEntry={true}></TextInput>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Forgot password')}
+          style={styles.forgotpas}>
+          <Text>Glemt dit kodeord?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.loginBtn, {backgroundColor: colors.mainButton}]}
+          onPress={() => handleLogin(email, password, navigation)}
+          title=" Login"
+          titleColor="#000000">
+          <Text style={styles.btnText}>Login</Text>
+        </TouchableOpacity>
+        <Text>Har du ikke en konto?</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Sign up')}
+          style={[styles.createBtn, {backgroundColor: colors.subButton}]}
+          title="Create one">
+          <Text style={styles.btnText}>Lav en her</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -68,9 +71,10 @@ const styles = StyleSheet.create({
     marginBottom: 200,
   },
   image: {
-    width: 320,
-    height: 130,
+    width: '80%',
+    height: '30%',
     marginTop: 50,
+    marginBottom: 30,
   },
   form: {
     width: 280,
