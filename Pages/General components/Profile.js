@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -21,28 +21,34 @@ import getAvatarImage from './AvatarUtils';
 import { useTheme} from '@react-navigation/native';
 import BottomNavigation from '../../Navigation/BottomNav';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {useUser} from '../../Components/UserContext';
+import {useFocusEffect} from '@react-navigation/native';
+
 
 export const Profile = () => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+ // const [username, setUsername] = useState('');
+  //const [name, setName] = useState('');
+  //const [email, setEmail] = useState('');
   let [avatar, setAvatar] = useState('');
   const {colors} = useTheme();
+  const {username, name, email, updateUserProfile} = useUser();
+
+    useFocusEffect(
+      useCallback(() => {
+        updateUserProfile();
+        return () => {};
+      }, []),
+    );
 
   useEffect(() => {
     async function getCurrentUser() {
-      if (username === '') {
         const currentUser = await Parse.User.currentAsync();
         if (currentUser !== null) {
-          setUsername(currentUser.getUsername());
-          setEmail(currentUser.getEmail());
-          setName(currentUser.get('name'));
           setAvatar(currentUser.get('avatar'));
         }
-      }
     }
     getCurrentUser();
-  }, []);
+  }, [username]);
 
 const handleAvatarSelect = selectedAvatar => {
   setAvatar(selectedAvatar);

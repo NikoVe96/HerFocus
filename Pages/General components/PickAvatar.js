@@ -56,6 +56,15 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
+          handleAvatarSelect('Avatar18');
+        }}
+        style={pickedAvatar('Avatar18')}>
+        <Image
+          source={require('../../Assets/images/Avatar18.png')}
+          style={styles.images}></Image>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
           handleAvatarSelect('Avatar4');
         }}
         style={pickedAvatar('Avatar4')}>
@@ -79,6 +88,15 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
         style={pickedAvatar('Avatar6')}>
         <Image
           source={require('../../Assets/images/Avatar6.png')}
+          style={styles.images}></Image>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          handleAvatarSelect('Avatar19');
+        }}
+        style={pickedAvatar('Avatar19')}>
+        <Image
+          source={require('../../Assets/images/Avatar19.png')}
           style={styles.images}></Image>
       </TouchableOpacity>
       <TouchableOpacity

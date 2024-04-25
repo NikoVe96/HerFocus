@@ -1,12 +1,15 @@
 import React, {createContext, useContext, useState} from 'react';
 import Parse from 'parse/react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
    const [username, setUsername] = useState('');
    const [error, setError] = useState('');
-   const [password, setPassword] = useState('');
+   const [avatar, setAvatar] = useState('');
+   const [email, setEmail] = useState('');
+   const [name, setName] = useState('');
 
   const handleSignup = async (
     name,
@@ -68,9 +71,19 @@ export const UserProvider = ({ children }) => {
    }
  };
 
+  const updateUserProfile = async () => {
+    const currentUser = Parse.User.current();
+    if (currentUser) {
+      setUsername(currentUser.get('username'));
+      setAvatar(currentUser.get('avatar'));
+      setEmail(currentUser.get('email')); 
+      setName(currentUser.get('name'));
+    }
+  };
+
  return (
    <UserContext.Provider
-     value={{username, error, handleLogin, handleLogout, handleSignup}}>
+     value={{username, email, name, error, avatar, updateUserProfile, handleLogin, handleLogout, handleSignup}}>
      {children}
    </UserContext.Provider>
  );
