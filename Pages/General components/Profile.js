@@ -68,12 +68,12 @@ const handleAvatarSelect = selectedAvatar => {
           <Text style={styles.user}>{username}</Text>
           <Image source={avatarImageSource} style={styles.avatarImage} />
           <View style={styles.avatar}>
-            <View style={styles.avatar} size={30}></View>
+            <View style={styles.avatar}></View>
           </View>
         </View>
         <View style={styles.seperator}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
+          <FontAwesomeIcon icon={faUser} style={styles.icons} size={20} />
           <Text style={styles.userInfo}> {name} </Text>
         </View>
         <View
@@ -87,33 +87,13 @@ const handleAvatarSelect = selectedAvatar => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={30} />
+            <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={20} />
             <Text style={styles.userInfo}>{email} </Text>
           </View>
           <FontAwesomeIcon
             icon={faPenToSquare}
             style={styles.iconEdit}
-            size={30}
-          />
-        </View>
-        <View
-          style={[
-            styles.seperator,
-            {backgroundColor: colors.mainButton},
-          ]}></View>
-        <View style={styles.userContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <FontAwesomeIcon icon={faLock} style={styles.icons} size={30} />
-            <Text style={styles.userInfo}> ************* </Text>
-          </View>
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-            style={styles.iconEdit}
-            size={30}
+            size={20}
           />
         </View>
         <View
@@ -139,7 +119,6 @@ const handleAvatarSelect = selectedAvatar => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0 
   },
   userNameContainer: {
     alignItems: 'center',
@@ -158,7 +137,6 @@ const styles = StyleSheet.create({
   avatar: {
     alignSelf: 'center',
     marginTop: 10,
-    marginBottom: 20,
   },
   user: {
     paddingLeft: 60,

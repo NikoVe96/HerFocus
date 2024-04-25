@@ -1,8 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import Parse from 'parse/react-native';
+import {useTheme} from '@react-navigation/native';
 
 export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
+  const {colors} = useTheme();
+
+
   const handleAvatarSelect = async avatarSelection => {
     onAvatarSelect(avatarSelection);
     if (!isSignedUp) {
@@ -22,7 +26,7 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   const pickedAvatar = avatarSelection => {
     return {
       ...styles.images,
-      backgroundColor: avatarSelection === picked ? 'black' : 'transparent',
+      backgroundColor: avatarSelection === picked ? colors.border : 'transparent',
       borderRadius: avatarSelection === picked ? 30 : 0,
     };
   };
