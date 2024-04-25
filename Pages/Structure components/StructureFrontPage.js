@@ -33,7 +33,7 @@ export const StructureFrontPage = () => {
                 style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => navigation.navigate('Daily overview')}>
                 <Image
-                    source={require('../../Assets/images/structure_todo.png')}
+                    source={require('../../Assets/images/structure_dailyOverview.png')}
                     style={styles.imageLarge}></Image>
                 <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Daglig oversigt</Text>
             </TouchableOpacity>
@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
         marginTop: 35,
     },
     imageLarge: {
-        width: '30%',
+        width: '50%',
         height: '70%',
         resizeMode: 'contain',
     },
     imageSmall: {
-        width: '65%',
+        width: '70%',
         height: '70%',
         resizeMode: 'contain',
     },

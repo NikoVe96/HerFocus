@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Image, Text, TextInput, Button, Alert, List, SafeAreaView, ScrollView, StyleSheet, Modal } from "react-native";
+import { View, TouchableOpacity, Image, Text, TextInput, Button, Alert, List, SafeAreaView, ScrollView, StyleSheet, Modal, Switch } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlusSquare, faSmileBeam } from "@fortawesome/free-regular-svg-icons";
 import React, { useState, useEffect } from 'react';
@@ -54,7 +54,6 @@ export const AddTask = ({ navigation }) => {
                 if (currentUser !== null) {
                     setUsername(currentUser.getUsername());
                     setID(currentUser.id);
-                    routineList();
                 }
             }
         }
@@ -76,10 +75,11 @@ export const AddTask = ({ navigation }) => {
             newTask.set('user', currentUser);
             newTask.set('color', taskColor);
             newTask.set('category', taskCategory);
+            newTask.set('type', 'task');
             // If time, add recurring option
             await newTask.save();
             console.log('Success: task saved')
-            Alert.alert('A new task has been added to your calendar!')
+            Alert.alert('En ny to-do er blevet tilføjet til din kalender!')
             clearInput();
         } catch (error) {
             console.log('Error saving new task: ', error);
@@ -110,15 +110,19 @@ export const AddTask = ({ navigation }) => {
     };
 
     const handleStartTimeConfirm = (date) => {
-        if (date.getMinutes() < 10) {
-            let minutes = '0' + date.getMinutes();
-            setStartTime(date.getHours()
-                + ':' + minutes)
-            console.log(minutes);
-        } else {
-            setStartTime(date.getHours()
-                + ':' + date.getMinutes());
+        let minutes = date.getMinutes();
+        let hours = date.getHours();
+
+        if (minutes < 10) {
+            minutes = '0' + date.getMinutes();
         }
+
+        if (hours < 10) {
+            hours = '0' + date.getHours();
+        }
+
+        setStartTime(hours
+            + ':' + minutes);
         hideStartTimePicker();
     };
 
@@ -131,15 +135,19 @@ export const AddTask = ({ navigation }) => {
     };
 
     const handleEndTimeConfirm = (date) => {
-        if (date.getMinutes() < 10) {
-            let minutes = '0' + date.getMinutes();
-            setEndTime(date.getHours()
-                + ':' + minutes)
-            console.log(minutes);
-        } else {
-            setEndTime(date.getHours()
-                + ':' + date.getMinutes());
+        let minutes = date.getMinutes();
+        let hours = date.getHours();
+
+        if (minutes < 10) {
+            minutes = '0' + date.getMinutes();
         }
+
+        if (hours < 10) {
+            hours = '0' + date.getHours();
+        }
+
+        setEndTime(hours
+            + ':' + minutes);
 
         hideEndTimePicker();
     };
@@ -270,7 +278,7 @@ export const AddTask = ({ navigation }) => {
                     </View>
                     <View style={{ marginVertical: 5, flexDirection: 'row' }}>
                         <View style={styles.rowView}>
-                            <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}>
+                            <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
                                 <Text style={styles.buttonText}>Emoji</Text>
                             </TouchableOpacity>
                             <Modal
@@ -310,7 +318,7 @@ export const AddTask = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                         <View style={styles.rowView}>
                             <TouchableOpacity
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
+                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
                                 onPress={showStartTimePicker}>
                                 <Text style={styles.buttonText}>Start tidspunkt</Text>
                             </TouchableOpacity>
@@ -330,7 +338,7 @@ export const AddTask = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                         <View style={styles.rowView}>
                             <TouchableOpacity
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
+                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
                                 onPress={showEndTimePicker}>
                                 <Text style={styles.buttonText}>Slut tidspunkt</Text>
                             </TouchableOpacity>
@@ -350,7 +358,7 @@ export const AddTask = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                         <View style={styles.rowView}>
                             <TouchableOpacity
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}
+                                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
                                 onPress={showDatePicker}>
                                 <Text style={styles.buttonText}>Dato</Text>
                             </TouchableOpacity>
@@ -363,14 +371,13 @@ export const AddTask = ({ navigation }) => {
                         </View>
                         <View style={[styles.rowView, { alignItems: 'center' }]}>
                             <Text style={[styles.text, { fontWeight: 'bold' }]}
-                            // Insert if statement to test if value is null, if so, render text without variable
                             >
                                 {`${taskDate}`}
                             </Text>
                         </View>
                     </View>
                 </View>
-                <TouchableOpacity style={[styles.Button, { backgroundColor: colors.mainButton, borderColor: colors.border }]} onPress={newTask}>
+                <TouchableOpacity style={[styles.Button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={newTask}>
                     <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Tilføj ny to-do</Text>
                 </TouchableOpacity>
             </ScrollView>
@@ -387,9 +394,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         borderWidth: 1,
-        marginTop: '5%',
+        marginVertical: '5%',
         paddingHorizontal: 20,
-        elevation: 10
+        elevation: 5
     },
     buttonSmall: {
         justifyContent: 'center',
@@ -399,7 +406,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         marginVertical: 5,
-        elevation: 10
+        elevation: 5
     },
     modalButton: {
         backgroundColor: 'lightgrey',

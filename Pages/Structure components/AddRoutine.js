@@ -14,6 +14,7 @@ import { useTheme } from '@react-navigation/native';
 import AccordionItem from '../../Components/AccordionItem';
 import EmojiPicker, { emojiFromUtf16 } from "rn-emoji-picker"
 import { emojis } from "rn-emoji-picker/dist/data"
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -101,6 +102,7 @@ export const AddRoutine = ({ navigation }) => {
             newRoutine.set('emoji', routineEmoji);
             newRoutine.set('color', routineColor);
             newRoutine.set('routineSteps', []);
+            newRoutine.set('type', 'routine');
             await newRoutine.save();
 
             routines();
@@ -164,21 +166,41 @@ export const AddRoutine = ({ navigation }) => {
                 </View>
                 <View>
                     {allRoutines.map((routine, index) => (
-                        <AccordionItem key={index} title={routine.get('name')} emoji={routine.get('emoji')} icon={null}>
-                            <View style={{ backgroundColor: colors.mainButton, borderWidth: 1, borderRadius: 10, padding: 10, borderColor: colors.mainButton, elevation: 10 }}>
+                        <AccordionItem
+                            key={index}
+                            title={routine.get('name')}
+                            emoji={routine.get('emoji')}
+                            icon={null}
+                            emojiStyle={{ fontSize: 35 }}
+                            titleStyle={{ fontSize: 24, color: colors.border }}>
+                            <View style={{ backgroundColor: colors.mainButton, borderWidth: 1, borderRadius: 10, padding: 5, borderColor: colors.mainButton, elevation: 10 }}>
                                 {routine.get('routineSteps').map((step, index) => (
-                                    <View key={index} style={{ padding: 10, borderWidth: 1, borderRadius: 10, marginVertical: 5, flexDirection: 'row', backgroundColor: colors.subButton, borderColor: colors.subButton, elevation: 10, justifyContent: 'space-between' }}>
+                                    <View key={index} style={{ flexDirection: 'row' }}>
                                         <View style={{ justifyContent: 'center' }}>
-                                            <Text style={{ fontSize: 18 }}>{step.stepName}</Text>
+                                            <BouncyCheckbox
+                                                size={30}
+                                                fillColor={colors.mainButton}
+                                                unfillColor="#FFFFFF"
+                                                iconStyle={{ borderColor: "black" }}
+                                                innerIconStyle={{ borderWidth: 2 }}
+                                                textStyle={{ fontFamily: "JosefinSans-Regular" }}
+                                                onPress={(isChecked) => { }}
+                                                style={{ marginHorizontal: 10, flex: 0.5 }}
+                                            />
                                         </View>
-                                        {step.stepTime !== null ?
-                                            <View style={{ flexDirection: 'row', width: '20%', alignItems: 'center', marginLeft: '45%' }}>
-                                                <FontAwesomeIcon icon={faStopwatch} style={{ marginHorizontal: 5 }} size={20} color={colors.border} />
-                                                <Text style={{ fontSize: 18 }}>{step.stepTime}</Text>
+                                        <View style={{ padding: 10, borderWidth: 1, borderRadius: 10, marginVertical: 5, flexDirection: 'row', backgroundColor: colors.subButton, borderColor: colors.subButton, elevation: 10, justifyContent: 'space-between', width: '80%' }}>
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <Text style={{ fontSize: 18 }}>{step.stepName}</Text>
                                             </View>
-                                            : <Text></Text>}
-                                        <View style={{ justifyContent: 'center' }}>
-                                            <FontAwesomeIcon icon={faTrashCan} size={20} color='#BF4C41' />
+                                            {step.stepTime !== null ?
+                                                <View style={{ flexDirection: 'row', width: '20%', alignItems: 'center', marginLeft: '45%' }}>
+                                                    <FontAwesomeIcon icon={faStopwatch} style={{ marginHorizontal: 5 }} size={20} color={colors.border} />
+                                                    <Text style={{ fontSize: 18 }}>{step.stepTime}</Text>
+                                                </View>
+                                                : <Text></Text>}
+                                            <View style={{ justifyContent: 'center' }}>
+                                                <FontAwesomeIcon icon={faTrashCan} size={20} color='#BF4C41' />
+                                            </View>
                                         </View>
                                     </View>
                                 ))}

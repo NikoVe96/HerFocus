@@ -45,6 +45,7 @@ import Module from '../Pages/Learning components/Module';
 import ModulesOverview from '../Pages/Learning components/ModulesOverview';
 import Forum from '../Pages/Forum/Forum';
 import IndividualPost from '../Pages/Forum/IndividualPost';
+import Notebook from '../Pages/Structure components/Notebook';
 
 const Drawer = createDrawerNavigator();
 
@@ -62,7 +63,7 @@ function CustomDrawerContent({ navigation }) {
 
   return (
     <DrawerContentScrollView style={{ backgroundColor: colors.background }}>
-      <AccordionItem title="Structure" icon={faListCheck}>
+      <AccordionItem title="Structure" icon={faListCheck} titleStyle={{ color: colors.border }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Add routine')}>
@@ -118,7 +119,7 @@ function CustomDrawerContent({ navigation }) {
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Forums" icon={faComments}>
+      <AccordionItem title="Forums" icon={faComments} titleStyle={{ color: colors.border }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick subject')}>
@@ -146,7 +147,7 @@ function CustomDrawerContent({ navigation }) {
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Learning modules" icon={faGraduationCap}>
+      <AccordionItem title="Learning modules" icon={faGraduationCap} titleStyle={{ color: colors.border }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick module')}>
@@ -235,7 +236,7 @@ function CustomDrawerContent({ navigation }) {
           </View>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Knowledge base" icon={faBrain}>
+      <AccordionItem title="Knowledge base" icon={faBrain} titleStyle={{ color: colors.border }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick topic')}>
@@ -297,7 +298,7 @@ function CustomDrawerContent({ navigation }) {
           </View>
         </TouchableOpacity>
       </View>
-      <AccordionItem title="About us" icon={faUsers}>
+      <AccordionItem title="About us" icon={faUsers} titleStyle={{ color: colors.border }}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('App history')}>
@@ -405,6 +406,9 @@ function SideMenu() {
       <Drawer.Screen
         name="Add event"
         component={AddEvent}></Drawer.Screen>
+      <Drawer.Screen
+        name="Notebook"
+        component={Notebook}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }
