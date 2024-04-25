@@ -33,7 +33,27 @@ export const PickTopics = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
-            navigation.navigate('Subject articles', {subject: 'diagnosis'})
+            navigation.navigate('Subject articles', {subject: 'adhd'})
+          }>
+          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+            <View
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+              <Image
+                source={require('../../Assets/images/WhatIs.png')}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}></Image>
+              <Text style={styles.text}>Hvad er ADHD?</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() =>
+            navigation.navigate('Subject articles', {subject: 'mental'})
           }>
           <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
@@ -46,9 +66,7 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>
-                At blive diagostiseret med ADHD/ADD
-              </Text>
+              <Text style={styles.text}>Udfordringer med ADHD</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -75,26 +93,6 @@ export const PickTopics = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
-            navigation.navigate('Subject articles', {subject: 'adhd'})
-          }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
-            <View
-              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
-              <Image
-                source={require('../../Assets/images/WhatIs.png')}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}></Image>
-              <Text style={styles.text}>Hvad er ADHD?</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.press}
-          onPress={() =>
             navigation.navigate('Subject articles', {
               subject: 'relationships',
             })
@@ -110,7 +108,7 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>Relationer og ADHD</Text>
+              <Text style={styles.text}>ADHD og Relationer</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -123,12 +121,6 @@ export const PickTopics = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  frontView: {
-    width: 330,
-    height: 140,
-    marginTop: 10,
-    alignItems: 'center',
   },
   title: {
     textAlign: 'center',

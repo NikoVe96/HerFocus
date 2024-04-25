@@ -91,7 +91,7 @@ export const ArticlesDiagnosed = ({route}) => {
                   </Text>
                   <View
                     style={[styles.seperator, {backgroundColor: colors.border}]}></View>
-                  <Text numberOfLines={3} style={[styles.articleText, {color: colors.text}]}>
+                  <Text numberOfLines={4} style={[styles.articleText, {color: colors.text}]}>
                     {item.get('text').replaceAll(/#|-|>|/gi, '')}
                   </Text>
                 </View>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     color: 'black',
-    marginBottom: 15,
+    marginBottom: 35,
   },
   text: {
     color: 'black',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   buttonGrad: {
     width: '100%',
-    height: 120,
+    height: 150,
     borderRadius: 10,
     position: 'absolute',
     bottom: 5,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   buttonParent: {
     width: '90%',
-    height: 120,
+    height: 150,
     borderRadius: 10,
     alignSelf: 'center',
     elevation: 10,
