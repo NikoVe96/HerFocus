@@ -19,8 +19,8 @@ export const PickSubject = () => {
    const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
-      <View style={styles.container}>
-    <ScrollView>
+    <View style={styles.container}>
+      <ScrollView>
         <Text
           style={[
             styles.title,
@@ -42,13 +42,14 @@ export const PickSubject = () => {
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/Heart.png')}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}></Image>
-              <Text style={styles.text}>Familie</Text>
+                style={styles.images}></Image>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Familie
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -66,13 +67,14 @@ export const PickSubject = () => {
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/Hands.png')}
-                style={{
-                  width: 100,
-                  height: 110,
-                  marginTop: 10,
-                  marginBottom: 4,
-                }}></Image>
-              <Text style={styles.text}>Relationer</Text>
+                style={styles.images}></Image>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Relationer
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -91,13 +93,14 @@ export const PickSubject = () => {
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/Medicin.png')}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}></Image>
-              <Text style={styles.text}>Medicin</Text>
+                style={styles.images}></Image>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Medicin
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -116,19 +119,20 @@ export const PickSubject = () => {
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/Tips.png')}
-                style={{
-                  width: 100,
-                  height: 100,
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}></Image>
-              <Text style={styles.text}>Gode tips</Text>
+                style={styles.images}></Image>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Gode tips
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
       <BottomNavigation />
-      </View>
+    </View>
   );
 };
 
@@ -138,13 +142,11 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 22,
-    marginBottom: 30,
+    marginBottom: 35,
     marginTop: 35,
   },
   text: {
     textAlign: 'center',
-    fontSize: 18,
     fontWeight: 'bold',
   },
   buttonGrad: {
@@ -167,6 +169,12 @@ const styles = StyleSheet.create({
   },
   press: {
     marginBottom: 15,
+  },
+  images: {
+    width: 100,
+    height: 100,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 

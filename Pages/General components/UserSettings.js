@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, Alert, SafeAreaView, ScrollView, Switch, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, View, Alert, SafeAreaView, ScrollView, Switch, StyleSheet, Dimensions } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import Parse from 'parse/react-native';
@@ -23,6 +23,8 @@ export const UserSettings = ({ navigation }) => {
     const postToggleSwitch = () => setIsPostEnabled(previousState => !previousState);
     const [isModalVisible, setModalVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState();
+    const {width, height} = Dimensions.get('window');
+    const scaleFactor = Math.min(width / 375, height / 667);
 
     useEffect(() => {
         const getCurrentUser = async () => {
@@ -62,152 +64,77 @@ export const UserSettings = ({ navigation }) => {
     };
 
     return (
-      <SafeAreaView style={{justifyContent: 'center', paddingHorizontal: 10}}>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
-          <Text
-            style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              alignSelf: 'center',
-              color: colors.text,
-            }}>
-            Settings
-          </Text>
+          <View style={styles.title}>
+            <Text
+              style={[
+                styles.textStyle,
+                {color: colors.text, fontSize: 30 * scaleFactor},
+              ]}>
+              Indstillinger
+            </Text>
+          </View>
           <View
-            style={{
-              borderWidth: 1,
-              backgroundColor: colors.border,
-              width: 300,
-              marginBottom: 20,
-              alignSelf: 'center',
-              borderColor: colors.border,
-              borderRadius: 10,
-            }}></View>
-          <View
-            style={{
-              marginVertical: 15,
-              marginHorizontal: 10,
-              backgroundColor: colors.subButton,
-              height: 350,
-              width: 340,
-              padding: 10,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: colors.subButton,
-              elevation: 20,
-            }}>
-            <Text style={{fontSize: 25, flex: 1}}>Farvetema</Text>
+            style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+          <View style={[styles.colorView, {backgroundColor: colors.subButton}]}>
+            <Text
+              style={{
+                fontSize: 20 * scaleFactor,
+                flex: 1,
+                alignSelf: 'center',
+                color: colors.text,
+              }}>
+              Skift farvetema
+            </Text>
             <View style={styles.themeOption}>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#FFD3DA',
-                  borderColor: '#D9E4EC',
-                }}
+                style={styles.pastel}
                 onPress={() => updateTheme('pastel')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#A47786',
-                  borderColor: '#533440',
-                }}
+                style={styles.purple}
                 onPress={() => updateTheme('purple')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#F7A399',
-                  borderColor: '#BF4C41',
-                }}
+                style={styles.red}
                 onPress={() => updateTheme('red')}></TouchableOpacity>
             </View>
             <View style={styles.themeOption}>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#FFEABF',
-                  borderColor: '#DC9B18',
-                }}
+                style={styles.yellow}
                 onPress={() => updateTheme('yellow')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#94C973',
-                  borderColor: '#2F5233',
-                }}
+                style={styles.green}
                 onPress={() => updateTheme('green')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#6AABD2',
-                  borderColor: '#274472',
-                }}
+                style={styles.blue}
                 onPress={() => updateTheme('blue')}></TouchableOpacity>
             </View>
             <View style={styles.themeOption}>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#68669D',
-                  borderColor: '#131227',
-                }}
+                style={styles.darkBlue}
                 onPress={() => updateTheme('darkBlue')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#4F4848',
-                  borderColor: '#000000',
-                }}
+                style={styles.dark}
                 onPress={() => updateTheme('dark')}></TouchableOpacity>
               <TouchableOpacity
-                style={{
-                  borderWidth: 5,
-                  borderRadius: 50,
-                  width: 75,
-                  height: 75,
-                  backgroundColor: '#CCAFA5',
-                  borderColor: '#4F4848',
-                }}
+                style={styles.neutral}
                 onPress={() => updateTheme('neutral')}></TouchableOpacity>
             </View>
           </View>
           <View
-            style={{
-              marginVertical: 15,
-              marginHorizontal: 10,
-              backgroundColor: colors.subButton,
-              height: 250,
-              width: 340,
-              padding: 10,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: colors.subButton,
-              elevation: 10,
-            }}>
-            <Text style={{fontSize: 25, flex: 1}}>Notifikationer</Text>
+            style={[
+              styles.notificationView,
+              {backgroundColor: colors.subButton},
+            ]}>
+            <Text
+              style={{
+                fontSize: 20 * scaleFactor,
+                flex: 1,
+                alignSelf: 'center',
+                color: colors.text,
+              }}>
+              Notifikationer
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -278,32 +205,25 @@ export const UserSettings = ({ navigation }) => {
             </View>
           </View>
           <View
-            style={{
-              marginVertical: 15,
-              marginHorizontal: 10,
-              backgroundColor: colors.subButton,
-              height: 120,
-              width: 340,
-              padding: 10,
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: colors.subButton,
-              elevation: 20,
-            }}>
-            <Text style={{fontSize: 25, flex: 1}}>Slet din konto</Text>
+            style={[styles.deleteView, {backgroundColor: colors.subButton}]}>
+            <Text
+              style={{
+                fontSize: 20 * scaleFactor,
+                flex: 1,
+                alignSelf: 'center',
+                color: colors.text,
+              }}>
+              Slet konto
+            </Text>
             <TouchableOpacity
               onPress={showModal}
-              style={{
-                backgroundColor: colors.mainButton,
-                borderWidth: 4,
-                borderRadius: 10,
-                borderColor: colors.border,
-                flex: 0.7,
-                marginHorizontal: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>
+              style={[styles.deleteBtn, {backgroundColor: colors.mainButton}]}>
+              <Text
+                style={{
+                  fontSize: 20 * scaleFactor,
+                  fontWeight: 'bold',
+                  color: colors.text,
+                }}>
                 Slet din konto
               </Text>
             </TouchableOpacity>
@@ -322,7 +242,8 @@ export const UserSettings = ({ navigation }) => {
                 }}>
                 <Text
                   style={{
-                    fontSize: 24,
+                    color: colors.text,
+                    fontSize: 24 * scaleFactor,
                     fontWeight: 'bold',
                     textAlign: 'center',
                   }}>
@@ -330,7 +251,8 @@ export const UserSettings = ({ navigation }) => {
                 </Text>
                 <Text
                   style={{
-                    fontSize: 20,
+                    color: colors.text,
+                    fontSize: 20 * scaleFactor,
                     textAlign: 'center',
                     marginVertical: 10,
                   }}>
@@ -394,11 +316,139 @@ export const UserSettings = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    themeOption: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        flex: 2
-    },
-})
+  container: {
+    flex: 1,
+  },
+  themeOption: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flex: 2,
+  },
+  title: {
+    marginTop: 40,
+    alignSelf: 'center',
+  },
+  textStyle: {
+    fontSize: 25,
+  },
+  seperator: {
+    height: 1,
+    width: '60%',
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  colorView: {
+    marginVertical: 15,
+    marginHorizontal: 10,
+    height: 280,
+    width: '90%',
+    alignSelf: 'center',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 20,
+  },
+  pastel: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#FFD3DA',
+    borderColor: '#D9E4EC',
+  },
+  purple: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#A47786',
+    borderColor: '#533440',
+  },
+  red: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#F7A399',
+    borderColor: '#BF4C41',
+  },
+  yellow: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#FFEABF',
+    borderColor: '#DC9B18',
+  },
+  green: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#94C973',
+    borderColor: '#2F5233',
+  },
+  blue: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#6AABD2',
+    borderColor: '#274472',
+  },
+  darkBlue: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#68669D',
+    borderColor: '#131227',
+  },
+  dark: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#4F4848',
+    borderColor: '#000000',
+  },
+  neutral: {
+    borderWidth: 4,
+    borderRadius: 50,
+    width: '17%',
+    height: '70%',
+    backgroundColor: '#CCAFA5',
+    borderColor: '#4F4848',
+  },
+  notificationView: {
+    marginHorizontal: 10,
+    height: 190,
+    width: '90%',
+    alignSelf: 'center',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 10,
+  },
+  deleteView: {
+    marginVertical: 15,
+    marginHorizontal: 10,
+    height: 100,
+    width: '90%',
+    alignSelf: 'center',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 20,
+  },
+  deleteBtn: {
+    borderWidth: 2,
+    borderRadius: 10,
+    flex: 0.7,
+    width: '80%',
+    alignSelf: 'center',
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default UserSettings;

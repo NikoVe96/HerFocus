@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    marginBottom: 200,
   },
   image: {
     width: '80%',
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   form: {
-    width: 280,
+    width: '70%',
     height: 30,
     marginTop: 20,
     borderBottomColor: '#000000',
@@ -87,12 +86,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 50,
     fontSize: 18,
-    fontWeight: 'bold',
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
   },
   loginBtn: {
-    width: 200,
+    width: '50%',
     height: 30,
     borderColor: '#000000',
     borderWidth: 1,
@@ -105,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   createBtn: {
-    width: 130,
+    width: '30%',
     height: 30,
     borderColor: '#000000',
     borderWidth: 1,

@@ -26,9 +26,6 @@ import {useFocusEffect} from '@react-navigation/native';
 
 
 export const Profile = () => {
- // const [username, setUsername] = useState('');
-  //const [name, setName] = useState('');
-  //const [email, setEmail] = useState('');
   let [avatar, setAvatar] = useState('');
   const {colors} = useTheme();
   const {username, name, email, updateUserProfile} = useUser();
@@ -65,7 +62,7 @@ const handleAvatarSelect = selectedAvatar => {
               styles.styling,
               {backgroundColor: colors.bars},
             ]}></View>
-          <Text style={styles.user}>{username}</Text>
+          <Text style={[styles.user, {color: colors.text}]}>{username}</Text>
           <Image source={avatarImageSource} style={styles.avatarImage} />
           <View style={styles.avatar}>
             <View style={styles.avatar}></View>
@@ -90,11 +87,6 @@ const handleAvatarSelect = selectedAvatar => {
             <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={20} />
             <Text style={styles.userInfo}>{email} </Text>
           </View>
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-            style={styles.iconEdit}
-            size={20}
-          />
         </View>
         <View
           style={[
@@ -102,7 +94,7 @@ const handleAvatarSelect = selectedAvatar => {
             {backgroundColor: colors.mainButton},
           ]}></View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
+          <FontAwesomeIcon icon={faImage} style={styles.icons} size={20} />
           <Text style={styles.userInfo}> Skift avatar </Text>
         </View>
         <View style={styles.changeAvatar}>
@@ -143,7 +135,6 @@ const styles = StyleSheet.create({
     paddingRight: 60,
     textAlign: 'center',
     fontSize: 30,
-    color: 'black',
     zIndex: 2,
     position: 'absolute',
     marginTop: 40,

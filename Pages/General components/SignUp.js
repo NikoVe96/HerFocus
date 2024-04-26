@@ -31,30 +31,6 @@ const handleAvatarSelect = selectedAvatar => {
   setAvatar(selectedAvatar);
 };
 
-  // const handleSignup = async () => {
-  //   if(email)
-  //   if (password !== confirmPassword) {
-  //     console.log('Error' + error.message);
-  //     setError('Kodeordene er ikke ens, prøv igen 🙂');
-  //     return;
-  //   }
-
-  //   const user = new Parse.User();
-  //   user.set('name', name);
-  //   user.set('username', username);
-  //   user.set('email', email);
-  //   user.set('password', password);
-  //   user.set('avatar', avatar);
-  //   console.log(avatar);
-
-  //   try {
-  //     await user.signUp();
-  //     navigation.navigate('Login');
-  //     console.log('pressed');
-  //   } catch (error) { }
-  // };
-
-
   return (
         <SafeAreaView >
     <ScrollView>
@@ -143,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   form: {
-    width: 280,
+    width: '70%',
     height: 30,
     marginTop: 20,
     borderBottomColor: '#000000',

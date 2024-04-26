@@ -27,7 +27,7 @@ export const AppHistory = () => {
             Om herfocus
           </Text>
         </View>
-        <View style={styles.seperator}></View>
+        <View style={[styles.seperator, {backgroundColor: colors.border}]}></View>
         <Text
           style={[
             styles.aboutText,
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     height: 1,
     width: '60%',
     alignSelf: 'center',
-    backgroundColor: 'black',
     marginTop: 10,
     marginBottom: 10,
   },

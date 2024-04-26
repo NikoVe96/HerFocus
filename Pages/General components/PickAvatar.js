@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import Parse from 'parse/react-native';
 import {useTheme} from '@react-navigation/native';
+import { height, width } from '@fortawesome/free-solid-svg-icons/faBoxArchive';
 
 export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   const {colors} = useTheme();

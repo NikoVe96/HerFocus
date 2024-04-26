@@ -58,7 +58,7 @@ function CustomDrawerContent({ navigation }) {
 
   return (
     <DrawerContentScrollView style={{backgroundColor: colors.background}}>
-      <AccordionItem title="Structure" icon={faListCheck}>
+      <AccordionItem title="Planlægning" icon={faListCheck}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Add routine')}>
@@ -68,7 +68,7 @@ function CustomDrawerContent({ navigation }) {
             style={{marginRight: 10}}
             color={colors.border}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Add a new routine{' '}
+            Tilføj en ny rutine{' '}
           </Text>
         </TouchableOpacity>
         <View
@@ -85,7 +85,7 @@ function CustomDrawerContent({ navigation }) {
             style={{marginRight: 10}}
             color={colors.border}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Add a new task{' '}
+            Tilføj en ny opgave{' '}
           </Text>
         </TouchableOpacity>
         <View
@@ -102,7 +102,7 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Calendar overview{' '}
+            Kalender oversigt{' '}
           </Text>
         </TouchableOpacity>
         <View
@@ -119,11 +119,11 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Daily overview{' '}
+            Dagligt overblik{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Forums" icon={faComments}>
+      <AccordionItem title="Fora" icon={faComments}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Pick subject')}>
@@ -133,7 +133,7 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Pick a subject{' '}
+            Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
@@ -150,11 +150,11 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Favorite posts{' '}
+            Favoritopslag{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Learning modules" icon={faGraduationCap}>
+      <AccordionItem title="Læringsmoduler" icon={faGraduationCap}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Pick module')}>
@@ -182,10 +182,10 @@ function CustomDrawerContent({ navigation }) {
           <View>
             <Text
               style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
-              Module 1
+              Modul 1
             </Text>
             <Text style={{fontSize: 18, color: colors.border}}>
-              What is ADHD{' '}
+              Hvad er ADHD{' '}
             </Text>
           </View>
         </TouchableOpacity>
@@ -204,10 +204,10 @@ function CustomDrawerContent({ navigation }) {
           <View>
             <Text
               style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
-              Module 2
+              Modul 2
             </Text>
             <Text style={{fontSize: 18, color: colors.border}}>
-              how to handle getting overwhelmed{' '}
+              Hvordan håndterer man at blive overvældet{' '}
             </Text>
           </View>
         </TouchableOpacity>
@@ -225,10 +225,10 @@ function CustomDrawerContent({ navigation }) {
           <View>
             <Text
               style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
-              Module 3
+              Modul 3
             </Text>
             <Text style={{fontSize: 18, color: colors.border}}>
-              Structuring your daily life{' '}
+              Strukturering af dagligdagen{' '}
             </Text>
           </View>
         </TouchableOpacity>
@@ -247,15 +247,15 @@ function CustomDrawerContent({ navigation }) {
           <View>
             <Text
               style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
-              Module 4
+              Modul 4
             </Text>
             <Text style={{fontSize: 18, color: colors.border}}>
-              Long term goals{' '}
+              Langsigtede mål{' '}
             </Text>
           </View>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Knowledge base" icon={faBrain}>
+      <AccordionItem title="Vidensbank" icon={faBrain}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Pick topic')}>
@@ -265,7 +265,7 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Pick a topic{' '}
+            Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
@@ -282,7 +282,7 @@ function CustomDrawerContent({ navigation }) {
             color={colors.iconDark}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Favorite articles{' '}
+            Favoritartikler{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
@@ -294,11 +294,11 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.iconDark}
+              color={colors.border}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.text}]}>
-              Profile
+            <Text style={[styles.accordTitle, {color: colors.border}]}>
+              Profil
             </Text>
           </View>
         </TouchableOpacity>
@@ -311,16 +311,16 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.iconDark}
+              color={colors.border}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.text}]}>
-              Settings
+            <Text style={[styles.accordTitle, {color: colors.border}]}>
+              Indstillinger
             </Text>
           </View>
         </TouchableOpacity>
       </View>
-      <AccordionItem title="About us" icon={faUsers}>
+      <AccordionItem title="Om herfocus" icon={faUsers}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('App history')}>
@@ -329,7 +329,7 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>History</Text>
+          <Text style={{fontSize: 18, color: colors.border}}>Historien om herfocus</Text>
         </TouchableOpacity>
         <View
           style={[
@@ -345,7 +345,7 @@ function CustomDrawerContent({ navigation }) {
             color={colors.border}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <Text style={{fontSize: 18, color: colors.border}}>
-            Help and contact info
+            Kontakt os
           </Text>
         </TouchableOpacity>
       </AccordionItem>
@@ -357,11 +357,11 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size={20}
-              color={colors.icon}
+              color={colors.border}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.text}]}>
-              Log out
+            <Text style={[styles.accordTitle, {color: colors.border}]}>
+              Log ud
             </Text>
           </View>
         </TouchableOpacity>
