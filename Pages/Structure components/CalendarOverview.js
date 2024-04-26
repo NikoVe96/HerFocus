@@ -228,10 +228,11 @@ export const CalendarOverview = ({ navigation }) => {
                             todayTextColor: colors.background,
                             textMonthFontSize: 24 * scaleFactor,
                             textDayFontSize: 18 * scaleFactor,
-                            textDayHeaderFontSize: 16 * scaleFactor,
+                            textDayHeaderFontSize: 20 * scaleFactor,
                             todayBackgroundColor: colors.mainButton
                         }}
                         markedDates={marked}
+                        calendarHeight={500}
                     >
                     </Calendar>
                 </View>

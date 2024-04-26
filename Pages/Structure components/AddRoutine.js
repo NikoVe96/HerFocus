@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
-import { Text, View, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert, StyleSheet, Dimensions } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPenToSquare, faPlusSquare, faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 import { faStopwatch, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,8 @@ export const AddRoutine = ({ navigation }) => {
     const [allRoutines, setAllRoutines] = useState([]);
     const [emojiModalVisible, setEmojiModalVisible] = useState(false);
     const [recent, setRecent] = useState([]);
+    const { width, height } = Dimensions.get('window');
+    const scaleFactor = Math.min(width / 375, height / 667);
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -89,7 +91,7 @@ export const AddRoutine = ({ navigation }) => {
         await routines();
         hideAddStepModal();
 
-        Alert.alert('New step added!');
+        Alert.alert('Et nyt step er blevet tilføjet!');
     };
 
     async function saveRoutine() {
@@ -114,15 +116,6 @@ export const AddRoutine = ({ navigation }) => {
             console.log('Error saving new routine: ', error);
         }
     }
-
-    const handleStepChange = (text, index, fieldName) => {
-        setRoutineSteps(prevSteps => {
-            let updatedSteps = [...prevSteps];
-            updatedSteps[index][fieldName] = text;
-            console.log(updatedSteps);
-            return updatedSteps;
-        });
-    };
 
     const handleDeleteStep = (index, routine) => {
         const newStepArray = [...routineSteps];
@@ -161,7 +154,7 @@ export const AddRoutine = ({ navigation }) => {
         <SafeAreaView>
             <ScrollView>
                 <View style={{ alignItems: 'center', padding: 10 }}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Rutiner</Text>
+                    <Text style={{ fontSize: 24 * scaleFactor, fontWeight: 'bold' }}>Rutiner</Text>
                     <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
                 </View>
                 <View>
@@ -171,47 +164,59 @@ export const AddRoutine = ({ navigation }) => {
                             title={routine.get('name')}
                             emoji={routine.get('emoji')}
                             icon={null}
-                            emojiStyle={{ fontSize: 35 }}
-                            titleStyle={{ fontSize: 24, color: colors.border }}>
-                            <View style={{ backgroundColor: colors.mainButton, borderWidth: 1, borderRadius: 10, padding: 5, borderColor: colors.mainButton, elevation: 10 }}>
+                            emojiStyle={{ fontSize: 35 * scaleFactor }}
+                            titleStyle={{ fontSize: 24 * scaleFactor, color: colors.border }}>
+                            <View
+                                style={{
+                                    backgroundColor: colors.mainButton,
+                                    borderWidth: 1,
+                                    borderRadius: 10,
+                                    padding: 5,
+                                    borderColor: colors.mainButton,
+                                    elevation: 5,
+                                    shadowColor: 'grey',
+                                    shadowOffset: { width: 1, height: 2 },
+                                    shadowOpacity: 0.8,
+                                    shadowRadius: 1,
+                                }}>
                                 {routine.get('routineSteps').map((step, index) => (
                                     <View key={index} style={{ flexDirection: 'row' }}>
                                         <View style={{ justifyContent: 'center' }}>
                                             <BouncyCheckbox
-                                                size={30}
-                                                fillColor={colors.mainButton}
+                                                size={30 * scaleFactor}
+                                                fillColor={colors.subButton}
                                                 unfillColor="#FFFFFF"
                                                 iconStyle={{ borderColor: "black" }}
                                                 innerIconStyle={{ borderWidth: 2 }}
                                                 textStyle={{ fontFamily: "JosefinSans-Regular" }}
                                                 onPress={(isChecked) => { }}
-                                                style={{ marginHorizontal: 10, flex: 0.5 }}
+                                                style={{ marginLeft: '5%', flex: 0.5 }}
                                             />
                                         </View>
-                                        <View style={{ padding: 10, borderWidth: 1, borderRadius: 10, marginVertical: 5, flexDirection: 'row', backgroundColor: colors.subButton, borderColor: colors.subButton, elevation: 10, justifyContent: 'space-between', width: '80%' }}>
+                                        <View style={{ padding: 10, borderWidth: 1, borderRadius: 10, marginVertical: '2%', flexDirection: 'row', backgroundColor: colors.subButton, borderColor: colors.subButton, elevation: 5, justifyContent: 'space-between', width: '80%' }}>
                                             <View style={{ justifyContent: 'center' }}>
-                                                <Text style={{ fontSize: 18 }}>{step.stepName}</Text>
+                                                <Text style={{ fontSize: 18 * scaleFactor }}>{step.stepName}</Text>
                                             </View>
                                             {step.stepTime !== null ?
                                                 <View style={{ flexDirection: 'row', width: '20%', alignItems: 'center', marginLeft: '45%' }}>
-                                                    <FontAwesomeIcon icon={faStopwatch} style={{ marginHorizontal: 5 }} size={20} color={colors.border} />
-                                                    <Text style={{ fontSize: 18 }}>{step.stepTime}</Text>
+                                                    <FontAwesomeIcon icon={faStopwatch} style={{ marginHorizontal: 5 }} size={20 * scaleFactor} color={colors.border} />
+                                                    <Text style={{ fontSize: 18 * scaleFactor }}>{step.stepTime}</Text>
                                                 </View>
                                                 : <Text></Text>}
                                             <View style={{ justifyContent: 'center' }}>
-                                                <FontAwesomeIcon icon={faTrashCan} size={20} color='#BF4C41' />
+                                                <FontAwesomeIcon icon={faTrashCan} size={20 * scaleFactor} color='#BF4C41' />
                                             </View>
                                         </View>
                                     </View>
                                 ))}
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20, alignItems: 'center' }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: '2%', alignItems: 'center' }}>
                                     <TouchableOpacity
-                                        style={{ borderWidth: 1, marginHorizontal: 10, padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}
+                                        style={{ borderWidth: 1, marginHorizontal: '2%', padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}
                                         onPress={() => showAddStepeModal(routine, routine.get('routineSteps'))}>
-                                        <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Tilføj et nyt step</Text>
+                                        <Text style={{ fontSize: 17 * scaleFactor, fontWeight: 'bold' }}>Tilføj et nyt step</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ borderWidth: 1, marginHorizontal: 10, padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}>
-                                        <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Slet rutine</Text>
+                                    <TouchableOpacity style={{ borderWidth: 1, marginHorizontal: '2%', padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}>
+                                        <Text style={{ fontSize: 17 * scaleFactor, fontWeight: 'bold' }}>Slet rutine</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -224,16 +229,16 @@ export const AddRoutine = ({ navigation }) => {
                     onBackdropPress={() => setStepModalVisible(false)}>
                     <View style={{ backgroundColor: colors.background, padding: 10, borderWidth: 1, borderColor: colors.background, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
                         <View>
-                            <Text style={{ fontSize: 20, }}>Tilføj et navn til dit step</Text>
+                            <Text style={{ fontSize: 20 * scaleFactor }}>Tilføj et navn til dit step</Text>
                             <TextInput
-                                style={{ backgroundColor: 'white', fontSize: 16, marginVertical: 10, borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
+                                style={{ backgroundColor: 'white', fontSize: 16 * scaleFactor, marginVertical: '2%', borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
                                 onChangeText={text => setStepName(text)}
                             ></TextInput>
                         </View>
-                        <View style={{ marginVertical: 10 }}>
-                            <Text style={{ marginVertical: 10, fontSize: 20 }}>Vil du tilføje hvor lang tid det tager at fuldføre steppet?</Text>
+                        <View style={{ marginVertical: 10 * scaleFactor }}>
+                            <Text style={{ marginVertical: 10, fontSize: 20 * scaleFactor }}>Vil du tilføje hvor lang tid det tager at fuldføre steppet?</Text>
                             <TextInput
-                                style={{ backgroundColor: 'white', fontSize: 16, marginVertical: 10, borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
+                                style={{ backgroundColor: 'white', fontSize: 16 * scaleFactor, marginVertical: '2%', borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
                                 onChangeText={text => setStepTime(Number(text))}
                             ></TextInput>
                         </View>
@@ -242,7 +247,7 @@ export const AddRoutine = ({ navigation }) => {
                         style={{ backgroundColor: colors.mainButton, padding: 5, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: colors.mainButton, borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}
                         onPress={handleNewStepConfirm}
                     >
-                        <Text style={{ fontSize: 26 }}>Tilføj et nyt step</Text>
+                        <Text style={{ fontSize: 26 * scaleFactor }}>Tilføj et nyt step</Text>
                     </TouchableOpacity>
                 </Modal>
                 <Modal
@@ -250,75 +255,106 @@ export const AddRoutine = ({ navigation }) => {
                     onBackdropPress={() => setRoutineModalVisible(false)}>
                     <View style={{ backgroundColor: colors.background, padding: 10, borderWidth: 1, borderColor: colors.background, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
                         <View>
-                            <Text style={{ fontSize: 20, }}>Giv din rutine et navn</Text>
+                            <Text style={{ fontSize: 20 * scaleFactor }}>Giv din rutine et navn</Text>
                             <TextInput
-                                style={{ backgroundColor: 'white', fontSize: 16, marginVertical: 10, borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
+                                style={{ backgroundColor: 'white', fontSize: 16 * scaleFactor, marginVertical: '2%', borderWidth: 1, borderColor: 'white', borderRadius: 10, padding: 5 }}
                                 onChangeText={text => setRoutineName(text)}
                             ></TextInput>
-                            <View style={{ marginVertical: 10 }}>
-                                <Text style={{ fontSize: 20, marginVertical: 5 }} >Vælg en farve</Text>
+                            <View style={{ marginVertical: '3%' }}>
+                                <Text style={{ fontSize: 20 * scaleFactor, marginVertical: '1%' }} >Vælg en farve</Text>
                                 <View style={styles.colorOptions}>
                                     <TouchableOpacity
                                         style={{
                                             borderWidth: routineColor === '#FAEDCB' ? 1.5 : 1,
-                                            borderRadius: routineColor === '#FAEDCB' ? 30 : 20,
-                                            width: routineColor === '#FAEDCB' ? 45 : 40,
-                                            height: routineColor === '#FAEDCB' ? 45 : 40,
+                                            borderRadius: routineColor === '#FAEDCB' ? 30 * scaleFactor : 20 * scaleFactor,
+                                            width: routineColor === '#FAEDCB' ? 45 * scaleFactor : 40 * scaleFactor,
+                                            height: routineColor === '#FAEDCB' ? 45 * scaleFactor : 40 * scaleFactor,
                                             backgroundColor: '#FAEDCB',
-                                            borderColor: colors.border,
+                                            borderColor: '#FAEDCB',
+                                            elevation: 5,
+                                            shadowColor: 'grey',
+                                            shadowOffset: { width: 1, height: 2 },
+                                            shadowOpacity: 0.8,
+                                            shadowRadius: 1,
                                         }}
                                         onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
                                     <TouchableOpacity style={{
                                         borderWidth: routineColor === '#C9E4DE' ? 1.5 : 1,
-                                        borderRadius: routineColor === '#C9E4DE' ? 30 : 20,
-                                        width: routineColor === '#C9E4DE' ? 45 : 40,
-                                        height: routineColor === '#C9E4DE' ? 45 : 40,
+                                        borderRadius: routineColor === '#C9E4DE' ? 30 * scaleFactor : 20 * scaleFactor,
+                                        width: routineColor === '#C9E4DE' ? 45 * scaleFactor : 40 * scaleFactor,
+                                        height: routineColor === '#C9E4DE' ? 45 * scaleFactor : 40 * scaleFactor,
                                         backgroundColor: '#C9E4DE',
-                                        borderColor: colors.border,
+                                        borderColor: '#C9E4DE',
+                                        elevation: 5,
+                                        shadowColor: 'grey',
+                                        shadowOffset: { width: 1, height: 2 },
+                                        shadowOpacity: 0.8,
+                                        shadowRadius: 1,
                                     }}
                                         onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
                                     <TouchableOpacity style={{
                                         borderWidth: routineColor === '#C6DEF1' ? 1.5 : 1,
-                                        borderRadius: routineColor === '#C6DEF1' ? 30 : 20,
-                                        width: routineColor === '#C6DEF1' ? 45 : 40,
-                                        height: routineColor === '#C6DEF1' ? 45 : 40,
+                                        borderRadius: routineColor === '#C6DEF1' ? 30 * scaleFactor : 20 * scaleFactor,
+                                        width: routineColor === '#C6DEF1' ? 45 * scaleFactor : 40 * scaleFactor,
+                                        height: routineColor === '#C6DEF1' ? 45 * scaleFactor : 40 * scaleFactor,
                                         backgroundColor: '#C6DEF1',
-                                        borderColor: colors.border,
+                                        borderColor: '#C6DEF1',
+                                        elevation: 5,
+                                        shadowColor: 'grey',
+                                        shadowOffset: { width: 1, height: 2 },
+                                        shadowOpacity: 0.8,
+                                        shadowRadius: 1,
                                     }}
                                         onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
                                     <TouchableOpacity style={{
                                         borderWidth: routineColor === '#DBCDF0' ? 1.5 : 1,
-                                        borderRadius: routineColor === '#DBCDF0' ? 30 : 20,
-                                        width: routineColor === '#DBCDF0' ? 45 : 40,
-                                        height: routineColor === '#DBCDF0' ? 45 : 40,
+                                        borderRadius: routineColor === '#DBCDF0' ? 30 * scaleFactor : 20 * scaleFactor,
+                                        width: routineColor === '#DBCDF0' ? 45 * scaleFactor : 40 * scaleFactor,
+                                        height: routineColor === '#DBCDF0' ? 45 * scaleFactor : 40 * scaleFactor,
                                         backgroundColor: '#DBCDF0',
-                                        borderColor: colors.border,
+                                        borderColor: '#DBCDF0',
+                                        elevation: 5,
+                                        shadowColor: 'grey',
+                                        shadowOffset: { width: 1, height: 2 },
+                                        shadowOpacity: 0.8,
+                                        shadowRadius: 1,
                                     }}
                                         onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
                                     <TouchableOpacity style={{
                                         borderWidth: routineColor === '#FFADAD' ? 1.5 : 1,
-                                        borderRadius: routineColor === '#FFADAD' ? 30 : 20,
-                                        width: routineColor === '#FFADAD' ? 45 : 40,
-                                        height: routineColor === '#FFADAD' ? 45 : 40,
+                                        borderRadius: routineColor === '#FFADAD' ? 30 * scaleFactor : 20 * scaleFactor,
+                                        width: routineColor === '#FFADAD' ? 45 * scaleFactor : 40 * scaleFactor,
+                                        height: routineColor === '#FFADAD' ? 45 * scaleFactor : 40 * scaleFactor,
                                         backgroundColor: '#FFADAD',
-                                        borderColor: colors.border,
+                                        borderColor: '#FFADAD',
+                                        elevation: 5,
+                                        shadowColor: 'grey',
+                                        shadowOffset: { width: 1, height: 2 },
+                                        shadowOpacity: 0.8,
+                                        shadowRadius: 1,
                                     }}
                                         onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
                                     <TouchableOpacity style={{
                                         borderWidth: routineColor === '#FFD6A5' ? 1.5 : 1,
-                                        borderRadius: routineColor === '#FFD6A5' ? 30 : 20,
-                                        width: routineColor === '#FFD6A5' ? 45 : 40,
-                                        height: routineColor === '#FFD6A5' ? 45 : 40,
+                                        borderRadius: routineColor === '#FFD6A5' ? 30 * scaleFactor : 20 * scaleFactor,
+                                        width: routineColor === '#FFD6A5' ? 45 * scaleFactor : 40 * scaleFactor,
+                                        height: routineColor === '#FFD6A5' ? 45 * scaleFactor : 40 * scaleFactor,
                                         backgroundColor: '#FFD6A5',
-                                        borderColor: colors.border,
+                                        borderColor: '#FFD6A5',
+                                        elevation: 5,
+                                        shadowColor: 'grey',
+                                        shadowOffset: { width: 1, height: 2 },
+                                        shadowOpacity: 0.8,
+                                        shadowRadius: 1,
+
                                     }}
                                         onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
                                 </View>
                             </View>
-                            <View style={{ marginVertical: 5, flexDirection: 'row' }}>
+                            <View style={{ marginVertical: '1%', flexDirection: 'row' }}>
                                 <View style={styles.rowView}>
-                                    <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.border }]}>
-                                        <Text style={styles.buttonText}>Emoji</Text>
+                                    <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
+                                        <Text style={{ fontSize: 18 * scaleFactor }}>Emoji</Text>
                                     </TouchableOpacity>
                                     <Modal
                                         visible={emojiModalVisible}
@@ -333,7 +369,7 @@ export const AddRoutine = ({ navigation }) => {
                                                     recent={recent}
                                                     loading={false}
                                                     darkMode={false}
-                                                    perLine={6}
+                                                    perLine={6 * scaleFactor}
                                                     onSelect={chosenEmoji => {
                                                         setRoutineEmoji(chosenEmoji.emoji);
                                                         hideEmojiModal();
@@ -343,13 +379,13 @@ export const AddRoutine = ({ navigation }) => {
                                                 />
                                             </View>
                                             <TouchableOpacity style={[styles.modalButton, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={hideEmojiModal}>
-                                                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>LUK</Text>
+                                                <Text style={{ fontWeight: 'bold', fontSize: 24 * scaleFactor }}>LUK</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </Modal>
                                 </View>
                                 <View style={[styles.rowView, { alignItems: 'center' }]}>
-                                    <Text style={{ fontSize: 26 }}> {routineEmoji}</Text>
+                                    <Text style={{ fontSize: 30 * scaleFactor }}> {routineEmoji}</Text>
                                 </View>
                             </View>
                         </View>
@@ -358,13 +394,19 @@ export const AddRoutine = ({ navigation }) => {
                         style={{ backgroundColor: colors.mainButton, padding: 5, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', borderWidth: 1, borderColor: colors.mainButton, borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }}
                         onPress={() => saveRoutine()}
                     >
-                        <Text style={{ fontSize: 26 }}>Tilføj en ny rutine</Text>
+                        <Text style={{ fontSize: 26 * scaleFactor }}>Tilføj en ny rutine</Text>
                     </TouchableOpacity>
                 </Modal>
                 <TouchableOpacity
                     onPress={() => showRoutineModal()}
-                    style={{ backgroundColor: colors.mainButton, padding: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.mainButton, borderRadius: 10, alignSelf: 'center', padding: 10, paddingHorizontal: 20, marginBottom: 20 }}>
-                    <Text style={{ fontSize: 26, }} >Tilføj ny rutine</Text>
+                    style={{
+                        backgroundColor: colors.mainButton, padding: 5, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.mainButton, borderRadius: 10, alignSelf: 'center', padding: 10, paddingHorizontal: '5%', marginBottom: '10%', elevation: 5,
+                        shadowColor: 'grey',
+                        shadowOffset: { width: 1, height: 2 },
+                        shadowOpacity: 0.8,
+                        shadowRadius: 1,
+                    }}>
+                    <Text style={{ fontSize: 26 * scaleFactor, }} >Tilføj ny rutine</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView >
@@ -374,9 +416,9 @@ export const AddRoutine = ({ navigation }) => {
 const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
-        width: 300,
+        width: '80%',
         alignSelf: 'center',
-        marginTop: 10,
+        marginTop: '2%',
         borderRadius: 10
     },
     colorOptions: {
@@ -385,8 +427,6 @@ const styles = StyleSheet.create({
     },
     rowView: {
         flex: 1,
-        //alignItems: 'center',
-        //justifyContent: 'center',
     },
     modalContainer: {
         flex: 1,
@@ -408,12 +448,15 @@ const styles = StyleSheet.create({
     buttonSmall: {
         justifyContent: 'center',
         padding: 5,
-        height: 40,
         alignItems: 'center',
         borderWidth: 1,
         borderRadius: 10,
         marginVertical: 5,
-        elevation: 10
+        elevation: 5,
+        shadowColor: 'grey',
+        shadowOffset: { width: 1, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
     },
     modalButton: {
         backgroundColor: 'lightgrey',
