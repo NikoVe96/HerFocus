@@ -11,6 +11,8 @@ import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import {configurePushNotifications} from './PushNotificationMethods';
+
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -23,6 +25,8 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false,
   }),
 });
+
+configurePushNotifications();
 
 // Can use this function below or use Expo's Push Notification Tool from: https://expo.dev/notifications
 async function sendPushNotification(expoPushToken) {

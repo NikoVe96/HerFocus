@@ -4,9 +4,10 @@
   "expo": {
     "extra": {
       "eas": {
-        "projectId": "62e4f831-0c2e-404f-a977-ca92fc7534a9"
+        "projectId": "719d54b2-c349-453c-995b-582f94c1bc58"
       }
     },
-    "owner": "nikov96"
+    "owner": "herfocus",
+    "slug": "herfocus-thesis"
   }
 }
