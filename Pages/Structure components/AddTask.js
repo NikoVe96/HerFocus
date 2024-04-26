@@ -20,32 +20,19 @@ export const AddTask = ({ navigation }) => {
 
     const { colors } = useTheme();
     const [taskName, setTaskName] = useState('');
-    const [taskRoutine, setTaskRoutine] = useState('');
     const [taskDate, setTaskDate] = useState('');
     const [taskStartTime, setStartTime] = useState('');
     const [taskEndTime, setEndTime] = useState('');
-    const [taskCategory, setTaskCategory] = useState('');
     const [username, setUsername] = useState('');
     const [ID, setID] = useState('');
-    // query routines in list from database
-    const [routines, setRoutines] = useState([]);
-    // + add button at the end to add new routine
-    const [openRoutine, setOpenRoutine] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
-    const [newRoutine, setNewRoutine] = useState('');
     const [taskColor, setTaskColor] = useState('');
     const [recent, setRecent] = useState([]);
     const [emojiModalVisible, setEmojiModalVisible] = useState(false);
     const [emoji, setEmoji] = useState();
-    const taskCategories = [
-        { label: 'Mentalt helbred', value: 'mentalt helbred' },
-        { label: 'Huslig pligt', value: 'huslig pligt' },
-        { label: 'Personlig opgave', value: 'personlig opgave' },
-        { label: 'Arbejds opgave', value: 'arbejds opgave' },
-    ];
 
     useEffect(() => {
         async function getCurrentUser() {
@@ -79,10 +66,12 @@ export const AddTask = ({ navigation }) => {
             // If time, add recurring option
             await newTask.save();
             console.log('Success: task saved')
-            Alert.alert('En ny to-do er blevet tilføjet til din kalender!')
+            Alert.alert('En ny to-do er blevet tilføjet til din kalender!');
             clearInput();
         } catch (error) {
             console.log('Error saving new task: ', error);
+            Alert.alert('Hovsa!',
+                'Det ser ud til at du mangler at udfylde enten navn, dato, farve, start eller sluttidspunkt 😉')
         }
     }
 
@@ -259,24 +248,7 @@ export const AddTask = ({ navigation }) => {
                                 onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ marginBottom: 10 }}>
-                        <Text style={styles.text}>
-                            Kategori
-                        </Text>
-                        <DropDownPicker
-                            open={openCategory}
-                            value={taskCategory}
-                            items={taskCategories}
-                            setOpen={setOpenCategory}
-                            setValue={(value) => setTaskCategory(value)}
-                            placeholder='Vælg en kategori'
-                            onChangeValue={(value) => {
-                                setTaskCategory(value)
-                            }}
-                            style={{ borderColor: 'white' }}
-                        />
-                    </View>
-                    <View style={{ marginVertical: 5, flexDirection: 'row' }}>
+                    <View style={{ marginTop: '10%', flexDirection: 'row' }}>
                         <View style={styles.rowView}>
                             <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
                                 <Text style={styles.buttonText}>Emoji</Text>
@@ -286,7 +258,6 @@ export const AddTask = ({ navigation }) => {
                                 animationType="slide"
                                 transparent={true}
                                 onRequestClose={hideEmojiModal}
-
                             >
                                 <View style={styles.modalContainer}>
                                     <View style={[styles.emojiPickerContainer, { backgroundColor: colors.background }]}>
@@ -381,7 +352,7 @@ export const AddTask = ({ navigation }) => {
                     <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Tilføj ny to-do</Text>
                 </TouchableOpacity>
             </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 

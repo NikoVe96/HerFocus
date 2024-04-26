@@ -114,15 +114,21 @@ export const AddRoutine = ({ navigation }) => {
             clearInput();
         } catch (error) {
             console.log('Error saving new routine: ', error);
+            Alert.alert('Hovsa!',
+                'Det ser ud til at du har glemt at udfylde enten navn eller farve 😉')
         }
     }
 
-    const handleDeleteStep = (index, routine) => {
-        const newStepArray = [...routineSteps];
-        const deletedStep = newStepArray.splice(index, 1);
-        setRoutineSteps(newStepArray);
+    const handleDeleteStep = async (index, routine) => {
 
-        Alert.alert(`${deletedStep} has been removed`);
+        const routinesArray = routine.get('routineSteps');
+        const newStepsArray = routinesArray.splice(index, 1);
+        routine.set('stepsArray', newStepsArray);
+        await routine.save();
+
+        routines();
+
+        Alert.alert('Dit rutine step er blevet fjernet!');
     }
 
     function clearInput() {
@@ -203,9 +209,10 @@ export const AddRoutine = ({ navigation }) => {
                                                     <Text style={{ fontSize: 18 * scaleFactor }}>{step.stepTime}</Text>
                                                 </View>
                                                 : <Text></Text>}
-                                            <View style={{ justifyContent: 'center' }}>
+                                            <TouchableOpacity style={{ justifyContent: 'center' }}
+                                                onPress={() => handleDeleteStep(index, routine)}>
                                                 <FontAwesomeIcon icon={faTrashCan} size={20 * scaleFactor} color='#BF4C41' />
-                                            </View>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 ))}
@@ -215,7 +222,8 @@ export const AddRoutine = ({ navigation }) => {
                                         onPress={() => showAddStepeModal(routine, routine.get('routineSteps'))}>
                                         <Text style={{ fontSize: 17 * scaleFactor, fontWeight: 'bold' }}>Tilføj et nyt step</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ borderWidth: 1, marginHorizontal: '2%', padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}>
+                                    <TouchableOpacity style={{ borderWidth: 1, marginHorizontal: '2%', padding: 8, borderRadius: 10, backgroundColor: colors.border, borderColor: colors.border, flex: 1, alignItems: 'center' }}
+                                    >
                                         <Text style={{ fontSize: 17 * scaleFactor, fontWeight: 'bold' }}>Slet rutine</Text>
                                     </TouchableOpacity>
                                 </View>

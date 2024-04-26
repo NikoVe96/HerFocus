@@ -71,6 +71,8 @@ export const AddEvent = () => {
             clearInput();
         } catch (error) {
             console.log('Error saving new event: ', error);
+            Alert.alert('Hovsa!',
+                'Det ser ud til at du har glemt at udfylde enten navn, farve, dato, start eller slut tidspunkt 😉')
         }
     }
 
@@ -166,6 +168,8 @@ export const AddEvent = () => {
     function allDayEvent() {
         setDayEvent(true);
         setIsAllDayEnabled(previousState => !previousState);
+        setStartTime('00:00');
+        setEndTime('00:00');
     }
 
     return (

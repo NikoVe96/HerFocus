@@ -32,14 +32,13 @@ export const DailyOverview = () => {
     const [wallTask, setWallTask] = useState();
     const [isWallModalVisible, setWallModalVisible] = useState(false);
     const [toDoList, setToDoList] = useState([]);
-    const [todoTime, setTodoTime] = useState('');
+    const [todoTime, setTodoTime] = useState(0);
     const [openTodoTime, setOpenTodoTime] = useState(false);
     const todoTimes = [
-        { label: '30 minutter', value: '0.5' },
-        { label: '1 time', value: '1' },
-        { label: '2 time', value: '2' },
-        { label: '3 time', value: '3' },
-        { label: '4 time', value: '4' },
+        { label: '1 time', value: 1 },
+        { label: '2 time', value: 2 },
+        { label: '3 time', value: 3 },
+        { label: '4 time', value: 4 },
     ];
 
     useEffect(() => {
@@ -127,6 +126,36 @@ export const DailyOverview = () => {
         let Results = await TaskQuery.find();
         setCompletedTasks(Results);
         return Results;
+    }
+
+    async function postpone() {
+        //console.log(wallTask.get('startTime'));
+        //console.log(todoTime);
+
+        let startTimeHours = parseInt(wallTask.get('startTime').slice(0, 2));
+        let endTimeHours = parseInt(wallTask.get('endTime').slice(0, 2));
+        let startTimeMin = wallTask.get('startTime').slice(3, 5);
+        let endTimeMin = wallTask.get('endTime').slice(3, 5);
+        let newStartTime = startTimeHours + todoTime;
+        let newEndTime = endTimeHours + todoTime;
+
+        console.log(startTimeHours + todoTime);
+
+        if (newStartTime < startTimeHours || newStartTime >= 24) {
+            Alert.alert(`Start tiden vil gå over midnat. Ryk den istedet til fremtidige to-do's.`)
+            setTodoTime('');
+        } else {
+            newStartTime = newStartTime + ':' + startTimeMin;
+            newEndTime = newEndTime + ':' + endTimeMin;
+            console.log(newStartTime)
+            wallTask.set('startTime', newStartTime);
+            wallTask.set('endTime', newEndTime);
+            await wallTask.save();
+
+            setWallModalVisible(false);
+            Alert.alert(wallTask.get('name') + " er blevet skubbet " + todoTime + " timer frem");
+            setTodoTime('');
+        }
     }
 
     return (
@@ -293,7 +322,7 @@ export const DailyOverview = () => {
                                     justifyContent: 'center',
                                     elevation: 10
                                 }}
-                                    onPress={() => pushTodo(task)}>
+                                    onPress={() => postpone()}>
                                     <Text style={{ textAlign: 'center', fontSize: 16, }}>Udskyd din to-do</Text>
                                 </TouchableOpacity>
                             </View>
