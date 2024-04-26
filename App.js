@@ -16,7 +16,7 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
 Parse.serverURL = 'https://parseapi.back4app.com/'
 
-/* Notifications.setNotificationHandler({
+Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
@@ -77,55 +77,45 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token.data;
-} */
+}
 
 function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
-  //const [expoPushToken, setExpoPushToken] = useState('');
-  //const [notification, setNotification] = useState(false);
-  //const notificationListener = useRef();
-  //const responseListener = useRef();
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   useEffect(() => {
-    const getTheme = async () => {
-      try {
-        const currentUser = await Parse.User.currentAsync();
-        if (currentUser) {
-          setID(currentUser.id);
-          //themeQuery();
-        }
-      } catch (error) {
-        console.error('Error fetching user theme:', error);
-        //setTheme(themes.default); // Fallback to default theme on error
-      }
+
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
     };
 
-    /* registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
- 
-     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-       setNotification(notification);
-     });
- 
-     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-       console.log(response);
-     });
- 
-     return () => {
-       Notifications.removeNotificationSubscription(notificationListener.current);
-       Notifications.removeNotificationSubscription(responseListener.current);
-     }; */
-
-    getTheme();
   }, []);
 
-  async function themeQuery() {
-    let themeQ = new Parse.Query('Settings');
-    themeQ.contains('user', ID);
-    const Result = await themeQ.find();
-    const chosenTheme = (Result[0].get('theme'));
-    //setTheme(themes[chosenTheme]);
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've got notification! 🙄",
+        body: 'Here is the notification body',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 2 },
+    });
   }
 
   return (
@@ -133,12 +123,12 @@ function App() {
       <NavigationContainer theme={theme}>
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
-          {/*<Button
+          <Button
             title="Press to Send Notification"
-            onPress={async () => {
-              await sendPushNotification(expoPushToken);
-            }}
-          />*/}
+            onPress={
+              schedulePushNotification()
+            }
+          />
           <BottomNavigation />
         </SafeAreaView>
       </NavigationContainer>

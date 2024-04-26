@@ -6,6 +6,8 @@ buildscript {
         targetSdkVersion = 34
         ndkVersion = "25.1.8937393"
         kotlinVersion = "1.8.0"
+        googlePlayServicesVersion = "<Your play services version>" // default: "+"
+    firebaseMessagingVersion = "<Your Firebase version>" // default: "21.1.0"
     }
     repositories {
         google()
