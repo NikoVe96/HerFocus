@@ -73,8 +73,7 @@ export const ArticlesDiagnosed = ({route}) => {
                styles.press
               }
               onPress={() => readArticle(item)}>
-              <View
-                style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+             
                 <View
                   style={[
                     styles.buttonGrad,
@@ -95,7 +94,7 @@ export const ArticlesDiagnosed = ({route}) => {
                     {item.get('text').replaceAll(/#|-|>|/gi, '')}
                   </Text>
                 </View>
-              </View>
+            
             </TouchableOpacity>
           ))
         )}
@@ -125,34 +124,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonGrad: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    position: 'absolute',
-    bottom: 5,
-    alignItems: 'center',
-  },
-  buttonParent: {
     width: '90%',
     height: 150,
     borderRadius: 10,
+    bottom: 5,
+    alignItems: 'center',
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   press: {
     marginBottom: 15,
   },
-  articleText:{
+  articleText: {
     marginLeft: 10,
     marginRight: 10,
   },
-  seperator:{
-   borderWidth: 1,
-  width: '80%',
-  marginBottom: 10,
-  marginTop: 5,              
-  }
+  seperator: {
+    borderWidth: 1,
+    width: '80%',
+    marginBottom: 10,
+    marginTop: 5,
+  },
 });
 
 export default ArticlesDiagnosed;

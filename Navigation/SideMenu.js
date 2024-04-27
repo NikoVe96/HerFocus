@@ -66,15 +66,15 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             style={{marginRight: 10}}
-            color={colors.border}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+            color={colors.text}></FontAwesomeIcon>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Tilføj en ny rutine{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -83,15 +83,15 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             style={{marginRight: 10}}
-            color={colors.border}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+            color={colors.text}></FontAwesomeIcon>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Tilføj en ny opgave{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -99,16 +99,16 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Kalender oversigt{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -116,9 +116,9 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Dagligt overblik{' '}
           </Text>
         </TouchableOpacity>
@@ -130,16 +130,16 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -147,9 +147,9 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Favoritopslag{' '}
           </Text>
         </TouchableOpacity>
@@ -161,30 +161,30 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
-            <Text style={{fontSize: 18, color: colors.border}}>Modules </Text>
+            <Text style={{fontSize: 18, color: colors.text}}>Modules </Text>
           </View>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
             <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
+              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
               Modul 1
             </Text>
-            <Text style={{fontSize: 18, color: colors.border}}>
+            <Text style={{fontSize: 18, color: colors.text}}>
               Hvad er ADHD{' '}
             </Text>
           </View>
@@ -192,21 +192,21 @@ function CustomDrawerContent({ navigation }) {
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
             <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
+              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
               Modul 2
             </Text>
-            <Text style={{fontSize: 18, color: colors.border}}>
+            <Text style={{fontSize: 18, color: colors.text}}>
               Hvordan håndterer man at blive overvældet{' '}
             </Text>
           </View>
@@ -214,20 +214,20 @@ function CustomDrawerContent({ navigation }) {
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity style={{flexDirection: 'row', marginLeft: 30}}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
             <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
+              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
               Modul 3
             </Text>
-            <Text style={{fontSize: 18, color: colors.border}}>
+            <Text style={{fontSize: 18, color: colors.text}}>
               Strukturering af dagligdagen{' '}
             </Text>
           </View>
@@ -235,21 +235,21 @@ function CustomDrawerContent({ navigation }) {
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
             <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.border}}>
+              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
               Modul 4
             </Text>
-            <Text style={{fontSize: 18, color: colors.border}}>
+            <Text style={{fontSize: 18, color: colors.text}}>
               Langsigtede mål{' '}
             </Text>
           </View>
@@ -262,16 +262,16 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -279,9 +279,9 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.iconDark}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Favoritartikler{' '}
           </Text>
         </TouchableOpacity>
@@ -294,10 +294,10 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.border}]}>
+            <Text style={[styles.accordTitle, {color: colors.text}]}>
               Profil
             </Text>
           </View>
@@ -311,10 +311,10 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.border}]}>
+            <Text style={[styles.accordTitle, {color: colors.text}]}>
               Indstillinger
             </Text>
           </View>
@@ -327,14 +327,14 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>Historien om herfocus</Text>
+          <Text style={{fontSize: 18, color: colors.text}}>Historien om herfocus</Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
@@ -342,9 +342,9 @@ function CustomDrawerContent({ navigation }) {
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.border}}>
+          <Text style={{fontSize: 18, color: colors.text}}>
             Kontakt os
           </Text>
         </TouchableOpacity>
@@ -357,10 +357,10 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, {color: colors.border}]}>
+            <Text style={[styles.accordTitle, {color: colors.text}]}>
               Log ud
             </Text>
           </View>
@@ -373,7 +373,7 @@ function CustomDrawerContent({ navigation }) {
 function SideMenu() {
   return (
     <Drawer.Navigator
-      initialRouteName="Login"
+      initialRouteName="Front page"
       backBehavior="history"
       screenOptions={{
         drawerPosition: 'right',
@@ -469,10 +469,10 @@ const styles = StyleSheet.create({
     height: 12,
   },
   divider: {
-    borderWidth: 1,
+    textWidth: 1,
     marginHorizontal: 15,
     marginVertical: 10,
-    borderRadius: 10
+    textRadius: 10
   }
 });
 

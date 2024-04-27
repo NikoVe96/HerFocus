@@ -51,55 +51,71 @@ export const FrontPage = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Structure')}>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/2-removebg-preview.png')}
                 style={styles.images}></Image>
-              <Text style={styles.text}>Planlægge</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Planlægge
+              </Text>
             </View>
-          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Pick module')}>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/4-removebg-preview.png')}
                 style={styles.images}></Image>
-              <Text style={styles.text}>Lære</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Lære i læringsmodulerne
+              </Text>
             </View>
-          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Pick subject')}>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/1-removebg-preview.png')}
                 style={styles.images}></Image>
-              <Text style={styles.text}>Snakke med andre</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Snakke med andre
+              </Text>
             </View>
-          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Pick topic')}>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
                 source={require('../../Assets/images/3-removebg-preview.png')}
                 style={styles.images}></Image>
-              <Text style={styles.text}>Læse i vidensbanken</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Læse i vidensbanken
+              </Text>
             </View>
-          </View>
         </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
@@ -126,37 +142,30 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   buttonGrad: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    position: 'absolute',
-    bottom: 5,
-    backgroundColor: '#FFEABF',
-    alignItems: 'center',
-  },
-  buttonParent: {
     width: '90%',
     height: 150,
     borderRadius: 10,
-    backgroundColor: '#DC9B18',
+    bottom: 5,
+    backgroundColor: '#FFEABF',
+    alignItems: 'center',
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.50,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   press: {
     marginBottom: 15,
   },
-  images:{
-  width: 100,
-  height: 100,
-  marginTop: 10,
-  marginBottom: 10,
-  }
-  
+  images: {
+    width: '25%',
+    height: '60%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 export default FrontPage;

@@ -35,7 +35,7 @@ export const PickTopics = () => {
           onPress={() =>
             navigation.navigate('Subject articles', {subject: 'adhd'})
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -46,16 +46,22 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>Hvad er ADHD?</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Hvad er ADHD?
+              </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
             navigation.navigate('Subject articles', {subject: 'mental'})
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -66,16 +72,22 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>Udfordringer med ADHD</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Udfordringer med ADHD
+              </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
             navigation.navigate('Subject articles', {subject: 'women'})
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -86,9 +98,15 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>Kvinder med ADHD/ADD</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                Kvinder med ADHD/ADD
+              </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
@@ -97,7 +115,7 @@ export const PickTopics = () => {
               subject: 'relationships',
             })
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -108,9 +126,15 @@ export const PickTopics = () => {
                   marginTop: 10,
                   marginBottom: 10,
                 }}></Image>
-              <Text style={styles.text}>ADHD og Relationer</Text>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.text, fontSize: 18 * scaleFactor},
+                ]}>
+                ADHD og Relationer
+              </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
@@ -130,27 +154,19 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-    alignSelf: 'center'
   },
   buttonGrad: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    position: 'absolute',
-    bottom: 5,
-    backgroundColor: '#FFEABF',
-    alignItems: 'center',
-  },
-  buttonParent: {
     width: '90%',
     height: 150,
     borderRadius: 10,
-    backgroundColor: '#DC9B18',
+    bottom: 5,
+    alignItems: 'center',
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   press: {
     marginBottom: 15,

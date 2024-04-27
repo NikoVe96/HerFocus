@@ -112,7 +112,7 @@ export const UserSettings = ({ navigation }) => {
             <View style={styles.themeOption}>
               <TouchableOpacity
                 style={styles.darkBlue}
-                onPress={() => updateTheme('darkBlue')}></TouchableOpacity>
+                onPress={() => updateTheme('darkblue')}></TouchableOpacity>
               <TouchableOpacity
                 style={styles.dark}
                 onPress={() => updateTheme('dark')}></TouchableOpacity>
@@ -339,14 +339,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   colorView: {
-    marginVertical: 15,
-    marginHorizontal: 10,
-    height: 280,
+    marginTop: 15,
     width: '90%',
-    alignSelf: 'center',
-    padding: 10,
+    height: 270,
     borderRadius: 10,
-    elevation: 20,
+    bottom: 5,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   pastel: {
     borderWidth: 4,
@@ -354,7 +358,7 @@ const styles = StyleSheet.create({
     width: '17%',
     height: '70%',
     backgroundColor: '#FFD3DA',
-    borderColor: '#D9E4EC',
+    borderColor: '#7FE99E',
   },
   purple: {
     borderWidth: 4,
@@ -401,7 +405,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '17%',
     height: '70%',
-    backgroundColor: '#68669D',
+    backgroundColor: '#393751',
     borderColor: '#131227',
   },
   dark: {
@@ -409,7 +413,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '17%',
     height: '70%',
-    backgroundColor: '#4F4848',
+    backgroundColor: '#252121',
     borderColor: '#000000',
   },
   neutral: {
@@ -417,37 +421,45 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '17%',
     height: '70%',
-    backgroundColor: '#CCAFA5',
-    borderColor: '#4F4848',
+    backgroundColor: '#EDE7DC',
+    borderColor: '#B7897C',
   },
   notificationView: {
-    marginHorizontal: 10,
-    height: 190,
+    marginTop: 15,
     width: '90%',
-    alignSelf: 'center',
-    padding: 10,
+    height: 160,
     borderRadius: 10,
-    elevation: 10,
+    bottom: 5,
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
+    padding: 5,
   },
   deleteView: {
-    marginVertical: 15,
-    marginHorizontal: 10,
-    height: 100,
+    marginTop: 15,
     width: '90%',
-    alignSelf: 'center',
-    padding: 10,
+    height: 90,
     borderRadius: 10,
-    elevation: 20,
+    bottom: 5,
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   deleteBtn: {
     borderWidth: 2,
     borderRadius: 10,
-    flex: 0.7,
     width: '80%',
+    height: 40,
     alignSelf: 'center',
-    marginHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
 });
 

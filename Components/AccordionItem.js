@@ -18,10 +18,10 @@ function AccordionItem({ children, title, icon }) {
         <View style={styles.accordContainer}>
             <TouchableOpacity style={styles.accordHeader} onPress={toggleItem}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <FontAwesomeIcon icon={icon} size={20} color={colors.bars} style={{ marginRight: 10 }} />
-                    <Text style={[styles.accordTitle, { color: colors.bars }]}>{title}</Text>
+                    <FontAwesomeIcon icon={icon} size={20} color={colors.text} style={{ marginRight: 10 }} />
+                    <Text style={[styles.accordTitle, { color: colors.text }]}>{title}</Text>
                 </View>
-                <FontAwesomeIcon icon={faCaretDown} color={colors.bars} />
+                <FontAwesomeIcon icon={faCaretDown} color={colors.text} />
             </TouchableOpacity>
             {expanded && body}
         </View>

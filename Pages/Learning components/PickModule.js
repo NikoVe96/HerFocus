@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions
 } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -35,6 +36,8 @@ export const PickModule = () => {
   const [procrastinationProgress, setProcrastinationProgress] = useState('0');
   const [relationsProgress, setRelationsProgress] = useState('0');
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+      const {width, height} = Dimensions.get('window');
+      const scaleFactor = Math.min(width / 375, height / 667);
   const { colors } = useTheme();
   const moduleSubjects = [
     {
@@ -97,7 +100,13 @@ export const PickModule = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>Hvad vil du gerne lære om i dag?</Text>
+        <Text
+          style={[
+            styles.title,
+            {color: colors.text, fontSize: 22 * scaleFactor},
+          ]}>
+          Hvad vil du gerne lære om i dag?
+        </Text>
         <View style={{marginVertical: 20}}>
           <View
             style={[
@@ -107,7 +116,11 @@ export const PickModule = () => {
                 borderColor: colors.subButton,
               },
             ]}>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               {structuringProgress}%
             </Text>
           </View>
@@ -119,8 +132,7 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View
-              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+           
               <View
                 style={[
                   styles.buttonGrad,
@@ -130,11 +142,15 @@ export const PickModule = () => {
                   source={require('../../Assets/images/learning_notebook.png')}
                   style={{width: 120, height: 100, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
+                <Text
+                  style={[
+                    styles.text,
+                    {color: colors.text, fontSize: 18 * scaleFactor},
+                  ]}>
                   Planlægning og strukturering af hverdagen
                 </Text>
               </View>
-            </View>
+         
           </TouchableOpacity>
         </View>
         <View style={{marginVertical: 20}}>
@@ -146,7 +162,11 @@ export const PickModule = () => {
                 borderColor: colors.subButton,
               },
             ]}>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               {procrastinationProgress}%
             </Text>
           </View>
@@ -158,8 +178,7 @@ export const PickModule = () => {
                 image: moduleSubjects[1].image,
               })
             }>
-            <View
-              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+           
               <View
                 style={[
                   styles.buttonGrad,
@@ -169,9 +188,15 @@ export const PickModule = () => {
                   source={require('../../Assets/images/learning_hourglass.png')}
                   style={{width: 60, height: 95, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>Overkom overspringshandlinger</Text>
+                <Text
+                  style={[
+                    styles.text,
+                    {color: colors.text, fontSize: 18 * scaleFactor},
+                  ]}>
+                  Overkom overspringshandlinger
+                </Text>
               </View>
-            </View>
+         
           </TouchableOpacity>
         </View>
         <View style={{marginVertical: 20}}>
@@ -183,7 +208,11 @@ export const PickModule = () => {
                 borderColor: colors.subButton,
               },
             ]}>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               {relationsProgress}%
             </Text>
           </View>
@@ -195,8 +224,7 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View
-              style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
               <View
                 style={[
                   styles.buttonGrad,
@@ -206,20 +234,25 @@ export const PickModule = () => {
                   source={require('../../Assets/images/learning_relations.png')}
                   style={{width: 140, height: 95, marginTop: 5}}
                   sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>Forbedr dine sociale relationer</Text>
+                <Text
+                  style={[
+                    styles.text,
+                    {color: colors.text, fontSize: 18 * scaleFactor},
+                  ]}>
+                  Forbedr dine sociale relationer
+                </Text>
               </View>
-            </View>
+      
           </TouchableOpacity>
         </View>
       </ScrollView>
-        <BottomNavigation />
+      <BottomNavigation />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   scrollView: {
     paddingBottom: 20,
   },
@@ -254,7 +287,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
     elevation: 5,
     right: '3%',
-    top: '-15%'
+    top: '-15%',
   },
   button: {
     width: 210,
@@ -271,22 +304,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonGrad: {
-    width: 330,
+    width: '90%',
     height: 150,
     borderRadius: 10,
-    position: 'absolute',
     bottom: 5,
-    backgroundColor: '#FFEABF',
     alignItems: 'center',
-  },
-  buttonParent: {
-    width: 330,
-    height: 150,
-    borderRadius: 10,
-    backgroundColor: '#DC9B18',
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
 });
 

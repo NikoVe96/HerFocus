@@ -37,7 +37,7 @@ export const PickSubject = () => {
                 'I dette forum kan vi alle dele erfaringer, udfordringer og triumfer relateret til familierelationer.',
             })
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -51,7 +51,7 @@ export const PickSubject = () => {
                 Familie
               </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
@@ -62,7 +62,7 @@ export const PickSubject = () => {
                 'Relationer kan nogle gange være komplicerede, når man har ADHD. I dette forum kan du dele tips, frustrationer osv., der har med relationer at gøre.',
             })
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
+          
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -76,7 +76,7 @@ export const PickSubject = () => {
                 Relationer
               </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -88,7 +88,6 @@ export const PickSubject = () => {
                 'Medicin kan være et svært emne at tale om. Hold venligst medicinensnakken til dette forum, og husk at kontakte en læge, hvis det er nødvendigt.',
             })
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -102,7 +101,7 @@ export const PickSubject = () => {
                 Medicin
               </Text>
             </View>
-          </View>
+          
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -114,7 +113,6 @@ export const PickSubject = () => {
                 'Det er altid rart at lære af andres gode erfaringer. Her kan du dele dine gode tips, men også lære hvad der hjælper for andre.',
             })
           }>
-          <View style={[styles.buttonParent, {backgroundColor: colors.border}]}>
             <View
               style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Image
@@ -128,7 +126,6 @@ export const PickSubject = () => {
                 Gode tips
               </Text>
             </View>
-          </View>
         </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
@@ -147,25 +144,20 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   buttonGrad: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    position: 'absolute',
-    bottom: 5,
-    backgroundColor: '#FFEABF',
-    alignItems: 'center',
-  },
-  buttonParent: {
     width: '90%',
     height: 150,
     borderRadius: 10,
-    backgroundColor: '#DC9B18',
+    bottom: 5,
+    backgroundColor: '#FFEABF',
+    alignItems: 'center',
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   press: {
     marginBottom: 15,

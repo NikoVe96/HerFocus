@@ -9,6 +9,13 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
   const navigation = useNavigation();
   const { colors } = useTheme();
 
+   const logoSource =
+     colors.border === '#533440' ||
+     colors.border === '#131227' ||
+     colors.border === '#000000'
+     ? require('../Assets/images/logo_simple_dark.png') 
+    : require('../Assets/images/logo_simple_light.png'); 
+
   return (
     <View
       style={{
@@ -17,19 +24,17 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
-        backgroundColor: colors.bars,
+        paddingTop: 15,
+        backgroundColor: colors.border,
       }}>
       <TouchableOpacity onPress={() => goBack()}>
-        <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.iconDark} />
+        <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.barText} />
       </TouchableOpacity>
-      <View style={{ justifyContent: 'center' }}>
-        <Image
-          source={require('../Assets/images/logo_light_mode_simple-removebg-preview.png')}
-          style={{ width: 110, height: 30 }}
-        />
+      <View style={{justifyContent: 'center'}}>
+        <Image source={logoSource} style={{width: 110, height: 30}} />
       </View>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <FontAwesomeIcon icon={faBars} size={30} color={colors.iconDark} />
+        <FontAwesomeIcon icon={faBars} size={30} color={colors.barText} />
       </TouchableOpacity>
     </View>
   );

@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   userText: {
     marginTop: 5,
-    marginLeft: 5
+    marginLeft: 5,
   },
   user: {
     fontSize: 15,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   shadowProp: {
-    shadowColor: '#443939',
+    shadowColor: '#000',
     shadowOffset: {width: 1, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 1,
@@ -254,10 +254,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  avatarImage:{
+  avatarImage: {
     width: 40,
     height: 40,
-  }
+  },
 });
 
 export default Post;
