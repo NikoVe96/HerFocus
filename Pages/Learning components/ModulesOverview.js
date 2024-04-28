@@ -8,6 +8,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
@@ -21,10 +22,13 @@ export const ModulesOverview = ({ route }) => {
   const [completed, setCompleted] = useState([]);
   const navigation = useNavigation();
   const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
   const moduleImages = {
     '1 Struktur og planlægning': require('../../Assets/images/learning_think.png'),
     '2 Struktur og planlægning': require('../../Assets/images/learning_goals.png'),
-    '3 Struktur og planlægning': require('../../Assets/images/learning_notebook.png'),
+    '3 Struktur og planlægning': require('../../Assets/images/learning_clock.png'),
+    '4 Struktur og planlægning': require('../../Assets/images/learning_score.png'),
   };
 
   useEffect(() => {
@@ -54,19 +58,24 @@ export const ModulesOverview = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <Text style={styles.title}>{subject}</Text>
+        <Text
+          style={[styles.title,
+          {
+            fontSize: 30 * scaleFactor,
+          }]}>
+          {subject}</Text>
         <Image
           source={image}
-          style={{width: 200, height: 170, alignSelf: 'center'}}></Image>
-        <Text style={styles.description}>{description}</Text>
+          style={{ width: 200 * scaleFactor, height: 170 * scaleFactor, alignSelf: 'center' }}></Image>
+        <Text style={[styles.description, { fontSize: 16 * scaleFactor }]}>{description}</Text>
         <View
           style={[
             styles.border,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            { backgroundColor: colors.border, borderColor: colors.border },
           ]}></View>
-        <View style={{marginTop: 30}}>
+        <View style={{ marginTop: '4%' }}>
           {modules.length == 0 ? (
             <Text>Loading...</Text>
           ) : (
@@ -82,7 +91,7 @@ export const ModulesOverview = ({ route }) => {
                     {isCompleted && (
                       <FontAwesomeIcon
                         icon={faCircleCheck}
-                        size={30}
+                        size={30 * scaleFactor}
                         color="#2F5233"
                         style={styles.progessionBar}
                       />
@@ -99,25 +108,19 @@ export const ModulesOverview = ({ route }) => {
                       }>
                       <View
                         style={[
-                          styles.buttonParent,
-                          {backgroundColor: colors.mainButton},
+                          styles.buttonGrad,
+                          { backgroundColor: colors.subButton, height: 90 * scaleFactor, width: 250 * scaleFactor, },
                         ]}>
-                        <View
-                          style={[
-                            styles.buttonGrad,
-                            {backgroundColor: colors.subButton},
-                          ]}>
-                          <Image
-                            source={moduleImage}
-                            style={styles.image}></Image>
-                          <View style={{width: 100}}>
-                            <Text style={styles.moduleName}>
-                              Modul {item.get('name')}
-                            </Text>
-                            <Text style={styles.moduleDesc}>
-                              {item.get('description')}
-                            </Text>
-                          </View>
+                        <Image
+                          source={moduleImage}
+                          style={[styles.image, { height: 50 * scaleFactor, width: 50 * scaleFactor, }]}></Image>
+                        <View style={{ width: '60%', marginLeft: '3%' }}>
+                          <Text style={[styles.moduleName, { fontSize: 16 * scaleFactor }]}>
+                            Modul {item.get('name')}
+                          </Text>
+                          <Text style={styles.moduleDesc}>
+                            {item.get('description')}
+                          </Text>
                         </View>
                       </View>
                     </TouchableOpacity>
@@ -125,8 +128,8 @@ export const ModulesOverview = ({ route }) => {
                   {index !== modules.length - 1 ? (
                     <FontAwesomeIcon
                       icon={faDownLong}
-                      size={30}
-                      style={{marginVertical: 15}}
+                      size={30 * scaleFactor}
+                      style={{ marginVertical: 15 }}
                     />
                   ) : (
                     <Text></Text>
@@ -144,54 +147,41 @@ export const ModulesOverview = ({ route }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 30,
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: '2%'
   },
   moduleName: {
     fontWeight: 'bold',
   },
   description: {
-    fontSize: 16,
     padding: 10,
-    marginHorizontal: 10,
+    marginHorizontal: '3%',
   },
   border: {
     borderWidth: 1,
-    backgroundColor: 'black',
-    width: 300,
-    marginVertical: 10,
+    width: '80%',
+    marginVertical: '2%',
     alignSelf: 'center',
     borderRadius: 10
   },
   image: {
-    height: 50,
-    width: 50,
-    marginHorizontal: 10,
+    marginHorizontal: '2%',
   },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: '1%',
   },
   buttonGrad: {
-    height: 90,
-    width: 200,
     borderRadius: 10,
-    position: 'absolute',
-    bottom: 5,
     backgroundColor: '#FFEABF',
     alignItems: 'center',
     flexDirection: 'row',
-  },
-  buttonParent: {
-    height: 90,
-    width: 200,
-    borderRadius: 10,
-    backgroundColor: '#DC9B18',
-    alignSelf: 'center',
-    elevation: 20,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
   progessionBar: {
     width: '20%',
@@ -204,7 +194,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 5,
     top: '-20%',
-    right: '-3%'
+    right: '-3%',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
 });
 

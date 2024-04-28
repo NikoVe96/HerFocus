@@ -18,14 +18,10 @@ import Parse from 'parse/react-native';
 import Quiz from '../../Components/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< HEAD
 import BottomNavigation from '../../Navigation/BottomNav';
-=======
 import BouncyCheckbox from "react-native-bouncy-checkbox";
->>>>>>> LearningModuleStyling
 
 export const Module = ({ route }) => {
-  const width = Dimensions.get('window').width;
   const [progress, setProgress] = useState(new Animated.Value(1));
   const moduleLength = 7;
   const navigation = useNavigation();
@@ -41,6 +37,8 @@ export const Module = ({ route }) => {
   const { colors } = useTheme();
   const moduleName = `${module.get('name')} ${module.get('subject')}`;
   const [expanded, setExpanded] = useState(-1);
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
   const handleSlide = index => {
     Animated.parallel([
@@ -154,10 +152,7 @@ export const Module = ({ route }) => {
                   : null}
               </View>
             ))}
-
-
             <View style={{ flex: 1 }}>
-
             </View>
           </View>
         );
@@ -249,8 +244,8 @@ export const Module = ({ route }) => {
         break;
       case '3 Struktur og planlægning':
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
-            <Text style={{textAlign: 'center', fontSize: 24, marginTop: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
+            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>
               Planlæg dine rutiner
             </Text>
             <Text
@@ -262,18 +257,18 @@ export const Module = ({ route }) => {
               }}>
               Øvelse
             </Text>
-            <Text style={{fontSize: 18, marginBottom: '2%'}}>
+            <Text style={{ fontSize: 18, marginBottom: '2%' }}>
               I denne øvelse skal du tænke på en rutiner, du har. Skriv hvilke
               steps rutinen indeholder, og hvor længe de forskellige steps tager
               i tekstboksene
             </Text>
-            <Text style={{fontSize: 18, marginBottom: '4%'}}>
+            <Text style={{ fontSize: 18, marginBottom: '4%' }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
-            <Text style={{fontWeight: 'bold', marginBottom: 5}}>Rutine</Text>
+            <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Rutine</Text>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{flex: 1}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ flex: 1 }}>
                 <View>
                   <View style={styles.rutineView}>
                     <Text>1.</Text>
@@ -288,7 +283,7 @@ export const Module = ({ route }) => {
                       justifyContent: 'space-between',
                     }}>
                     <View>
-                      <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+                      <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>
                         Steps
                       </Text>
                       <View style={styles.rutineView}>
@@ -328,7 +323,7 @@ export const Module = ({ route }) => {
                       </View>
                     </View>
                     <View>
-                      <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+                      <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>
                         Tid
                       </Text>
                       <View style={styles.rutineView}>
@@ -529,41 +524,10 @@ export const Module = ({ route }) => {
           scrollEnabled={false}
           ref={swiperRef}>
           <ScrollView style={{ flex: 1 }}>
-            <View style={{ alignItems: 'center' }}>
-              <Image
-                source={require('../../Assets/images/planning_exercise.png')}
-                style={{ width: width, height: 250 }}></Image>
-            </View>
-            <View>
-              {exercises()}
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'baseline',
-                marginVertical: 20,
-              }}>
-              <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
-                onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 }}>Tilbage</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
-                onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 }}>Næste</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
-              style={{ width: width, height: 250 }}></Image>
+              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.takeawayHeader}>
-                Har du før været i denne situation?
-              </Text>
               <Text style={styles.text}>{intro1}</Text>
             </View>
             <View
@@ -571,22 +535,21 @@ export const Module = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
-                marginVertical: 20,
+                marginVertical: '3%',
               }}>
-              <View style={{ marginTop: 20, marginRight: 20 }}></View>
+              <View style={{ marginTop: '3%', marginRight: '5%' }}></View>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 }}>Næste</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
           <ScrollView style={{ flex: 1 }}>
             <Image
-              source={require('../../Assets/images/frustrated_woman.png')}
-              style={{ width: width, height: 250 }}></Image>
+              source={require('../../Assets/images/woman_reflecting.png')}
+              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.takeawayHeader}>Subject title...</Text>
               <Text style={styles.text}>{intro2}</Text>
             </View>
             <View
@@ -594,26 +557,25 @@ export const Module = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
-                marginVertical: 20,
+                marginVertical: '3%',
               }}>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 }}>Tilbage</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 }}>Næste</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
           <ScrollView style={{ flex: 1 }}>
             <Image
-              source={require('../../Assets/images/frustrated_woman.png')}
-              style={{ width: width, height: 250 }}></Image>
+              source={require('../../Assets/images/woman_writing.png')}
+              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.takeawayHeader}>Subject title...</Text>
               <Text style={styles.text}>{intro3}</Text>
             </View>
             <View
@@ -621,27 +583,27 @@ export const Module = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
-                marginVertical: 20,
+                marginVertical: '3%',
               }}>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 }}>Tilbage</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 }}>Næste</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
           <ScrollView style={{ flex: 1 }}>
             <View>
               <Image
-                source={require('../../Assets/images/quiz.png')}
-                style={{ width: width, height: 250 }}
-                sharedTransitionTag="structure"></Image>
-              <Text style={styles.takeawayHeader}>
+                source={require('../../Assets/images/women_taking_quiz.png')}
+                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}
+              ></Image>
+              <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
                 Lad os tage en quiz for at hjælpe dig med at huske, hvad du har
                 lært!
               </Text>
@@ -655,36 +617,61 @@ export const Module = ({ route }) => {
                   flexDirection: 'row',
                   justifyContent: 'space-around',
                   alignItems: 'baseline',
-                  marginVertical: 20,
+                  marginVertical: '3%',
                 }}>
                 <TouchableOpacity
                   style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                   onPress={() => swiperRef.current.scrollBy(-1)}>
-                  <Text style={{ fontSize: 20 }}>Tilbage</Text>
+                  <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                   onPress={() => swiperRef.current.scrollBy(1)}>
-                  <Text style={{ fontSize: 20 }}>Næste</Text>
+                  <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
-
-
-
           <ScrollView style={{ flex: 1 }}>
             <View style={{ alignItems: 'center' }}>
               <Image
-                source={require('../../Assets/images/notebook_planning.png')}
-                style={{ width: width, height: 250 }}></Image>
-              <Text style={styles.takeawayHeader}>
+                source={require('../../Assets/images/woman_doing_exercise.png')}
+                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+            </View>
+            <View>
+              {exercises()}
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'baseline',
+                marginVertical: '3%',
+              }}>
+              <TouchableOpacity
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => swiperRef.current.scrollBy(-1)}>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => swiperRef.current.scrollBy(1)}>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
+              <Image
+                source={require('../../Assets/images/lightbulbs.png')}
+                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+              <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
                 Her er der {keyPoints.length} takeaways fra dette modul
               </Text>
               {keyPoints.map((item, index) => {
                 return (
                   <View style={[styles.keyTakeaways, { backgroundColor: colors.subButton, borderColor: colors.subButton }]} key={index}>
-                    <Text style={styles.takeawayHeader}>
+                    <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
                       Takeaway {index + 1}
                     </Text>
                     <Text style={styles.text}>{item}</Text>
@@ -697,25 +684,25 @@ export const Module = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
-                marginVertical: 20,
+                marginVertical: '3%',
               }}>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 }}>Tilbage</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 }}>Næste</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <Image
               source={require('../../Assets/images/fireworks.png')}
-              style={{ width: width, height: 250 }}></Image>
-            <Text style={styles.takeawayHeader}>Tillykke! </Text>
+              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+            <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>Tillykke! </Text>
             <Text style={styles.text}>Du har lige færdiggjort dit første modul!</Text>
             <Text style={{ fontSize: 12, fontStyle: 'italic', marginTop: '35%' }}>Materialet fra dette modul er fundet i bogen "{book}", som er skrevet af {author}</Text>
             <View
@@ -723,23 +710,23 @@ export const Module = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
-                marginVertical: 20,
+                marginVertical: '3%',
               }}>
               <TouchableOpacity
                 style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 }}>Tilbage</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
                 onPress={() => handleCompletion()}>
-                <Text style={{ fontSize: 20 }}>Færdiggør modulet</Text>
+                <Text style={{ fontSize: 20 * scaleFactor }}>Færdiggør modulet</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Swiper>
       </View >
-      <BottomNavigation/>
+      <BottomNavigation />
     </SafeAreaView >
   );
 };
@@ -749,48 +736,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    margin: 10,
-    width: 200,
+    margin: '1%',
+    width: '60%',
     borderWidth: 1,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
   keyTakeaways: {
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
-    width: 350,
+    width: '80%',
     padding: 10,
     borderWidth: 1,
     borderRadius: 10,
     elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
   takeawayHeader: {
-    fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 5,
     padding: 5,
   },
   textContainer: {
-    margin: 10,
-  },
-  textInput: {
-    backgroundColor: 'white',
-    width: 250,
-    height: 200,
-    marginVertical: 10,
+    margin: '3%',
   },
   swiperBtn: {
-    marginTop: 20,
-    marginRight: 20,
+    marginTop: '2%',
+    marginRight: '2%',
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    elevation: 10,
-  },
-  swiperBtnText: {
-    fontSize: 16,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
   text: {
     fontSize: 18,

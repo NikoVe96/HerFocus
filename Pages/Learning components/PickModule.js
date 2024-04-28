@@ -40,6 +40,7 @@ export const PickModule = () => {
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
   const { colors } = useTheme();
+
   const moduleSubjects = [
     {
       subject: 'Opnå dine mål',
@@ -48,7 +49,7 @@ export const PickModule = () => {
     },
     {
       subject: 'Struktur og planlægning',
-      description: 'I dette modul vil du lære om forskellige værktøjer til at strukturere dit liv og din hverdag. For voksne med ADHD kan det være en fordel at have specifikke mål, tidsrammer og værktøjer til at opnå dine mål, og derfor har vi samlet nogle øvelser der kan give dig de bedste chancer for success og give mere overskud i hverdagen.',
+      description: 'I dette modul vil du lære om forskellige værktøjer til at strukturere dit liv og din hverdag. For voksne med ADHD kan det være en fordel at have specifikke mål, tidsrammer og værktøjer til at opnå sine mål. Derfor har vi samlet nogle øvelser der kan give dig de bedste chancer for success og forhåbentlig give mere overskud i hverdagen.',
       image: require('../../Assets/images/learning_notebook.png'),
     },
     {
@@ -61,9 +62,7 @@ export const PickModule = () => {
 
   useEffect(() => {
     getProgress('Struktur og planlægning');
-    getProgress('Overspringshandlinger1'),
-      getProgress('Relationer1');
-    getProgress('Opnå dine mål');
+
   }, []);
 
   async function getProgress(subject) {
@@ -77,11 +76,13 @@ export const PickModule = () => {
     completedModulesQ.equalTo('user', currentUser);
     completedResults = await completedModulesQ.find();
     let completedModules = 0;
-    completedResults[0].get('modulesCompleted').forEach(module => {
-      if (completedResults[0].get('modulesCompleted').filter(module => module.includes(subject))) {
-        completedModules += 1;
-      }
-    });
+    if (completedResults[0].get('modulesCompleted') != null) {
+      completedResults[0].get('modulesCompleted').forEach(module => {
+        if (completedResults[0].get('modulesCompleted').filter(module => module.includes(subject))) {
+          completedModules += 1;
+        }
+      });
+    }
 
     switch (subject) {
       case 'Struktur og planlægning':
