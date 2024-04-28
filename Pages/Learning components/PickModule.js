@@ -80,24 +80,9 @@ export const PickModule = () => {
     });
 
     switch (subject) {
-      case 'Opnå dine mål':
-        if (completedModules.length !== 0) {
-          setGoalProgress((completedModules / totalModulesResults.length) * 100);
-        }
-        break;
       case 'Struktur og planlægning':
         if (completedModules.length !== 0) {
           setStructuringProgress((completedModules / totalModulesResults.length) * 100);
-        }
-        break;
-      case 'Overspringshandlinger':
-        if (completedModules.length !== 0) {
-          setProcrastinationProgress((completedModules / totalModulesResults.length) * 100);
-        }
-        break;
-      case 'Y':
-        if (completedModules.length !== 0) {
-          setRelationsProgress((completedModules / totalModulesResults.length) * 100);
         }
         break;
       default:
@@ -109,31 +94,6 @@ export const PickModule = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>Hvad vil du gerne lære om i dag?</Text>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{goalProgress}%</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Module overview', {
-                subject: moduleSubjects[0].subject,
-                description: moduleSubjects[0].description,
-                image: moduleSubjects[0].image,
-              })
-            }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Image
-                  source={require('../../Assets/images/learning_hourglass.png')}
-                  style={{ width: 60, height: 95, marginTop: 5 }}>
-                </Image>
-                <Text style={styles.text}>
-                  Opnå dine mål
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
         <View style={{ marginVertical: 20 }}>
           <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
             <Text style={[styles.text, { fontWeight: 'bold' }]}>{structuringProgress}%</Text>
@@ -159,56 +119,7 @@ export const PickModule = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{procrastinationProgress}%</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Module overview', {
-                subject: moduleSubjects[1].subject,
-                description: moduleSubjects[1].description,
-                image: moduleSubjects[1].image,
-              })
-            }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Animated.Image
-                  source={require('../../Assets/images/learning_hourglass.png')}
-                  style={{ width: 60, height: 95, marginTop: 5 }}
-                  sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Overkom overspringshandlinger
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{relationsProgress}%</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Module overview', {
-                subject: moduleSubjects[0].subject,
-                description: moduleSubjects[0].description,
-                image: moduleSubjects[0].image,
-              })
-            }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Animated.Image
-                  source={require('../../Assets/images/learning_relations.png')}
-                  style={{ width: 140, height: 95, marginTop: 5 }}
-                  sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Forbedr dine sociale relationer
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
+
       </ScrollView>
     </SafeAreaView>
   );

@@ -93,7 +93,7 @@ export const Module = ({ route }) => {
 
   function exercises() {
     switch (moduleName) {
-      case '1 Opnå dine mål':
+      case '1 Struktur og planlægning':
         const tænkeFejl =
           [
             { name: "Alt eller intet" },
@@ -158,7 +158,7 @@ export const Module = ({ route }) => {
           </View>
         );
         break;
-      case '2 Opnå dine mål':
+      case '2 Struktur og planlægning':
         return (
           <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Identificer typen af dine overspringshandlinger</Text>
@@ -239,6 +239,21 @@ export const Module = ({ route }) => {
                 textAlignVertical={'top'}
               >
               </TextInput>
+            </View>
+          </View>
+        );
+        break;
+      case 3:
+        return (
+          <View>
+
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <Text>Aktiviteter og steps</Text>
+              </View>
+              <View>
+                <Text>Aktiviteter og steps</Text>
+              </View>
             </View>
           </View>
         );
