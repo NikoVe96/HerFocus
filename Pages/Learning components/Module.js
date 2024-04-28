@@ -243,21 +243,323 @@ export const Module = ({ route }) => {
           </View>
         );
         break;
-      case 3:
+      case '3 Struktur og planlægning':
         return (
-          <View>
-
-            <View style={{ flexDirection: 'row' }}>
-              <View>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
+            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Planlæg dine rutiner</Text>
+            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du ..</Text>
+            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
+            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ flex: 2.5 }}>
                 <Text>Aktiviteter og steps</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text>1.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>a.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>b.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>c.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>d.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>e.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
               </View>
-              <View>
-                <Text>Aktiviteter og steps</Text>
+
+              <View style={{ flex: 0.5 }}>
+                <Text>Tid</Text>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>a.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>b.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>c.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>d.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
+                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
+                  <Text>e.</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'white',
+                      borderWidth: 1,
+                      borderColor: 'white',
+                      borderRadius: 10,
+                      padding: 5
+                    }}
+                    multiline={true}
+                    numberOfLines={1}
+                  >
+                  </TextInput>
+                </View>
               </View>
             </View>
           </View>
         );
         break;
+      case '4 Struktur og planlægning':
+        return (
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
+            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Reflekter over dine præstationer</Text>
+            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
+            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du udvælge nogle af de opgaver du har haft i løbet af ugen, og reflektere over dem.</Text>
+            <Text style={{ fontSize: 18, marginBottom: '2%' }}>Hvordan gik det med at klare opgaven? Oplevede du nogle tænkefejl undervejs? Hvordan kunne du vende de negative tanker til noget positivt istedet?</Text>
+            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
+            <View
+              style={{
+                marginVertical: '1%',
+                backgroundColor: colors.subButton,
+                marginVertical: '2%',
+                padding: '3%',
+                borderWidth: 1,
+                borderColor: colors.subButton,
+                borderRadius: 10
+              }}>
+              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={2}
+                textAlignVertical={'top'}>
+              </TextInput>
+              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={6}
+                textAlignVertical={'top'}>
+              </TextInput>
+            </View>
+            <View
+              style={{
+                marginVertical: '1%',
+                backgroundColor: colors.subButton,
+                marginVertical: '2%',
+                padding: '3%',
+                borderWidth: 1,
+                borderColor: colors.subButton,
+                borderRadius: 10
+              }}>
+              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={2}
+                textAlignVertical={'top'}>
+              </TextInput>
+              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={6}
+                textAlignVertical={'top'}>
+              </TextInput>
+            </View>
+            <View
+              style={{
+                marginVertical: '1%',
+                backgroundColor: colors.subButton,
+                marginVertical: '2%',
+                padding: '3%',
+                borderWidth: 1,
+                borderColor: colors.subButton,
+                borderRadius: 10
+              }}>
+              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={2}
+                textAlignVertical={'top'}>
+              </TextInput>
+              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+              </View>
+              <TextInput
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={6}
+                textAlignVertical={'top'}>
+              </TextInput>
+            </View>
+          </View>
+        );
       default:
         break;
     }
