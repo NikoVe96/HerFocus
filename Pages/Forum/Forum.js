@@ -16,7 +16,7 @@ export const Forum = ({route}) => {
 
   useEffect(() => {
     postQuery();
-  }, [forumTitle]);
+  }, [forumTitle, posts]);
 
   function handleNewPost() {
     postQuery();

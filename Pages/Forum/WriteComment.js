@@ -36,10 +36,8 @@ function WriteComment({postId, onNewComment}) {
     try {
       const result = await newComment.save();
       onNewComment(result);
-      console.log('Comment saved successfully');
       postId.increment('numberOfComments');
       await postId.save();
-      console.log('Post commentCount incremented!');
     } catch (error) {
       console.error('Error saving comment:', error);
     }

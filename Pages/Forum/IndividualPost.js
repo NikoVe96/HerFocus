@@ -45,8 +45,8 @@ function IndividualPost({ route }) {
   }
 
   return (
-      <SafeAreaView style={styles.container}>
-    <ScrollView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <View style={styles.postContainer}>
           <Post
             style={styles.post}
@@ -56,11 +56,16 @@ function IndividualPost({ route }) {
             }
           />
           <WriteComment postId={postObject} onNewComment={handleNewComment} />
-          <CommentSection comments={allComments} setComments={fetchComments} />
+          <CommentSection
+            postId={postObject.id}
+            comments={allComments}
+            setComments={fetchComments}
+            onNewComment={handleNewComment}
+          />
         </View>
-    </ScrollView>
+      </ScrollView>
       <BottomNavigation />
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 

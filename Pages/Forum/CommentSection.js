@@ -7,14 +7,16 @@ import {useEffect, useState} from 'react';
 import Parse from 'parse/react-native';
 import getAvatarImage from '../General components/AvatarUtils';
 import Modal from 'react-native-modal';
+//import { useComments } from '../../Components/CommentContext';
 
-const CommentSection = ({comments, setComments}) => {
+const CommentSection = ({comments, setComments, postId}) => {
   const {colors} = useTheme();
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('');
    const [currentCommentId, setCurrentCommentId] = useState(null); 
   const [isModalVisible, setModalVisible] = useState(false);
   const avatarImageSource = getAvatarImage(avatar);
+
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -35,14 +37,10 @@ const CommentSection = ({comments, setComments}) => {
     setModalVisible(false);
   };
 
-  async function deleteComment (commentId) {
-    console.log('commentID: ' + commentId);
-    let query = new Parse.Query('Comment');
-    query.equalTo('objectId', commentId);
-    const result = await query.first();
-    console.log('result: ' + result);
+  async function deleteComment () {
     try {
-      await result.destroy();
+      await currentCommentId.destroy();
+      updatePostCommentCount();
       handleDeleteComment();
     } catch (error) {
       console.error('Failed to delete the comment:', error);
@@ -50,8 +48,18 @@ const CommentSection = ({comments, setComments}) => {
     hideModal();
   };
 
-  const handleDeleteComment = commentId => {
-    const updatedComments = comments.filter(comment => comment.id !== commentId);
+async function updatePostCommentCount() {
+  const postQuery = new Parse.Query('Post');
+  const post = await postQuery.get(postId);
+  console.log('post ' + postId);
+  post.increment('numberOfComments', -1);
+  await post.save();
+}
+
+  const handleDeleteComment = () => {
+    const updatedComments = comments.filter(
+      comment => comment.id !== currentCommentId.id,
+    );
     setComments(updatedComments);
   };
 
@@ -64,9 +72,9 @@ const CommentSection = ({comments, setComments}) => {
           {comments.length == 0 ? (
             <Text></Text>
           ) : (
-            comments.map((comment, commentId) => (
+            comments.map((comment, index) => (
               <View
-                key={commentId}
+                key={index}
                 style={[
                   styles.commentContainer,
                   styles.shadowProp,
@@ -94,7 +102,7 @@ const CommentSection = ({comments, setComments}) => {
                     </View>
                   </View>
                   {comment.get('username') == username ? (
-                    <TouchableOpacity onPress={() => showModal()}>
+                    <TouchableOpacity onPress={() => showModal(comment)}>
                       <FontAwesomeIcon
                         icon={faTrash}
                         size={15}
@@ -124,7 +132,7 @@ const CommentSection = ({comments, setComments}) => {
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                          onPress={() => deleteComment(comment.id)}
+                          onPress={() => deleteComment()}
                           style={styles.modalTextContainer2}>
                           <Text style={styles.modalText}>
                             Ja, slet min kommentar

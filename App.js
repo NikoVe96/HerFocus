@@ -151,9 +151,9 @@ function App() {
 function AppWrapper() {
   return (
     <UserProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
     </UserProvider>
   );
 }
