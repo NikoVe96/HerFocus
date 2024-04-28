@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
 import BottomNavigation from '../../Navigation/BottomNav';
 
 export const StructureFrontPage = () => {
@@ -20,108 +20,156 @@ export const StructureFrontPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text
-        style={[
-          styles.title,
-          { color: colors.text, fontSize: 22 * scaleFactor },
-        ]}>
-        Hvad vil du gerne lave i dag?
-      </Text>
-      <TouchableOpacity
-        style={styles.press}
-        onPress={() => navigation.navigate('Calendar')}>
-        <View
-          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
-          <Image
-            source={require('../../Assets/images/structure_calendar.png')}
-            style={[styles.images, {
-              width: 100 * scaleFactor,
-              height: 100 * scaleFactor,
-            }]}></Image>
-          <Text
+      <ScrollView>
+        <Text
+          style={[
+            styles.title,
+            {color: colors.text, fontSize: 22 * scaleFactor},
+          ]}>
+          Hvad vil du gerne lave i dag?
+        </Text>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Calendar')}>
+          <View
             style={[
-              styles.text,
-              { color: colors.text, fontSize: 18 * scaleFactor },
+              styles.buttonGrad,
+              {backgroundColor: colors.mainButton, width: '90%'},
             ]}>
-            Kalender
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.press}
-        onPress={() => navigation.navigate('Daily overview')}>
-        <View
-          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
-          <Image
-            source={require('../../Assets/images/structure_dailyOverview.png')}
-            style={[styles.images, {
-              width: 160 * scaleFactor,
-              height: 100 * scaleFactor,
-            }]}></Image>
-          <Text
+            <Image
+              source={require('../../Assets/images/structure_calendar.png')}
+              style={[
+                styles.images,
+                {
+                  width: 100 * scaleFactor,
+                  height: 100 * scaleFactor,
+                },
+              ]}></Image>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
+              Kalender
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Daily overview')}>
+          <View
             style={[
-              styles.text,
-              { color: colors.text, fontSize: 18 * scaleFactor },
+              styles.buttonGrad,
+              {backgroundColor: colors.mainButton, width: '90%'},
             ]}>
-            Dags oversigt
-          </Text>
-        </View>
-      </TouchableOpacity>
+            <Image
+              source={require('../../Assets/images/structure_dailyOverview.png')}
+              style={[
+                styles.images,
+                {
+                  width: 160 * scaleFactor,
+                  height: 100 * scaleFactor,
+                },
+              ]}></Image>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
+              Dags oversigt
+            </Text>
+          </View>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.press}
-        onPress={() => navigation.navigate('Notebook')}>
-        <View
-          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
-          <Image
-            source={require('../../Assets/images/structure_notebook.png')}
-            style={[styles.images, {
-              width: 140 * scaleFactor,
-              height: 100 * scaleFactor,
-            }]}></Image>
-          <Text
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Notebook')}>
+          <View
             style={[
-              styles.text,
-              { color: colors.text, fontSize: 18 * scaleFactor },
+              styles.buttonGrad,
+              {backgroundColor: colors.mainButton, width: '90%'},
             ]}>
-            Notesbog
-          </Text>
+            <Image
+              source={require('../../Assets/images/structure_notebook.png')}
+              style={[
+                styles.images,
+                {
+                  width: 140 * scaleFactor,
+                  height: 100 * scaleFactor,
+                },
+              ]}></Image>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
+              Notesbog
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={[
+              styles.knowledgeViewSmall,
+              {
+                backgroundColor: colors.mainButton,
+                borderColor: colors.mainButton,
+                marginRight: '1%',
+              },
+            ]}
+            onPress={() => navigation.navigate('Add task')}>
+            <Image
+              source={require('../../Assets/images/structure_todo.png')}
+              style={styles.imageSmall}></Image>
+            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+              Ny to-do
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.knowledgeViewSmall,
+              {
+                backgroundColor: colors.mainButton,
+                borderColor: colors.mainButton,
+                marginHorizontal: '1%',
+              },
+            ]}
+            onPress={() => navigation.navigate('Add routine')}>
+            <Image
+              source={require('../../Assets/images/structure_routine.png')}
+              style={styles.imageSmall}></Image>
+            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+              Ny rutine
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.knowledgeViewSmall,
+              {
+                backgroundColor: colors.mainButton,
+                borderColor: colors.mainButton,
+                marginLeft: '1%',
+              },
+            ]}
+            onPress={() => navigation.navigate('Add event')}>
+            <Image
+              source={require('../../Assets/images/structure_event.png')}
+              style={styles.imageSmall}></Image>
+            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+              Nyt event
+            </Text>
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-      <View style={styles.row}>
-        <TouchableOpacity
-          style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginRight: '1%' }]}
-          onPress={() => navigation.navigate('Add task')}>
-          <Image
-            source={require('../../Assets/images/structure_todo.png')}
-            style={styles.imageSmall}></Image>
-          <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Ny to-do</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginHorizontal: '1%' }]}
-          onPress={() => navigation.navigate('Add routine')}>
-          <Image
-            source={require('../../Assets/images/structure_routine.png')}
-            style={styles.imageSmall}></Image>
-          <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Ny rutine</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginLeft: '1%' }]}
-          onPress={() => navigation.navigate('Add event')}>
-          <Image
-            source={require('../../Assets/images/structure_event.png')}
-            style={styles.imageSmall}></Image>
-          <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Nyt event</Text>
-        </TouchableOpacity>
-      </View>
-      <BottomNavigation style={{ flex: 0.5 }} />
-    </SafeAreaView >
+      </ScrollView>
+      <BottomNavigation />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3
+    flex: 1,
+    
   },
   helloUser: {
     paddingLeft: 60,
@@ -173,7 +221,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     paddingHorizontal: '5%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 60,
   },
   imageSmall: {
     width: '70%',
