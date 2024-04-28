@@ -20,7 +20,7 @@ export const StructureFrontPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{paddingBottom: 20}}>
         <Text
           style={[
             styles.title,
@@ -121,7 +121,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_todo.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
               Ny to-do
             </Text>
           </TouchableOpacity>
@@ -138,7 +138,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_routine.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
               Ny rutine
             </Text>
           </TouchableOpacity>
@@ -155,7 +155,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_event.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 20 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
               Nyt event
             </Text>
           </TouchableOpacity>

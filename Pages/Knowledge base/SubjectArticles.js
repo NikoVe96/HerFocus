@@ -85,11 +85,12 @@ export const ArticlesDiagnosed = ({route}) => {
                       fontSize: 18,
                       textAlign: 'center',
                       marginTop: 10,
+                      color: colors.text
                     }}>
                     {item.get('title')}
                   </Text>
                   <View
-                    style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+                    style={[styles.seperator, {backgroundColor: colors.text}]}></View>
                   <Text numberOfLines={4} style={[styles.articleText, {color: colors.text}]}>
                     {item.get('text').replaceAll(/#|-|>|/gi, '')}
                   </Text>

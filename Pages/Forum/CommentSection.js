@@ -116,10 +116,15 @@ async function updatePostCommentCount() {
                     isVisible={isModalVisible}
                     onBackdropPress={() => setModalVisible(false)}>
                     <View
-                      style={[
-                        styles.modalContainer,
-                        {backgroundColor: colors.light},
-                      ]}>
+                      style={{
+                        backgroundColor: colors.background,
+                        padding: 10,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderColor: colors.background,
+                        borderRadius: 10,
+                      }}>
                       <Text style={styles.modalTitle}>
                         Er du sikker på, at du vil slette din kommentar?
                       </Text>

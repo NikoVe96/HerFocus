@@ -141,7 +141,9 @@ export const UserSettings = ({ navigation }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{flex: 6, fontSize: 18}}>To-do opgaver</Text>
+              <Text style={{flex: 6, fontSize: 18, color: colors.text}}>
+                To-do opgaver
+              </Text>
               <Switch
                 trackColor={{false: colors.mainButton, true: colors.background}}
                 thumbColor={isTasksEnabled ? colors.border : colors.background}
@@ -157,7 +159,9 @@ export const UserSettings = ({ navigation }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{flex: 6, fontSize: 18}}>Kalender events</Text>
+              <Text style={{flex: 6, fontSize: 18, color: colors.text}}>
+                Kalender events
+              </Text>
               <Switch
                 trackColor={{false: colors.mainButton, true: colors.background}}
                 thumbColor={isEventsEnabled ? colors.border : colors.background}
@@ -173,7 +177,9 @@ export const UserSettings = ({ navigation }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{flex: 6, fontSize: 18}}>Rutiner</Text>
+              <Text style={{flex: 6, fontSize: 18, color: colors.text}}>
+                Rutiner
+              </Text>
               <Switch
                 trackColor={{false: colors.mainButton, true: colors.background}}
                 thumbColor={
@@ -191,7 +197,7 @@ export const UserSettings = ({ navigation }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{flex: 6, fontSize: 18}}>
+              <Text style={{flex: 6, fontSize: 18, color: colors.text}}>
                 Forum post kommentarer
               </Text>
               <Switch
