@@ -18,11 +18,8 @@ import Parse from 'parse/react-native';
 import Quiz from '../../Components/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< HEAD
 import BottomNavigation from '../../Navigation/BottomNav';
-=======
 import BouncyCheckbox from "react-native-bouncy-checkbox";
->>>>>>> LearningModuleStyling
 
 export const Module = ({ route }) => {
   const width = Dimensions.get('window').width;

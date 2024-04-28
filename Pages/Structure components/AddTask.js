@@ -164,18 +164,26 @@ export const AddTask = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{ justifyContent: 'center' }}>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView>
-        <View style={{ alignItems: 'center', padding: 10 }}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold' }}> Tilføj en ny to-do </Text>
-          <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+        <View style={{alignItems: 'center', padding: 10}}>
+          <Text style={{fontSize: 24, color: colors.text, marginTop: 15}}>
+            {' '}
+            Tilføj en ny to-do{' '}
+          </Text>
+          <View
+            style={[
+              styles.border,
+              {backgroundColor: colors.border, borderColor: colors.border},
+            ]}></View>
         </View>
-        <View style={{
-          alignContent: 'center',
-          paddingHorizontal: 16,
-        }}>
+        <View
+          style={{
+            alignContent: 'center',
+            paddingHorizontal: 16,
+          }}>
           <View>
-            <Text style={styles.text}>
+            <Text style={[styles.text, {color: colors.text}]}>
               Hvad skal din to-do hedde?
             </Text>
             <TextInput
@@ -185,7 +193,9 @@ export const AddTask = ({ navigation }) => {
             />
           </View>
           <View>
-            <Text style={styles.text} >Vælg en farve</Text>
+            <Text style={[styles.text, {color: colors.text}]}>
+              Vælg en farve
+            </Text>
             <View style={styles.colorOptions}>
               <TouchableOpacity
                 style={{
@@ -197,66 +207,84 @@ export const AddTask = ({ navigation }) => {
                   borderColor: colors.border,
                 }}
                 onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: taskColor === '#C9E4DE' ? 1.5 : 1,
-                borderRadius: taskColor === '#C9E4DE' ? 30 : 20,
-                width: taskColor === '#C9E4DE' ? 45 : 40,
-                height: taskColor === '#C9E4DE' ? 45 : 40,
-                backgroundColor: '#C9E4DE',
-                borderColor: colors.border,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: taskColor === '#C9E4DE' ? 1.5 : 1,
+                  borderRadius: taskColor === '#C9E4DE' ? 30 : 20,
+                  width: taskColor === '#C9E4DE' ? 45 : 40,
+                  height: taskColor === '#C9E4DE' ? 45 : 40,
+                  backgroundColor: '#C9E4DE',
+                  borderColor: colors.border,
+                }}
                 onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: taskColor === '#C6DEF1' ? 1.5 : 1,
-                borderRadius: taskColor === '#C6DEF1' ? 30 : 20,
-                width: taskColor === '#C6DEF1' ? 45 : 40,
-                height: taskColor === '#C6DEF1' ? 45 : 40,
-                backgroundColor: '#C6DEF1',
-                borderColor: colors.border,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: taskColor === '#C6DEF1' ? 1.5 : 1,
+                  borderRadius: taskColor === '#C6DEF1' ? 30 : 20,
+                  width: taskColor === '#C6DEF1' ? 45 : 40,
+                  height: taskColor === '#C6DEF1' ? 45 : 40,
+                  backgroundColor: '#C6DEF1',
+                  borderColor: colors.border,
+                }}
                 onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: taskColor === '#DBCDF0' ? 1.5 : 1,
-                borderRadius: taskColor === '#DBCDF0' ? 30 : 20,
-                width: taskColor === '#DBCDF0' ? 45 : 40,
-                height: taskColor === '#DBCDF0' ? 45 : 40,
-                backgroundColor: '#DBCDF0',
-                borderColor: colors.border,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: taskColor === '#DBCDF0' ? 1.5 : 1,
+                  borderRadius: taskColor === '#DBCDF0' ? 30 : 20,
+                  width: taskColor === '#DBCDF0' ? 45 : 40,
+                  height: taskColor === '#DBCDF0' ? 45 : 40,
+                  backgroundColor: '#DBCDF0',
+                  borderColor: colors.border,
+                }}
                 onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: taskColor === '#FFADAD' ? 1.5 : 1,
-                borderRadius: taskColor === '#FFADAD' ? 30 : 20,
-                width: taskColor === '#FFADAD' ? 45 : 40,
-                height: taskColor === '#FFADAD' ? 45 : 40,
-                backgroundColor: '#FFADAD',
-                borderColor: colors.border,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: taskColor === '#FFADAD' ? 1.5 : 1,
+                  borderRadius: taskColor === '#FFADAD' ? 30 : 20,
+                  width: taskColor === '#FFADAD' ? 45 : 40,
+                  height: taskColor === '#FFADAD' ? 45 : 40,
+                  backgroundColor: '#FFADAD',
+                  borderColor: colors.border,
+                }}
                 onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: taskColor === '#FFD6A5' ? 1.5 : 1,
-                borderRadius: taskColor === '#FFD6A5' ? 30 : 20,
-                width: taskColor === '#FFD6A5' ? 45 : 40,
-                height: taskColor === '#FFD6A5' ? 45 : 40,
-                backgroundColor: '#FFD6A5',
-                borderColor: colors.border,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: taskColor === '#FFD6A5' ? 1.5 : 1,
+                  borderRadius: taskColor === '#FFD6A5' ? 30 : 20,
+                  width: taskColor === '#FFD6A5' ? 45 : 40,
+                  height: taskColor === '#FFD6A5' ? 45 : 40,
+                  backgroundColor: '#FFD6A5',
+                  borderColor: colors.border,
+                }}
                 onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
             </View>
           </View>
-          <View style={{ marginTop: '10%', flexDirection: 'row' }}>
+          <View style={{marginTop: '10%', flexDirection: 'row'}}>
             <View style={styles.rowView}>
-              <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-                <Text style={styles.buttonText}>Emoji</Text>
+              <TouchableOpacity
+                onPress={showEmojiModal}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}>
+                <Text style={[styles.buttonText, {color: colors.text}]}>
+                  Emoji
+                </Text>
               </TouchableOpacity>
               <Modal
                 visible={emojiModalVisible}
                 animationType="slide"
                 transparent={true}
-                onRequestClose={hideEmojiModal}
-              >
+                onRequestClose={hideEmojiModal}>
                 <View style={styles.modalContainer}>
-                  <View style={[styles.emojiPickerContainer, { backgroundColor: colors.background }]}>
+                  <View
+                    style={[
+                      styles.emojiPickerContainer,
+                      {backgroundColor: colors.background},
+                    ]}>
                     <EmojiPicker
                       emojis={emojis}
                       recent={recent}
@@ -272,22 +300,38 @@ export const AddTask = ({ navigation }) => {
                       backgroundColor={colors.background}
                     />
                   </View>
-                  <TouchableOpacity style={[styles.modalButton, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={hideEmojiModal}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>LUK</Text>
+                  <TouchableOpacity
+                    style={[
+                      styles.modalButton,
+                      {
+                        backgroundColor: colors.mainButton,
+                        borderColor: colors.mainButton,
+                      },
+                    ]}
+                    onPress={hideEmojiModal}>
+                    <Text style={{fontWeight: 'bold', fontSize: 24}}>LUK</Text>
                   </TouchableOpacity>
                 </View>
               </Modal>
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={{ fontSize: 26 }}> {emoji}</Text>
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text style={{fontSize: 26}}> {emoji}</Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
+          <View style={{flexDirection: 'row', marginVertical: 2}}>
             <View style={styles.rowView}>
               <TouchableOpacity
-                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}
                 onPress={showStartTimePicker}>
-                <Text style={styles.buttonText}>Start tidspunkt</Text>
+                <Text style={[styles.buttonText, {color: colors.text}]}>
+                  Start tidspunkt
+                </Text>
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isStartTimePickerVisible}
@@ -296,18 +340,26 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideStartTimePicker}
               />
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={[styles.text, { fontWeight: 'bold' }]}>
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text style={[styles.text, {fontWeight: 'bold'}]}>
                 {taskStartTime === null ? '' : `${taskStartTime}`}
               </Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
+          <View style={{flexDirection: 'row', marginVertical: 2}}>
             <View style={styles.rowView}>
               <TouchableOpacity
-                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}
                 onPress={showEndTimePicker}>
-                <Text style={styles.buttonText}>Slut tidspunkt</Text>
+                <Text style={[styles.buttonText, {color: colors.text}]}>
+                  Slut tidspunkt
+                </Text>
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isEndTimePickerVisible}
@@ -316,18 +368,26 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideEndTimePicker}
               />
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={[styles.text, { fontWeight: 'bold' }]} >
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text style={[styles.text, {fontWeight: 'bold'}]}>
                 {taskEndTime === null ? '' : `${taskEndTime}`}
               </Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
+          <View style={{flexDirection: 'row', marginVertical: 2}}>
             <View style={styles.rowView}>
               <TouchableOpacity
-                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}
                 onPress={showDatePicker}>
-                <Text style={styles.buttonText}>Dato</Text>
+                <Text style={[styles.buttonText, {color: colors.text}]}>
+                  Dato
+                </Text>
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -336,44 +396,61 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideDatePicker}
               />
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={[styles.text, { fontWeight: 'bold' }]}
-              >
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text style={[styles.text, {fontWeight: 'bold'}]}>
                 {`${taskDate}`}
               </Text>
             </View>
           </View>
         </View>
-        <TouchableOpacity style={[styles.Button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={newTask}>
-          <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Tilføj ny to-do</Text>
+        <TouchableOpacity
+          style={[
+            styles.Button,
+            {
+              backgroundColor: colors.mainButton,
+              borderColor: colors.mainButton,
+            },
+          ]}
+          onPress={newTask}>
+          <Text style={{fontSize: 26, fontWeight: 'bold', color: colors.text}}>
+            Tilføj ny to-do
+          </Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView >
+      <BottomNavigation/>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   Button: {
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 10,
+    padding: 5,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
-    marginVertical: '5%',
-    paddingHorizontal: 20,
-    elevation: 5
+    marginVertical: '4%',
+    paddingHorizontal: '3%',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
   buttonSmall: {
     justifyContent: 'center',
-    padding: 5,
-    height: 40,
+    padding: '2%',
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    marginVertical: 5,
-    elevation: 5
+    elevation: 5,
+    shadowColor: 'grey',
+    shadowOffset: {width: 1, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    marginBottom: 8,
   },
   modalButton: {
     backgroundColor: 'lightgrey',
@@ -383,18 +460,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20
+    borderBottomLeftRadius: 20,
   },
   buttonText: {
-    color: "black",
+    color: 'black',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 20,
     borderWidth: 1,
     borderRadius: 20,
@@ -405,11 +482,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 10,
     width: '95%',
-    height: '95%'
+    height: '95%',
   },
   text: {
     marginVertical: 10,
-    fontSize: 18
+    fontSize: 18,
   },
   textInput: {
     padding: 8,
@@ -418,24 +495,24 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderRadius: 10,
     fontSize: 16,
-    borderColor: 'white'
+    borderColor: 'white',
   },
   border: {
     borderWidth: 1,
     width: 300,
     alignSelf: 'center',
     marginTop: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   colorOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   rowView: {
     flex: 1,
     //alignItems: 'center',
     //justifyContent: 'center',
-  }
+  },
 });
 
 export default AddTask;

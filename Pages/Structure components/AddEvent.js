@@ -174,140 +174,249 @@ export const AddEvent = () => {
   }
 
   return (
-    <SafeAreaView style={{ justifyContent: 'center' }}>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView>
-        <View style={{ alignItems: 'center', padding: '2%' }}>
-          <Text style={{ fontSize: 24 * scaleFactor, fontWeight: 'bold' }}> Tilføj en ny begivenhed</Text>
-          <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+        <View style={{alignItems: 'center', padding: '2%'}}>
+          <Text
+            style={{
+              fontSize: 24 * scaleFactor,
+              color: colors.text,
+              marginTop: 15,
+            }}>
+            {' '}
+            Tilføj en ny begivenhed
+          </Text>
+          <View
+            style={[
+              styles.border,
+              {backgroundColor: colors.border, borderColor: colors.border},
+            ]}></View>
         </View>
-        <View style={{
-          alignContent: 'center',
-          paddingHorizontal: '5%',
-        }}>
+        <View
+          style={{
+            alignContent: 'center',
+            paddingHorizontal: '5%',
+          }}>
           <View>
-            <Text style={[styles.text, { fontSize: 18 * scaleFactor }]}>
+            <Text
+              style={[
+                styles.text,
+                {fontSize: 18 * scaleFactor},
+                {color: colors.text},
+              ]}>
               Hvad skal din begivenhed hedde?
             </Text>
             <TextInput
-              style={[styles.textInput, { fontSize: 16 * scaleFactor }]}
+              style={[styles.textInput, {fontSize: 16 * scaleFactor}]}
               onChangeText={text => setEventName(text)}
               value={eventName}
             />
           </View>
-          <View style={{ marginTop: '2%', marginBottom: '5%' }}>
-            <Text style={[styles.text, { fontSize: 18 * scaleFactor }]} >Vælg en farve</Text>
+          <View style={{marginTop: '2%', marginBottom: '5%'}}>
+            <Text
+              style={[
+                styles.text,
+                {fontSize: 18 * scaleFactor},
+                {color: colors.text},
+              ]}>
+              Vælg en farve
+            </Text>
             <View style={styles.colorOptions}>
               <TouchableOpacity
                 style={{
                   borderWidth: eventColor === '#FAEDCB' ? 1.5 : 1,
-                  borderRadius: eventColor === '#FAEDCB' ? 30 * scaleFactor : 20 * scaleFactor,
-                  width: eventColor === '#FAEDCB' ? 45 * scaleFactor : 40 * scaleFactor,
-                  height: eventColor === '#FAEDCB' ? 45 * scaleFactor : 40 * scaleFactor,
+                  borderRadius:
+                    eventColor === '#FAEDCB'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#FAEDCB'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#FAEDCB'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
                   backgroundColor: '#FAEDCB',
                   borderColor: '#FAEDCB',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: { width: 1, height: 2 },
+                  shadowOffset: {width: 1, height: 2},
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: eventColor === '#C9E4DE' ? 1.5 : 1,
-                borderRadius: eventColor === '#C9E4DE' ? 30 * scaleFactor : 20 * scaleFactor,
-                width: eventColor === '#C9E4DE' ? 45 * scaleFactor : 40 * scaleFactor,
-                height: eventColor === '#C9E4DE' ? 45 * scaleFactor : 40 * scaleFactor,
-                backgroundColor: '#C9E4DE',
-                borderColor: '#C9E4DE',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: eventColor === '#C9E4DE' ? 1.5 : 1,
+                  borderRadius:
+                    eventColor === '#C9E4DE'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#C9E4DE'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#C9E4DE'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  backgroundColor: '#C9E4DE',
+                  borderColor: '#C9E4DE',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}
                 onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: eventColor === '#C6DEF1' ? 1.5 : 1,
-                borderRadius: eventColor === '#C6DEF1' ? 30 * scaleFactor : 20 * scaleFactor,
-                width: eventColor === '#C6DEF1' ? 45 * scaleFactor : 40 * scaleFactor,
-                height: eventColor === '#C6DEF1' ? 45 * scaleFactor : 40 * scaleFactor,
-                backgroundColor: '#C6DEF1',
-                borderColor: '#C6DEF1',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: eventColor === '#C6DEF1' ? 1.5 : 1,
+                  borderRadius:
+                    eventColor === '#C6DEF1'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#C6DEF1'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#C6DEF1'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  backgroundColor: '#C6DEF1',
+                  borderColor: '#C6DEF1',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}
                 onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: eventColor === '#DBCDF0' ? 1.5 : 1,
-                borderRadius: eventColor === '#DBCDF0' ? 30 * scaleFactor : 20 * scaleFactor,
-                width: eventColor === '#DBCDF0' ? 45 * scaleFactor : 40 * scaleFactor,
-                height: eventColor === '#DBCDF0' ? 45 * scaleFactor : 40 * scaleFactor,
-                backgroundColor: '#DBCDF0',
-                borderColor: '#DBCDF0',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: eventColor === '#DBCDF0' ? 1.5 : 1,
+                  borderRadius:
+                    eventColor === '#DBCDF0'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#DBCDF0'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#DBCDF0'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  backgroundColor: '#DBCDF0',
+                  borderColor: '#DBCDF0',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}
                 onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: eventColor === '#FFADAD' ? 1.5 : 1,
-                borderRadius: eventColor === '#FFADAD' ? 30 * scaleFactor : 20 * scaleFactor,
-                width: eventColor === '#FFADAD' ? 45 * scaleFactor : 40 * scaleFactor,
-                height: eventColor === '#FFADAD' ? 45 * scaleFactor : 40 * scaleFactor,
-                backgroundColor: '#FFADAD',
-                borderColor: '#FFADAD',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: eventColor === '#FFADAD' ? 1.5 : 1,
+                  borderRadius:
+                    eventColor === '#FFADAD'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#FFADAD'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#FFADAD'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  backgroundColor: '#FFADAD',
+                  borderColor: '#FFADAD',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}
                 onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
-              <TouchableOpacity style={{
-                borderWidth: eventColor === '#FFD6A5' ? 1.5 : 1,
-                borderRadius: eventColor === '#FFD6A5' ? 30 * scaleFactor : 20 * scaleFactor,
-                width: eventColor === '#FFD6A5' ? 45 * scaleFactor : 40 * scaleFactor,
-                height: eventColor === '#FFD6A5' ? 45 * scaleFactor : 40 * scaleFactor,
-                backgroundColor: '#FFD6A5',
-                borderColor: '#FFD6A5',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-
-              }}
+              <TouchableOpacity
+                style={{
+                  borderWidth: eventColor === '#FFD6A5' ? 1.5 : 1,
+                  borderRadius:
+                    eventColor === '#FFD6A5'
+                      ? 30 * scaleFactor
+                      : 20 * scaleFactor,
+                  width:
+                    eventColor === '#FFD6A5'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  height:
+                    eventColor === '#FFD6A5'
+                      ? 45 * scaleFactor
+                      : 40 * scaleFactor,
+                  backgroundColor: '#FFD6A5',
+                  borderColor: '#FFD6A5',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}
                 onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ flex: 6, fontSize: 18 * scaleFactor }}>Hele dagen</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{flex: 6, fontSize: 18 * scaleFactor, color: colors.text}}>
+              Hele dagen
+            </Text>
             <Switch
-              trackColor={{ false: colors.mainButton, true: colors.subButton }}
+              trackColor={{false: colors.mainButton, true: colors.subButton}}
               thumbColor={isAllDayEnabled ? colors.border : colors.background}
               ios_backgroundColor={colors.mainButton}
               onValueChange={() => allDayEvent()}
               value={isAllDayEnabled}
             />
           </View>
-          <View style={{ marginVertical: '2%', flexDirection: 'row' }}>
+          <View style={{marginVertical: '2%', flexDirection: 'row'}}>
             <View style={styles.rowView}>
-              <TouchableOpacity onPress={showEmojiModal} style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-                <Text style={[styles.buttonText, { fontSize: 20 * scaleFactor }]}>Emoji</Text>
+              <TouchableOpacity
+                onPress={showEmojiModal}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.buttonText,
+                    {fontSize: 20 * scaleFactor},
+                    {color: colors.text},
+                  ]}>
+                  Emoji
+                </Text>
               </TouchableOpacity>
               <Modal
                 visible={emojiModalVisible}
                 animationType="slide"
                 transparent={true}
-                onRequestClose={hideEmojiModal}
-              >
+                onRequestClose={hideEmojiModal}>
                 <View style={styles.modalContainer}>
-                  <View style={[styles.emojiPickerContainer, { backgroundColor: colors.background }]}>
+                  <View
+                    style={[
+                      styles.emojiPickerContainer,
+                      {backgroundColor: colors.background},
+                    ]}>
                     <EmojiPicker
                       emojis={emojis}
                       recent={recent}
@@ -322,27 +431,58 @@ export const AddEvent = () => {
                       onChangeRecent={setRecent}
                       backgroundColor={colors.background}
                     />
-
                   </View>
-                  <TouchableOpacity style={[styles.modalButton, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={hideEmojiModal}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 24 * scaleFactor }}>LUK</Text>
+                  <TouchableOpacity
+                    style={[
+                      styles.modalButton,
+                      {
+                        backgroundColor: colors.mainButton,
+                        borderColor: colors.mainButton,
+                      },
+                    ]}
+                    onPress={hideEmojiModal}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: 24 * scaleFactor,
+                        color: colors.text,
+                      }}>
+                      LUK
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </Modal>
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={{ fontSize: 26 * scaleFactor }}> {emoji}</Text>
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text style={{fontSize: 26 * scaleFactor, color: colors.text}}>
+                {' '}
+                {emoji}
+              </Text>
             </View>
           </View>
-          {isAllDayEnabled ?
+          {isAllDayEnabled ? (
             <Text></Text>
-            : <View>
-              <View style={{ flexDirection: 'row', marginVertical: '1%' }}>
+          ) : (
+            <View>
+              <View style={{flexDirection: 'row', marginVertical: '1%'}}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                    style={[
+                      styles.buttonSmall,
+                      {
+                        backgroundColor: colors.subButton,
+                        borderColor: colors.subButton,
+                      },
+                    ]}
                     onPress={showStartTimePicker}>
-                    <Text style={[styles.buttonText, { fontSize: 20 * scaleFactor }]}>Start tidspunkt</Text>
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        {fontSize: 20 * scaleFactor},
+                        {color: colors.text},
+                      ]}>
+                      Starttidspunkt
+                    </Text>
                   </TouchableOpacity>
                   <DateTimePickerModal
                     isVisible={isStartTimePickerVisible}
@@ -351,18 +491,36 @@ export const AddEvent = () => {
                     onCancel={hideStartTimePicker}
                   />
                 </View>
-                <View style={[styles.rowView, { alignItems: 'center' }]}>
-                  <Text style={[styles.text, { fontWeight: 'bold', fontSize: 18 * scaleFactor }]}>
+                <View style={[styles.rowView, {alignItems: 'center'}]}>
+                  <Text
+                    style={[
+                      styles.text,
+                      {fontWeight: 'bold', fontSize: 18 * scaleFactor},
+                      {color: colors.text},
+                    ]}>
                     {eventStartTime === null ? '' : `${eventStartTime}`}
                   </Text>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row', marginVertical: '1%' }}>
+              <View style={{flexDirection: 'row', marginVertical: '1%'}}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
-                    style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                    style={[
+                      styles.buttonSmall,
+                      {
+                        backgroundColor: colors.subButton,
+                        borderColor: colors.subButton,
+                      },
+                    ]}
                     onPress={showEndTimePicker}>
-                    <Text style={[styles.buttonText, { fontSize: 20 * scaleFactor }]}>Slut tidspunkt</Text>
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        {fontSize: 20 * scaleFactor},
+                        {color: colors.text},
+                      ]}>
+                      Slut tidspunkt
+                    </Text>
                   </TouchableOpacity>
                   <DateTimePickerModal
                     isVisible={isEndTimePickerVisible}
@@ -371,21 +529,39 @@ export const AddEvent = () => {
                     onCancel={hideEndTimePicker}
                   />
                 </View>
-                <View style={[styles.rowView, { alignItems: 'center' }]}>
-                  <Text style={[styles.text, { fontWeight: 'bold', fontSize: 18 * scaleFactor }]} >
+                <View style={[styles.rowView, {alignItems: 'center'}]}>
+                  <Text
+                    style={[
+                      styles.text,
+                      {fontWeight: 'bold', fontSize: 18 * scaleFactor},
+                      {color: colors.text},
+                    ]}>
                     {eventEndTime === null ? '' : `${eventEndTime}`}
                   </Text>
                 </View>
               </View>
             </View>
-          }
+          )}
 
-          <View style={{ flexDirection: 'row', marginVertical: '2%' }}>
+          <View style={{flexDirection: 'row', marginVertical: '2%'}}>
             <View style={styles.rowView}>
               <TouchableOpacity
-                style={[styles.buttonSmall, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}
+                style={[
+                  styles.buttonSmall,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}
                 onPress={showDatePicker}>
-                <Text style={[styles.buttonText, { fontSize: 20 * scaleFactor }]}>Dato</Text>
+                <Text
+                  style={[
+                    styles.buttonText,
+                    {fontSize: 20 * scaleFactor},
+                    {color: colors.text},
+                  ]}>
+                  Dato
+                </Text>
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -394,18 +570,33 @@ export const AddEvent = () => {
                 onCancel={hideDatePicker}
               />
             </View>
-            <View style={[styles.rowView, { alignItems: 'center' }]}>
-              <Text style={[styles.text, { fontWeight: 'bold', fontSize: 18 * scaleFactor }]}
-              >
+            <View style={[styles.rowView, {alignItems: 'center'}]}>
+              <Text
+                style={[
+                  styles.text,
+                  {fontWeight: 'bold', fontSize: 18 * scaleFactor},
+                  {color: colors.text},
+                ]}>
                 {`${eventDate}`}
               </Text>
             </View>
           </View>
         </View>
-        <TouchableOpacity style={[styles.Button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]} onPress={newEvent}>
-          <Text style={{ fontSize: 26 * scaleFactor, fontWeight: 'bold' }}>Tilføj nyt event</Text>
+        <TouchableOpacity
+          style={[
+            styles.Button,
+            {
+              backgroundColor: colors.mainButton,
+              borderColor: colors.mainButton,
+            },
+          ]}
+          onPress={newEvent}>
+          <Text style={{fontSize: 26 * scaleFactor, fontWeight: 'bold', color: colors.text}}>
+            Tilføj nyt event
+          </Text>
         </TouchableOpacity>
       </ScrollView>
+      <BottomNavigation/>
     </SafeAreaView>
   );
 }
@@ -422,7 +613,7 @@ const styles = StyleSheet.create({
     marginVertical: '4%',
     paddingHorizontal: '3%',
     elevation: 5,
-    shadowColor: 'grey',
+    shadowColor: 'black',
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,

@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   shadowProp: {
-    shadowColor: '#443939',
+    shadowColor: '#000',
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
