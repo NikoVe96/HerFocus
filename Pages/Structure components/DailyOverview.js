@@ -73,7 +73,7 @@ export const DailyOverview = () => {
 
     const futureTodo = async function () {
         console.log('Wall task: ' + wallTask);
-        const currentUser = await Parse.User.currentAsync();
+        /*const currentUser = await Parse.User.currentAsync();
         let notebook = new Parse.Query('Notebook');
         notebook.equalTo('user', currentUser);
         const notebookResult = await notebook.first();
@@ -86,16 +86,15 @@ export const DailyOverview = () => {
             console.log('New list: ' + newTodoList);
             notebookResult.set('todo', newTodoList);
             await notebookResult.save();
+*/
+        wallTask.set('futureTask', true);
+        await wallTask.save();
+        const completed = await completedTasks();
+        const remaining = await remainingTasks();
+        taskPercentage(completed, remaining);
 
-            wallTask.set('futureTask', true);
-            await wallTask.save();
-            const completed = await completedTasks();
-            const remaining = await remainingTasks();
-            taskPercentage(completed, remaining);
-
-            setWallModalVisible(false);
-            Alert.alert(wallTask.get('name') + ' er nu blevet flyttet til fremtidige to-dos!');
-        }
+        setWallModalVisible(false);
+        Alert.alert(wallTask.get('name') + ' er nu blevet flyttet til fremtidige to-dos!');
     }
 
     const taskPercentage = async function (completedTasks, remainingTasks) {

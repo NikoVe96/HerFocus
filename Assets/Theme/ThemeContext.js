@@ -159,7 +159,7 @@ const themes = {
   darkblue: DarkBlueTheme,
   dark: DarkTheme,
   neutral: NeutralTheme,
-  default: YellowTheme,
+  default: DefaultTheme,
 };
 
 export function useThemeContext() {

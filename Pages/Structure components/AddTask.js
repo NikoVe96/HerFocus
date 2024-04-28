@@ -25,7 +25,6 @@ export const AddTask = ({ navigation }) => {
     const [taskEndTime, setEndTime] = useState('');
     const [username, setUsername] = useState('');
     const [ID, setID] = useState('');
-    const [openCategory, setOpenCategory] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisibility] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
@@ -52,8 +51,6 @@ export const AddTask = ({ navigation }) => {
             const newTask = new Parse.Object('Task');
             const currentUser = await Parse.User.currentAsync();
 
-            //If routine chosen, fill
-
             newTask.set('name', taskName);
             newTask.set('date', taskDate);
             newTask.set('startTime', taskStartTime);
@@ -61,7 +58,6 @@ export const AddTask = ({ navigation }) => {
             newTask.set('emoji', emoji);
             newTask.set('user', currentUser);
             newTask.set('color', taskColor);
-            newTask.set('category', taskCategory);
             newTask.set('type', 'task');
             // If time, add recurring option
             await newTask.save();
@@ -148,7 +144,6 @@ export const AddTask = ({ navigation }) => {
         setTaskDate('');
         setEmoji();
         setTaskColor('');
-        setTaskCategory('');
     }
 
     function showEmojiModal() {

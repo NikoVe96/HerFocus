@@ -176,7 +176,7 @@ export const AddEvent = () => {
         <SafeAreaView style={{ justifyContent: 'center' }}>
             <ScrollView>
                 <View style={{ alignItems: 'center', padding: '2%' }}>
-                    <Text style={{ fontSize: 24 * scaleFactor, fontWeight: 'bold' }}> Tilføj et nyt event </Text>
+                    <Text style={{ fontSize: 24 * scaleFactor, fontWeight: 'bold' }}> Tilføj en ny begivenhed</Text>
                     <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
                 </View>
                 <View style={{
@@ -185,7 +185,7 @@ export const AddEvent = () => {
                 }}>
                     <View>
                         <Text style={[styles.text, { fontSize: 18 * scaleFactor }]}>
-                            Hvad skal dit event hedde?
+                            Hvad skal din begivenhed hedde?
                         </Text>
                         <TextInput
                             style={[styles.textInput, { fontSize: 16 * scaleFactor }]}

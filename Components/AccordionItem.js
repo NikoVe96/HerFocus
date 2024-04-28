@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@react-navigation/native';
 
-function AccordionItem({ children, title, icon, emoji, titleStyle, emojiStyle, toggleStyle }) {
+function AccordionItem({ children, title, icon, emoji, titleStyle, emojiStyle, toggleStyle, time }) {
     const [expanded, setExpanded] = useState(false);
     const { colors } = useTheme();
 
@@ -24,7 +24,12 @@ function AccordionItem({ children, title, icon, emoji, titleStyle, emojiStyle, t
                         <FontAwesomeIcon icon={icon} size={20} color={toggleStyle == '' ? colors.border : toggleStyle} style={{ marginRight: 10 }} />
                         : <Text style={[emojiStyle, { fontSize: 22, marginRight: 10 }]}>{emoji}</Text>
                     }
-                    <Text style={[styles.accordTitle, titleStyle,]}>{title}</Text>
+                    {time == null ?
+                        <Text style={[styles.accordTitle, titleStyle,]}>{title}</Text>
+                        : <View>
+                            <Text style={[styles.accordTitle, titleStyle,]}>{title}</Text>
+                            <Text style={{ fontSize: 14 }}>{time}</Text>
+                        </View>}
                 </View>
                 <FontAwesomeIcon icon={faCaretDown} color={colors.bars} />
             </TouchableOpacity>
@@ -36,7 +41,7 @@ function AccordionItem({ children, title, icon, emoji, titleStyle, emojiStyle, t
 const styles = StyleSheet.create({
     accordContainer: {
         paddingBottom: 4,
-        width: '100%'
+        width: '100%',
     },
     accordHeader: {
         padding: 12,
@@ -44,7 +49,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 5,
+        alignItems: 'center',
+
     },
     accordTitle: {
         fontSize: 22,
