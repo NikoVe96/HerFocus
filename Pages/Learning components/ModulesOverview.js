@@ -13,6 +13,7 @@ import Parse from 'parse/react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faDownLong, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const ModulesOverview = ({ route }) => {
   const { subject, image, description } = route.params;
@@ -53,21 +54,27 @@ export const ModulesOverview = ({ route }) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView>
         <Text style={styles.title}>{subject}</Text>
         <Image
           source={image}
-          style={{ width: 200, height: 170, alignSelf: 'center' }}></Image>
+          style={{width: 200, height: 170, alignSelf: 'center'}}></Image>
         <Text style={styles.description}>{description}</Text>
-        <View style={[styles.border, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
-        <View style={{ marginTop: 30 }}>
+        <View
+          style={[
+            styles.border,
+            {backgroundColor: colors.border, borderColor: colors.border},
+          ]}></View>
+        <View style={{marginTop: 30}}>
           {modules.length == 0 ? (
             <Text>Loading...</Text>
           ) : (
             modules.map((item, index) => {
-              const moduleSignature = `${item.get('name')} ${item.get('subject',)}`;
-              const moduleImage = moduleImages[moduleSignature]
+              const moduleSignature = `${item.get('name')} ${item.get(
+                'subject',
+              )}`;
+              const moduleImage = moduleImages[moduleSignature];
               const isCompleted = completed.includes(moduleSignature);
               return (
                 <View key={index} style={styles.container}>
@@ -90,12 +97,20 @@ export const ModulesOverview = ({ route }) => {
                           onNewCompletion: handleNewCompletion(),
                         })
                       }>
-                      <View style={[styles.buttonParent, { backgroundColor: colors.mainButton }]}>
-                        <View style={[styles.buttonGrad, { backgroundColor: colors.subButton }]}>
+                      <View
+                        style={[
+                          styles.buttonParent,
+                          {backgroundColor: colors.mainButton},
+                        ]}>
+                        <View
+                          style={[
+                            styles.buttonGrad,
+                            {backgroundColor: colors.subButton},
+                          ]}>
                           <Image
                             source={moduleImage}
                             style={styles.image}></Image>
-                          <View style={{ width: 100 }}>
+                          <View style={{width: 100}}>
                             <Text style={styles.moduleName}>
                               Modul {item.get('name')}
                             </Text>
@@ -107,21 +122,22 @@ export const ModulesOverview = ({ route }) => {
                       </View>
                     </TouchableOpacity>
                   </View>
-                  {index !== (modules.length - 1) ?
+                  {index !== modules.length - 1 ? (
                     <FontAwesomeIcon
                       icon={faDownLong}
                       size={30}
-                      style={{ marginVertical: 15 }}
+                      style={{marginVertical: 15}}
                     />
-                    : <Text></Text>
-                  }
-
+                  ) : (
+                    <Text></Text>
+                  )}
                 </View>
               );
             })
           )}
         </View>
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 };

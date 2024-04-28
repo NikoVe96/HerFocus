@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Text, TouchableOpacity, View, Alert } from 'react-native';
+import React, {createContext, useContext, useState, useEffect} from 'react';
+import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import Parse from 'parse/react-native';
-import { DefaultTheme } from '@react-navigation/native';
+import {DefaultTheme} from '@react-navigation/native';
 
 const ThemeContext = createContext();
 
@@ -9,15 +9,16 @@ const PastelTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    bars: '#FFD3DA',
-    background: '#FFFAE2',
+    bars: '#FFC1D4',
+    background: '#FEEED4',
     text: 'black',
-    border: '#FFD3DA',
-    notification: '#D9E4EC',
+    barText: 'black',
+    border: '#FFC1D4',
+    notification: '#BEF0CD',
     iconLight: 'white',
     iconDark: 'black',
-    mainButton: '#BFFCD1',
-    subButton: '#D9E4EC',
+    mainButton: '#E7CCF7',
+    subButton: '#BBE7FE',
   },
 };
 
@@ -28,6 +29,7 @@ const PurpleTheme = {
     bars: '#533440',
     background: '#E8D5DE',
     text: 'black',
+    barText: 'white',
     border: '#533440',
     notification: '#B083A8',
     iconLight: 'white',
@@ -44,6 +46,7 @@ const RedTheme = {
     bars: '#BF4C41',
     background: '#FFF8F7',
     text: 'black',
+    barText: 'black',
     border: '#BF4C41',
     notification: '#FFD2CD',
     iconLight: 'white',
@@ -60,6 +63,7 @@ const YellowTheme = {
     bars: '#DC9B18',
     background: '#FFF6ED',
     text: 'black',
+    barText: 'black',
     border: '#DC9B18',
     notification: '#FFEABF',
     iconLight: 'white',
@@ -73,15 +77,16 @@ const GreenTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    Bars: '#2F5233',
-    background: '#D0EDD5',
+    Bars: '#69A046',
+    background: '#E7F7ED',
     text: 'black',
-    border: '#2F5233',
+    barText: 'black',
+    border: '#69A046',
     notification: '#94C973',
     iconLight: 'white',
     iconDark: 'black',
-    mainButton: '#2F5233',
-    subButton: '#94C973',
+    mainButton: '#94C973',
+    subButton: '#D0EDD5',
   },
 };
 
@@ -92,12 +97,13 @@ const BlueTheme = {
     Bars: '#6AABD2',
     background: '#D9E4EC',
     text: 'black',
-    border: '#274472',
-    notification: '#8BC5E8',
+    barText: 'black',
+    border: '#6AABD2',
+    notification: '#5B77AC',
     iconLight: 'white',
     iconDark: 'black',
-    mainButton: '#274472',
-    subButton: '#94C973',
+    mainButton: '#4C8BB0',
+    subButton: '#A1C9E7',
   },
 };
 
@@ -107,7 +113,8 @@ const DarkBlueTheme = {
     ...DefaultTheme.colors,
     Bars: '#131227',
     background: '#393751',
-    text: 'white',
+    text: '#C7C7C7',
+    barText: '#C7C7C7',
     border: '#131227',
     notification: '#414062',
     iconLight: '#E4BEED',
@@ -123,7 +130,8 @@ const DarkTheme = {
     ...DefaultTheme.colors,
     Bars: '#000000',
     background: '#252121',
-    text: 'white',
+    text: '#C7C7C7',
+    barText: '#C7C7C7',
     border: '#000000',
     notification: '#4F4848',
     iconLight: 'white',
@@ -137,15 +145,16 @@ const NeutralTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#CCAFA5',
+    bars: '#B7897C',
     background: '#EDE7DC',
     text: 'black',
-    border: '#CCAFA5',
-    notification: '#E7D2CC',
+    barText: 'black',
+    border: '#B7897C',
+    notification: '#E1A898',
     iconLight: 'white',
     iconDark: 'black',
-    mainButton: '#CCAFA5',
-    subButton: '#4F4848',
+    mainButton: '#E1A898',
+    subButton: '#E7D2CC',
   },
 };
 
@@ -166,7 +175,7 @@ export function useThemeContext() {
   return useContext(ThemeContext);
 }
 
-export const ThemeProvider = ({ children }) => {
+export const ThemeProvider = ({children}) => {
   const [theme, setTheme] = useState();
   const [ID, setID] = useState('');
 
@@ -178,6 +187,7 @@ export const ThemeProvider = ({ children }) => {
           setID(currentUser.id);
           let themeQ = new Parse.Query('Settings');
           themeQ.contains('user', ID);
+          console.log(ID);
           const Result = await themeQ.find();
           const chosenTheme = Result[0].get('theme');
           setTheme(themes[chosenTheme] || themes.yellow);
@@ -205,12 +215,13 @@ export const ThemeProvider = ({ children }) => {
       }
     } else {
       Alert.alert('Settings not found for this user');
+      console.log(ID);
     }
     setTheme(themes[newThemeName] || themes.yellow);
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, updateTheme }}>
+    <ThemeContext.Provider value={{theme, updateTheme}}>
       {children}
     </ThemeContext.Provider>
   );

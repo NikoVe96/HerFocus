@@ -4,18 +4,23 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import Markdown from 'react-native-markdown-display';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const ArticlesDiagnosed = ({route}) => {
   const navigation = useNavigation();
   const [articlesList, setArticlesList] = useState([]);
   const {subject} = route.params;
   const {colors} = useTheme();
+  const {width, height} = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
+
 
   useEffect(() => {
     try {
@@ -40,80 +45,66 @@ export const ArticlesDiagnosed = ({route}) => {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.title}>Her kan du vælge en artikel.</Text>
-          <Text style={styles.title2}>God læsning!</Text>
-          {articlesList.length == 0 ? (
-            <Text style={{textAlign: 'center', fontSize: 24}}>
-              Loading articles...
-            </Text>
-          ) : (
-            articlesList.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.knowledgeView,
-                  styles.shadowProp,
-                  {backgroundColor: colors.subButton},
-                ]}
-                onPress={() => readArticle(item)}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    textAlign: 'center',
-                  }}>
-                  {item.get('title')}
-                </Text>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView>
+        <Text
+          style={[
+            styles.title,
+            {color: colors.text, fontSize: 22 * scaleFactor},
+          ]}>
+          Her kan du vælge en artikel.
+        </Text>
+        <Text
+          style={[
+            styles.title2,
+            {color: colors.text, fontSize: 22 * scaleFactor},
+          ]}>
+          God læsning!
+        </Text>
+        {articlesList.length == 0 ? (
+          <Text style={{textAlign: 'center', fontSize: 24}}>
+            Loading articles...
+          </Text>
+        ) : (
+          articlesList.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={
+               styles.press
+              }
+              onPress={() => readArticle(item)}>
+             
                 <View
-                  style={{
-                    borderWidth: 1,
-                    backgroundColor: 'black',
-                    width: 250,
-                    marginVertical: 5,
-                  }}></View>
-                <Text numberOfLines={3} style={{fontStyle: 'italic'}}>
-                  {item.get('text').replaceAll(/#|-|>|/gi, '')}
-                </Text>
-              </TouchableOpacity>
-            ))
-          )}
-        </ScrollView>
-      </SafeAreaView>
-    </ScrollView>
+                  style={[
+                    styles.buttonGrad,
+                    {backgroundColor: colors.mainButton},
+                  ]}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                      textAlign: 'center',
+                      marginTop: 10,
+                    }}>
+                    {item.get('title')}
+                  </Text>
+                  <View
+                    style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+                  <Text numberOfLines={4} style={[styles.articleText, {color: colors.text}]}>
+                    {item.get('text').replaceAll(/#|-|>|/gi, '')}
+                  </Text>
+                </View>
+            
+            </TouchableOpacity>
+          ))
+        )}
+      </ScrollView>
+      <BottomNavigation />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignContent: 'center',
-    alignItems: 'center',
-  },
-  scrollView: {
-    paddingLeft: 10,
-    marginRight: 11,
-    flex: 1,
-  },
-  knowledgeView: {
-    width: 330,
-    height: 120,
-    backgroundColor: '#FFFFFF',
-    marginTop: 10,
-    alignItems: 'center',
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 3,
-  },
-  shadowProp: {
-    shadowColor: '#443939',
-    shadowOffset: {width: 1, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-  },
   title: {
     textAlign: 'center',
     fontSize: 22,
@@ -125,22 +116,38 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     color: 'black',
-    marginBottom: 15,
-  },
-  button: {
-    width: 210,
-    height: 30,
-    backgroundColor: 'lightgrey',
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginTop: 50,
-    justifyContent: 'center',
+    marginBottom: 35,
   },
   text: {
     color: 'black',
     textAlign: 'center',
     fontSize: 18,
+  },
+  buttonGrad: {
+    width: '90%',
+    height: 150,
+    borderRadius: 10,
+    bottom: 5,
+    alignItems: 'center',
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
+  },
+  press: {
+    marginBottom: 15,
+  },
+  articleText: {
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  seperator: {
+    borderWidth: 1,
+    width: '80%',
+    marginBottom: 10,
+    marginTop: 5,
   },
 });
 

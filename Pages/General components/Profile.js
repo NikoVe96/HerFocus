@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Dimensions
 } from 'react-native';
 import Parse from 'parse/react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -18,96 +19,137 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import PickAvatar from './PickAvatar';
 import getAvatarImage from './AvatarUtils';
+import { useTheme} from '@react-navigation/native';
+import BottomNavigation from '../../Navigation/BottomNav';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {useUser} from '../../Components/UserContext';
+import {useFocusEffect} from '@react-navigation/native';
+
 
 export const Profile = () => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   let [avatar, setAvatar] = useState('');
+  const {colors} = useTheme();
+  const {username, name, email, updateUserProfile} = useUser();
+   const {width, height} = Dimensions.get('window');
+   const scaleFactor = Math.min(width / 375, height / 667);
+
+    useFocusEffect(
+      useCallback(() => {
+        updateUserProfile();
+        return () => {};
+      }, []),
+    );
 
   useEffect(() => {
     async function getCurrentUser() {
-      if (username === '') {
         const currentUser = await Parse.User.currentAsync();
         if (currentUser !== null) {
-          setUsername(currentUser.getUsername());
-          setEmail(currentUser.getEmail());
-          setName(currentUser.get('name'));
           setAvatar(currentUser.get('avatar'));
         }
-      }
     }
     getCurrentUser();
-  }, []);
+  }, [username]);
 
-  const handleAvatarSelect = selectedAvatar => {
-    setAvatar(selectedAvatar);
-  };
+const handleAvatarSelect = selectedAvatar => {
+  setAvatar(selectedAvatar);
+};
 
   const avatarImageSource = getAvatarImage(avatar);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.userNameContainer}>
-        <View style={styles.styling}></View>
-        <Text style={styles.user}>{username}</Text>
-        <Image source={avatarImageSource} style={styles.avatarImage} />
-        <View style={styles.avatar}>
-          <View style={styles.avatar} size={30}></View>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.userNameContainer}>
+          <View
+            style={[styles.styling, {backgroundColor: colors.border}]}></View>
+          <Text
+            style={[
+              styles.user,
+              {color: colors.text, fontSize: 25 * scaleFactor},
+            ]}>
+            {username}
+          </Text>
+          <Image source={avatarImageSource} style={styles.avatarImage} />
+          <View style={styles.avatar}>
+            <View style={styles.avatar}></View>
+          </View>
         </View>
-      </View>
-      <View style={styles.seperator}></View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FontAwesomeIcon icon={faUser} style={styles.icons} size={30} />
-        <Text style={styles.userInfo}> {name} </Text>
-      </View>
-      <View style={styles.seperator}></View>
-      <View style={styles.userContainer}>
+        <View style={styles.seperator}></View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <FontAwesomeIcon
+            icon={faUser}
+            style={[styles.icons, {color: colors.text}]}
+            size={20}
+          />
+          <Text
+            style={[
+              styles.userInfo,
+              {color: colors.text, fontSize: 18 * scaleFactor},
+            ]}>
+            {' '}
+            {name}{' '}
+          </Text>
+        </View>
         <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <FontAwesomeIcon icon={faEnvelope} style={styles.icons} size={30} />
-          <Text style={styles.userInfo}>{email} </Text>
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.mainButton},
+          ]}></View>
+        <View style={styles.userContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              style={[styles.icons, {color: colors.text}]}
+              size={20}
+            />
+            <Text
+              style={[
+                styles.userInfo,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
+              {email}
+            </Text>
+          </View>
         </View>
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          style={styles.iconEdit}
-          size={30}
-        />
-      </View>
-      <View style={styles.seperator}></View>
-      <View style={styles.userContainer}>
         <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <FontAwesomeIcon icon={faLock} style={styles.icons} size={30} />
-          <Text style={styles.userInfo}> ************* </Text>
+          style={[
+            styles.seperator,
+            {backgroundColor: colors.mainButton},
+          ]}></View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <FontAwesomeIcon
+            icon={faImage}
+            style={[styles.icons, {color: colors.text}]}
+            size={20}
+          />
+          <Text
+            style={[
+              styles.userInfo,
+              {color: colors.text, fontSize: 18 * scaleFactor},
+            ]}>
+            Skift avatar
+          </Text>
         </View>
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          style={styles.iconEdit}
-          size={30}
-        />
-      </View>
-      <View style={styles.seperator}></View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <FontAwesomeIcon icon={faImage} style={styles.icons} size={30} />
-        <Text style={styles.userInfo}> Change avatar </Text>
-      </View>
-      <PickAvatar
-        onAvatarSelect={handleAvatarSelect}
-        PickedAvatar={avatar}></PickAvatar>
-    </ScrollView>
+        <View style={styles.changeAvatar}>
+          <PickAvatar
+            onAvatarSelect={handleAvatarSelect}
+            picked={avatar}></PickAvatar>
+        </View>
+      </ScrollView>
+      <BottomNavigation />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   userNameContainer: {
-    zIndex: 1,
     alignItems: 'center',
   },
   avatarImage: {
@@ -117,31 +159,27 @@ const styles = StyleSheet.create({
   },
   styling: {
     width: '100%',
-    height: 100,
-    backgroundColor: '#DC9B18',
+    height: 80,
     borderBottomEndRadius: 100,
     borderBottomStartRadius: 100,
   },
   avatar: {
-    alignItems: 'center',
+    alignSelf: 'center',
     marginTop: 10,
-    marginBottom: 20,
   },
   user: {
     paddingLeft: 60,
     paddingRight: 60,
     textAlign: 'center',
     fontSize: 30,
-    color: 'black',
     zIndex: 2,
     position: 'absolute',
-    marginTop: 50,
+    marginTop: 40,
   },
   seperator: {
     width: '100%',
     height: 1,
     marginBottom: 20,
-    backgroundColor: '#DC9B18',
   },
   userInfo: {
     fontSize: 20,
@@ -160,6 +198,9 @@ const styles = StyleSheet.create({
   iconEdit: {
     marginRight: 20,
     marginBottom: 20,
+  },
+  changeAvatar: {
+    marginLeft: 10,
   },
 });
 

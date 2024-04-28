@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   userText: {
     marginTop: 5,
-    marginLeft: 5
+    marginLeft: 5,
   },
   user: {
     fontSize: 15,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   avatarImage: {
     width: 40,
     height: 40,
-  }
+  },
 });
 
 export default Post;

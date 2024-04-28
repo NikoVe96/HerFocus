@@ -17,6 +17,8 @@ const getAvatarImage = avatar => {
     Avatar15: require('../../Assets/images/Avatar15.png'),
     Avatar16: require('../../Assets/images/Avatar16.png'),
     Avatar17: require('../../Assets/images/Avatar17.png'),
+    Avatar18: require('../../Assets/images/Avatar18.png'),
+    Avatar19: require('../../Assets/images/Avatar19.png'),
   };
 
   return avatarMap[avatar];

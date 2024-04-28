@@ -31,7 +31,7 @@ function AccordionItem({ children, title, icon, emoji, titleStyle, emojiStyle, t
                             <Text style={{ fontSize: 14 }}>{time}</Text>
                         </View>}
                 </View>
-                <FontAwesomeIcon icon={faCaretDown} color={colors.bars} />
+                <FontAwesomeIcon icon={faCaretDown} color={colors.text} />
             </TouchableOpacity>
             {expanded && body}
         </View>

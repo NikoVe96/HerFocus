@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions
 } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,6 +28,7 @@ import {
   faKitchenSet,
 } from '@fortawesome/free-solid-svg-icons';
 import Parse from 'parse/react-native';
+import BottomNavigation from '../../Navigation/BottomNav';
 
 export const PickModule = () => {
   const navigation = useNavigation();
@@ -34,6 +36,8 @@ export const PickModule = () => {
   const [procrastinationProgress, setProcrastinationProgress] = useState('0');
   const [relationsProgress, setRelationsProgress] = useState('0');
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
   const { colors } = useTheme();
   const moduleSubjects = [
     {
@@ -94,12 +98,31 @@ export const PickModule = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>Hvad vil du gerne lære om i dag?</Text>
+        <Text
+          style={[
+            styles.title,
+            { color: colors.text, fontSize: 22 * scaleFactor },
+          ]}>
+          Hvad vil du gerne lære om i dag?
+        </Text>
         <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{structuringProgress}%</Text>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text
+              style={[
+                styles.text,
+                { color: colors.text, fontSize: 18 * scaleFactor },
+              ]}>
+              {structuringProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -109,22 +132,43 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Animated.Image
-                  source={require('../../Assets/images/learning_notebook.png')}
-                  style={{ width: 120, height: 100, marginTop: 5 }}
-                  sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Planlægning og strukturering af hverdagen
-                </Text>
-              </View>
+
+            <View
+              style={[
+                styles.buttonGrad,
+                { backgroundColor: colors.mainButton },
+              ]}>
+              <Animated.Image
+                source={require('../../Assets/images/learning_notebook.png')}
+                style={{ width: 120, height: 100, marginTop: 5 }}
+                sharedTransitionTag="structure"></Animated.Image>
+              <Text
+                style={[
+                  styles.text,
+                  { color: colors.text, fontSize: 18 * scaleFactor },
+                ]}>
+                Planlægning og strukturering af hverdagen
+              </Text>
             </View>
+
           </TouchableOpacity>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{procrastinationProgress}%</Text>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text
+              style={[
+                styles.text,
+                { color: colors.text, fontSize: 18 * scaleFactor },
+              ]}>
+              {procrastinationProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -134,22 +178,43 @@ export const PickModule = () => {
                 image: moduleSubjects[1].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Animated.Image
-                  source={require('../../Assets/images/learning_hourglass.png')}
-                  style={{ width: 60, height: 95, marginTop: 5 }}
-                  sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Overkom overspringshandlinger
-                </Text>
-              </View>
+
+            <View
+              style={[
+                styles.buttonGrad,
+                { backgroundColor: colors.mainButton },
+              ]}>
+              <Animated.Image
+                source={require('../../Assets/images/learning_hourglass.png')}
+                style={{ width: 60, height: 95, marginTop: 5 }}
+                sharedTransitionTag="structure"></Animated.Image>
+              <Text
+                style={[
+                  styles.text,
+                  { color: colors.text, fontSize: 18 * scaleFactor },
+                ]}>
+                Overkom overspringshandlinger
+              </Text>
             </View>
+
           </TouchableOpacity>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <View style={[styles.progessionBar, { backgroundColor: colors.subButton, borderColor: colors.subButton }]}>
-            <Text style={[styles.text, { fontWeight: 'bold' }]}>{relationsProgress}%</Text>
+          <View
+            style={[
+              styles.progessionBar,
+              {
+                backgroundColor: colors.subButton,
+                borderColor: colors.subButton,
+              },
+            ]}>
+            <Text
+              style={[
+                styles.text,
+                { color: colors.text, fontSize: 18 * scaleFactor },
+              ]}>
+              {relationsProgress}%
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() =>
@@ -159,28 +224,35 @@ export const PickModule = () => {
                 image: moduleSubjects[0].image,
               })
             }>
-            <View style={[styles.buttonParent, { backgroundColor: colors.border }]}>
-              <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
-                <Animated.Image
-                  source={require('../../Assets/images/learning_relations.png')}
-                  style={{ width: 140, height: 95, marginTop: 5 }}
-                  sharedTransitionTag="structure"></Animated.Image>
-                <Text style={styles.text}>
-                  Forbedr dine sociale relationer
-                </Text>
-              </View>
+
+            <View
+              style={[
+                styles.buttonGrad,
+                { backgroundColor: colors.mainButton },
+              ]}>
+              <Animated.Image
+                source={require('../../Assets/images/learning_relations.png')}
+                style={{ width: 140, height: 95, marginTop: 5 }}
+                sharedTransitionTag="structure"></Animated.Image>
+              <Text
+                style={[
+                  styles.text,
+                  { color: colors.text, fontSize: 18 * scaleFactor },
+                ]}>
+                Forbedr dine sociale relationer
+              </Text>
             </View>
+
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <BottomNavigation />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
+  container: {},
   scrollView: {
     paddingBottom: 20,
   },
@@ -215,7 +287,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
     elevation: 5,
     right: '3%',
-    top: '-15%'
+    top: '-15%',
   },
   button: {
     width: 210,
@@ -232,20 +304,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonGrad: {
-    width: 330,
+    width: '90%',
     height: 150,
     borderRadius: 10,
-    position: 'absolute',
     bottom: 5,
     alignItems: 'center',
-  },
-  buttonParent: {
-    width: 330,
-    height: 150,
-    borderRadius: 10,
     alignSelf: 'center',
-    elevation: 10,
-    zIndex: 1,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
   },
 });
 

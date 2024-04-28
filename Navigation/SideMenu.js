@@ -45,25 +45,21 @@ import Module from '../Pages/Learning components/Module';
 import ModulesOverview from '../Pages/Learning components/ModulesOverview';
 import Forum from '../Pages/Forum/Forum';
 import IndividualPost from '../Pages/Forum/IndividualPost';
+import { useState } from 'react';
+import { useUser } from '../Components/UserContext';
 import Notebook from '../Pages/Structure components/Notebook';
 
 const Drawer = createDrawerNavigator();
 
-const handleLogout = async navigation => {
-  try {
-    await Parse.User.logOut();
-    navigation.navigate('Login');
-  } catch (error) {
-    console.error('Error logging out', error);
-  }
-};
 
 function CustomDrawerContent({ navigation }) {
   const { colors } = useTheme();
+  const { handleLogout } = useUser();
+
 
   return (
     <DrawerContentScrollView style={{ backgroundColor: colors.background }}>
-      <AccordionItem title="Structure" icon={faListCheck} titleStyle={{ color: colors.border }}>
+      <AccordionItem title="Planlægning" icon={faListCheck}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Add routine')}>
@@ -71,13 +67,16 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             style={{ marginRight: 10 }}
-            color={colors.border}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Add a new routine{' '}
+            color={colors.text}></FontAwesomeIcon>
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Tilføj en ny rutine{' '}
           </Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Add task')}>
@@ -85,182 +84,206 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             style={{ marginRight: 10 }}
-            color={colors.border}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Add a new task{' '}
+            color={colors.text}></FontAwesomeIcon>
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Tilføj en ny opgave{' '}
           </Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Calendar')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Calendar overview{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Kalender oversigt{' '}
           </Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Daily overview')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Daily overview{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Dagligt overblik{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Forums" icon={faComments} titleStyle={{ color: colors.border }}>
+      <AccordionItem title="Fora" icon={faComments}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick subject')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Pick a subject{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Favorite posts')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Favorite posts{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Favoritopslag{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Learning modules" icon={faGraduationCap} titleStyle={{ color: colors.border }}>
+      <AccordionItem title="Læringsmoduler" icon={faGraduationCap}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick module')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
-            <Text style={{ fontSize: 18, color: colors.border }}>Modules </Text>
+            <Text style={{ fontSize: 18, color: colors.text }}>Modules </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', color: colors.border }}>
-              Module 1
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
+              Modul 1
             </Text>
-            <Text style={{ fontSize: 18, color: colors.border }}>
-              What is ADHD{' '}
+            <Text style={{ fontSize: 18, color: colors.text }}>
+              Hvad er ADHD{' '}
             </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', color: colors.border }}>
-              Module 2
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
+              Modul 2
             </Text>
-            <Text style={{ fontSize: 18, color: colors.border }}>
-              how to handle getting overwhelmed{' '}
+            <Text style={{ fontSize: 18, color: colors.text }}>
+              Hvordan håndterer man at blive overvældet{' '}
             </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity style={{ flexDirection: 'row', marginLeft: 30 }}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', color: colors.border }}>
-              Module 3
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
+              Modul 3
             </Text>
-            <Text style={{ fontSize: 18, color: colors.border }}>
-              Structuring your daily life{' '}
+            <Text style={{ fontSize: 18, color: colors.text }}>
+              Strukturering af dagligdagen{' '}
             </Text>
           </View>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
           <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', color: colors.border }}>
-              Module 4
+              style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
+              Modul 4
             </Text>
-            <Text style={{ fontSize: 18, color: colors.border }}>
-              Long term goals{' '}
+            <Text style={{ fontSize: 18, color: colors.text }}>
+              Langsigtede mål{' '}
             </Text>
           </View>
         </TouchableOpacity>
       </AccordionItem>
-      <AccordionItem title="Knowledge base" icon={faBrain} titleStyle={{ color: colors.border }}>
+      <AccordionItem title="Vidensbank" icon={faBrain}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Pick topic')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Pick a topic{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Vælg et emne{' '}
           </Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Favorite articles')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Favorite articles{' '}
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Favoritartikler{' '}
           </Text>
         </TouchableOpacity>
       </AccordionItem>
@@ -272,11 +295,11 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.border }]}>
-              Profile
+            <Text style={[styles.accordTitle, { color: colors.text }]}>
+              Profil
             </Text>
           </View>
         </TouchableOpacity>
@@ -289,38 +312,41 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faUser}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.border }]}>
-              Settings
+            <Text style={[styles.accordTitle, { color: colors.text }]}>
+              Indstillinger
             </Text>
           </View>
         </TouchableOpacity>
       </View>
-      <AccordionItem title="About us" icon={faUsers} titleStyle={{ color: colors.border }}>
+      <AccordionItem title="Om herfocus" icon={faUsers}>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('App history')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>History</Text>
+          <Text style={{ fontSize: 18, color: colors.text }}>Historien om herfocus</Text>
         </TouchableOpacity>
         <View
-          style={[styles.divider, { backgroundColor: colors.border, borderColor: colors.border }]}></View>
+          style={[
+            styles.divider,
+            { backgroundColor: colors.text, textColor: colors.text },
+          ]}></View>
         <TouchableOpacity
           style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
           onPress={() => navigation.navigate('Contact information')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            color={colors.border}
+            color={colors.text}
             style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.border }}>
-            Help and contact info
+          <Text style={{ fontSize: 18, color: colors.text }}>
+            Kontakt os
           </Text>
         </TouchableOpacity>
       </AccordionItem>
@@ -332,11 +358,11 @@ function CustomDrawerContent({ navigation }) {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size={20}
-              color={colors.border}
+              color={colors.text}
               style={{ marginRight: 10 }}
             />
-            <Text style={[styles.accordTitle, { color: colors.border }]}>
-              Log out
+            <Text style={[styles.accordTitle, { color: colors.text }]}>
+              Log ud
             </Text>
           </View>
         </TouchableOpacity>
@@ -348,7 +374,7 @@ function CustomDrawerContent({ navigation }) {
 function SideMenu() {
   return (
     <Drawer.Navigator
-      initialRouteName='Front page'
+      initialRouteName="Front page"
       backBehavior="history"
       screenOptions={{
         drawerPosition: 'right',
@@ -367,10 +393,17 @@ function SideMenu() {
         component={CalendarOverview}></Drawer.Screen>
       <Drawer.Screen
         name="Forgot password"
-        component={ForgotPassword}></Drawer.Screen>
-      <Drawer.Screen name="Login" component={LogIn}></Drawer.Screen>
+        component={ForgotPassword}
+        options={{ headerShown: false }}></Drawer.Screen>
+      <Drawer.Screen
+        name="Login"
+        component={LogIn}
+        options={{ headerShown: false }}></Drawer.Screen>
       <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
-      <Drawer.Screen name="Sign up" component={SignUp}></Drawer.Screen>
+      <Drawer.Screen
+        name="Sign up"
+        component={SignUp}
+        options={{ headerShown: false }}></Drawer.Screen>
       <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
       <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
       <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>
@@ -403,9 +436,7 @@ function SideMenu() {
       <Drawer.Screen
         name="Structure"
         component={StructureFrontPage}></Drawer.Screen>
-      <Drawer.Screen
-        name="Add event"
-        component={AddEvent}></Drawer.Screen>
+      <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
       <Drawer.Screen
         name="Notebook"
         component={Notebook}></Drawer.Screen>
@@ -442,10 +473,10 @@ const styles = StyleSheet.create({
     height: 12,
   },
   divider: {
-    borderWidth: 1,
+    textWidth: 1,
     marginHorizontal: 15,
     marginVertical: 10,
-    borderRadius: 10
+    textRadius: 10
   }
 });
 

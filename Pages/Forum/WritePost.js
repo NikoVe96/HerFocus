@@ -7,42 +7,36 @@ import {
   TextInput,
   Image
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Parse from 'parse/react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
+import { useUser } from '../../Components/UserContext';
 
 function WritePost({ forumTitle, onNewPost }) {
   const [post, setPost] = useState('');
-  const [username, setUsername] = useState('');
-  const [avatar, setAvatar] = useState('');
   const { colors } = useTheme();
+  const { username, avatar, updateUserProfile } = useUser();
 
-  useEffect(() => {
-    async function getCurrentUser() {
-      const currentUser = Parse.User.current();
-      if (currentUser !== null) {
-        const username = currentUser.get('username');
-        const avatar = currentUser.get('avatar');
-        setUsername(username);
-        setAvatar(avatar);
-      } else {
-        console.log('Error fetching user data');
-      }
-    }
-    getCurrentUser();
-  }, [forumTitle]);
+  useFocusEffect(
+    useCallback(() => {
+      updateUserProfile();
+      return () => { };
+    }, []),
+  );
+
 
   const handlePost = async () => {
     const Post = new Parse.Object('Post');
-
     Post.set('postContent', post);
     Post.set('userObjectId', Parse.User.current());
     Post.set('username', username);
     Post.set('forumTitle', forumTitle);
     Post.set('numberOfComments', 0);
     Post.set('avatar', avatar);
+    console.log('avatar2: ' + avatar);
 
     try {
       const result = await Post.save();

@@ -10,9 +10,10 @@ import {
   View,
 } from 'react-native';
 import Parse from 'parse/react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import PickAvatar from './PickAvatar';
+import {useUser} from '../../Components/UserContext';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -20,114 +21,105 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
   let [avatar, setAvatar] = useState('');
   const navigation = useNavigation();
+  const {colors} = useTheme();
+  const {handleSignup, error} = useUser(); 
+   
 
-  const handleAvatarSelect = ({ selectedAvatar }) => {
-    setAvatar(selectedAvatar);
-  };
-
-  const handleSignup = async () => {
-    if (password !== confirmPassword) {
-      console.log('Error' + error.message);
-      setError('The passwords do not match, try again! 🙂');
-      return;
-    }
-
-    const user = new Parse.User();
-    user.set('name', name);
-    user.set('username', username);
-    user.set('email', email);
-    user.set('password', password);
-    user.set('avatar', avatar);
-    console.log(avatar);
-
-    try {
-      await user.signUp();
-      navigation.navigate('Daily overview');
-      console.log('pressed');
-    } catch (error) { }
-  };
+const handleAvatarSelect = selectedAvatar => {
+  setAvatar(selectedAvatar);
+};
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.view}>
-        <Image
-          source={require('../../Assets/images/logo-light-nb.png')}
-          style={styles.image}></Image>
-        <TextInput
-          placeholder="Name"
-          placeholderTextColor="#8C8C8C"
-          value={name}
-          onChangeText={text => setName(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Username"
-          placeholderTextColor="#8C8C8C"
-          value={username}
-          onChangeText={text => setUsername(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor="#8C8C8C"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor="#8C8C8C"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry={true}
-          style={styles.form}></TextInput>
-        <TextInput
-          placeholder="Confirm password"
-          placeholderTextColor="#8C8C8C"
-          value={confirmPassword}
-          onChangeText={text => setConfirmPassword(text)}
-          secureTextEntry={true}
-          style={styles.form}></TextInput>
-        <Text style={styles.avatar}> Pick an avatar </Text>
-        <View style={styles.avatarMargin}>
-          <PickAvatar
-            onAvatarSelect={handleAvatarSelect}
-            pickedAvatar={avatar}
-            isSignUp={true}></PickAvatar>
+        <SafeAreaView >
+    <ScrollView>
+        <View style={styles.container}>
+          <Image
+            source={require('../../Assets/images/logo-light-nb.png')}
+            style={styles.image}></Image>
+          <TextInput
+            placeholder="Navn"
+            placeholderTextColor="#8C8C8C"
+            value={name}
+            onChangeText={text => setName(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Brugernavn"
+            placeholderTextColor="#8C8C8C"
+            value={username}
+            onChangeText={text => setUsername(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#8C8C8C"
+            value={email}
+            onChangeText={text => setEmail(text)}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Kodeord"
+            placeholderTextColor="#8C8C8C"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry={true}
+            style={styles.form}></TextInput>
+          <TextInput
+            placeholder="Bekræft kodeord"
+            placeholderTextColor="#8C8C8C"
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
+            secureTextEntry={true}
+            style={styles.form}></TextInput>
+          <Text style={styles.errorText}>{error}</Text>
+          <Text style={styles.avatar}> Vælg en avatar </Text>
+          <View style={styles.avatarMargin}>
+            <PickAvatar
+              onAvatarSelect={handleAvatarSelect}
+              picked={avatar}
+              isSignUp={true}></PickAvatar>
+          </View>
+          <TouchableOpacity
+            style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}
+            onPress={() =>
+              handleSignup(
+                name,
+                username,
+                email,
+                password,
+                confirmPassword,
+                navigation,
+                avatar,
+              )
+            }
+            title=" Sign up"
+            titleColor="#000000">
+            <Text style={styles.btnText}>Lav en profil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}>
+            <Text style={styles.btnText}>Tilbage til login</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.signUpBtn}
-          onPress={() => {
-            handleSignup();
-          }}
-          title=" Sign up"
-          titleColor="#000000">
-          <Text style={styles.btnText}>Sign up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpBtn} title="Login">
-          <Text style={styles.btnText}>Back to login</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF6ED',
     flex: 1,
-  },
-  view: {
     alignItems: 'center',
+    marginBottom: '40%',
   },
   image: {
-    width: 320,
-    height: 130,
-    marginTop: 50,
+    width: '80%',
+    height: '20%',
+    marginTop: 30,
+    marginBottom: 10,
   },
   form: {
-    backgroundColor: '#FFF6ED',
-    width: 280,
+    width: '70%',
     height: 30,
     marginTop: 20,
     borderBottomColor: '#000000',
@@ -135,17 +127,16 @@ const styles = StyleSheet.create({
   },
   avatar: {
     fontSize: 18,
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 10,
   },
   avatarMargin: {
     marginLeft: 30,
-    marginRight: 10,
+    marginRight: 20,
   },
   signUpBtn: {
-    width: 200,
+    width: '60%',
     height: 30,
-    backgroundColor: '#DC9B18',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
@@ -156,6 +147,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 15,
+  },
+  errorText: {
+    color: 'red',
   },
 });
 
