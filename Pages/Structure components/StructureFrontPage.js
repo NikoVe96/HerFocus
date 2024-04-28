@@ -4,7 +4,9 @@ import {
     SafeAreaView,
     View,
     TouchableOpacity,
-    ImageBackground
+    ImageBackground,
+    Image,
+    Dimensions
 } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,166 +14,122 @@ import { ScrollView } from 'react-native-gesture-handler';
 export const StructureFrontPage = () => {
     const navigation = useNavigation();
     const { colors } = useTheme();
+    const { width, height } = Dimensions.get('window');
+    const scaleFactor = Math.min(width / 375, height / 667);
 
     return (
-        <ScrollView style={{ marginBottom: 30 }}>
-            <SafeAreaView style={styles.container}>
-                <Text style={styles.title}>Hvad skal du planlægge i dag?</Text>
-                <TouchableOpacity
-                    style={styles.knowledgeView}
-                    onPress={() => navigation.navigate('Calendar')}>
-                    <ImageBackground
-                        source={require('../../Assets/images/calendar_background.png')}
-                        style={styles.images}
-                        resizeMode="cover">
-                        <View
-                            style={[styles.button, { backgroundColor: colors.subButton }]}
-                        >
-                            <Text style={styles.text}>Kalender</Text>
-                        </View>
-                    </ImageBackground>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.knowledgeView, { backgroundColor: colors.mainButton }]} onPress={() => navigation.navigate('Daily overview')}>
-                    <ImageBackground
-                        source={require('../../Assets/images/daily_overview.png')}
-                        style={styles.images}
-                        resizeMode="cover">
-                        <View
-                            style={[styles.button, { backgroundColor: colors.subButton }]}
 
-                        >
-                            <Text style={styles.text}>Daglig oversigt</Text>
-                        </View>
-                    </ImageBackground>
+        <SafeAreaView style={styles.container}>
+            <Text style={[styles.title, { fontSize: 22 * scaleFactor }]}>Hvad skal du planlægge i dag?</Text>
+            <TouchableOpacity
+                style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => navigation.navigate('Calendar')}>
+                <Image
+                    source={require('../../Assets/images/structure_calendar.png')}
+                    style={styles.imageLarge}></Image>
+                <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Kalender</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => navigation.navigate('Daily overview')}>
+                <Image
+                    source={require('../../Assets/images/structure_dailyOverview.png')}
+                    style={styles.imageLarge}></Image>
+                <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Daglig oversigt</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                onPress={() => navigation.navigate('Notebook')}>
+                <Image
+                    source={require('../../Assets/images/structure_notebook.png')}
+                    style={styles.imageLarge}></Image>
+                <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Notesbog</Text>
+            </TouchableOpacity>
+            <View style={styles.row}>
+                <TouchableOpacity
+                    style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginRight: '1%' }]}
+                    onPress={() => navigation.navigate('Add task')}>
+                    <Image
+                        source={require('../../Assets/images/structure_todo.png')}
+                        style={styles.imageSmall}></Image>
+                    <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Ny to-do</Text>
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row', marginHorizontal: 22 }}>
-                    <TouchableOpacity style={styles.knowledgeViewSmall} onPress={() => navigation.navigate('Add task')}>
-                        <ImageBackground
-                            source={require('../../Assets/images/to-do.png')}
-                            style={styles.images}
-                            resizeMode="cover">
-                            <View
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton }]}
-                            >
-                                <Text style={styles.textSmall}>Ny to-do</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.knowledgeViewSmall} onPress={() => navigation.navigate('Add routine')}>
-                        <ImageBackground
-                            source={require('../../Assets/images/watch.png')}
-                            style={styles.images}
-                            resizeMode="cover">
-                            <View
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton }]}
-                            >
-                                <Text style={styles.textSmall}>Ny rutine</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.knowledgeViewSmall} onPress={() => navigation.navigate('Add event')}>
-                        <ImageBackground
-                            source={require('../../Assets/images/coffee_chat.png')}
-                            style={styles.images}
-                            resizeMode="cover">
-                            <View
-                                style={[styles.buttonSmall, { backgroundColor: colors.subButton }]}
-                            >
-                                <Text style={styles.textSmall}>Nyt event</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={[styles.knowledgeView, { backgroundColor: colors.mainButton }]}>
-                    <ImageBackground
-                        source={require('../../Assets/images/notebook_background.png')}
-                        style={styles.images}
-                        resizeMode="cover">
-                        <View
-                            style={[styles.button, { backgroundColor: colors.subButton }]}
-                        //onPress={() => navigation.navigate('Daily overview')}
-                        >
-                            <Text style={styles.text}>Notesbog</Text>
-                        </View>
-                    </ImageBackground>
+                <TouchableOpacity
+                    style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginHorizontal: '1%' }]}
+                    onPress={() => navigation.navigate('Add routine')}>
+                    <Image
+                        source={require('../../Assets/images/structure_routine.png')}
+                        style={styles.imageSmall}></Image>
+                    <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Ny rutine</Text>
                 </TouchableOpacity>
-            </SafeAreaView>
-        </ScrollView>
+                <TouchableOpacity
+                    style={[styles.knowledgeViewSmall, { backgroundColor: colors.mainButton, borderColor: colors.mainButton, marginLeft: '1%' }]}
+                    onPress={() => navigation.navigate('Add event')}>
+                    <Image
+                        source={require('../../Assets/images/structure_event.png')}
+                        style={styles.imageSmall}></Image>
+                    <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Nyt event</Text>
+                </TouchableOpacity>
+            </View>
+
+        </SafeAreaView >
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        justifyContent: 'center',
         flex: 1,
-    },
-    scrollView: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
 
     },
     knowledgeView: {
-        width: 330,
-        height: 140,
-        marginTop: 10,
-        alignItems: 'baseline',
+        width: '80%',
+        height: '20%',
         borderRadius: 8,
         borderWidth: 1,
-        elevation: 20,
-
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 5, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: '2%'
     },
     knowledgeViewSmall: {
-        height: 90,
+        height: '45%',
         marginTop: 10,
         alignItems: 'center',
         borderRadius: 8,
         borderWidth: 1,
         flex: 1,
-        marginHorizontal: 5
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 5, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
     title: {
-        paddingLeft: 60,
-        paddingRight: 60,
         textAlign: 'center',
-        fontSize: 22,
         color: 'black',
         marginBottom: 15,
         marginTop: 35,
     },
-    button: {
-        width: 210,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 8,
-        marginTop: 50,
-        justifyContent: 'center',
-        marginTop: 100,
+    imageLarge: {
+        width: '50%',
+        height: '70%',
+        resizeMode: 'contain',
     },
-    buttonSmall: {
+    imageSmall: {
+        width: '70%',
+        height: '70%',
+        resizeMode: 'contain',
+    },
+    row: {
+        flexDirection: 'row',
         width: '80%',
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 8,
-        marginTop: 50,
-        justifyContent: 'center',
-
-    },
-    text: {
-        color: 'black',
-        textAlign: 'center',
-        fontSize: 18,
-    },
-    textSmall: {
-        color: 'black',
-        textAlign: 'center',
-        fontSize: 16,
-    },
-    images: {
-        width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        overflow: 'hidden',
-        borderRadius: 7,
-        borderWidth: 0.2,
+        justifyContent: 'space-between'
     },
 });
 

@@ -25,15 +25,6 @@ const data = {
       },
     ],
   },
-  overwhelmed: {
-    1: [
-      {
-        question: 'question 2',
-        options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-        correct_option: 'Option 2',
-      },
-    ],
-  },
 };
 
 export default data;

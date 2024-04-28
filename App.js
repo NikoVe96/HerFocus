@@ -11,6 +11,7 @@ import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { CalendarContext, CalendarProvider } from 'react-native-calendars';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -130,7 +131,9 @@ function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1, }}>
+
       <NavigationContainer theme={theme}>
+
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
           {/*<Button
@@ -141,6 +144,7 @@ function App() {
           />*/}
           <BottomNavigation />
         </SafeAreaView>
+
       </NavigationContainer>
     </GestureHandlerRootView>
   );
@@ -150,7 +154,7 @@ function AppWrapper() {
   return (
     <ThemeProvider>
       <App />
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 
