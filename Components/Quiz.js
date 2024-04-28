@@ -47,12 +47,12 @@ const Quiz = ({ navigation, subject, module }) => {
     return (
         <View style={styles.container}>
             {Questions.map((question, questionIndex) => (
-                <View key={questionIndex} style={styles.subContainer}>
+                <View key={questionIndex} style={[styles.subContainer, { backgroundColor: colors.background }]}>
                     <QuizQuestions
                         index={questionIndex}
                         question={question.question}
                     />
-                    <View>
+                    <View style={{ marginVertical: '10%' }}>
                         {question.options.map((option, optionIndex) => (
                             <TouchableOpacity
                                 key={optionIndex}
@@ -62,7 +62,8 @@ const Quiz = ({ navigation, subject, module }) => {
                                     {
                                         backgroundColor: selectedOptions[questionIndex] === option
                                             ? isCorrect[questionIndex] ? "#7be25b" : "#f0222b"
-                                            : "#fac782",
+                                            : colors.subButton,
+                                        elevation: 5,
                                     },
                                 ]}
                             >
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
     },
     optionText: {
-        fontSize: 16,
+        fontSize: 18,
         color: "black",
         textAlign: "center",
     },
