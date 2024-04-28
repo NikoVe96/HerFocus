@@ -19,32 +19,74 @@ export const StructureFrontPage = () => {
   const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
-
     <SafeAreaView style={styles.container}>
-      <Text style={[styles.title, { fontSize: 22 * scaleFactor }]}>Hvad skal du planlægge i dag?</Text>
+      <Text
+        style={[
+          styles.title,
+          { color: colors.text, fontSize: 22 * scaleFactor },
+        ]}>
+        Hvad vil du gerne lave i dag?
+      </Text>
       <TouchableOpacity
-        style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+        style={styles.press}
         onPress={() => navigation.navigate('Calendar')}>
-        <Image
-          source={require('../../Assets/images/structure_calendar.png')}
-          style={styles.imageLarge}></Image>
-        <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Kalender</Text>
+        <View
+          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
+          <Image
+            source={require('../../Assets/images/structure_calendar.png')}
+            style={[styles.images, {
+              width: 100 * scaleFactor,
+              height: 100 * scaleFactor,
+            }]}></Image>
+          <Text
+            style={[
+              styles.text,
+              { color: colors.text, fontSize: 18 * scaleFactor },
+            ]}>
+            Kalender
+          </Text>
+        </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+        style={styles.press}
         onPress={() => navigation.navigate('Daily overview')}>
-        <Image
-          source={require('../../Assets/images/structure_dailyOverview.png')}
-          style={styles.imageLarge}></Image>
-        <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Daglig oversigt</Text>
+        <View
+          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
+          <Image
+            source={require('../../Assets/images/structure_dailyOverview.png')}
+            style={[styles.images, {
+              width: 160 * scaleFactor,
+              height: 100 * scaleFactor,
+            }]}></Image>
+          <Text
+            style={[
+              styles.text,
+              { color: colors.text, fontSize: 18 * scaleFactor },
+            ]}>
+            Dags oversigt
+          </Text>
+        </View>
       </TouchableOpacity>
+
       <TouchableOpacity
-        style={[styles.knowledgeView, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+        style={styles.press}
         onPress={() => navigation.navigate('Notebook')}>
-        <Image
-          source={require('../../Assets/images/structure_notebook.png')}
-          style={styles.imageLarge}></Image>
-        <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Notesbog</Text>
+        <View
+          style={[styles.buttonGrad, { backgroundColor: colors.mainButton, width: '90%', }]}>
+          <Image
+            source={require('../../Assets/images/structure_notebook.png')}
+            style={[styles.images, {
+              width: 140 * scaleFactor,
+              height: 100 * scaleFactor,
+            }]}></Image>
+          <Text
+            style={[
+              styles.text,
+              { color: colors.text, fontSize: 18 * scaleFactor },
+            ]}>
+            Notesbog
+          </Text>
+        </View>
       </TouchableOpacity>
       <View style={styles.row}>
         <TouchableOpacity
@@ -72,65 +114,71 @@ export const StructureFrontPage = () => {
           <Text style={{ fontSize: 20 * scaleFactor, marginTop: '1%' }}>Nyt event</Text>
         </TouchableOpacity>
       </View>
-
+      <BottomNavigation style={{ flex: 0.5 }} />
     </SafeAreaView >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
+    flex: 3
   },
-  knowledgeView: {
-    width: '80%',
-    height: '20%',
-    borderRadius: 8,
-    borderWidth: 1,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 5, height: 10 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: '2%'
-  },
-  knowledgeViewSmall: {
-    height: '45%',
-    marginTop: 10,
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    flex: 1,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 5, height: 10 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  helloUser: {
+    paddingLeft: 60,
+    paddingRight: 60,
+    textAlign: 'center',
+    marginTop: 30,
+    marginBottom: 10,
   },
   title: {
+    paddingLeft: 60,
+    paddingRight: 60,
     textAlign: 'center',
-    color: 'black',
-    marginBottom: 15,
-    marginTop: 35,
+    marginVertical: '5%',
   },
-  imageLarge: {
-    width: '50%',
-    height: '70%',
-    resizeMode: 'contain',
+  text: {
+    textAlign: 'center',
+  },
+  buttonGrad: {
+    borderRadius: 10,
+    bottom: 5,
+    backgroundColor: '#FFEABF',
+    alignItems: 'center',
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.50,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+  },
+  press: {
+    marginBottom: 15,
+  },
+  images: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  knowledgeViewSmall: {
+    height: '40%',
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    flex: 1,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 5, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingHorizontal: '5%',
+    justifyContent: 'space-between'
   },
   imageSmall: {
     width: '70%',
     height: '70%',
     resizeMode: 'contain',
-  },
-  row: {
-    flexDirection: 'row',
-    width: '80%',
-    justifyContent: 'space-between'
   },
 });
 
