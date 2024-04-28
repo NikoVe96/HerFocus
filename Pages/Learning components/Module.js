@@ -245,182 +245,125 @@ export const Module = ({ route }) => {
         break;
       case '3 Struktur og planlægning':
         return (
-          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
-            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Planlæg dine rutiner</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du ..</Text>
-            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
-            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ flex: 2.5 }}>
-                <Text>Aktiviteter og steps</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text>1.</Text>
-                  <TextInput
+          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+            <Text style={{textAlign: 'center', fontSize: 24, marginTop: '2%'}}>
+              Planlæg dine rutiner
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginBottom: '3%',
+              }}>
+              Øvelse
+            </Text>
+            <Text style={{fontSize: 18, marginBottom: '2%'}}>
+              I denne øvelse skal du tænke på en rutiner, du har. Skriv hvilke
+              steps rutinen indeholder, og hvor længe de forskellige steps tager
+              i tekstboksene
+            </Text>
+            <Text style={{fontSize: 18, marginBottom: '4%'}}>
+              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+            </Text>
+            <Text style={{fontWeight: 'bold', marginBottom: 5}}>Rutine</Text>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{flex: 1}}>
+                <View>
+                  <View style={styles.rutineView}>
+                    <Text>1.</Text>
+                    <TextInput
+                      style={styles.rutineText1}
+                      multiline={true}
+                      numberOfLines={1}></TextInput>
+                  </View>
+                  <View
                     style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>a.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>b.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>c.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>d.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>e.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-              </View>
-
-              <View style={{ flex: 0.5 }}>
-                <Text>Tid</Text>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>a.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>b.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>c.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>d.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
-                </View>
-                <View style={{ flexDirection: 'row', marginLeft: '5%' }}>
-                  <Text>e.</Text>
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 5
-                    }}
-                    multiline={true}
-                    numberOfLines={1}
-                  >
-                  </TextInput>
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View>
+                      <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+                        Steps
+                      </Text>
+                      <View style={styles.rutineView}>
+                        <Text>a.</Text>
+                        <TextInput
+                          style={styles.rutineText2}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>b.</Text>
+                        <TextInput
+                          style={styles.rutineText2}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>c.</Text>
+                        <TextInput
+                          style={styles.rutineText2}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>d.</Text>
+                        <TextInput
+                          style={styles.rutineText2}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>e.</Text>
+                        <TextInput
+                          style={styles.rutineText2}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                    </View>
+                    <View>
+                      <Text style={{fontWeight: 'bold', marginBottom: 5}}>
+                        Tid
+                      </Text>
+                      <View style={styles.rutineView}>
+                        <Text>a.</Text>
+                        <TextInput
+                          style={styles.rutineTime}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>b.</Text>
+                        <TextInput
+                          style={styles.rutineTime}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>c.</Text>
+                        <TextInput
+                          style={styles.rutineTime}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>d.</Text>
+                        <TextInput
+                          style={styles.rutineTime}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                      <View style={styles.rutineView}>
+                        <Text>e.</Text>
+                        <TextInput
+                          style={styles.rutineTime}
+                          multiline={true}
+                          numberOfLines={1}></TextInput>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
@@ -805,7 +748,7 @@ const styles = StyleSheet.create({
     width: 200,
     borderWidth: 1,
     borderRadius: 10,
-    elevation: 10
+    elevation: 10,
   },
   keyTakeaways: {
     justifyContent: 'center',
@@ -815,14 +758,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderRadius: 10,
-    elevation: 5
+    elevation: 5,
   },
   takeawayHeader: {
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 5,
-    padding: 5
+    padding: 5,
   },
   textContainer: {
     margin: 10,
@@ -846,7 +789,36 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-  }
+  },
+  rutineView: {
+    flexDirection: 'row',
+    marginBottom: 5,
+    marginLeft: '5%',
+  },
+  rutineText1: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+    width: '90%',
+  },
+  rutineText2: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+    width: '70%',
+  },
+  rutineTime: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+    width: '35%',
+  },
 });
 
 export default Module;

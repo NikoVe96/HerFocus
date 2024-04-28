@@ -1,12 +1,4 @@
 {
   "name": "HerFocus",
-  "displayName": "HerFocus",
-  "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "62e4f831-0c2e-404f-a977-ca92fc7534a9"
-      }
-    },
-    "owner": "nikov96"
-  }
+  "displayName": "HerFocus"
 }
