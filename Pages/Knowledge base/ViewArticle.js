@@ -46,9 +46,10 @@ export const ViewArticle = ({route}) => {
         <View style={styles.articleText}>
           <Markdown
             style={{
-              paragraph: {fontSize: 18 * scaleFactor},
-              bullet_list: {fontSize: 18},
+              paragraph: {fontSize: 18 * scaleFactor, color: colors.text},
+              bullet_list: {fontSize: 18, color: colors.text},
               heading3: {
+                color: colors.text,
                 fontSize: 20 * scaleFactor,
                 marginTop: 30,
                 fontWeight: 'bold',
@@ -57,7 +58,7 @@ export const ViewArticle = ({route}) => {
                 borderRadius: 8,
                 paddingLeft: 15,
                 paddingRight: 15,
-                padding: 2
+                padding: 2,
               },
               list_item: {marginVertical: 5},
             }}>
@@ -73,14 +74,14 @@ export const ViewArticle = ({route}) => {
                 width: 200,
                 alignSelf: 'center',
               }}></View>
-            <Text>
+            <Text style={{color: colors.text}}>
               Denne artikel er skrevet af
-              <Text style={{fontWeight: 'bold'}}>
+              <Text style={{fontWeight: 'bold', color: colors.text}}>
                 {' '}
                 {article.get('author')}.
               </Text>
             </Text>
-            <Text style={{marginVertical: 10}}>
+            <Text style={{marginVertical: 10, color: colors.text}}>
               Hele artiklen samt mere info kan findes på
               <Text style={{fontStyle: 'italic'}} onPress={goToLink}>
                 {' '}

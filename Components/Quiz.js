@@ -45,43 +45,60 @@ const Quiz = ({ navigation, subject, module }) => {
     };
 
     return (
-        <View style={styles.container}>
-            {Questions.map((question, questionIndex) => (
-                <View key={questionIndex} style={[styles.subContainer, { backgroundColor: colors.background }]}>
-                    <QuizQuestions
-                        index={questionIndex}
-                        question={question.question}
-                    />
-                    <View style={{ marginVertical: '10%' }}>
-                        {question.options.map((option, optionIndex) => (
-                            <TouchableOpacity
-                                key={optionIndex}
-                                onPress={() => validateAnswer(option, questionIndex)}
-                                style={[
-                                    styles.optionsText,
-                                    {
-                                        backgroundColor: selectedOptions[questionIndex] === option
-                                            ? isCorrect[questionIndex] ? "#7be25b" : "#f0222b"
-                                            : colors.subButton,
-                                        elevation: 5,
-                                    },
-                                ]}
-                            >
-                                <Text style={styles.optionText}>{option}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
-            ))}
-            <View style={{ alignItems: 'center' }}>
-                <Text style={styles.scoreText}>You got {score} out of {Questions.length} questions correct</Text>
+      <View style={styles.container}>
+        {Questions.map((question, questionIndex) => (
+          <View
+            key={questionIndex}
+            style={[styles.subContainer, {backgroundColor: colors.background}]}>
+            <QuizQuestions
+              index={questionIndex}
+              question={question.question}
+              style={{color: colors.text}}
+            />
+            <View style={{marginVertical: '10%'}}>
+              {question.options.map((option, optionIndex) => (
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
-                    onPress={() => resetQuiz()}>
-                    <Text style={{ fontSize: 20 }}>Tag quizzen igen</Text>
+                  key={optionIndex}
+                  onPress={() => validateAnswer(option, questionIndex)}
+                  style={[
+                    styles.optionsText,
+                    {
+                      backgroundColor:
+                        selectedOptions[questionIndex] === option
+                          ? isCorrect[questionIndex]
+                            ? '#7be25b'
+                            : '#f0222b'
+                          : colors.subButton,
+                      elevation: 5,
+                    },
+                  ]}>
+                  <Text style={[styles.optionText, {color: colors.text}]}>
+                    {option}
+                  </Text>
                 </TouchableOpacity>
+              ))}
             </View>
+          </View>
+        ))}
+        <View style={{alignItems: 'center'}}>
+          <Text style={[styles.scoreText, {color: colors.text}]}>
+            Du fik {score} ud af {Questions.length} spørgsmål korrekt
+          </Text>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                backgroundColor: colors.mainButton,
+                borderColor: colors.mainButton,
+              },
+            ]}
+            onPress={() => resetQuiz()}>
+            <Text style={{fontSize: 20, color: colors.text, alignSelf: 'center'}}>
+              Tag quizzen igen
+            </Text>
+          </TouchableOpacity>
         </View>
+      </View>
     );
 };
 

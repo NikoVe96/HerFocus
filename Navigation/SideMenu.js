@@ -51,6 +51,15 @@ import Notebook from '../Pages/Structure components/Notebook';
 
 const Drawer = createDrawerNavigator();
 
+const moduleSubjects = [
+  {
+    subject: 'Struktur og planlægning',
+    description:
+      'I dette modul vil du lære om forskellige værktøjer til at strukturere dit liv og din hverdag. For voksne med ADHD kan det være en fordel at have specifikke mål, tidsrammer og værktøjer til at opnå sine mål. Derfor har vi samlet nogle øvelser, der kan give dig de bedste chancer for success og forhåbentlig give mere overskud i hverdagen.',
+    image: require('../Assets/images/learning_notebook.png'),
+  },
+];
+
 
 function CustomDrawerContent({ navigation }) {
   const { colors } = useTheme();
@@ -128,18 +137,24 @@ function CustomDrawerContent({ navigation }) {
         </TouchableOpacity>
       </AccordionItem>
       <AccordionItem
-        title="Fora"
+        title="Forum"
         icon={faComments}
         titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
-          onPress={() => navigation.navigate('Pick subject')}>
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Familie',
+              forumDescription:
+                'I dette forum kan vi alle dele erfaringer, udfordringer og triumfer relateret til familierelationer.',
+            })
+          }>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.text}}>Vælg et emne </Text>
+          <Text style={{fontSize: 18, color: colors.text}}>Familie </Text>
         </TouchableOpacity>
         <View
           style={[
@@ -148,13 +163,61 @@ function CustomDrawerContent({ navigation }) {
           ]}></View>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
-          onPress={() => navigation.navigate('Favorite posts')}>
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Relationer',
+              forumDescription:
+                'Relationer kan nogle gange være komplicerede, når man har ADHD. I dette forum kan du dele tips, frustrationer osv., der har med relationer at gøre.',
+            })
+          }>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.text}}>Favoritopslag </Text>
+          <Text style={{fontSize: 18, color: colors.text}}>Relationer </Text>
+        </TouchableOpacity>
+        <View
+          style={[
+            styles.divider,
+            {backgroundColor: colors.text, textColor: colors.text},
+          ]}></View>
+        <TouchableOpacity
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Medicin',
+              forumDescription:
+                'Medicin kan være et svært emne at tale om. Hold venligst medicinensnakken til dette forum, og husk at kontakte en læge, hvis det er nødvendigt.',
+            })
+          }>
+          <FontAwesomeIcon
+            icon={faCircle}
+            size={13}
+            color={colors.text}
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18, color: colors.text}}>Medicin </Text>
+        </TouchableOpacity>
+        <View
+          style={[
+            styles.divider,
+            {backgroundColor: colors.text, textColor: colors.text},
+          ]}></View>
+        <TouchableOpacity
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
+          onPress={() =>
+            navigation.navigate('Forum', {
+              forumTitle: 'Gode tips',
+              forumDescription:
+                'Det er altid rart at lære af andres gode erfaringer. Her kan du dele dine gode tips, men også lære hvad der hjælper for andre.',
+            })
+          }>
+          <FontAwesomeIcon
+            icon={faCircle}
+            size={13}
+            color={colors.text}
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18, color: colors.text}}>Gode tips </Text>
         </TouchableOpacity>
       </AccordionItem>
       <AccordionItem
@@ -163,23 +226,13 @@ function CustomDrawerContent({ navigation }) {
         titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
-          onPress={() => navigation.navigate('Pick module')}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            color={colors.text}
-            style={{marginRight: 10}}></FontAwesomeIcon>
-          <View>
-            <Text style={{fontSize: 18, color: colors.text}}>Modules </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={[
-            styles.divider,
-            {backgroundColor: colors.text, textColor: colors.text},
-          ]}></View>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
+          onPress={() =>
+            navigation.navigate('Module overview', {
+              subject: moduleSubjects[0].subject,
+              description: moduleSubjects[0].description,
+              image: moduleSubjects[0].image,
+            })
+          }>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
@@ -190,73 +243,8 @@ function CustomDrawerContent({ navigation }) {
               style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
               Modul 1
             </Text>
-            <Text style={{fontSize: 18, color: colors.text}}>
-              Hvad er ADHD{' '}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={[
-            styles.divider,
-            {backgroundColor: colors.text, textColor: colors.text},
-          ]}></View>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            color={colors.text}
-            style={{marginRight: 10}}></FontAwesomeIcon>
-          <View>
-            <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
-              Modul 2
-            </Text>
-            <Text style={{fontSize: 18, color: colors.text}}>
-              Hvordan håndterer man at blive overvældet{' '}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={[
-            styles.divider,
-            {backgroundColor: colors.text, textColor: colors.text},
-          ]}></View>
-        <TouchableOpacity style={{flexDirection: 'row', marginLeft: 30}}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            color={colors.text}
-            style={{marginRight: 10}}></FontAwesomeIcon>
-          <View>
-            <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
-              Modul 3
-            </Text>
-            <Text style={{fontSize: 18, color: colors.text}}>
-              Strukturering af dagligdagen{' '}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={[
-            styles.divider,
-            {backgroundColor: colors.text, textColor: colors.text},
-          ]}></View>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            color={colors.text}
-            style={{marginRight: 10}}></FontAwesomeIcon>
-          <View>
-            <Text
-              style={{fontSize: 18, fontWeight: 'bold', color: colors.text}}>
-              Modul 4
-            </Text>
-            <Text style={{fontSize: 18, color: colors.text}}>
-              Langsigtede mål{' '}
+            <Text style={{fontSize: 18, color: colors.text, paddingRight: 5}}>
+              Strukturering og planlægning af dagligdagen{' '}
             </Text>
           </View>
         </TouchableOpacity>
@@ -273,24 +261,7 @@ function CustomDrawerContent({ navigation }) {
             size={13}
             color={colors.text}
             style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.text}}>Vælg et emne </Text>
-        </TouchableOpacity>
-        <View
-          style={[
-            styles.divider,
-            {backgroundColor: colors.text, textColor: colors.text},
-          ]}></View>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
-          onPress={() => navigation.navigate('Favorite articles')}>
-          <FontAwesomeIcon
-            icon={faCircle}
-            size={13}
-            color={colors.text}
-            style={{marginRight: 10}}></FontAwesomeIcon>
-          <Text style={{fontSize: 18, color: colors.text}}>
-            Favoritartikler{' '}
-          </Text>
+          <Text style={{fontSize: 18, color: colors.text}}>Artikeltemaer </Text>
         </TouchableOpacity>
       </AccordionItem>
       <View style={styles.accordContainer}>

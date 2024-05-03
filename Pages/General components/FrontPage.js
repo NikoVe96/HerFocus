@@ -64,7 +64,7 @@ export const FrontPage = () => {
                 styles.text,
                 { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
-              Planlægge
+              Planlægning
             </Text>
           </View>
         </TouchableOpacity>
@@ -84,7 +84,7 @@ export const FrontPage = () => {
                 styles.text,
                 { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
-              Lære i læringsmodulerne
+              Læringsmoduler
             </Text>
           </View>
         </TouchableOpacity>
@@ -105,7 +105,7 @@ export const FrontPage = () => {
                 styles.text,
                 { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
-              Snakke med andre
+              Forum
             </Text>
           </View>
         </TouchableOpacity>
@@ -125,7 +125,7 @@ export const FrontPage = () => {
                 styles.text,
                 { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
-              Læse i vidensbanken
+              Vidensbank
             </Text>
           </View>
         </TouchableOpacity>

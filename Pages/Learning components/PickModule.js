@@ -49,7 +49,7 @@ export const PickModule = () => {
     },
     {
       subject: 'Struktur og planlægning',
-      description: 'I dette modul vil du lære om forskellige værktøjer til at strukturere dit liv og din hverdag. For voksne med ADHD kan det være en fordel at have specifikke mål, tidsrammer og værktøjer til at opnå sine mål. Derfor har vi samlet nogle øvelser der kan give dig de bedste chancer for success og forhåbentlig give mere overskud i hverdagen.',
+      description: 'I dette modul vil du lære om forskellige værktøjer til at strukturere dit liv og din hverdag. For voksne med ADHD kan det være en fordel at have specifikke mål, tidsrammer og værktøjer til at opnå sine mål. Derfor har vi samlet nogle øvelser, der kan give dig de bedste chancer for success og forhåbentlig give mere overskud i hverdagen.',
       image: require('../../Assets/images/learning_notebook.png'),
     },
     {

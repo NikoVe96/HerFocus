@@ -105,12 +105,42 @@ export const Module = ({ route }) => {
             { name: "Spår fremtiden" },
             { name: "Følelses ræsonnement" },];
         return (
-          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
-            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Identificer dine egne tænkefejl</Text>
-            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du tjekke de bokse af, hvor du kan genkende dig selv i tankefejlen. I tekstfeltet skriver du derefter et eksempel på en situation, hvor du har oplevet at lave den tænkefejl</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>Udfyld kun de tekstfelter der tilhører tænke fejl som du kan genkende dig selv i.</Text>
-            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
+          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 24,
+                marginTop: '2%',
+                color: colors.text,
+              }}>
+              Identificer dine egne tænkefejl
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginBottom: '3%',
+                color: colors.text,
+              }}>
+              Øvelse
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              I denne øvelse skal du tjekke de bokse af, hvor du kan genkende
+              dig selv i tankefejlen. I tekstfeltet skriver du derefter et
+              eksempel på en situation, hvor du har oplevet at lave den
+              tænkefejl
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              Udfyld kun de tekstfelter, der tilhører tænkefejl, som du kan
+              genkende dig selv i.
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+            </Text>
             {tænkeFejl.map((item, index) => (
               <View
                 key={index}
@@ -121,49 +151,79 @@ export const Module = ({ route }) => {
                   padding: '3%',
                   borderWidth: 1,
                   borderColor: colors.subButton,
-                  borderRadius: 10
+                  borderRadius: 10,
                 }}>
-                <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
-                  <Text style={{ fontSize: 20 }}>{item.name}</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginBottom: '2%',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={{fontSize: 20}}>{item.name}</Text>
                   <BouncyCheckbox
                     size={35}
                     fillColor={colors.border}
                     unfillColor="#FFFFFF"
-                    iconStyle={{ borderColor: colors.border }}
-                    innerIconStyle={{ borderWidth: 2 }}
-                    textStyle={{ fontFamily: "JosefinSans-Regular" }}
-                    onPress={() => { toggleExercise(index) }}
-                    style={{ marginLeft: '20%' }}
+                    iconStyle={{borderColor: colors.border}}
+                    innerIconStyle={{borderWidth: 2}}
+                    textStyle={{fontFamily: 'JosefinSans-Regular'}}
+                    onPress={() => {
+                      toggleExercise(index);
+                    }}
+                    style={{marginLeft: '20%'}}
                   />
                 </View>
-                {expanded == index ?
+                {expanded == index ? (
                   <TextInput
                     style={{
                       backgroundColor: 'white',
                       borderWidth: 1,
                       borderColor: 'white',
                       borderRadius: 10,
-                      padding: 10
+                      padding: 10,
                     }}
                     multiline={true}
                     numberOfLines={10}
-                    textAlignVertical={'top'}>
-                  </TextInput>
-                  : null}
+                    textAlignVertical={'top'}></TextInput>
+                ) : null}
               </View>
             ))}
-            <View style={{ flex: 1 }}>
-            </View>
+            <View style={{flex: 1}}></View>
           </View>
         );
         break;
       case '2 Struktur og planlægning':
         return (
-          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
-            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Identificer typen af dine overspringshandlinger</Text>
-            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du udfylde felterne for at identificere og reflektere over hvilke typer af overspringshandlinger du typisk har problemer med.</Text>
-            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
+          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 24,
+                marginTop: '2%',
+                color: colors.text,
+              }}>
+              Identificer typen af dine overspringshandlinger
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginBottom: '3%',
+                color: colors.text,
+              }}>
+              Øvelse
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              I denne øvelse skal du udfylde felterne for at identificere og
+              reflektere ove, hvilke typer af overspringshandlinger du typisk
+              har problemer med.
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+            </Text>
             <View
               style={{
                 marginVertical: '1%',
@@ -172,22 +232,24 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <Text style={{ fontSize: 18, marginBottom: '4%' }}>Hvilke(n) typer af overspringshandlinger kan du identificere dig med?</Text>
+              <Text
+                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                Hvilke(n) typer af overspringshandlinger kan du identificere dig
+                med?
+              </Text>
               <TextInput
                 style={{
                   backgroundColor: 'white',
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={5}
-                textAlignVertical={'top'}
-              >
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
             <View
               style={{
@@ -197,22 +259,24 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <Text style={{ fontSize: 18, marginBottom: '4%' }}>Giv et eksempel på hvornår du har lavet en overspringshandling af denne type</Text>
+              <Text
+                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                Giv et eksempel på hvornår, du har lavet en overspringshandling
+                af denne type
+              </Text>
               <TextInput
                 style={{
                   backgroundColor: 'white',
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={5}
-                textAlignVertical={'top'}
-              >
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
             <View
               style={{
@@ -222,30 +286,38 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <Text style={{ fontSize: 18, marginBottom: '4%' }}>Hvad kan du gøre for at lave færre overspringshandlinger af denne type?</Text>
+              <Text
+                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                Hvad kan du gøre for at lave færre overspringshandlinger af
+                denne type?
+              </Text>
               <TextInput
                 style={{
                   backgroundColor: 'white',
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={5}
-                textAlignVertical={'top'}
-              >
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
           </View>
         );
         break;
       case '3 Struktur og planlægning':
         return (
-          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
-            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>
+          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 24,
+                marginTop: '2%',
+                color: colors.text,
+              }}>
               Planlæg dine rutiner
             </Text>
             <Text
@@ -254,21 +326,27 @@ export const Module = ({ route }) => {
                 fontSize: 16,
                 fontWeight: 'bold',
                 marginBottom: '3%',
+                color: colors.text,
               }}>
               Øvelse
             </Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
               I denne øvelse skal du tænke på en rutiner, du har. Skriv hvilke
               steps rutinen indeholder, og hvor længe de forskellige steps tager
               i tekstboksene
             </Text>
-            <Text style={{ fontSize: 18, marginBottom: '4%' }}>
+            <Text
+              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
-            <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Rutine</Text>
+            <Text
+              style={{fontWeight: 'bold', marginBottom: 5, color: colors.text}}>
+              Rutine
+            </Text>
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ flex: 1 }}>
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View style={{flex: 1}}>
                 <View>
                   <View style={styles.rutineView}>
                     <Text>1.</Text>
@@ -283,39 +361,69 @@ export const Module = ({ route }) => {
                       justifyContent: 'space-between',
                     }}>
                     <View>
-                      <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          marginBottom: 5,
+                          color: colors.text,
+                        }}>
                         Steps
                       </Text>
                       <View style={styles.rutineView}>
-                        <Text>a.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          a.
+                        </Text>
                         <TextInput
                           style={styles.rutineText2}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>b.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          b.
+                        </Text>
                         <TextInput
                           style={styles.rutineText2}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>c.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          c.
+                        </Text>
                         <TextInput
                           style={styles.rutineText2}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>d.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          d.
+                        </Text>
                         <TextInput
                           style={styles.rutineText2}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>e.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          e.
+                        </Text>
                         <TextInput
                           style={styles.rutineText2}
                           multiline={true}
@@ -323,39 +431,69 @@ export const Module = ({ route }) => {
                       </View>
                     </View>
                     <View>
-                      <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>
+                      <Text
+                        style={{
+                          fontWeight: 'bold',
+                          marginBottom: 5,
+                          color: colors.text,
+                        }}>
                         Tid
                       </Text>
                       <View style={styles.rutineView}>
-                        <Text>a.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          a.
+                        </Text>
                         <TextInput
                           style={styles.rutineTime}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>b.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          b.
+                        </Text>
                         <TextInput
                           style={styles.rutineTime}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>c.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          c.
+                        </Text>
                         <TextInput
                           style={styles.rutineTime}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>d.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          d.
+                        </Text>
                         <TextInput
                           style={styles.rutineTime}
                           multiline={true}
                           numberOfLines={1}></TextInput>
                       </View>
                       <View style={styles.rutineView}>
-                        <Text>e.</Text>
+                        <Text
+                          style={{
+                            color: colors.text,
+                          }}>
+                          e.
+                        </Text>
                         <TextInput
                           style={styles.rutineTime}
                           multiline={true}
@@ -371,12 +509,41 @@ export const Module = ({ route }) => {
         break;
       case '4 Struktur og planlægning':
         return (
-          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
-            <Text style={{ textAlign: 'center', fontSize: 24, marginTop: '2%' }}>Reflekter over dine præstationer</Text>
-            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold', marginBottom: '3%' }}>Øvelse</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>I denne øvelse skal du udvælge nogle af de opgaver du har haft i løbet af ugen, og reflektere over dem.</Text>
-            <Text style={{ fontSize: 18, marginBottom: '2%' }}>Hvordan gik det med at klare opgaven? Oplevede du nogle tænkefejl undervejs? Hvordan kunne du vende de negative tanker til noget positivt istedet?</Text>
-            <Text style={{ fontSize: 18, marginBottom: '4%' }}>Når opgaven er fulført, vil du kunne finde den i din notesbog.</Text>
+          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 24,
+                marginTop: '2%',
+                color: colors.text,
+              }}>
+              Reflekter over dine præstationer
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginBottom: '3%',
+                color: colors.text,
+              }}>
+              Øvelse
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              I denne øvelse skal du udvælge nogle af de opgaver du har haft i
+              løbet af ugen, og reflektere over dem.
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              Hvordan gik det med at klare opgaven? Oplevede du nogle tænkefejl
+              undervejs? Hvordan kunne du vende de negative tanker til noget
+              positivt istedet?
+            </Text>
+            <Text
+              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+            </Text>
             <View
               style={{
                 marginVertical: '1%',
@@ -385,10 +552,15 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: '2%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -396,14 +568,18 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={2}
-                textAlignVertical={'top'}>
-              </TextInput>
-              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+                textAlignVertical={'top'}></TextInput>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: '3%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20}}>Beskriv hvordan det gik</Text>
               </View>
               <TextInput
                 style={{
@@ -411,12 +587,11 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={6}
-                textAlignVertical={'top'}>
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
             <View
               style={{
@@ -426,10 +601,15 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: '2%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20}}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -437,14 +617,20 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={2}
-                textAlignVertical={'top'}>
-              </TextInput>
-              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+                textAlignVertical={'top'}></TextInput>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: '3%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20, color: colors.text}}>
+                  Beskriv hvordan det gik
+                </Text>
               </View>
               <TextInput
                 style={{
@@ -452,12 +638,11 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={6}
-                textAlignVertical={'top'}>
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
             <View
               style={{
@@ -467,10 +652,15 @@ export const Module = ({ route }) => {
                 padding: '3%',
                 borderWidth: 1,
                 borderColor: colors.subButton,
-                borderRadius: 10
+                borderRadius: 10,
               }}>
-              <View style={{ flexDirection: 'row', marginBottom: '2%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Opgave</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: '2%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -478,14 +668,20 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={2}
-                textAlignVertical={'top'}>
-              </TextInput>
-              <View style={{ flexDirection: 'row', marginVertical: '3%', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
+                textAlignVertical={'top'}></TextInput>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: '3%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 20, color: colors.text}}>
+                  Beskriv hvordan det gik
+                </Text>
               </View>
               <TextInput
                 style={{
@@ -493,12 +689,11 @@ export const Module = ({ route }) => {
                   borderWidth: 1,
                   borderColor: 'white',
                   borderRadius: 10,
-                  padding: 10
+                  padding: 10,
                 }}
                 multiline={true}
                 numberOfLines={6}
-                textAlignVertical={'top'}>
-              </TextInput>
+                textAlignVertical={'top'}></TextInput>
             </View>
           </View>
         );
@@ -508,7 +703,7 @@ export const Module = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <LearningProgressHeader
         progress={progress}
         moduleLength={moduleLength}
@@ -516,19 +711,23 @@ export const Module = ({ route }) => {
         description={description}
         image={image}
       />
-      <View style={{ flex: 8, backgroundColor: colors.background }}>
+      <View style={{flex: 8, backgroundColor: colors.background}}>
         <Swiper
           loop={false}
           showsPagination={false}
           onIndexChanged={index => handleSlide(index)}
           scrollEnabled={false}
           ref={swiperRef}>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{flex: 1}}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
-              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+              style={{
+                width: width,
+                height: 270 * scaleFactor,
+                alignSelf: 'center',
+              }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{intro1}</Text>
+              <Text style={[styles.text, {color: colors.text}]}>{intro1}</Text>
             </View>
             <View
               style={{
@@ -537,20 +736,32 @@ export const Module = ({ route }) => {
                 alignItems: 'baseline',
                 marginVertical: '3%',
               }}>
-              <View style={{ marginTop: '3%', marginRight: '5%' }}></View>
+              <View style={{marginTop: '3%', marginRight: '5%'}}></View>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Næste
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{flex: 1}}>
             <Image
               source={require('../../Assets/images/woman_reflecting.png')}
-              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+              style={{
+                width: width,
+                height: 270 * scaleFactor,
+                alignSelf: 'center',
+              }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{intro2}</Text>
+              <Text style={[styles.text, {color: colors.text}]}>{intro2}</Text>
             </View>
             <View
               style={{
@@ -560,23 +771,43 @@ export const Module = ({ route }) => {
                 marginVertical: '3%',
               }}>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Tilbage
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Næste
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{flex: 1}}>
             <Image
               source={require('../../Assets/images/woman_writing.png')}
-              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+              style={{
+                width: width,
+                height: 270 * scaleFactor,
+                alignSelf: 'center',
+              }}></Image>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>{intro3}</Text>
+              <Text style={[styles.text, {color: colors.text}]}>{intro3}</Text>
             </View>
             <View
               style={{
@@ -586,24 +817,47 @@ export const Module = ({ route }) => {
                 marginVertical: '3%',
               }}>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Tilbage
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Næste
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{flex: 1}}>
             <View>
               <Image
                 source={require('../../Assets/images/women_taking_quiz.png')}
-                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}
-              ></Image>
-              <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
+                style={{
+                  width: width,
+                  height: 270 * scaleFactor,
+                  alignSelf: 'center',
+                }}></Image>
+              <Text
+                style={[
+                  styles.takeawayHeader,
+                  {fontSize: 22 * scaleFactor, color: colors.text},
+                ]}>
                 Lad os tage en quiz for at hjælpe dig med at huske, hvad du har
                 lært!
               </Text>
@@ -611,6 +865,7 @@ export const Module = ({ route }) => {
                 key={module.id}
                 subject={subject}
                 module={module.get('name')}
+                style={{color: colors.text}}
               />
               <View
                 style={{
@@ -620,27 +875,47 @@ export const Module = ({ route }) => {
                   marginVertical: '3%',
                 }}>
                 <TouchableOpacity
-                  style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                  style={[
+                    styles.swiperBtn,
+                    {
+                      backgroundColor: colors.mainButton,
+                      borderColor: colors.mainButton,
+                    },
+                  ]}
                   onPress={() => swiperRef.current.scrollBy(-1)}>
-                  <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                  <Text
+                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    Tilbage
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                  style={[
+                    styles.swiperBtn,
+                    {
+                      backgroundColor: colors.mainButton,
+                      borderColor: colors.mainButton,
+                    },
+                  ]}
                   onPress={() => swiperRef.current.scrollBy(1)}>
-                  <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                  <Text
+                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    Næste
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={{ alignItems: 'center' }}>
+          <ScrollView style={{flex: 1}}>
+            <View style={{alignItems: 'center'}}>
               <Image
                 source={require('../../Assets/images/woman_doing_exercise.png')}
-                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
+                style={{
+                  width: width,
+                  height: 270 * scaleFactor,
+                  alignSelf: 'center',
+                }}></Image>
             </View>
-            <View>
-              {exercises()}
-            </View>
+            <View>{exercises()}</View>
             <View
               style={{
                 flexDirection: 'row',
@@ -649,29 +924,65 @@ export const Module = ({ route }) => {
                 marginVertical: '3%',
               }}>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Tilbage
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Næste
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={{ alignItems: 'center' }}>
+          <ScrollView style={{flex: 1}}>
+            <View style={{alignItems: 'center'}}>
               <Image
                 source={require('../../Assets/images/lightbulbs.png')}
-                style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
-              <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
+                style={{
+                  width: width,
+                  height: 270 * scaleFactor,
+                  alignSelf: 'center',
+                }}></Image>
+              <Text
+                style={[
+                  styles.takeawayHeader,
+                  {fontSize: 22 * scaleFactor, color: colors.text},
+                ]}>
                 Her er der {keyPoints.length} takeaways fra dette modul
               </Text>
               {keyPoints.map((item, index) => {
                 return (
-                  <View style={[styles.keyTakeaways, { backgroundColor: colors.subButton, borderColor: colors.subButton }]} key={index}>
-                    <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>
+                  <View
+                    style={[
+                      styles.keyTakeaways,
+                      {
+                        backgroundColor: colors.subButton,
+                        borderColor: colors.subButton,
+                      },
+                    ]}
+                    key={index}>
+                    <Text
+                      style={[
+                        styles.takeawayHeader,
+                        {fontSize: 22 * scaleFactor, color: colors.text},
+                      ]}>
                       Takeaway {index + 1}
                     </Text>
                     <Text style={styles.text}>{item}</Text>
@@ -687,24 +998,61 @@ export const Module = ({ route }) => {
                 marginVertical: '3%',
               }}>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Tilbage
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Næste</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Næste
+                </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{flex: 1, alignItems: 'center'}}>
             <Image
               source={require('../../Assets/images/fireworks.png')}
-              style={{ width: width, height: 270 * scaleFactor, alignSelf: 'center' }}></Image>
-            <Text style={[styles.takeawayHeader, { fontSize: 22 * scaleFactor }]}>Tillykke! </Text>
-            <Text style={styles.text}>Du har lige færdiggjort dit første modul!</Text>
-            <Text style={{ fontSize: 12, fontStyle: 'italic', marginTop: '35%' }}>Materialet fra dette modul er fundet i bogen "{book}", som er skrevet af {author}</Text>
+              style={{
+                width: width,
+                height: 270 * scaleFactor,
+                alignSelf: 'center',
+              }}></Image>
+            <Text
+              style={[
+                styles.takeawayHeader,
+                {fontSize: 22 * scaleFactor, color: colors.text},
+              ]}>
+              Tillykke!{' '}
+            </Text>
+            <Text style={[styles.text, {color: colors.text}]}>
+              Du har lige færdiggjort dit første modul!
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontStyle: 'italic',
+                marginTop: '35%',
+                color: colors.text,
+              }}>
+              Materialet fra dette modul er fundet i bogen "{book}", som er
+              skrevet af {author}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -713,21 +1061,37 @@ export const Module = ({ route }) => {
                 marginVertical: '3%',
               }}>
               <TouchableOpacity
-                style={[styles.swiperBtn, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.swiperBtn,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Tilbage</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Tilbage
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: colors.mainButton, borderColor: colors.mainButton }]}
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor: colors.mainButton,
+                    borderColor: colors.mainButton,
+                  },
+                ]}
                 onPress={() => handleCompletion()}>
-                <Text style={{ fontSize: 20 * scaleFactor }}>Færdiggør modulet</Text>
+                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                  Færdiggør modulet
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </Swiper>
-      </View >
+      </View>
       <BottomNavigation />
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 

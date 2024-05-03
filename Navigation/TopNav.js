@@ -28,13 +28,13 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
         backgroundColor: colors.border,
       }}>
       <TouchableOpacity onPress={() => goBack()}>
-        <FontAwesomeIcon icon={faCircleLeft} size={30} color={colors.barText} />
+        <FontAwesomeIcon icon={faCircleLeft} size={25} color={colors.barText} />
       </TouchableOpacity>
       <View style={{justifyContent: 'center'}}>
         <Image source={logoSource} style={{width: 110, height: 30}} />
       </View>
       <TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <FontAwesomeIcon icon={faBars} size={30} color={colors.barText} />
+        <FontAwesomeIcon icon={faBars} size={25} color={colors.barText} />
       </TouchableOpacity>
     </View>
   );
