@@ -40,9 +40,25 @@ const ForgotPassword = () => {
         <Image
           source={require('../../Assets/images/logo-light-nb.png')}
           style={styles.image}></Image>
-        <Text style={[styles.text, {color: colors.text, fontSize: 16 * scaleFactor}]}>Har du glemt dit kodeord?</Text>
-        <Text style={[styles.text , {color: colors.text, fontSize: 16 * scaleFactor}]}>Pyt, det sker!</Text>
-        <Text style={[styles.text1 , {color: colors.text, fontSize: 16 * scaleFactor}]}>
+        <Text
+          style={[
+            styles.text,
+            {color: colors.text, fontSize: 16 * scaleFactor},
+          ]}>
+          Har du glemt dit kodeord?
+        </Text>
+        <Text
+          style={[
+            styles.text,
+            {color: colors.text, fontSize: 16 * scaleFactor},
+          ]}>
+          Pyt, det sker!
+        </Text>
+        <Text
+          style={[
+            styles.text1,
+            {color: colors.text, fontSize: 16 * scaleFactor},
+          ]}>
           Skriv din email i feltet, og så får du tilsendt en mail hvori, du kan
           ændre dit kodeord.
         </Text>
@@ -50,17 +66,21 @@ const ForgotPassword = () => {
           placeholder="Email"
           placeholderTextColor="#8C8C8C"
           onChangeText={text => setEmail(text)}
-          style={styles.form}></TextInput>
+          style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
         <TouchableOpacity
           style={[styles.loginBtn, {backgroundColor: colors.mainButton}]}
           onPress={() => handleResendPassword()}
           titleColor="#000000">
-          <Text style={styles.btnText}>Ændre kodeord</Text>
+          <Text style={[styles.btnText, {fontSize: 15 * scaleFactor}]}>
+            Ændre kodeord
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.createBtn, {backgroundColor: colors.subButton}]}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.btnText}>Tilbage til Login</Text>
+          <Text style={[styles.btnText, {fontSize: 15 * scaleFactor}]}>
+            Tilbage til Login
+          </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ScrollView>
@@ -81,13 +101,11 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 16,
   },
   text1: {
     paddingLeft: 50,
     paddingRight: 50,
     textAlign: 'center',
-    fontSize: 16,
     marginTop: 10,
   },
   form: {
@@ -100,13 +118,16 @@ const styles = StyleSheet.create({
   loginBtn: {
     width: '60%',
     height: 30,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
     marginTop: 40,
     marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   btnText: {
     fontSize: 15,
@@ -114,12 +135,15 @@ const styles = StyleSheet.create({
   createBtn: {
     width: '40%',
     height: 30,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 15,
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
 });
 

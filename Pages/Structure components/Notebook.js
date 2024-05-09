@@ -104,7 +104,7 @@ export const Notebook = () => {
             const currentUser = await Parse.User.currentAsync();
             let notebook = new Parse.Query('Notebook');
             notebook.equalTo('user', currentUser);
-            const notebookResult = await notebook.first();
+            const notebookResult = await notebook.find();
 
 
             let newNotesList = notebookResult.get('notes');

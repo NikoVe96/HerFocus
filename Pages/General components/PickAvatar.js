@@ -27,7 +27,8 @@ export const PickAvatar = ({onAvatarSelect, isSignedUp, picked}) => {
   const pickedAvatar = avatarSelection => {
     return {
       ...styles.images,
-      backgroundColor: avatarSelection === picked ? colors.border : 'transparent',
+      backgroundColor:
+        avatarSelection === picked ? colors.border : 'transparent',
       borderRadius: avatarSelection === picked ? 30 : 0,
     };
   };
@@ -216,6 +217,14 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginBottom: 5,
+    alignSelf: 'flex-start',
+    marginHorizontal: '1%',
+    justifyContent: 'space-between',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
 });
 

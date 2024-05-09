@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   View,
+  Dimensions,
 } from 'react-native';
 import Parse from 'parse/react-native';
 import {useNavigation, useTheme} from '@react-navigation/native';
@@ -25,6 +26,8 @@ const SignUp = () => {
   const navigation = useNavigation();
   const {colors} = useTheme();
   const {handleSignup, error} = useUser(); 
+  const {width, height} = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
    
 
 const handleAvatarSelect = selectedAvatar => {
@@ -32,8 +35,8 @@ const handleAvatarSelect = selectedAvatar => {
 };
 
   return (
-        <SafeAreaView >
-    <ScrollView>
+    <SafeAreaView>
+      <ScrollView>
         <View style={styles.container}>
           <Image
             source={require('../../Assets/images/logo-light-nb.png')}
@@ -43,35 +46,38 @@ const handleAvatarSelect = selectedAvatar => {
             placeholderTextColor="#8C8C8C"
             value={name}
             onChangeText={text => setName(text)}
-            style={styles.form}></TextInput>
+            style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
           <TextInput
             placeholder="Brugernavn"
             placeholderTextColor="#8C8C8C"
             value={username}
             onChangeText={text => setUsername(text)}
-            style={styles.form}></TextInput>
+            style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
           <TextInput
             placeholder="Email"
             placeholderTextColor="#8C8C8C"
             value={email}
             onChangeText={text => setEmail(text)}
-            style={styles.form}></TextInput>
+            style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
           <TextInput
             placeholder="Kodeord"
             placeholderTextColor="#8C8C8C"
             value={password}
             onChangeText={text => setPassword(text)}
             secureTextEntry={true}
-            style={styles.form}></TextInput>
+            style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
           <TextInput
             placeholder="Bekræft kodeord"
             placeholderTextColor="#8C8C8C"
             value={confirmPassword}
             onChangeText={text => setConfirmPassword(text)}
             secureTextEntry={true}
-            style={styles.form}></TextInput>
+            style={[styles.form, {fontSize: 14 * scaleFactor}]}></TextInput>
           <Text style={styles.errorText}>{error}</Text>
-          <Text style={styles.avatar}> Vælg en avatar </Text>
+          <Text style={[styles.avatar, {fontSize: 17 * scaleFactor}]}>
+            {' '}
+            Vælg en avatar{' '}
+          </Text>
           <View style={styles.avatarMargin}>
             <PickAvatar
               onAvatarSelect={handleAvatarSelect}
@@ -93,12 +99,16 @@ const handleAvatarSelect = selectedAvatar => {
             }
             title=" Sign up"
             titleColor="#000000">
-            <Text style={styles.btnText}>Lav en profil</Text>
+            <Text style={[styles.btnText, {fontSize: 15 * scaleFactor}]}>
+              Lav en profil
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Login')}
             style={[styles.signUpBtn, {backgroundColor: colors.mainButton}]}>
-            <Text style={styles.btnText}>Tilbage til login</Text>
+            <Text style={[styles.btnText, {fontSize: 15 * scaleFactor}]}>
+              Tilbage til login
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -116,6 +126,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '20%',
     marginTop: 30,
+    marginLeft: 10,
     marginBottom: 10,
   },
   form: {
@@ -126,27 +137,27 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   avatar: {
-    fontSize: 18,
     marginTop: 5,
     marginBottom: 10,
   },
   avatarMargin: {
     marginLeft: 30,
     marginRight: 20,
+    padding: 3,
   },
   signUpBtn: {
     width: '60%',
     height: 30,
-    borderColor: '#000000',
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  btnText: {
-    fontSize: 15,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
   },
   errorText: {
     color: 'red',

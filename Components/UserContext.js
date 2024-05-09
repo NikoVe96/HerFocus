@@ -21,6 +21,9 @@ export const UserProvider = ({ children }) => {
     avatar
   ) => {
     setError('')
+
+    const lowerCaseEmail = email.toLowerCase();
+
     const userNameExist = new Parse.Query('User');
     userNameExist.equalTo('username', username);
     const userExists = await userNameExist.first(); 
@@ -35,7 +38,7 @@ export const UserProvider = ({ children }) => {
     const user = new Parse.User();
     user.set('name', name);
     user.set('username', username);
-    user.set('email', email);
+    user.set('email', lowerCaseEmail);
     user.set('password', password);
     user.set('avatar', avatar);
 
@@ -50,8 +53,11 @@ export const UserProvider = ({ children }) => {
 
   const handleLogin = async (email, password, navigation) => {
     setError('');
+
+  const lowerCaseEmail = email.toLowerCase(); 
+
     try {
-      const user = await Parse.User.logIn(email, password);
+      const user = await Parse.User.logIn(lowerCaseEmail, password);
       console.log('Success! User ID:', user.id);
       navigation.navigate('Front page');
        setUsername(user.getUsername());
