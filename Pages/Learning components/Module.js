@@ -39,6 +39,7 @@ export const Module = ({ route }) => {
   const [expanded, setExpanded] = useState(-1);
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
+  let notebookExercises = [];
 
   const handleSlide = index => {
     Animated.parallel([
@@ -81,6 +82,8 @@ export const Module = ({ route }) => {
     result.addUnique('modulesCompleted', moduleName);
     result.save();
 
+    //notebookExercises.push({ module: moduleName,  })
+    console.log(notebookExercises);
 
     navigation.navigate('Module overview', {
       subject: subject,
@@ -105,7 +108,7 @@ export const Module = ({ route }) => {
             { name: "Spår fremtiden" },
             { name: "Følelses ræsonnement" },];
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={{
                 textAlign: 'center',
@@ -126,19 +129,19 @@ export const Module = ({ route }) => {
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               I denne øvelse skal du tjekke de bokse af, hvor du kan genkende
               dig selv i tankefejlen. I tekstfeltet skriver du derefter et
               eksempel på en situation, hvor du har oplevet at lave den
               tænkefejl
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               Udfyld kun de tekstfelter, der tilhører tænkefejl, som du kan
               genkende dig selv i.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
             {tænkeFejl.map((item, index) => (
@@ -159,18 +162,18 @@ export const Module = ({ route }) => {
                     marginBottom: '2%',
                     justifyContent: 'space-between',
                   }}>
-                  <Text style={{fontSize: 20}}>{item.name}</Text>
+                  <Text style={{ fontSize: 20 }}>{item.name}</Text>
                   <BouncyCheckbox
                     size={35}
                     fillColor={colors.border}
                     unfillColor="#FFFFFF"
-                    iconStyle={{borderColor: colors.border}}
-                    innerIconStyle={{borderWidth: 2}}
-                    textStyle={{fontFamily: 'JosefinSans-Regular'}}
+                    iconStyle={{ borderColor: colors.border }}
+                    innerIconStyle={{ borderWidth: 2 }}
+                    textStyle={{ fontFamily: 'JosefinSans-Regular' }}
                     onPress={() => {
                       toggleExercise(index);
                     }}
-                    style={{marginLeft: '20%'}}
+                    style={{ marginLeft: '20%' }}
                   />
                 </View>
                 {expanded == index ? (
@@ -188,13 +191,13 @@ export const Module = ({ route }) => {
                 ) : null}
               </View>
             ))}
-            <View style={{flex: 1}}></View>
+            <View style={{ flex: 1 }}></View>
           </View>
         );
         break;
       case '2 Struktur og planlægning':
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={{
                 textAlign: 'center',
@@ -215,13 +218,13 @@ export const Module = ({ route }) => {
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               I denne øvelse skal du udfylde felterne for at identificere og
               reflektere ove, hvilke typer af overspringshandlinger du typisk
               har problemer med.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
             <View
@@ -235,7 +238,7 @@ export const Module = ({ route }) => {
                 borderRadius: 10,
               }}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
                 Hvilke(n) typer af overspringshandlinger kan du identificere dig
                 med?
               </Text>
@@ -262,7 +265,7 @@ export const Module = ({ route }) => {
                 borderRadius: 10,
               }}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
                 Giv et eksempel på hvornår, du har lavet en overspringshandling
                 af denne type
               </Text>
@@ -289,7 +292,7 @@ export const Module = ({ route }) => {
                 borderRadius: 10,
               }}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+                style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
                 Hvad kan du gøre for at lave færre overspringshandlinger af
                 denne type?
               </Text>
@@ -310,7 +313,7 @@ export const Module = ({ route }) => {
         break;
       case '3 Struktur og planlægning':
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={{
                 textAlign: 'center',
@@ -331,22 +334,22 @@ export const Module = ({ route }) => {
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               I denne øvelse skal du tænke på en rutiner, du har. Skriv hvilke
               steps rutinen indeholder, og hvor længe de forskellige steps tager
               i tekstboksene
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
             <Text
-              style={{fontWeight: 'bold', marginBottom: 5, color: colors.text}}>
+              style={{ fontWeight: 'bold', marginBottom: 5, color: colors.text }}>
               Rutine
             </Text>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{flex: 1}}>
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ flex: 1 }}>
                 <View>
                   <View style={styles.rutineView}>
                     <Text>1.</Text>
@@ -509,7 +512,7 @@ export const Module = ({ route }) => {
         break;
       case '4 Struktur og planlægning':
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={{
                 textAlign: 'center',
@@ -530,18 +533,18 @@ export const Module = ({ route }) => {
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               I denne øvelse skal du udvælge nogle af de opgaver du har haft i
               løbet af ugen, og reflektere over dem.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '2%', color: colors.text }}>
               Hvordan gik det med at klare opgaven? Oplevede du nogle tænkefejl
               undervejs? Hvordan kunne du vende de negative tanker til noget
               positivt istedet?
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
+              style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
             <View
@@ -560,7 +563,7 @@ export const Module = ({ route }) => {
                   marginBottom: '2%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
+                <Text style={{ fontSize: 20, color: colors.text }}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -579,7 +582,7 @@ export const Module = ({ route }) => {
                   marginVertical: '3%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20}}>Beskriv hvordan det gik</Text>
+                <Text style={{ fontSize: 20 }}>Beskriv hvordan det gik</Text>
               </View>
               <TextInput
                 style={{
@@ -609,7 +612,7 @@ export const Module = ({ route }) => {
                   marginBottom: '2%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20}}>Opgave</Text>
+                <Text style={{ fontSize: 20 }}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -628,7 +631,7 @@ export const Module = ({ route }) => {
                   marginVertical: '3%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20, color: colors.text}}>
+                <Text style={{ fontSize: 20, color: colors.text }}>
                   Beskriv hvordan det gik
                 </Text>
               </View>
@@ -660,7 +663,7 @@ export const Module = ({ route }) => {
                   marginBottom: '2%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
+                <Text style={{ fontSize: 20, color: colors.text }}>Opgave</Text>
               </View>
               <TextInput
                 style={{
@@ -679,7 +682,7 @@ export const Module = ({ route }) => {
                   marginVertical: '3%',
                   justifyContent: 'space-between',
                 }}>
-                <Text style={{fontSize: 20, color: colors.text}}>
+                <Text style={{ fontSize: 20, color: colors.text }}>
                   Beskriv hvordan det gik
                 </Text>
               </View>
@@ -703,7 +706,7 @@ export const Module = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LearningProgressHeader
         progress={progress}
         moduleLength={moduleLength}
@@ -711,14 +714,14 @@ export const Module = ({ route }) => {
         description={description}
         image={image}
       />
-      <View style={{flex: 8, backgroundColor: colors.background}}>
+      <View style={{ flex: 8, backgroundColor: colors.background }}>
         <Swiper
           loop={false}
           showsPagination={false}
           onIndexChanged={index => handleSlide(index)}
           scrollEnabled={false}
           ref={swiperRef}>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/frustrated_woman.png')}
               style={{
@@ -727,7 +730,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro1}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro1}</Text>
             </View>
             <View
               style={{
@@ -736,7 +739,7 @@ export const Module = ({ route }) => {
                 alignItems: 'baseline',
                 marginVertical: '3%',
               }}>
-              <View style={{marginTop: '3%', marginRight: '5%'}}></View>
+              <View style={{ marginTop: '3%', marginRight: '5%' }}></View>
               <TouchableOpacity
                 style={[
                   styles.swiperBtn,
@@ -746,13 +749,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/woman_reflecting.png')}
               style={{
@@ -761,7 +764,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro2}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro2}</Text>
             </View>
             <View
               style={{
@@ -779,7 +782,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -792,13 +795,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/woman_writing.png')}
               style={{
@@ -807,7 +810,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro3}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro3}</Text>
             </View>
             <View
               style={{
@@ -825,7 +828,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -838,13 +841,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <View>
               <Image
                 source={require('../../Assets/images/women_taking_quiz.png')}
@@ -856,7 +859,7 @@ export const Module = ({ route }) => {
               <Text
                 style={[
                   styles.takeawayHeader,
-                  {fontSize: 22 * scaleFactor, color: colors.text},
+                  { fontSize: 22 * scaleFactor, color: colors.text },
                 ]}>
                 Lad os tage en quiz for at hjælpe dig med at huske, hvad du har
                 lært!
@@ -865,7 +868,7 @@ export const Module = ({ route }) => {
                 key={module.id}
                 subject={subject}
                 module={module.get('name')}
-                style={{color: colors.text}}
+                style={{ color: colors.text }}
               />
               <View
                 style={{
@@ -884,7 +887,7 @@ export const Module = ({ route }) => {
                   ]}
                   onPress={() => swiperRef.current.scrollBy(-1)}>
                   <Text
-                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                     Tilbage
                   </Text>
                 </TouchableOpacity>
@@ -898,15 +901,15 @@ export const Module = ({ route }) => {
                   ]}
                   onPress={() => swiperRef.current.scrollBy(1)}>
                   <Text
-                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                     Næste
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/woman_doing_exercise.png')}
                 style={{
@@ -932,7 +935,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -945,14 +948,14 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/lightbulbs.png')}
                 style={{
@@ -963,7 +966,7 @@ export const Module = ({ route }) => {
               <Text
                 style={[
                   styles.takeawayHeader,
-                  {fontSize: 22 * scaleFactor, color: colors.text},
+                  { fontSize: 22 * scaleFactor, color: colors.text },
                 ]}>
                 Her er der {keyPoints.length} takeaways fra dette modul
               </Text>
@@ -981,7 +984,7 @@ export const Module = ({ route }) => {
                     <Text
                       style={[
                         styles.takeawayHeader,
-                        {fontSize: 22 * scaleFactor, color: colors.text},
+                        { fontSize: 22 * scaleFactor, color: colors.text },
                       ]}>
                       Takeaway {index + 1}
                     </Text>
@@ -1006,7 +1009,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1019,13 +1022,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <View style={{flex: 1, alignItems: 'center'}}>
+          <View style={{ flex: 1, alignItems: 'center' }}>
             <Image
               source={require('../../Assets/images/fireworks.png')}
               style={{
@@ -1036,11 +1039,11 @@ export const Module = ({ route }) => {
             <Text
               style={[
                 styles.takeawayHeader,
-                {fontSize: 22 * scaleFactor, color: colors.text},
+                { fontSize: 22 * scaleFactor, color: colors.text },
               ]}>
               Tillykke!{' '}
             </Text>
-            <Text style={[styles.text, {color: colors.text}]}>
+            <Text style={[styles.text, { color: colors.text }]}>
               Du har lige færdiggjort dit første modul!
             </Text>
             <Text
@@ -1069,7 +1072,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1082,7 +1085,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => handleCompletion()}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Færdiggør modulet
                 </Text>
               </TouchableOpacity>
@@ -1090,7 +1093,6 @@ export const Module = ({ route }) => {
           </View>
         </Swiper>
       </View>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

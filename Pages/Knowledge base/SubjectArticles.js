@@ -6,19 +6,19 @@ import {
   TouchableOpacity,
   Dimensions
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useNavigation, useTheme} from '@react-navigation/native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import Markdown from 'react-native-markdown-display';
 import BottomNavigation from '../../Navigation/BottomNav';
 
-export const ArticlesDiagnosed = ({route}) => {
+export const ArticlesDiagnosed = ({ route }) => {
   const navigation = useNavigation();
   const [articlesList, setArticlesList] = useState([]);
-  const {subject} = route.params;
-  const {colors} = useTheme();
-  const {width, height} = Dimensions.get('window');
+  const { subject } = route.params;
+  const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
 
 
@@ -41,28 +41,28 @@ export const ArticlesDiagnosed = ({route}) => {
   }
 
   const readArticle = article => {
-    navigation.navigate('View article', {article: article});
+    navigation.navigate('View article', { article: article });
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           Her kan du vælge en artikel.
         </Text>
         <Text
           style={[
             styles.title2,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           God læsning!
         </Text>
         {articlesList.length == 0 ? (
-          <Text style={{textAlign: 'center', fontSize: 24}}>
+          <Text style={{ textAlign: 'center', fontSize: 24 }}>
             Loading articles...
           </Text>
         ) : (
@@ -70,37 +70,36 @@ export const ArticlesDiagnosed = ({route}) => {
             <TouchableOpacity
               key={index}
               style={
-               styles.press
+                styles.press
               }
               onPress={() => readArticle(item)}>
-             
+
+              <View
+                style={[
+                  styles.buttonGrad,
+                  { backgroundColor: colors.mainButton },
+                ]}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginTop: 10,
+                    color: colors.text
+                  }}>
+                  {item.get('title')}
+                </Text>
                 <View
-                  style={[
-                    styles.buttonGrad,
-                    {backgroundColor: colors.mainButton},
-                  ]}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      textAlign: 'center',
-                      marginTop: 10,
-                      color: colors.text
-                    }}>
-                    {item.get('title')}
-                  </Text>
-                  <View
-                    style={[styles.seperator, {backgroundColor: colors.text}]}></View>
-                  <Text numberOfLines={4} style={[styles.articleText, {color: colors.text}]}>
-                    {item.get('text').replaceAll(/#|-|>|/gi, '')}
-                  </Text>
-                </View>
-            
+                  style={[styles.seperator, { backgroundColor: colors.text }]}></View>
+                <Text numberOfLines={4} style={[styles.articleText, { color: colors.text }]}>
+                  {item.get('text').replaceAll(/#|-|>|/gi, '')}
+                </Text>
+              </View>
+
             </TouchableOpacity>
           ))
         )}
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,
   },
   press: {

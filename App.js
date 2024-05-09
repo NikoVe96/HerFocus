@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigation from './Navigation/BottomNav';
 import SideMenu from './Navigation/SideMenu';
-import { NavigationContainer, DefaultTheme, useTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, useTheme, useNavigationState } from '@react-navigation/native';
 import { useColorScheme, Button } from 'react-native';
 import Parse from 'parse/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -89,6 +89,7 @@ function App() {
   //const [notification, setNotification] = useState(false);
   //const notificationListener = useRef();
   //const responseListener = useRef();
+  const [currentRouteName, setCurrentRouteName] = useState('');
 
   useEffect(() => {
     const getTheme = async () => {
@@ -118,23 +119,22 @@ function App() {
        Notifications.removeNotificationSubscription(notificationListener.current);
        Notifications.removeNotificationSubscription(responseListener.current);
      }; */
-
-    getTheme();
   }, []);
 
-  async function themeQuery() {
-    let themeQ = new Parse.Query('Settings');
-    themeQ.contains('user', ID);
-    const Result = await themeQ.find();
-    const chosenTheme = (Result[0].get('theme'));
-    //setTheme(themes[chosenTheme]);
-  }
+  const onStateChange = (state) => {
+    const activeRouteName = state.routes[state.index].name;
+    setCurrentRouteName(activeRouteName);
+  };
+
+  // Screens where the bottom navigation should be hidden
+  const hiddenScreens = ['Login', 'Sign up', 'Forgot password'];
+  const shouldDisplayBottomNav = !hiddenScreens.includes(currentRouteName);
 
   return (
     <GestureHandlerRootView style={{ flex: 1, }}>
-
-      <NavigationContainer theme={theme}>
-
+      <NavigationContainer
+        theme={theme}
+        onStateChange={onStateChange}>
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
           {/*<Button
@@ -143,13 +143,14 @@ function App() {
               await sendPushNotification(expoPushToken);
             }}
           />*/}
-          {/* <BottomNavigation /> */}
+          {shouldDisplayBottomNav && <BottomNavigation />}
         </SafeAreaView>
-
       </NavigationContainer>
     </GestureHandlerRootView>
   );
 }
+
+
 
 function AppWrapper() {
   return (

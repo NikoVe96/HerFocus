@@ -47,7 +47,6 @@ export const Forum = ({ route }) => {
           forumTitle={forumTitle}></WritePost>
         <Feed forumTitle={forumTitle} posts={posts} setPosts={setPosts} />
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

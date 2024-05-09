@@ -1,14 +1,14 @@
-import {Text, View, SafeAreaView, StyleSheet, Dimensions} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPhone} from '@fortawesome/free-solid-svg-icons/faPhone';
-import {faEnvelope} from '@fortawesome/free-solid-svg-icons/faEnvelope';
+import { Text, View, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope';
 import BottomNavigation from '../../Navigation/BottomNav';
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export const ContactInformation = () => {
-  const {colors} = useTheme();
-  const {width, height} = Dimensions.get('window');
+  const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
   return (
     <SafeAreaView style={styles.container}>
@@ -17,35 +17,35 @@ export const ContactInformation = () => {
           <Text
             style={[
               styles.textStyle,
-              {color: colors.text, fontSize: 30 * scaleFactor},
+              { color: colors.text, fontSize: 30 * scaleFactor },
             ]}>
             Kontaktinformationer
           </Text>
         </View>
         <View
-          style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+          style={[styles.seperator, { backgroundColor: colors.border }]}></View>
         <Text
           style={[
             styles.contactText,
-            {color: colors.text, fontSize: 16 * scaleFactor},
+            { color: colors.text, fontSize: 16 * scaleFactor },
           ]}>
           Har du har spørgsmål, problemer eller feedback, er du velkommen til at
           tage kontakt til os. Vi vil meget gerne høre fra dig!
         </Text>
         <View style={styles.contactContainer}>
-          <View style={[styles.contact, {backgroundColor: colors.mainButton}]}>
+          <View style={[styles.contact, { backgroundColor: colors.mainButton }]}>
             <View style={styles.phoneAndMail}>
               <FontAwesomeIcon icon={faPhone} style={styles.icons} size={25} />
               <Text
                 style={[
                   styles.phoneAndMailText,
-                  {color: colors.text, fontSize: 21 * scaleFactor},
+                  { color: colors.text, fontSize: 21 * scaleFactor },
                 ]}>
                 +45 31652107
               </Text>
             </View>
           </View>
-          <View style={[styles.contact, {backgroundColor: colors.mainButton}]}>
+          <View style={[styles.contact, { backgroundColor: colors.mainButton }]}>
             <View style={styles.phoneAndMail}>
               <FontAwesomeIcon
                 icon={faEnvelope}
@@ -55,7 +55,7 @@ export const ContactInformation = () => {
               <Text
                 style={[
                   styles.phoneAndMailText,
-                  {color: colors.text, fontSize: 21 * scaleFactor},
+                  { color: colors.text, fontSize: 21 * scaleFactor },
                 ]}>
                 emhb@itu.dk
               </Text>
@@ -63,7 +63,6 @@ export const ContactInformation = () => {
           </View>
         </View>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

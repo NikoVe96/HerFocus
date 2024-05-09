@@ -130,7 +130,6 @@ export const FrontPage = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

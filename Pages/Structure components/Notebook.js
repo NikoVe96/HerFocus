@@ -258,7 +258,7 @@ export const Notebook = () => {
                         <Modal
                             isVisible={isToDoModalVisible}
                             onBackdropPress={() => setToDoModalVisible(false)}>
-                            <View style={{ backgroundColor: colors.background, padding: 10, borderWidth: 1, borderColor: colors.background, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
+                            <View style={{ backgroundColor: colors.background, height: '80%', padding: 10, borderWidth: 1, borderColor: colors.background, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}>
                                 <AddTask />
                             </View>
                             <TouchableOpacity

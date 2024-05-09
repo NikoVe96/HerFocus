@@ -174,9 +174,9 @@ export const AddEvent = () => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <View style={{alignItems: 'center', padding: '2%'}}>
+        <View style={{ alignItems: 'center', padding: '2%' }}>
           <Text
             style={{
               fontSize: 24 * scaleFactor,
@@ -189,7 +189,7 @@ export const AddEvent = () => {
           <View
             style={[
               styles.border,
-              {backgroundColor: colors.border, borderColor: colors.border},
+              { backgroundColor: colors.border, borderColor: colors.border },
             ]}></View>
         </View>
         <View
@@ -201,23 +201,23 @@ export const AddEvent = () => {
             <Text
               style={[
                 styles.text,
-                {fontSize: 18 * scaleFactor},
-                {color: colors.text},
+                { fontSize: 18 * scaleFactor },
+                { color: colors.text },
               ]}>
               Hvad skal din begivenhed hedde?
             </Text>
             <TextInput
-              style={[styles.textInput, {fontSize: 16 * scaleFactor}]}
+              style={[styles.textInput, { fontSize: 16 * scaleFactor }]}
               onChangeText={text => setEventName(text)}
               value={eventName}
             />
           </View>
-          <View style={{marginTop: '2%', marginBottom: '5%'}}>
+          <View style={{ marginTop: '2%', marginBottom: '5%' }}>
             <Text
               style={[
                 styles.text,
-                {fontSize: 18 * scaleFactor},
-                {color: colors.text},
+                { fontSize: 18 * scaleFactor },
+                { color: colors.text },
               ]}>
               Vælg en farve
             </Text>
@@ -241,7 +241,7 @@ export const AddEvent = () => {
                   borderColor: '#FAEDCB',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -265,7 +265,7 @@ export const AddEvent = () => {
                   borderColor: '#C9E4DE',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -289,7 +289,7 @@ export const AddEvent = () => {
                   borderColor: '#C6DEF1',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -313,7 +313,7 @@ export const AddEvent = () => {
                   borderColor: '#DBCDF0',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -337,7 +337,7 @@ export const AddEvent = () => {
                   borderColor: '#FFADAD',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -361,7 +361,7 @@ export const AddEvent = () => {
                   borderColor: '#FFD6A5',
                   elevation: 5,
                   shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
+                  shadowOffset: { width: 1, height: 2 },
                   shadowOpacity: 0.8,
                   shadowRadius: 1,
                 }}
@@ -375,18 +375,18 @@ export const AddEvent = () => {
               alignItems: 'center',
             }}>
             <Text
-              style={{flex: 6, fontSize: 18 * scaleFactor, color: colors.text}}>
+              style={{ flex: 6, fontSize: 18 * scaleFactor, color: colors.text }}>
               Hele dagen
             </Text>
             <Switch
-              trackColor={{false: colors.mainButton, true: colors.subButton}}
+              trackColor={{ false: colors.mainButton, true: colors.subButton }}
               thumbColor={isAllDayEnabled ? colors.border : colors.background}
               ios_backgroundColor={colors.mainButton}
               onValueChange={() => allDayEvent()}
               value={isAllDayEnabled}
             />
           </View>
-          <View style={{marginVertical: '2%', flexDirection: 'row'}}>
+          <View style={{ marginVertical: '2%', flexDirection: 'row' }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 onPress={showEmojiModal}
@@ -400,8 +400,8 @@ export const AddEvent = () => {
                 <Text
                   style={[
                     styles.buttonText,
-                    {fontSize: 20 * scaleFactor},
-                    {color: colors.text},
+                    { fontSize: 20 * scaleFactor },
+                    { color: colors.text },
                   ]}>
                   Emoji
                 </Text>
@@ -415,7 +415,7 @@ export const AddEvent = () => {
                   <View
                     style={[
                       styles.emojiPickerContainer,
-                      {backgroundColor: colors.background},
+                      { backgroundColor: colors.background },
                     ]}>
                     <EmojiPicker
                       emojis={emojis}
@@ -453,8 +453,8 @@ export const AddEvent = () => {
                 </View>
               </Modal>
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
-              <Text style={{fontSize: 26 * scaleFactor, color: colors.text}}>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
+              <Text style={{ fontSize: 26 * scaleFactor, color: colors.text }}>
                 {' '}
                 {emoji}
               </Text>
@@ -464,7 +464,7 @@ export const AddEvent = () => {
             <Text></Text>
           ) : (
             <View>
-              <View style={{flexDirection: 'row', marginVertical: '1%'}}>
+              <View style={{ flexDirection: 'row', marginVertical: '1%' }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
                     style={[
@@ -478,8 +478,8 @@ export const AddEvent = () => {
                     <Text
                       style={[
                         styles.buttonText,
-                        {fontSize: 20 * scaleFactor},
-                        {color: colors.text},
+                        { fontSize: 20 * scaleFactor },
+                        { color: colors.text },
                       ]}>
                       Starttidspunkt
                     </Text>
@@ -491,18 +491,18 @@ export const AddEvent = () => {
                     onCancel={hideStartTimePicker}
                   />
                 </View>
-                <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <View style={[styles.rowView, { alignItems: 'center' }]}>
                   <Text
                     style={[
                       styles.text,
-                      {fontWeight: 'bold', fontSize: 18 * scaleFactor},
-                      {color: colors.text},
+                      { fontWeight: 'bold', fontSize: 18 * scaleFactor },
+                      { color: colors.text },
                     ]}>
                     {eventStartTime === null ? '' : `${eventStartTime}`}
                   </Text>
                 </View>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: '1%'}}>
+              <View style={{ flexDirection: 'row', marginVertical: '1%' }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
                     style={[
@@ -516,8 +516,8 @@ export const AddEvent = () => {
                     <Text
                       style={[
                         styles.buttonText,
-                        {fontSize: 20 * scaleFactor},
-                        {color: colors.text},
+                        { fontSize: 20 * scaleFactor },
+                        { color: colors.text },
                       ]}>
                       Slut tidspunkt
                     </Text>
@@ -529,12 +529,12 @@ export const AddEvent = () => {
                     onCancel={hideEndTimePicker}
                   />
                 </View>
-                <View style={[styles.rowView, {alignItems: 'center'}]}>
+                <View style={[styles.rowView, { alignItems: 'center' }]}>
                   <Text
                     style={[
                       styles.text,
-                      {fontWeight: 'bold', fontSize: 18 * scaleFactor},
-                      {color: colors.text},
+                      { fontWeight: 'bold', fontSize: 18 * scaleFactor },
+                      { color: colors.text },
                     ]}>
                     {eventEndTime === null ? '' : `${eventEndTime}`}
                   </Text>
@@ -543,7 +543,7 @@ export const AddEvent = () => {
             </View>
           )}
 
-          <View style={{flexDirection: 'row', marginVertical: '2%'}}>
+          <View style={{ flexDirection: 'row', marginVertical: '2%' }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 style={[
@@ -557,8 +557,8 @@ export const AddEvent = () => {
                 <Text
                   style={[
                     styles.buttonText,
-                    {fontSize: 20 * scaleFactor},
-                    {color: colors.text},
+                    { fontSize: 20 * scaleFactor },
+                    { color: colors.text },
                   ]}>
                   Dato
                 </Text>
@@ -570,12 +570,12 @@ export const AddEvent = () => {
                 onCancel={hideDatePicker}
               />
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
               <Text
                 style={[
                   styles.text,
-                  {fontWeight: 'bold', fontSize: 18 * scaleFactor},
-                  {color: colors.text},
+                  { fontWeight: 'bold', fontSize: 18 * scaleFactor },
+                  { color: colors.text },
                 ]}>
                 {`${eventDate}`}
               </Text>
@@ -591,12 +591,11 @@ export const AddEvent = () => {
             },
           ]}
           onPress={newEvent}>
-          <Text style={{fontSize: 26 * scaleFactor, fontWeight: 'bold', color: colors.text}}>
+          <Text style={{ fontSize: 26 * scaleFactor, fontWeight: 'bold', color: colors.text }}>
             Tilføj nyt event
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation/>
     </SafeAreaView>
   );
 }

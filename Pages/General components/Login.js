@@ -16,8 +16,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 const LogIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-   const {colors} = useTheme();
-   const {handleLogin, error} = useUser(); 
+  const { colors } = useTheme();
+  const { handleLogin, error } = useUser();
 
 
   return (
@@ -46,7 +46,7 @@ const LogIn = ({ navigation }) => {
           <Text>Glemt dit kodeord?</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.loginBtn, {backgroundColor: colors.mainButton}]}
+          style={[styles.loginBtn, { backgroundColor: colors.mainButton }]}
           onPress={() => handleLogin(email, password, navigation)}
           title=" Login"
           titleColor="#000000">
@@ -55,7 +55,7 @@ const LogIn = ({ navigation }) => {
         <Text>Har du ikke en konto?</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('Sign up')}
-          style={[styles.createBtn, {backgroundColor: colors.subButton}]}
+          style={[styles.createBtn, { backgroundColor: colors.subButton }]}
           title="Create one">
           <Text style={styles.btnText}>Lav en her</Text>
         </TouchableOpacity>
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
+    marginBottom: 200,
   },
   image: {
     width: '80%',
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     width: '50%',
-    height: 30,
+    height: 50,
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 8,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
   },
   createBtn: {
     width: '30%',
-    height: 30,
+    height: 50,
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 15,
