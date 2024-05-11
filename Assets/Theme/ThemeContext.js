@@ -113,8 +113,8 @@ const DarkBlueTheme = {
     ...DefaultTheme.colors,
     Bars: '#131227',
     background: '#393751',
-    text: '#C7C7C7',
-    barText: '#C7C7C7',
+    text: 'white',
+    barText: 'white',
     border: '#131227',
     notification: '#414062',
     iconLight: '#E4BEED',
@@ -201,21 +201,16 @@ export const ThemeProvider = ({children}) => {
   }, []);
 
   const updateTheme = async newThemeName => {
-    let settingsQuery = new Parse.Query('Settings');
-    settingsQuery.contains('user', ID);
-    const result = await settingsQuery.first();
+     const currentUser = await Parse.User.currentAsync();
+     const userSettings = currentUser.get('settings');
+     await userSettings.fetch();
 
-    if (result) {
-      result.set('theme', newThemeName);
+   
+      userSettings.set('theme', newThemeName);
       try {
-        await result.save();
-        Alert.alert('Your theme was updated!');
+        await userSettings.save();
       } catch (error) {
         Alert.alert('Error:', error.message);
-      }
-    } else {
-      Alert.alert('Settings not found for this user');
-      console.log(ID);
     }
     setTheme(themes[newThemeName] || themes.yellow);
   };

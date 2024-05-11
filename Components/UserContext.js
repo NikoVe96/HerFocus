@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
     password,
     confirmPassword,
     navigation,
-    avatar
+    avatar,
   ) => {
     setError('')
 
@@ -26,7 +26,8 @@ export const UserProvider = ({ children }) => {
 
     const userNameExist = new Parse.Query('User');
     userNameExist.equalTo('username', username);
-    const userExists = await userNameExist.first(); 
+    const userExists = await userNameExist.first();
+
     if (userExists) {
       setError('Dette brugernavn er allerede i brug, vælg et nyt');
     }
@@ -42,8 +43,15 @@ export const UserProvider = ({ children }) => {
     user.set('password', password);
     user.set('avatar', avatar);
 
+    const userSettings = new Parse.Object('Settings');
+    userSettings.set('theme', 'yellow');
+    userSettings.set('user', user);
+
     try {
       await user.signUp();
+      await userSettings.save();
+      user.set('settings', userSettings);
+      await user.save();
       navigation.navigate('Login');
       console.log('pressed');
     } catch (error) {

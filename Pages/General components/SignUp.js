@@ -23,6 +23,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   let [avatar, setAvatar] = useState('');
+  const [settings, setSettings] = useState('');
   const navigation = useNavigation();
   const {colors} = useTheme();
   const {handleSignup, error} = useUser(); 
@@ -95,6 +96,7 @@ const handleAvatarSelect = selectedAvatar => {
                 confirmPassword,
                 navigation,
                 avatar,
+                settings
               )
             }
             title=" Sign up"
