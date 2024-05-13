@@ -11,7 +11,7 @@ import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import { UserProvider } from './Components/UserContext';
+import { UserProvider, useUser } from './Components/UserContext';
 
 
 Parse.setAsyncStorage(AsyncStorage);
@@ -130,11 +130,14 @@ function App() {
   const hiddenScreens = ['Login', 'Sign up', 'Forgot password'];
   const shouldDisplayBottomNav = !hiddenScreens.includes(currentRouteName);
 
+  const { username } = useUser();
+
   return (
     <GestureHandlerRootView style={{ flex: 1, }}>
       <NavigationContainer
         theme={theme}
-        onStateChange={onStateChange}>
+      //onStateChange={onStateChange}
+      >
         <SafeAreaView style={{ flex: 1 }}>
           <SideMenu />
           {/*<Button
@@ -143,7 +146,7 @@ function App() {
               await sendPushNotification(expoPushToken);
             }}
           />*/}
-          {shouldDisplayBottomNav && <BottomNavigation />}
+          {username == '' ? null : <BottomNavigation />}
         </SafeAreaView>
       </NavigationContainer>
     </GestureHandlerRootView>

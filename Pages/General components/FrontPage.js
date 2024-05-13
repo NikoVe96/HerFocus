@@ -14,33 +14,35 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import { useUser } from '../../Components/UserContext';
 import BottomNavigation from '../../Navigation/BottomNav';
 
-export const HelloUser = () => {
-  const { username } = useUser();
-  const { colors } = useTheme();
-  const { width, height } = Dimensions.get('window');
-  const scaleFactor = Math.min(width / 375, height / 667);
-
-  return (
-    <Text
-      style={[
-        styles.helloUser,
-        { color: colors.text, fontSize: 22 * scaleFactor }
-      ]}>
-      Hej, {username}!
-    </Text>
-  );
-};
-
 export const FrontPage = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    async function getCurrentUser() {
+      if (username === '') {
+        const currentUser = await Parse.User.currentAsync();
+        if (currentUser !== null) {
+          setUsername(currentUser.getUsername());
+        }
+      }
+    }
+    getCurrentUser();
+  }, [username]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <HelloUser />
+        <Text
+          style={[
+            styles.helloUser,
+            { color: colors.text, fontSize: 22 * scaleFactor }
+          ]}>
+          Hej, {username}!
+        </Text>
         <Text
           style={[
             styles.title,

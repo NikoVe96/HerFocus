@@ -2,6 +2,8 @@ import {
   DrawerContentScrollView,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
+import React, { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, View, StyleSheet } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -65,7 +67,6 @@ const moduleSubjects = [
 function CustomDrawerContent({ navigation }) {
   const { colors } = useTheme();
   const { handleLogout } = useUser();
-
 
   return (
     <DrawerContentScrollView style={{ backgroundColor: colors.background }}>
@@ -352,76 +353,95 @@ function CustomDrawerContent({ navigation }) {
   );
 }
 
+
 function SideMenu() {
+
+  const { updateUserProfile, username } = useUser();
+
+  const initialRouteName = username != '' ? 'Front page' : 'Login';
+
+  useFocusEffect(
+    useCallback(() => {
+      updateUserProfile();
+      return () => { };
+    }, [username]),
+  );
+
   return (
     <Drawer.Navigator
-      initialRouteName="Front page"
       backBehavior="history"
+      //initialRouteName={username == '' ? 'Login' : 'Front page'}
       screenOptions={{
         drawerPosition: 'right',
         header: props => <TopNavigation {...props} />,
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
-      <Drawer.Screen name="Add routine" component={AddRoutine}></Drawer.Screen>
-      <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
-      <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
-      <Drawer.Screen
-        name="Contact information"
-        component={ContactInformation}></Drawer.Screen>
-      <Drawer.Screen
-        name="Calendar"
-        component={CalendarOverview}></Drawer.Screen>
-      <Drawer.Screen
-        name="Forgot password"
-        component={ForgotPassword}
-        options={{ headerShown: false }}></Drawer.Screen>
-      <Drawer.Screen
-        name="Login"
-        component={LogIn}
-        options={{ headerShown: false }}></Drawer.Screen>
-      <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
-      <Drawer.Screen
-        name="Sign up"
-        component={SignUp}
-        options={{ headerShown: false }}></Drawer.Screen>
-      <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
-      <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
-      <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>
-      <Drawer.Screen
-        name="Daily overview"
-        component={DailyOverview}></Drawer.Screen>
-      <Drawer.Screen
-        name="Pick subject"
-        component={PickSubject}></Drawer.Screen>
-      <Drawer.Screen
-        name="Favorite posts"
-        component={FavoritePosts}></Drawer.Screen>
-      <Drawer.Screen
-        name="Favorite articles"
-        component={FavoriteArticles}></Drawer.Screen>
-      <Drawer.Screen
-        name="Subject articles"
-        component={SubjectArticles}></Drawer.Screen>
-      <Drawer.Screen
-        name="View article"
-        component={ViewArticle}></Drawer.Screen>
-      <Drawer.Screen
-        name="Module overview"
-        component={ModulesOverview}></Drawer.Screen>
-      <Drawer.Screen name="Module" component={Module}></Drawer.Screen>
-      <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
-      <Drawer.Screen
-        name="IndividualPost"
-        component={IndividualPost}></Drawer.Screen>
-      <Drawer.Screen
-        name="Structure"
-        component={StructureFrontPage}></Drawer.Screen>
-      <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
-      <Drawer.Screen
-        name="Notebook"
-        component={Notebook}></Drawer.Screen>
-
+      {username == '' ?
+        <>
+          <Drawer.Screen
+            name="Login"
+            component={LogIn}
+            options={{ headerShown: false }}></Drawer.Screen>
+          <Drawer.Screen
+            name="Forgot password"
+            component={ForgotPassword}
+            options={{ headerShown: false }}></Drawer.Screen>
+          <Drawer.Screen
+            name="Sign up"
+            component={SignUp}
+            options={{ headerShown: false }}></Drawer.Screen>
+        </>
+        :
+        <>
+          <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
+          <Drawer.Screen name="Add routine" component={AddRoutine}></Drawer.Screen>
+          <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
+          <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
+          <Drawer.Screen
+            name="Contact information"
+            component={ContactInformation}></Drawer.Screen>
+          <Drawer.Screen
+            name="Calendar"
+            component={CalendarOverview}></Drawer.Screen>
+          <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
+          <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
+          <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
+          <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>
+          <Drawer.Screen
+            name="Daily overview"
+            component={DailyOverview}></Drawer.Screen>
+          <Drawer.Screen
+            name="Pick subject"
+            component={PickSubject}></Drawer.Screen>
+          <Drawer.Screen
+            name="Favorite posts"
+            component={FavoritePosts}></Drawer.Screen>
+          <Drawer.Screen
+            name="Favorite articles"
+            component={FavoriteArticles}></Drawer.Screen>
+          <Drawer.Screen
+            name="Subject articles"
+            component={SubjectArticles}></Drawer.Screen>
+          <Drawer.Screen
+            name="View article"
+            component={ViewArticle}></Drawer.Screen>
+          <Drawer.Screen
+            name="Module overview"
+            component={ModulesOverview}></Drawer.Screen>
+          <Drawer.Screen name="Module" component={Module}></Drawer.Screen>
+          <Drawer.Screen name="Forum" component={Forum}></Drawer.Screen>
+          <Drawer.Screen
+            name="IndividualPost"
+            component={IndividualPost}></Drawer.Screen>
+          <Drawer.Screen
+            name="Structure"
+            component={StructureFrontPage}></Drawer.Screen>
+          <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
+          <Drawer.Screen
+            name="Notebook"
+            component={Notebook}></Drawer.Screen>
+        </>
+      }
     </Drawer.Navigator>
   );
 }

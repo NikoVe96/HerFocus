@@ -39,7 +39,7 @@ export const Module = ({ route }) => {
   const [expanded, setExpanded] = useState(-1);
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
-  let notebookExercises = [];
+  const [notebookExercises, setNotebookExercises] = useState({});
 
   const handleSlide = index => {
     Animated.parallel([
@@ -82,7 +82,6 @@ export const Module = ({ route }) => {
     result.addUnique('modulesCompleted', moduleName);
     result.save();
 
-    //notebookExercises.push({ module: moduleName,  })
     console.log(notebookExercises);
 
     navigation.navigate('Module overview', {
@@ -144,6 +143,52 @@ export const Module = ({ route }) => {
               style={{ fontSize: 18, marginBottom: '4%', color: colors.text }}>
               Når opgaven er fulført, vil du kunne finde den i din notesbog.
             </Text>
+            <View
+              style={{
+                marginVertical: '1%',
+                backgroundColor: colors.subButton,
+                marginVertical: '2%',
+                padding: '3%',
+                borderWidth: 1,
+                borderColor: colors.subButton,
+                borderRadius: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: '2%',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{ fontSize: 20 }}>Alt eller intet</Text>
+                <BouncyCheckbox
+                  size={35}
+                  fillColor={colors.border}
+                  unfillColor="#FFFFFF"
+                  iconStyle={{ borderColor: colors.border }}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  textStyle={{ fontFamily: 'JosefinSans-Regular' }}
+                  onPress={() => {
+                    toggleExercise(index);
+                  }}
+                  style={{ marginLeft: '20%' }}
+                />
+              </View>
+              {expanded ? (
+                <TextInput
+                  style={{
+                    backgroundColor: 'white',
+                    borderWidth: 1,
+                    borderColor: 'white',
+                    borderRadius: 10,
+                    padding: 10,
+                  }}
+                  multiline={true}
+                  numberOfLines={10}
+                  textAlignVertical={'top'}
+                  onChangeText={text => updateExerciseResult(text)}></TextInput>
+              ) : null}
+            </View>
+            {/*
             {tænkeFejl.map((item, index) => (
               <View
                 key={index}
@@ -187,10 +232,12 @@ export const Module = ({ route }) => {
                     }}
                     multiline={true}
                     numberOfLines={10}
-                    textAlignVertical={'top'}></TextInput>
+                    textAlignVertical={'top'}
+                    onChangeText={text => updateExerciseResult(text)}></TextInput>
                 ) : null}
               </View>
             ))}
+          */}
             <View style={{ flex: 1 }}></View>
           </View>
         );

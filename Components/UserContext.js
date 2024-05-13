@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import Parse from 'parse/react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -15,6 +15,21 @@ export const UserProvider = ({ children }) => {
   const [taskProgress, setTaskProgress] = useState(0);
   const [remainingTasks, setRemainingTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const currentUser = await Parse.User.currentAsync();
+      if (currentUser) {
+        setUsername(currentUser.getUsername());
+        console.log('username success: ' + username);
+      } else {
+        setUsername(''); // Ensure username is empty if no user is logged in
+        console.log('username fail: ' + username);
+      }
+    };
+    checkUser();
+
+  }, []);
 
   const handleSignup = async (
     name,
@@ -58,7 +73,7 @@ export const UserProvider = ({ children }) => {
     try {
       const user = await Parse.User.logIn(email, password);
       console.log('Success! User ID:', user.id);
-      navigation.navigate('Front page');
+      //navigation.navigate('Front page');
       setUsername(user.getUsername());
     } catch (error) {
       console.error('Error while logging in user', error);
@@ -70,14 +85,14 @@ export const UserProvider = ({ children }) => {
     try {
       await Parse.User.logOut();
       setUsername('');
-      navigation.navigate('Login');
+      //navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out', error);
     }
   };
 
   const updateUserProfile = async () => {
-    const currentUser = Parse.User.current();
+    const currentUser = await Parse.User.currentAsync();
     if (currentUser) {
       setUsername(currentUser.get('username'));
       setAvatar(currentUser.get('avatar'));

@@ -36,6 +36,7 @@ export const AddEvent = () => {
   const [dayEvent, setDayEvent] = useState(false);
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
+  const [description, setDescription] = useState('');
 
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export const AddEvent = () => {
       newEvent.set('color', eventColor);
       newEvent.set('type', 'event');
       newEvent.set('allDay', dayEvent);
+      newEvent.set('description', description);
       // If time, add recurring option
       await newEvent.save();
       console.log('Success: event saved')
@@ -148,6 +150,7 @@ export const AddEvent = () => {
     setEventDate('');
     setEmoji('');
     setEventColor('');
+    setDescription('');
   }
 
   function showEmojiModal() {
@@ -581,6 +584,22 @@ export const AddEvent = () => {
               </Text>
             </View>
           </View>
+          <View
+            style={{
+              alignContent: 'center',
+            }}>
+            <Text style={[styles.text, { color: colors.text }]}>
+              Tilføj en beskrivelse
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={text => setDescription(text)}
+              value={description}
+              multiline={true}
+              numberOfLines={8}
+              textAlignVertical={'top'}>
+            </TextInput>
+          </View>
         </View>
         <TouchableOpacity
           style={[
@@ -624,7 +643,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     elevation: 5,
-    shadowColor: 'grey',
+    shadowColor: 'black',
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
@@ -661,17 +680,18 @@ const styles = StyleSheet.create({
     height: '95%'
   },
   text: {
-    marginVertical: '2%',
-
+    marginVertical: 10,
+    fontSize: 18,
   },
   textInput: {
-    padding: 10,
+    padding: 8,
     backgroundColor: 'white',
     borderWidth: 1,
     borderRadius: 10,
+    fontSize: 16,
     borderColor: 'white',
     elevation: 5,
-    shadowColor: 'grey',
+    shadowColor: 'black',
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,

@@ -258,11 +258,10 @@ export const DailyOverview = () => {
                     fontWeight: 'bold',
                     alignSelf: 'center',
                     marginVertical: 10,
-                    marginBottom: 30,
+                    marginBottom: 10,
                   }}>
                   Næste to-do
                 </Text>
-
                 <View style={styles.rowView}>
                   <Text style={{ fontSize: 36 }}>
                     {remainingTasksArray[0].get('emoji')}
@@ -283,6 +282,19 @@ export const DailyOverview = () => {
                     {remainingTasksArray[0].get('endTime')}
                   </Text>
                 </View>
+                {remainingTasksArray[0].get('description') == '' ?
+                  null
+                  : <ScrollView
+                    style={{
+                      borderWidth: 1,
+                      borderColor: colors.border,
+                      borderRadius: 10,
+                      padding: 10,
+                      marginHorizontal: 10,
+                    }}>
+                    <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[0].get('description')}</Text>
+                  </ScrollView>
+                }
                 <View style={styles.rowView}>
                   <View
                     style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
@@ -337,7 +349,7 @@ export const DailyOverview = () => {
                     fontWeight: 'bold',
                     alignSelf: 'center',
                     marginVertical: 10,
-                    marginBottom: 30,
+                    marginBottom: 10,
                   }}>
                   Næste to-do
                 </Text>
@@ -362,6 +374,19 @@ export const DailyOverview = () => {
                     {remainingTasksArray[1].get('endTime')}
                   </Text>
                 </View>
+                {remainingTasksArray[1].get('description') == '' ?
+                  null
+                  : <ScrollView
+                    contentContainerStyle={{
+                      borderWidth: 1,
+                      borderColor: colors.border,
+                      borderRadius: 10,
+                      padding: 10,
+                      marginHorizontal: 10,
+                    }}>
+                    <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[1].get('description')}</Text>
+                  </ScrollView>
+                }
                 <View style={styles.rowView}>
                   <View
                     style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
@@ -557,7 +582,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 15
+    marginVertical: 5
   },
   text: {
     fontSize: 18,

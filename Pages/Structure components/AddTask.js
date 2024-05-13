@@ -33,6 +33,7 @@ export const AddTask = ({ navigation }) => {
   const [recent, setRecent] = useState([]);
   const [emojiModalVisible, setEmojiModalVisible] = useState(false);
   const [emoji, setEmoji] = useState();
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -60,6 +61,7 @@ export const AddTask = ({ navigation }) => {
       newTask.set('user', currentUser);
       newTask.set('color', taskColor);
       newTask.set('type', 'task');
+      newTask.set('description', description);
       // If time, add recurring option
       await newTask.save();
       console.log('Success: task saved')
@@ -145,6 +147,7 @@ export const AddTask = ({ navigation }) => {
     setTaskDate('');
     setEmoji();
     setTaskColor('');
+    setDescription('');
   }
 
   function showEmojiModal() {
@@ -204,7 +207,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FAEDCB' ? 45 : 40,
                   height: taskColor === '#FAEDCB' ? 45 : 40,
                   backgroundColor: '#FAEDCB',
-                  borderColor: colors.border,
+                  borderColor: '#FAEDCB',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
               <TouchableOpacity
@@ -214,7 +222,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#C9E4DE' ? 45 : 40,
                   height: taskColor === '#C9E4DE' ? 45 : 40,
                   backgroundColor: '#C9E4DE',
-                  borderColor: colors.border,
+                  borderColor: '#C9E4DE',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
               <TouchableOpacity
@@ -224,7 +237,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#C6DEF1' ? 45 : 40,
                   height: taskColor === '#C6DEF1' ? 45 : 40,
                   backgroundColor: '#C6DEF1',
-                  borderColor: colors.border,
+                  borderColor: '#C6DEF1',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
               <TouchableOpacity
@@ -234,7 +252,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#DBCDF0' ? 45 : 40,
                   height: taskColor === '#DBCDF0' ? 45 : 40,
                   backgroundColor: '#DBCDF0',
-                  borderColor: colors.border,
+                  borderColor: '#DBCDF0',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
               <TouchableOpacity
@@ -244,7 +267,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FFADAD' ? 45 : 40,
                   height: taskColor === '#FFADAD' ? 45 : 40,
                   backgroundColor: '#FFADAD',
-                  borderColor: colors.border,
+                  borderColor: '#FFADAD',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
               <TouchableOpacity
@@ -254,7 +282,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FFD6A5' ? 45 : 40,
                   height: taskColor === '#FFD6A5' ? 45 : 40,
                   backgroundColor: '#FFD6A5',
-                  borderColor: colors.border,
+                  borderColor: '#FFD6A5',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
             </View>
@@ -403,6 +436,23 @@ export const AddTask = ({ navigation }) => {
             </View>
           </View>
         </View>
+        <View
+          style={{
+            alignContent: 'center',
+            paddingHorizontal: 16,
+          }}>
+          <Text style={[styles.text, { color: colors.text }]}>
+            Tilføj en beskrivelse
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={text => setDescription(text)}
+            value={description}
+            multiline={true}
+            numberOfLines={8}
+            textAlignVertical={'top'}>
+          </TextInput>
+        </View>
         <TouchableOpacity
           style={[
             styles.Button,
@@ -445,7 +495,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     elevation: 5,
-    shadowColor: 'grey',
+    shadowColor: 'black',
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
@@ -495,6 +545,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     borderColor: 'white',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
   border: {
     borderWidth: 1,
