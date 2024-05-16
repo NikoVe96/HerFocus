@@ -1,12 +1,12 @@
 import 'react-native-get-random-values';
 import 'expo-random';
 import 'react-native-gesture-handler';
-import {AppRegistry} from 'react-native';
+import { AppRegistry } from 'react-native';
 import App from './App';
-import {name as appName} from './app.json';
+import { name as appName } from './app.json';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
-import {Importance} from 'react-native-push-notification';
+import { Importance } from 'react-native-push-notification';
 
 AppRegistry.registerComponent('main', () => App);
 
@@ -17,7 +17,7 @@ PushNotification.configure({
   onRegister: function (token) {
     console.log("TOKEN:", token);
   },
-  
+
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
@@ -37,7 +37,7 @@ PushNotification.configure({
   },
 
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-  onRegistrationError: function(err) {
+  onRegistrationError: function (err) {
     console.error(err.message, err);
   },
 
@@ -60,7 +60,7 @@ PushNotification.configure({
    *     requestPermissions: Platform.OS === 'ios'
    */
   requestPermissions: true,
-  
+
 });
 
 PushNotification.localNotification({
@@ -126,15 +126,15 @@ PushNotification.localNotificationSchedule({
   repeatTime: 1, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
 });
 
- PushNotification.createChannel(
-   {
-     channelId: 'herfocusid', // (required)
-     channelName: 'Channel', // (required)
-     channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-     playSound: false, // (optional) default: true
-     soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-     importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-     vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-   },
-   created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
- );
+PushNotification.createChannel(
+  {
+    channelId: 'herfocusid', // (required)
+    channelName: 'Channel', // (required)
+    channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+    playSound: false, // (optional) default: true
+    soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  },
+  created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+);
