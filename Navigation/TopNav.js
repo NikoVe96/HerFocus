@@ -25,7 +25,7 @@ export const TopNavigation = ({ navigation: { goBack } }) => {
         alignItems: 'center',
         paddingHorizontal: 10,
         paddingTop: 15,
-        backgroundColor: colors.border,
+        backgroundColor: colors.background,
       }}>
       <TouchableOpacity onPress={() => goBack()}>
         <FontAwesomeIcon icon={faCircleLeft} size={25} color={colors.barText} />

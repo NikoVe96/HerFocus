@@ -11,13 +11,14 @@ import {
   ScrollView,
 } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
+import {debounce} from 'lodash';
 import Swiper from 'react-native-swiper';
 import LearningProgressHeader from '../../Components/LearningProgressHeader';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import Parse from 'parse/react-native';
 import Quiz from '../../Components/Quiz';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faChevronLeft, faBookmark, faCheck } from '@fortawesome/free-solid-svg-icons';
 import BottomNavigation from '../../Navigation/BottomNav';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
@@ -25,20 +26,22 @@ export const Module = ({ route }) => {
   const [progress, setProgress] = useState(new Animated.Value(1));
   const moduleLength = 7;
   const navigation = useNavigation();
-  const { module, subject, description, image } = route.params;
+  const {module, subject, description, image} = route.params;
   const [intro1, setIntro1] = useState('');
   const [intro2, setIntro2] = useState('');
   const [intro3, setIntro3] = useState('');
   const [questions, setQuestions] = useState([]);
   const [keyPoints, setKeyPoints] = useState([]);
+  const [answer, setAnswers] = useState({});
   const [author, setAuthor] = useState('');
   const [book, setBook] = useState('');
   const swiperRef = useRef(null);
-  const { colors } = useTheme();
+  const {colors} = useTheme();
   const moduleName = `${module.get('name')} ${module.get('subject')}`;
   const [expanded, setExpanded] = useState(-1);
-  const { width, height } = Dimensions.get('window');
+  const {width, height} = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
+  const [saved, setSaved] = useState({});
 
   const handleSlide = index => {
     Animated.parallel([
@@ -57,7 +60,7 @@ export const Module = ({ route }) => {
     setIntro1('');
     setKeyPoints([]);
     moduleContent();
-    console.log(moduleName)
+    console.log(moduleName);
   }, [module]);
 
   async function moduleContent() {
@@ -81,7 +84,6 @@ export const Module = ({ route }) => {
     result.addUnique('modulesCompleted', moduleName);
     result.save();
 
-
     navigation.navigate('Module overview', {
       subject: subject,
       image: image,
@@ -89,256 +91,523 @@ export const Module = ({ route }) => {
     });
   }
 
-  function toggleExercise(index) {
-    setExpanded(expanded === index ? -1 : index);
+  const handleAnswerChange = (exerciseName, answerText) => {
+    setAnswers(prevAnswers => ({
+      ...prevAnswers,
+      [exerciseName]: answerText,
+    }));
+  };
+
+  async function saveAnswer(moduleName, exerciseName, answerText) {
+    const currentUser = await Parse.User.currentAsync();
+    if (!currentUser) {
+      return;
+    }
+
+    const ModuleAnswers = Parse.Object.extend('ModuleAnswers');
+    const query = new Parse.Query(ModuleAnswers);
+
+    query.equalTo('user', currentUser);
+    query.equalTo('module', moduleName);
+    let moduleAnswers = await query.first();
+
+    if (!moduleAnswers) {
+      moduleAnswers = new ModuleAnswers();
+      moduleAnswers.set('user', currentUser);
+      moduleAnswers.set('module', moduleName);
+      moduleAnswers.set('answers', []);
+    }
+
+    const answers = moduleAnswers.get('answers');
+    answers.push({
+      exercise: exerciseName,
+      answer: answerText,
+    });
+    moduleAnswers.set('answers', answers);
+
+    try {
+      await moduleAnswers.save();
+       setSaved(prevSaved => ({
+         ...prevSaved,
+         [exerciseName]: true,
+       }));
+      console.log('Answer saved successfully!');
+      console.log(moduleName, exerciseName, answerText);
+    } catch (error) {
+      console.error('Error while saving answer: ', error);
+    }
   }
+
 
   function exercises() {
     switch (moduleName) {
       case '1 Struktur og planlægning':
-        const tænkeFejl =
-          [
-            { name: "Alt eller intet" },
-            { name: "Ignorer det gode" },
-            { name: "Tænke fejl" },
-            { name: "Gøre ting større end de er" },
-            { name: "Spår fremtiden" },
-            { name: "Følelses ræsonnement" },];
+        const tænkefejl1 = 'Alt eller intet';
+        const tænkefejl2 = 'Ignorer det gode';
+        const tænkefejl3 = 'Tænkefejl';
+        const tænkefejl4 = 'Gøre ting større end de er';
+        const tænkefejl5 = 'Spår fremtiden';
+        const tænkefejl6 = 'Følelses ræsonnement';
+
         return (
           <View style={{backgroundColor: colors.background, padding: '2%'}}>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 24,
-                marginTop: '2%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.title,
+                {fontSize: 20 * scaleFactor, color: colors.text},
+              ]}>
               Identificer dine egne tænkefejl
             </Text>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginBottom: '3%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.exercise,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               I denne øvelse skal du tjekke de bokse af, hvor du kan genkende
               dig selv i tankefejlen. I tekstfeltet skriver du derefter et
               eksempel på en situation, hvor du har oplevet at lave den
               tænkefejl
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Udfyld kun de tekstfelter, der tilhører tænkefejl, som du kan
               genkende dig selv i.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
+              Tryk på "gem" ikonet ved siden af tekstfeltet for at gemme øvelsen
+              i din notesbog.
             </Text>
-            {tænkeFejl.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  marginVertical: '1%',
-                  backgroundColor: colors.subButton,
-                  marginVertical: '2%',
-                  padding: '3%',
-                  borderWidth: 1,
-                  borderColor: colors.subButton,
-                  borderRadius: 10,
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginBottom: '2%',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={{fontSize: 20}}>{item.name}</Text>
-                  <BouncyCheckbox
-                    size={35}
-                    fillColor={colors.border}
-                    unfillColor="#FFFFFF"
-                    iconStyle={{borderColor: colors.border}}
-                    innerIconStyle={{borderWidth: 2}}
-                    textStyle={{fontFamily: 'JosefinSans-Regular'}}
-                    onPress={() => {
-                      toggleExercise(index);
-                    }}
-                    style={{marginLeft: '20%'}}
-                  />
-                </View>
-                {expanded == index ? (
-                  <TextInput
-                    style={{
-                      backgroundColor: 'white',
-                      borderWidth: 1,
-                      borderColor: 'white',
-                      borderRadius: 10,
-                      padding: 10,
-                    }}
-                    multiline={true}
-                    numberOfLines={10}
-                    textAlignVertical={'top'}></TextInput>
-                ) : null}
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl1}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl1, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl1] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl1, answer[tænkefejl1])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-            ))}
-            <View style={{flex: 1}}></View>
+            </View>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl2}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl2, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl2] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl2, answer[tænkefejl2])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl3}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl3, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl3] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl3, answer[tænkefejl3])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl4}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl4, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl4] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl4, answer[tænkefejl4])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl5}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl5, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl5] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl5, answer[tænkefejl5])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {tænkefejl6}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(tænkefejl6, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[tænkefejl6] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, tænkefejl6, answer[tænkefejl6])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           </View>
         );
         break;
       case '2 Struktur og planlægning':
+        const overspringshandling1 = 'Hvilke(n) typer af overspringshandlinger kan du identificere dig med?';
+        const overspringshandling2 = 'Giv et eksempel på hvornår, du har lavet en overspringshandling af denne type';
+        const overspringshandling3 = 'Hvad kan du gøre for at lave færre overspringshandlinger af denne type?';
         return (
           <View style={{backgroundColor: colors.background, padding: '2%'}}>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 24,
-                marginTop: '2%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.title,
+                {fontSize: 20 * scaleFactor, color: colors.text},
+              ]}>
               Identificer typen af dine overspringshandlinger
             </Text>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginBottom: '3%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.exercise,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               I denne øvelse skal du udfylde felterne for at identificere og
-              reflektere ove, hvilke typer af overspringshandlinger du typisk
+              reflektere ove, hvilke typer af overspringshandlinger, du typisk
               har problemer med.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
+              Tryk på "gem" ikonet ved siden af tekstfeltet for at gemme øvelsen
+              i din notesbog.
             </Text>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
+            <View style={styles.answerView}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-                Hvilke(n) typer af overspringshandlinger kan du identificere dig
-                med?
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {overspringshandling1}
               </Text>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={5}
-                textAlignVertical={'top'}></TextInput>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text =>
+                    handleAnswerChange(overspringshandling1, text)
+                  }
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[overspringshandling1] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(
+                        moduleName,
+                        overspringshandling1,
+                        answer[overspringshandling1],
+                      )
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
+            <View style={styles.answerView}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-                Giv et eksempel på hvornår, du har lavet en overspringshandling
-                af denne type
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {overspringshandling2}
               </Text>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={5}
-                textAlignVertical={'top'}></TextInput>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text =>
+                    handleAnswerChange(overspringshandling2, text)
+                  }
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[overspringshandling2] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(
+                        moduleName,
+                        overspringshandling2,
+                        answer[overspringshandling2],
+                      )
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
+            <View style={styles.answerView}>
               <Text
-                style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-                Hvad kan du gøre for at lave færre overspringshandlinger af
-                denne type?
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {overspringshandling3}
               </Text>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={5}
-                textAlignVertical={'top'}></TextInput>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text =>
+                    handleAnswerChange(overspringshandling3, text)
+                  }
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[overspringshandling3] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(
+                        moduleName,
+                        overspringshandling3,
+                        answer[overspringshandling3],
+                      )
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
         );
         break;
       case '3 Struktur og planlægning':
+        const rutine = '1. ';
+        const steps1 = 'a. ';
+        const steps2 = 'b. ';
+        const steps3 = 'c. ';
+        const steps4 = 'd. ';
+        const steps5 = 'e. ';
+        const steps6 = 'f.  ';
+        const steps7 = 'g. ';
         return (
           <View style={{backgroundColor: colors.background, padding: '2%'}}>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 24,
-                marginTop: '2%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.title,
+                {fontSize: 20 * scaleFactor, color: colors.text},
+              ]}>
               Planlæg dine rutiner
             </Text>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginBottom: '3%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.exercise,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
-              I denne øvelse skal du tænke på en rutiner, du har. Skriv hvilke
-              steps rutinen indeholder, og hvor længe de forskellige steps tager
-              i tekstboksene
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
+              I denne øvelse skal du tænke på en rutine, du har. Skriv hvilke
+              steps rutinen indeholder. Du kan derefter skrive rutinen ind i din
+              planlægger, for at gøre rutinen nemmere at klare næste gang.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
+              Tryk på "gem" ikonet ved siden af tekstfeltet for at gemme øvelsen
+              i din notesbog.
             </Text>
             <Text
               style={{fontWeight: 'bold', marginBottom: 5, color: colors.text}}>
@@ -346,158 +615,308 @@ export const Module = ({ route }) => {
             </Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={{flex: 1}}>
-                <View>
-                  <View style={styles.rutineView}>
-                    <Text>1.</Text>
-                    <TextInput
-                      style={styles.rutineText1}
-                      multiline={true}
-                      numberOfLines={1}></TextInput>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <View>
+              <View>
+                <View style={styles.rutineView}>
+                  <Text
+                    style={{fontSize: 14 * scaleFactor, color: colors.text}}>
+                    {rutine}
+                  </Text>
+                  <TextInput
+                    style={[styles.rutineText, {color: colors.text}]}
+                    onChangeText={text => handleAnswerChange(rutine, text)}
+                    value={answer}
+                    multiline={true}
+                    numberOfLines={5}></TextInput>
+                  {saved[rutine] ? (
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() =>
+                        saveAnswer(moduleName, rutine, answer[rutine])
+                      }>
+                      <FontAwesomeIcon
+                        icon={faBookmark}
+                        size={20}
+                        style={{marginRight: 10, marginTop: 10}}
+                        color={colors.border}></FontAwesomeIcon>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        marginBottom: 5,
+                        color: colors.text,
+                      }}>
+                      Steps
+                    </Text>
+                    <View style={styles.rutineView}>
                       <Text
                         style={{
-                          fontWeight: 'bold',
-                          marginBottom: 5,
+                          fontSize: 14 * scaleFactor,
                           color: colors.text,
                         }}>
-                        Steps
+                        {steps1}
                       </Text>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          a.
-                        </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineText2}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps1, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
-                      </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          b.
-                        </Text>
-                        <TextInput
-                          style={styles.rutineText2}
-                          multiline={true}
-                          numberOfLines={1}></TextInput>
-                      </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          c.
-                        </Text>
-                        <TextInput
-                          style={styles.rutineText2}
-                          multiline={true}
-                          numberOfLines={1}></TextInput>
-                      </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          d.
-                        </Text>
-                        <TextInput
-                          style={styles.rutineText2}
-                          multiline={true}
-                          numberOfLines={1}></TextInput>
-                      </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          e.
-                        </Text>
-                        <TextInput
-                          style={styles.rutineText2}
-                          multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps1] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps1, answer[steps1])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     </View>
-                    <View>
+                    <View style={styles.rutineView}>
                       <Text
                         style={{
-                          fontWeight: 'bold',
-                          marginBottom: 5,
+                          fontSize: 14 * scaleFactor,
                           color: colors.text,
                         }}>
-                        Tid
+                        {steps2}
                       </Text>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          a.
-                        </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineTime}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps2, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps2] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps2, answer[steps2])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          b.
-                        </Text>
+                    </View>
+                    <View style={styles.rutineView}>
+                      <Text
+                        style={{
+                          fontSize: 14 * scaleFactor,
+                          color: colors.text,
+                        }}>
+                        {steps3}
+                      </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineTime}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps3, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps3] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps3, answer[steps3])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          c.
-                        </Text>
+                    </View>
+                    <View style={styles.rutineView}>
+                      <Text
+                        style={{
+                          fontSize: 14 * scaleFactor,
+                          color: colors.text,
+                        }}>
+                        {steps4}
+                      </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineTime}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps4, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps4] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps4, answer[steps4])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          d.
-                        </Text>
+                    </View>
+                    <View style={styles.rutineView}>
+                      <Text
+                        style={{
+                          fontSize: 14 * scaleFactor,
+                          color: colors.text,
+                        }}>
+                        {steps5}
+                      </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineTime}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps5, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps5] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps5, answer[steps5])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
-                      <View style={styles.rutineView}>
-                        <Text
-                          style={{
-                            color: colors.text,
-                          }}>
-                          e.
-                        </Text>
+                    </View>
+                    <View style={styles.rutineView}>
+                      <Text
+                        style={{
+                          fontSize: 14 * scaleFactor,
+                          color: colors.text,
+                        }}>
+                        {steps6}
+                      </Text>
+                      <View style={styles.inputView}>
                         <TextInput
-                          style={styles.rutineTime}
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps6, text)
+                          }
+                          value={answer}
                           multiline={true}
-                          numberOfLines={1}></TextInput>
+                          numberOfLines={5}></TextInput>
+                        {saved[steps6] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps6, answer[steps6])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
+                      </View>
+                    </View>
+                    <View style={styles.rutineView}>
+                      <Text
+                        style={{
+                          fontSize: 14 * scaleFactor,
+                          color: colors.text,
+                        }}>
+                        {steps7}
+                      </Text>
+                      <View style={styles.inputView}>
+                        <TextInput
+                          style={[styles.rutineText, {color: colors.text}]}
+                          onChangeText={text =>
+                            handleAnswerChange(steps7, text)
+                          }
+                          value={answer}
+                          multiline={true}
+                          numberOfLines={5}></TextInput>
+                        {saved[steps7] ? (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            size={20}
+                            style={{marginRight: 10, marginTop: 10}}
+                            color={colors.border}></FontAwesomeIcon>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() =>
+                              saveAnswer(moduleName, steps7, answer[steps7])
+                            }>
+                            <FontAwesomeIcon
+                              icon={faBookmark}
+                              size={20}
+                              style={{marginRight: 10, marginTop: 10}}
+                              color={colors.border}></FontAwesomeIcon>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     </View>
                   </View>
@@ -508,192 +927,256 @@ export const Module = ({ route }) => {
         );
         break;
       case '4 Struktur og planlægning':
+        const opgave1 = '1. Opgave'; 
+        const opgave2 = '2. Opgave';
+        const opgave3 = '3. Opgave';
+        const beskriv1 = '1. Beskriv hvordan det gik';
+        const beskriv2 = '2. Beskriv hvordan det gik';
+        const beskriv3 = '3. Beskriv hvordan det gik';
         return (
           <View style={{backgroundColor: colors.background, padding: '2%'}}>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 24,
-                marginTop: '2%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.title,
+                {fontSize: 20 * scaleFactor, color: colors.text},
+              ]}>
               Reflekter over dine præstationer
             </Text>
             <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginBottom: '3%',
-                color: colors.text,
-              }}>
+              style={[
+                styles.exercise,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Øvelse
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               I denne øvelse skal du udvælge nogle af de opgaver du har haft i
               løbet af ugen, og reflektere over dem.
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '2%', color: colors.text}}>
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
               Hvordan gik det med at klare opgaven? Oplevede du nogle tænkefejl
               undervejs? Hvordan kunne du vende de negative tanker til noget
               positivt istedet?
             </Text>
             <Text
-              style={{fontSize: 18, marginBottom: '4%', color: colors.text}}>
-              Når opgaven er fulført, vil du kunne finde den i din notesbog.
+              style={[
+                styles.exerciseDesc,
+                {fontSize: 16 * scaleFactor, color: colors.text},
+              ]}>
+              Tryk på "gem" ikonet ved siden af tekstfeltet for at gemme øvelsen
+              i din notesbog.
             </Text>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: '2%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {opgave1}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(opgave1, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[opgave1] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, opgave1, answer[opgave1])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={2}
-                textAlignVertical={'top'}></TextInput>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: '3%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20}}>Beskriv hvordan det gik</Text>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {beskriv1}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(beskriv1, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[beskriv1] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, beskriv1, answer[beskriv1])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={6}
-                textAlignVertical={'top'}></TextInput>
             </View>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: '2%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20}}>Opgave</Text>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {opgave2}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(opgave2, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[opgave2] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, opgave2, answer[opgave2])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={2}
-                textAlignVertical={'top'}></TextInput>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: '3%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20, color: colors.text}}>
-                  Beskriv hvordan det gik
-                </Text>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {beskriv2}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(beskriv2, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[beskriv2] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, beskriv2, answer[beskriv2])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={6}
-                textAlignVertical={'top'}></TextInput>
             </View>
-            <View
-              style={{
-                marginVertical: '1%',
-                backgroundColor: colors.subButton,
-                marginVertical: '2%',
-                padding: '3%',
-                borderWidth: 1,
-                borderColor: colors.subButton,
-                borderRadius: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: '2%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20, color: colors.text}}>Opgave</Text>
+            <View style={styles.answerView}>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {opgave3}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(opgave3, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[opgave3] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, opgave3, answer[opgave3])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={2}
-                textAlignVertical={'top'}></TextInput>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: '3%',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 20, color: colors.text}}>
-                  Beskriv hvordan det gik
-                </Text>
+              <Text
+                style={[
+                  styles.exerciseText,
+                  {fontSize: 16 * scaleFactor, color: colors.text},
+                ]}>
+                {beskriv3}
+              </Text>
+              <View style={styles.inputView}>
+                <TextInput
+                  style={[styles.inputText, {color: colors.text}]}
+                  onChangeText={text => handleAnswerChange(beskriv3, text)}
+                  value={answer}
+                  multiline={true}
+                  numberOfLines={5}></TextInput>
+                {saved[beskriv3] ? (
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    size={20}
+                    style={{marginRight: 10, marginTop: 10}}
+                    color={colors.border}></FontAwesomeIcon>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() =>
+                      saveAnswer(moduleName, beskriv3, answer[beskriv3])
+                    }>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size={20}
+                      style={{marginRight: 10, marginTop: 10}}
+                      color={colors.border}></FontAwesomeIcon>
+                  </TouchableOpacity>
+                )}
               </View>
-              <TextInput
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                  padding: 10,
-                }}
-                multiline={true}
-                numberOfLines={6}
-                textAlignVertical={'top'}></TextInput>
             </View>
           </View>
         );
@@ -922,6 +1405,7 @@ export const Module = ({ route }) => {
                 justifyContent: 'space-around',
                 alignItems: 'baseline',
                 marginVertical: '3%',
+                marginBottom: 150,
               }}>
               <TouchableOpacity
                 style={[
@@ -1025,6 +1509,7 @@ export const Module = ({ route }) => {
               </TouchableOpacity>
             </View>
           </ScrollView>
+          <ScrollView>
           <View style={{flex: 1, alignItems: 'center'}}>
             <Image
               source={require('../../Assets/images/fireworks.png')}
@@ -1041,13 +1526,13 @@ export const Module = ({ route }) => {
               Tillykke!{' '}
             </Text>
             <Text style={[styles.text, {color: colors.text}]}>
-              Du har lige færdiggjort dit første modul!
+              Du har færdiggjort et læringsmodul!
             </Text>
             <Text
               style={{
                 fontSize: 12,
                 fontStyle: 'italic',
-                marginTop: '35%',
+                marginTop: '15%',
                 color: colors.text,
               }}>
               Materialet fra dette modul er fundet i bogen "{book}", som er
@@ -1088,6 +1573,7 @@ export const Module = ({ route }) => {
               </TouchableOpacity>
             </View>
           </View>
+      </ScrollView>
         </Swiper>
       </View>
       <BottomNavigation />
@@ -1107,7 +1593,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 2,
   },
   keyTakeaways: {
@@ -1121,7 +1607,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 2,
   },
   takeawayHeader: {
@@ -1142,7 +1628,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 2,
   },
   text: {
@@ -1150,7 +1636,6 @@ const styles = StyleSheet.create({
   },
   rutineView: {
     flexDirection: 'row',
-    marginBottom: 5,
     marginLeft: '5%',
   },
   rutineText1: {
@@ -1167,7 +1652,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 10,
     padding: 5,
-    width: '70%',
+    width: '90%',
   },
   rutineTime: {
     backgroundColor: 'white',
@@ -1176,6 +1661,44 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     width: '35%',
+  },
+  title: {
+    textAlign: 'center',
+    marginTop: '2%',
+  },
+  exercise: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: '3%',
+    marginTop: '2%',
+  },
+  exerciseDesc: {
+    margin: '2%',
+  },
+  exerciseText: {
+    marginBottom: 5,
+    fontWeight: 'bold',
+  },
+  inputView: {
+    flexDirection: 'row',
+    marginBottom: '2%',
+    justifyContent: 'space-between',
+  },
+  inputText: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    width: '88%',
+  },
+  answerView: {
+    marginBottom: 10,
+    marginTop: 10,
+  },
+  rutineText: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    width: '85%',
   },
 });
 

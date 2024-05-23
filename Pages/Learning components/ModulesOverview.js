@@ -48,14 +48,36 @@ export const ModulesOverview = ({ route }) => {
   async function completedQuery() {
     const currentUser = await Parse.User.currentAsync();
     let query = new Parse.Query('Settings');
-    query.contains('user', currentUser.id);
+    query.equalTo('user', currentUser.id);
     const result = await query.first();
-    setCompleted(result.get('modulesCompleted'));
+    if (result) {
+      setCompleted(result.get('modulesCompleted') || []);
+    }
   }
 
-  function handleNewCompletion() {
-    completedQuery();
-  }
+   async function handleModuleCompletion(moduleSignature) {
+     const currentUser = await Parse.User.currentAsync();
+     let query = new Parse.Query('Settings');
+     query.equalTo('user', currentUser);
+     const result = await query.first();
+
+     if (result) {
+       let modulesCompleted = result.get('modulesCompleted') || [];
+       if (!modulesCompleted.includes(moduleSignature)) {
+         modulesCompleted.push(moduleSignature);
+         result.set('modulesCompleted', modulesCompleted);
+         await result.save();
+         setCompleted(modulesCompleted);
+       }
+     }
+   }
+
+    useEffect(() => {
+      navigation.setOptions({
+        handleModuleCompletion: moduleSignature =>
+          handleModuleCompletion(moduleSignature),
+      });
+    }, [navigation]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -113,7 +135,8 @@ export const ModulesOverview = ({ route }) => {
                           subject: subject,
                           image: image,
                           description: description,
-                          onNewCompletion: handleNewCompletion(),
+                          onNewCompletion:
+                            () => handleModuleCompletion(moduleSignature),
                         })
                       }>
                       <View
@@ -139,7 +162,8 @@ export const ModulesOverview = ({ route }) => {
                             ]}>
                             Modul {item.get('name')}
                           </Text>
-                          <Text style={[styles.moduleDesc, {color: colors.text}]}>
+                          <Text
+                            style={[styles.moduleDesc, {color: colors.text}]}>
                             {item.get('description')}
                           </Text>
                         </View>

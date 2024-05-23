@@ -67,7 +67,6 @@ export const PickModule = () => {
 
   async function getProgress(subject) {
     const currentUser = await Parse.User.currentAsync();
-
     let totalModules = new Parse.Query('LearningModules');
     totalModules.equalTo('subject', subject);
     const totalModulesResults = await totalModules.find();
@@ -83,6 +82,7 @@ export const PickModule = () => {
         }
       });
     }
+
 
     switch (subject) {
       case 'Struktur og planlægning':

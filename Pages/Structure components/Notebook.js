@@ -12,7 +12,8 @@ import {
     faNoteSticky,
     faCircleXmark,
 } from '@fortawesome/free-regular-svg-icons';
-import { useEffect, useState } from "react";
+import {useEffect, useState, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import Modal from "react-native-modal";
 import AddTask from "./AddTask";
 import Parse from 'parse/react-native';
@@ -32,6 +33,7 @@ export const Notebook = () => {
     const [todoEndTime, setTodoEndTime] = useState('');
     const [todo, setTodo] = useState('');
     const [notes, setNotes] = useState([]);
+    const [moduleAnswers, setModuleAnswers] = useState([]);
     const [exercises, setExercises] = useState([]);
     const [isToDoModalVisible, setToDoModalVisible] = useState(false);
     const [isNotesModalVisible, setNotesModalVisible] = useState(false);
@@ -44,10 +46,16 @@ export const Notebook = () => {
     const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
 
     useEffect(() => {
-
         notesQuery();
         ToDoQuery();
     }, []);
+
+    useFocusEffect(
+      useCallback(() => {
+         fetchModuleAnswers();
+        return () => {};
+      }, []),
+    );
 
     function handleMenuClick(page) {
         setPage(page);
@@ -69,6 +77,11 @@ export const Notebook = () => {
         setToDoModalVisible(false);
     }
 
+    async function getCompletedModules(){
+        const currentUser = await Parse.User.currentAsync(); 
+        
+    }
+
 
     async function ToDoQuery() {
         const currentUser = await Parse.User.currentAsync();
@@ -83,46 +96,75 @@ export const Notebook = () => {
     }
 
     async function notesQuery() {
-        const currentUser = await Parse.User.currentAsync();
+      const currentUser = await Parse.User.currentAsync();
 
-        let notesQuery = new Parse.Query('Notebook');
-        notesQuery.equalTo('user', currentUser);
-        notesQuery.include('notes');
-        const notesResult = await notesQuery.find();
+      let notesQuery = new Parse.Query('Notebook');
+      notesQuery.equalTo('user', currentUser);
+      notesQuery.include('notes');
+      const notesResult = await notesQuery.find();
+     
+      if (notesResult.length > 0 && notesResult[0].get('notes')) {
         console.log('notes: ' + notesResult[0].get('notes'));
-
         setNotes(notesResult[0].get('notes'));
+      } else {
+        setNotes([]);
+      }
     }
 
+       async function fetchModuleAnswers() {
+           const currentUser = await Parse.User.currentAsync();
+           let ModuleAnswers = new Parse.Query('ModuleAnswers');
+           ModuleAnswers.equalTo('user', currentUser);
+           try {
+             const result = await ModuleAnswers.find();
+             setModuleAnswers(result);
+             console.log('exercises:' + result);
+           } catch (error) {
+             console.log('Error while fecthing answers');
+           }
+         }
+
+
     async function saveNewNote() {
-        try {
-            const newNote = new Parse.Object('Note');
-            newNote.set('name', noteName);
-            newNote.set('content', noteContent);
-            await newNote.save();
+      try {
+        const newNote = new Parse.Object('Note');
+        newNote.set('name', noteName);
+        newNote.set('content', noteContent);
+        await newNote.save();
+        console.log('New note saved:', newNote);
 
-            const currentUser = await Parse.User.currentAsync();
-            let notebook = new Parse.Query('Notebook');
-            notebook.equalTo('user', currentUser);
-            const notebookResult = await notebook.find();
+        const currentUser = await Parse.User.currentAsync();
+        console.log('Current user:', currentUser);
 
+        let notebookQuery = new Parse.Query('Notebook');
+        notebookQuery.equalTo('user', currentUser);
+        const notebookResults = await notebookQuery.find();
+        console.log('Notebook results:', notebookResults);
 
-            let newNotesList = notebookResult.get('notes');
-            newNotesList.push(newNote);
-            console.log('New list: ' + newNotesList);
-            notebookResult.set('notes', newNotesList);
-            await notebookResult.save();
+        if (notebookResults.length > 0) {
+          let notebookResult = notebookResults[0];
+          let newNotesList = notebookResult.get('notes');
+          console.log('Current notes list:', newNotesList);
 
-            await notesQuery();
+          newNotesList.push(newNote);
+          console.log('Updated notes list:', newNotesList);
+          notebookResult.set('notes', newNotesList);
+          await notebookResult.save();
+          console.log('Notebook updated:', notebookResult);
 
-            console.log('Success: note saved')
-            Alert.alert('Din note er blevet gemt!');
-            setNoteContent('');
-            setNoteName('');
-            setNotesModalVisible(false);
-        } catch (error) {
-            console.log('Error saving new note: ', error);
+          await notesQuery();
+
+          console.log('Success: note saved');
+          Alert.alert('Din note er blevet gemt!');
+          setNoteContent('');
+          setNoteName('');
+          setNotesModalVisible(false);
+        } else {
+          Alert.alert('Notesbog ikke fundet');
         }
+      } catch (error) {
+        console.log('Error saving new note:', error);
+      }
     }
 
     async function updateNote(note, content) {
@@ -198,6 +240,8 @@ export const Notebook = () => {
         setEndTimePickerVisibility(false);
     };
 
+ 
+
     const pages = () => {
         switch (page) {
             case '':
@@ -209,10 +253,45 @@ export const Notebook = () => {
                 );
             case 'exercises':
                 return (
-                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>Udførte øvelser</Text>
-                        <Text>Her kan du finde de øvelser du har fuldført i læringsmodulet</Text>
-                    </View>
+                  <View
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <Text
+                      style={{
+                        fontSize: 26,
+                        textAlign: 'center',
+                        marginBottom: '5%',
+                        marginTop: '10%',
+                      }}>
+                      Udførte øvelser
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        textAlign: 'center',
+                        marginBottom: '5%',
+                      }}>
+                      Her kan du finde de øvelser du har fuldført i
+                      læringsmodulet
+                    </Text>
+                    {moduleAnswers.map((moduleAnswer, index) => (
+                      <View key={index}>
+                        <Text style={{fontSize: 20, marginBottom: '2%'}}>
+                          {moduleAnswer.get('module')}
+                        </Text>
+                        <View
+                          style={[
+                            styles.seperator,
+                            {backgroundColor: colors.text},
+                          ]}></View>
+                        {moduleAnswer.get('answers').map((answer, idx) => (
+                          <View key={idx}>
+                            <Text style={{fontWeight: 'bold'}}>{answer.exercise}</Text>
+                            <Text style={{marginBottom: 10}}>{answer.answer}</Text>
+                          </View>
+                        ))}
+                      </View>
+                    ))}
+                  </View>
                 );
                 break;
             case 'to-do':
@@ -353,129 +432,159 @@ export const Notebook = () => {
                 break;
             case 'notes':
                 return (
-                    <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: '5%' }}>
-                        <Text style={{ fontSize: 26, marginBottom: '5%' }}>Noter</Text>
-                        {notes.map((item, index) => (
-                            <AccordionItem key={item.id || index} title={item.get('name')} icon={null}>
-                                <TextInput
-                                    style={{
-                                        backgroundColor: 'white',
-                                        borderWidth: 1,
-                                        borderColor: 'white',
-                                        borderRadius: 10,
-                                        fontSize: 16,
-                                        padding: '2%',
-                                    }}
-                                    value={updatedNoteContent[item.id] || item.get('content')}
-                                    onChangeText={text => setUpdatedNoteContent({ ...updatedNoteContent, [item.id]: text })}
-                                    multiline={true}
-                                    numberOfLines={12}
-                                    textAlignVertical={'top'}>
-                                </TextInput>
-                                <TouchableOpacity
-                                    style={{
-                                        borderWidth: 1,
-                                        backgroundColor: colors.subButton,
-                                        borderColor: colors.subButton,
-                                        borderRadius: 10,
-                                        padding: 10,
-                                        elevation: 10,
-                                        marginVertical: '5%',
-                                        alignItems: 'center',
-                                        width: '40%',
-                                        alignSelf: 'flex-end'
-
-                                    }}
-                                    onPress={() => updateNote(item, updatedNoteContent[item.id])}>
-                                    <Text style={{ fontSize: 16 }}>Opdater note</Text>
-                                </TouchableOpacity>
-                            </AccordionItem>
-                        ))}
-                        <TouchableOpacity
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '5%',
+                    }}>
+                    <Text style={{fontSize: 26, marginBottom: '5%'}}>
+                      Noter
+                    </Text>
+                    {notes && notes.length > 0 ? (
+                      notes.map((item, index) => (
+                        <AccordionItem
+                          key={item.id || index}
+                          title={item.get('name')}
+                          icon={null}>
+                          <TextInput
                             style={{
-                                borderWidth: 1,
-                                backgroundColor: colors.subButton,
-                                borderColor: colors.subButton,
-                                borderRadius: 10,
-                                padding: 10,
-                                elevation: 10,
-                                marginVertical: '20%',
-                                alignItems: 'center',
-                                width: '50%'
-
+                              backgroundColor: 'white',
+                              borderWidth: 1,
+                              borderColor: 'white',
+                              borderRadius: 10,
+                              fontSize: 16,
+                              padding: '2%',
                             }}
-                            onPress={() => setNotesModalVisible(true)}>
-                            <Text style={{ fontSize: 18 }}>Tilføj en ny note</Text>
+                            value={
+                              updatedNoteContent[item.id] || item.get('content')
+                            }
+                            onChangeText={text =>
+                              setUpdatedNoteContent({
+                                ...updatedNoteContent,
+                                [item.id]: text,
+                              })
+                            }
+                            multiline={true}
+                            numberOfLines={12}
+                            textAlignVertical={'top'}></TextInput>
+                          <TouchableOpacity
+                            style={{
+                              borderWidth: 1,
+                              backgroundColor: colors.subButton,
+                              borderColor: colors.subButton,
+                              borderRadius: 10,
+                              padding: 10,
+                              elevation: 10,
+                              marginVertical: '5%',
+                              alignItems: 'center',
+                              width: '40%',
+                              alignSelf: 'flex-end',
+                            }}
+                            onPress={() =>
+                              updateNote(item, updatedNoteContent[item.id])
+                            }>
+                            <Text style={{fontSize: 16}}>Opdater note</Text>
+                          </TouchableOpacity>
+                        </AccordionItem>
+                      ))
+                    ) : (
+                      <Text>
+                      </Text>
+                    )}
+                    <TouchableOpacity
+                      style={{
+                        borderWidth: 1,
+                        backgroundColor: colors.subButton,
+                        borderColor: colors.subButton,
+                        borderRadius: 10,
+                        padding: 10,
+                        elevation: 10,
+                        marginVertical: '20%',
+                        alignItems: 'center',
+                        width: '50%',
+                      }}
+                      onPress={() => setNotesModalVisible(true)}>
+                      <Text style={{fontSize: 18}}>Tilføj en ny note</Text>
+                    </TouchableOpacity>
+                    <Modal
+                      isVisible={isNotesModalVisible}
+                      onBackdropPress={() => setNotesModalVisible(false)}>
+                      <View
+                        style={{
+                          backgroundColor: colors.background,
+                          padding: 10,
+                          borderWidth: 1,
+                          borderColor: colors.background,
+                          borderRadius: 10,
+                        }}>
+                        <View
+                          style={{
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 24,
+                              marginLeft: '20%',
+                              marginBottom: '10%',
+                            }}>
+                            {' '}
+                            Tilføj en ny note
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => setNotesModalVisible(false)}>
+                            <FontAwesomeIcon icon={faCircleXmark} size={25} />
+                          </TouchableOpacity>
+                        </View>
+                        <Text style={{fontSize: 18}}>
+                          Hvad skal din note hedde?
+                        </Text>
+                        <TextInput
+                          style={{
+                            backgroundColor: 'white',
+                            borderWidth: 1,
+                            borderColor: 'white',
+                            borderRadius: 10,
+                            fontSize: 20,
+                            padding: '2%',
+                            marginVertical: '5%',
+                          }}
+                          onChangeText={text => setNoteName(text)}
+                          value={noteName}></TextInput>
+                        <TextInput
+                          style={{
+                            backgroundColor: 'white',
+                            borderWidth: 1,
+                            borderColor: 'white',
+                            borderRadius: 10,
+                            fontSize: 16,
+                            padding: '2%',
+                          }}
+                          onChangeText={text => setNoteContent(text)}
+                          value={noteContent}
+                          multiline={true}
+                          numberOfLines={12}
+                          textAlignVertical={'top'}></TextInput>
+                        <TouchableOpacity
+                          style={{
+                            borderWidth: 1,
+                            backgroundColor: colors.subButton,
+                            borderColor: colors.subButton,
+                            borderRadius: 10,
+                            padding: 10,
+                            elevation: 10,
+                            marginVertical: '10%',
+                            alignItems: 'center',
+                            width: '50%',
+                            alignSelf: 'center',
+                          }}
+                          onPress={() => saveNewNote()}>
+                          <Text style={{fontSize: 18}}>Gem note</Text>
                         </TouchableOpacity>
-                        <Modal
-                            isVisible={isNotesModalVisible}
-                            onBackdropPress={() => setNotesModalVisible(false)}>
-                            <View
-                                style={{
-                                    backgroundColor: colors.background,
-                                    padding: 10,
-                                    borderWidth: 1,
-                                    borderColor: colors.background,
-                                    borderRadius: 10,
-                                }}>
-                                <View style={{
-                                    justifyContent: 'space-between',
-                                    flexDirection: 'row',
-                                }}>
-                                    <Text style={{ fontSize: 24, marginLeft: '20%', marginBottom: '10%' }}> Tilføj en ny note</Text>
-                                    <TouchableOpacity onPress={() => setNotesModalVisible(false)}>
-                                        <FontAwesomeIcon icon={faCircleXmark} size={25} />
-                                    </TouchableOpacity>
-                                </View>
-                                <Text style={{ fontSize: 18 }}>Hvad skal din note hedde?</Text>
-                                <TextInput
-                                    style={{
-                                        backgroundColor: 'white',
-                                        borderWidth: 1,
-                                        borderColor: 'white',
-                                        borderRadius: 10,
-                                        fontSize: 20,
-                                        padding: '2%',
-                                        marginVertical: '5%'
-                                    }}
-                                    onChangeText={text => setNoteName(text)}
-                                    value={noteName}>
-                                </TextInput>
-                                <TextInput
-                                    style={{
-                                        backgroundColor: 'white',
-                                        borderWidth: 1,
-                                        borderColor: 'white',
-                                        borderRadius: 10,
-                                        fontSize: 16,
-                                        padding: '2%',
-                                    }}
-                                    onChangeText={text => setNoteContent(text)}
-                                    value={noteContent}
-                                    multiline={true}
-                                    numberOfLines={12}
-                                    textAlignVertical={'top'}>
-                                </TextInput>
-                                <TouchableOpacity
-                                    style={{
-                                        borderWidth: 1,
-                                        backgroundColor: colors.subButton,
-                                        borderColor: colors.subButton,
-                                        borderRadius: 10,
-                                        padding: 10,
-                                        elevation: 10,
-                                        marginVertical: '10%',
-                                        alignItems: 'center',
-                                        width: '50%',
-                                        alignSelf: 'center'
-
-                                    }}
-                                    onPress={() => saveNewNote()}>
-                                    <Text style={{ fontSize: 18 }}>Gem note</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Modal>
-                    </View>
+                      </View>
+                    </Modal>
+                  </View>
                 );
                 break;
             default:
@@ -543,35 +652,38 @@ export const Notebook = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'center'
-    },
-    menu: {
-
-
-    },
-    rowView: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    buttonSmall: {
-        justifyContent: 'center',
-        padding: 5,
-        height: 40,
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginVertical: 5,
-        elevation: 5
-    },
-    buttonText: {
-        color: "black",
-        fontSize: 20,
-        textAlign: "center",
-    },
-})
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  menu: {},
+  rowView: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  buttonSmall: {
+    justifyContent: 'center',
+    padding: 5,
+    height: 40,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginVertical: 5,
+    elevation: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  seperator: {
+    width: 250,
+    height: 1,
+    marginBottom: 5,
+    marginTop: 5,
+  },
+});
 export default Notebook;
 
 

@@ -33,6 +33,7 @@
     "has-property-descriptors": "^1.0.2",
     "imurmurhash": "^0.1.4",
     "install": "^0.13.0",
+    "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "npm": "^10.7.0",
     "parse": "^4.3.1",

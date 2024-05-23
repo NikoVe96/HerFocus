@@ -11,53 +11,64 @@ export const UserProvider = ({ children }) => {
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
 
-  const handleSignup = async (
-    name,
-    username,
-    email,
-    password,
-    confirmPassword,
-    navigation,
-    avatar,
-  ) => {
-    setError('')
 
-    const lowerCaseEmail = email.toLowerCase();
+   const handleSignup = async (
+     name,
+     username,
+     email,
+     password,
+     confirmPassword,
+     navigation,
+     avatar,
+   ) => {
+     setError('');
 
-    const userNameExist = new Parse.Query('User');
-    userNameExist.equalTo('username', username);
-    const userExists = await userNameExist.first();
+     const lowerCaseEmail = email.toLowerCase();
 
-    if (userExists) {
-      setError('Dette brugernavn er allerede i brug, vælg et nyt');
-    }
-      if (password !== confirmPassword) {
-        setError('Kodeordene er ikke ens, prøv igen');
-        return;
-      }
-      
-    const user = new Parse.User();
-    user.set('name', name);
-    user.set('username', username);
-    user.set('email', lowerCaseEmail);
-    user.set('password', password);
-    user.set('avatar', avatar);
+     const userNameExist = new Parse.Query('User');
+     userNameExist.equalTo('username', username);
+     const userExists = await userNameExist.first();
 
-    const userSettings = new Parse.Object('Settings');
-    userSettings.set('theme', 'yellow');
-    userSettings.set('user', user);
+     if (userExists) {
+       setError('Dette brugernavn er allerede i brug, vælg et nyt');
+       return; 
+     }
 
-    try {
-      await user.signUp();
-      await userSettings.save();
-      user.set('settings', userSettings);
-      await user.save();
-      navigation.navigate('Login');
-      console.log('pressed');
-    } catch (error) {
-        console.error('Error during signup:', error);
-    }
-  };
+     if (password !== confirmPassword) {
+       setError('Kodeordene er ikke ens, prøv igen');
+       return; 
+     }
+
+     const user = new Parse.User();
+     user.set('name', name);
+     user.set('username', username);
+     user.set('email', lowerCaseEmail);
+     user.set('password', password);
+     user.set('avatar', avatar);
+
+     const userSettings = new Parse.Object('Settings');
+     userSettings.set('theme', 'yellow');
+     userSettings.set('user', user);
+     userSettings.set('modulesCompleted', []);
+
+     const userNotebook = new Parse.Object('Notebook');
+     userNotebook.set('user', user);
+     userNotebook.set('exercises', []); 
+     userNotebook.set('todo', []);
+     userNotebook.set('notes', []); 
+
+     try {
+       await user.signUp();
+       await userSettings.save();
+       await userNotebook.save();
+       user.set('settings', userSettings);
+       user.set('notebook', userNotebook);
+       await user.save();
+       navigation.navigate('Login');
+     } catch (error) {
+       console.error('Error during signup:', error);
+     }
+   };
 
   const handleLogin = async (email, password, navigation) => {
     setError('');
