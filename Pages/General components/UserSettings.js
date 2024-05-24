@@ -46,7 +46,6 @@ export const UserSettings = ({ navigation }) => {
         try {
             await currentUser.destroy();
             Alert.alert('Your account has successfully been deleted')
-            //Logout and return to login page
             navigation.navigate('Login');
             return true;
         } catch (error) {
@@ -363,8 +362,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '17%',
     height: '70%',
-    backgroundColor: '#FFD3DA',
-    borderColor: '#7FE99E',
+    borderColor: '#E7CCF7',
+    backgroundColor: '#BBE7FE',
   },
   purple: {
     borderWidth: 4,

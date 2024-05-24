@@ -86,7 +86,7 @@ const GreenTheme = {
     iconLight: 'white',
     iconDark: 'black',
     mainButton: '#94C973',
-    subButton: '#D0EDD5',
+    subButton: '#C1E3B0',
   },
 };
 

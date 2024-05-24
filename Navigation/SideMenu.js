@@ -48,6 +48,8 @@ import IndividualPost from '../Pages/Forum/IndividualPost';
 import { useState } from 'react';
 import { useUser } from '../Components/UserContext';
 import Notebook from '../Pages/Structure components/Notebook';
+import FutureTodo from '../Pages/Structure components/FutureTodo';
+import CompletedModules from '../Pages/Learning components/CompletedModules';
 
 const Drawer = createDrawerNavigator();
 
@@ -365,6 +367,8 @@ function SideMenu() {
       <Drawer.Screen name="Add routine" component={AddRoutine}></Drawer.Screen>
       <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
       <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
+      <Drawer.Screen name="Future todo" component={FutureTodo}></Drawer.Screen>
+      <Drawer.Screen name="Completed modules" component={CompletedModules}></Drawer.Screen>
       <Drawer.Screen
         name="Contact information"
         component={ContactInformation}></Drawer.Screen>
@@ -374,16 +378,16 @@ function SideMenu() {
       <Drawer.Screen
         name="Forgot password"
         component={ForgotPassword}
-        options={{ headerShown: false }}></Drawer.Screen>
+        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen
         name="Login"
         component={LogIn}
-        options={{ headerShown: false }}></Drawer.Screen>
+        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
       <Drawer.Screen
         name="Sign up"
         component={SignUp}
-        options={{ headerShown: false }}></Drawer.Screen>
+        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
       <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
       <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>
@@ -417,9 +421,7 @@ function SideMenu() {
         name="Structure"
         component={StructureFrontPage}></Drawer.Screen>
       <Drawer.Screen name="Add event" component={AddEvent}></Drawer.Screen>
-      <Drawer.Screen
-        name="Notebook"
-        component={Notebook}></Drawer.Screen>
+      <Drawer.Screen name="Notebook" component={Notebook}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

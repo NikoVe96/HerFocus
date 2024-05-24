@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
     },
     accordTitle: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold'
     },
     accordBody: {

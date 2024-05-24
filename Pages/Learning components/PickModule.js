@@ -26,6 +26,7 @@ import {
   faSpinner,
   faShoppingCart,
   faKitchenSet,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
 import Parse from 'parse/react-native';
 import BottomNavigation from '../../Navigation/BottomNav';
@@ -96,16 +97,16 @@ export const PickModule = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.scrollView}>
         <Text
           style={[
             styles.title,
-            { color: colors.text, fontSize: 22 * scaleFactor },
+            {color: colors.text, fontSize: 22 * scaleFactor},
           ]}>
           Hvad vil du gerne lære om i dag?
         </Text>
-        <View style={{ marginVertical: 20 }}>
+        <View style={{marginVertical: 20}}>
           <View
             style={[
               styles.progessionBar,
@@ -117,7 +118,7 @@ export const PickModule = () => {
             <Text
               style={[
                 styles.text,
-                { color: colors.text, fontSize: 18 * scaleFactor },
+                {color: colors.text, fontSize: 18 * scaleFactor},
               ]}>
               {structuringProgress}%
             </Text>
@@ -130,28 +131,35 @@ export const PickModule = () => {
                 image: moduleSubjects[1].image,
               })
             }>
-
             <View
-              style={[
-                styles.buttonGrad,
-                { backgroundColor: colors.mainButton },
-              ]}>
+              style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
               <Animated.Image
                 source={require('../../Assets/images/learning_notebook.png')}
-                style={{ width: 120, height: 100, marginTop: 5 }}
+                style={{width: 120, height: 100, marginTop: 5}}
                 sharedTransitionTag="structure"></Animated.Image>
               <Text
                 style={[
                   styles.text,
-                  { color: colors.text, fontSize: 18 * scaleFactor },
+                  {color: colors.text, fontSize: 18 * scaleFactor},
                 ]}>
                 Planlægning og strukturering af hverdagen
               </Text>
             </View>
-
           </TouchableOpacity>
         </View>
-
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Completed modules')}>
+          <View style={[styles.done, {backgroundColor: colors.mainButton}]}>
+            <FontAwesomeIcon
+              icon={faCheck}
+              size={35 * scaleFactor}
+              color={colors.border}
+            />
+            <Text style={[styles.doneText, {color: colors.text}]}>
+              Opgavesvar for fuldførte læringsmoduler
+            </Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
     </SafeAreaView>
@@ -220,9 +228,26 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 2,
   },
+  done: {
+    width: '90%',
+    height: 70,
+    borderRadius: 10,
+    bottom: 5,
+    alignItems: 'center',
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
+  },
+  doneText:{
+    alignSelf: 'center',
+    justifyContent: 'center',
+  }
 });
 
 export default PickModule;

@@ -32,19 +32,7 @@ export const StructureFrontPage = () => {
           style={styles.press}
           onPress={() => navigation.navigate('Calendar')}>
           <View
-            style={[
-              styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
-            ]}>
-            <Image
-              source={require('../../Assets/images/structure_calendar.png')}
-              style={[
-                styles.images,
-                {
-                  width: 100 * scaleFactor,
-                  height: 100 * scaleFactor,
-                },
-              ]}></Image>
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
             <Text
               style={[
                 styles.text,
@@ -52,25 +40,22 @@ export const StructureFrontPage = () => {
               ]}>
               Kalender
             </Text>
+            <Image
+              source={require('../../Assets/images/structure_calendar.png')}
+              style={[
+                styles.images,
+                {
+                  width: 70 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Daily overview')}>
           <View
-            style={[
-              styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
-            ]}>
-            <Image
-              source={require('../../Assets/images/structure_dailyOverview.png')}
-              style={[
-                styles.images,
-                {
-                  width: 160 * scaleFactor,
-                  height: 100 * scaleFactor,
-                },
-              ]}></Image>
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
             <Text
               style={[
                 styles.text,
@@ -78,88 +63,110 @@ export const StructureFrontPage = () => {
               ]}>
               Dags oversigt
             </Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.press}
-          onPress={() => navigation.navigate('Notebook')}>
-          <View
-            style={[
-              styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
-            ]}>
             <Image
-              source={require('../../Assets/images/structure_notebook.png')}
+              source={require('../../Assets/images/structure_dailyOverview.png')}
               style={[
                 styles.images,
                 {
-                  width: 140 * scaleFactor,
-                  height: 100 * scaleFactor,
+                  width: 110 * scaleFactor,
+                  height: 70 * scaleFactor,
                 },
               ]}></Image>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Add task')}>
+          <View
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}
+            onPress={() => navigation.navigate('Add task')}>
             <Text
               style={[
                 styles.text,
                 {color: colors.text, fontSize: 18 * scaleFactor},
               ]}>
-              Notesbog
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.row}>
-          <TouchableOpacity
-            style={[
-              styles.knowledgeViewSmall,
-              {
-                backgroundColor: colors.mainButton,
-                borderColor: colors.mainButton,
-                marginRight: '1%',
-              },
-            ]}
-            onPress={() => navigation.navigate('Add task')}>
-            <Image
-              source={require('../../Assets/images/structure_todo.png')}
-              style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
               Ny to-do
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.knowledgeViewSmall,
-              {
-                backgroundColor: colors.mainButton,
-                borderColor: colors.mainButton,
-                marginHorizontal: '1%',
-              },
-            ]}
-            onPress={() => navigation.navigate('Add routine')}>
             <Image
-              source={require('../../Assets/images/structure_routine.png')}
-              style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
+              source={require('../../Assets/images/structure_todo.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Add routine')}>
+          <View
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               Ny rutine
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.knowledgeViewSmall,
-              {
-                backgroundColor: colors.mainButton,
-                borderColor: colors.mainButton,
-                marginLeft: '1%',
-              },
-            ]}
-            onPress={() => navigation.navigate('Add event')}>
             <Image
-              source={require('../../Assets/images/structure_event.png')}
-              style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
+              source={require('../../Assets/images/structure_routine.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Add event')}>
+          <View
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               Nyt event
             </Text>
-          </TouchableOpacity>
-        </View>
+            <Image
+              source={require('../../Assets/images/structure_event.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.press}
+          onPress={() => navigation.navigate('Future todo')}>
+          <View
+            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            <Text
+              style={[
+                styles.text,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
+              Fremtidige to-dos
+            </Text>
+            <Image
+              source={require('../../Assets/images/structure_event.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
       <BottomNavigation />
     </SafeAreaView>
@@ -169,7 +176,6 @@ export const StructureFrontPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
   },
   helloUser: {
     paddingLeft: 60,
@@ -186,8 +192,10 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    marginLeft: 20,
   },
   buttonGrad: {
+    width: '85%',
     borderRadius: 10,
     bottom: 5,
     backgroundColor: '#FFEABF',
@@ -195,9 +203,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     elevation: 5,
     shadowColor: 'black',
-    shadowOpacity: 0.50,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   press: {
     marginBottom: 15,
@@ -205,6 +215,7 @@ const styles = StyleSheet.create({
   images: {
     marginTop: 10,
     marginBottom: 10,
+    marginRight: 20,
   },
   knowledgeViewSmall: {
     height: '40%',
@@ -214,7 +225,7 @@ const styles = StyleSheet.create({
     flex: 1,
     elevation: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 5, height: 10 },
+    shadowOffset: {width: 5, height: 10},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
@@ -223,12 +234,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     justifyContent: 'space-between',
     marginBottom: 60,
-  },
-  imageSmall: {
-    width: '70%',
-    height: '70%',
-    resizeMode: 'contain',
-  },
+  }
 });
 
 export default StructureFrontPage;
