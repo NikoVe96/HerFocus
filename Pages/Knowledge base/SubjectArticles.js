@@ -12,6 +12,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import Parse from 'parse/react-native';
 import Markdown from 'react-native-markdown-display';
 import BottomNavigation from '../../Navigation/BottomNav';
+import Swiper from 'react-native-swiper';
 
 export const ArticlesDiagnosed = ({route}) => {
   const navigation = useNavigation();
@@ -46,27 +47,8 @@ export const ArticlesDiagnosed = ({route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView>
-        <Text
-          style={[
-            styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
-          ]}>
-          Her kan du vælge en artikel.
-        </Text>
-        <Text
-          style={[
-            styles.title2,
-            {color: colors.text, fontSize: 22 * scaleFactor},
-          ]}>
-          God læsning!
-        </Text>
-        {articlesList.length == 0 ? (
-          <Text style={{textAlign: 'center', fontSize: 24}}>
-            Loading articles...
-          </Text>
-        ) : (
-          articlesList.map((item, index) => (
+      <Swiper showsPagination={true} loop={false}>
+          {articlesList.map((item, index) => (
             <TouchableOpacity
               key={index}
               style={
@@ -95,12 +77,9 @@ export const ArticlesDiagnosed = ({route}) => {
                     {item.get('text').replaceAll(/#|-|>|/gi, '')}
                   </Text>
                 </View>
-            
             </TouchableOpacity>
-          ))
-        )}
-      </ScrollView>
-      <BottomNavigation />
+          ))}
+      </Swiper>
     </SafeAreaView>
   );
 };

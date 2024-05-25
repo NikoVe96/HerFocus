@@ -11,6 +11,7 @@ import {
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import BottomNavigation from '../../Navigation/BottomNav';
+import Swiper from 'react-native-swiper';
 
 export const PickSubject = () => {
   const navigation = useNavigation();

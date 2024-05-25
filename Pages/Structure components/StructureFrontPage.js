@@ -26,54 +26,8 @@ export const StructureFrontPage = () => {
             styles.title,
             {color: colors.text, fontSize: 22 * scaleFactor},
           ]}>
-          Hvad vil du gerne lave i dag?
+          Hvad skal der planlægges i dag? 
         </Text>
-        <TouchableOpacity
-          style={styles.press}
-          onPress={() => navigation.navigate('Calendar')}>
-          <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
-            <Text
-              style={[
-                styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
-              ]}>
-              Kalender
-            </Text>
-            <Image
-              source={require('../../Assets/images/structure_calendar.png')}
-              style={[
-                styles.images,
-                {
-                  width: 70 * scaleFactor,
-                  height: 70 * scaleFactor,
-                },
-              ]}></Image>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.press}
-          onPress={() => navigation.navigate('Daily overview')}>
-          <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
-            <Text
-              style={[
-                styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
-              ]}>
-              Dags oversigt
-            </Text>
-            <Image
-              source={require('../../Assets/images/structure_dailyOverview.png')}
-              style={[
-                styles.images,
-                {
-                  width: 110 * scaleFactor,
-                  height: 70 * scaleFactor,
-                },
-              ]}></Image>
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Add task')}>
@@ -131,7 +85,7 @@ export const StructureFrontPage = () => {
                 styles.text,
                 {color: colors.text, fontSize: 18 * scaleFactor},
               ]}>
-              Nyt event
+              Ny begivenhed
             </Text>
             <Image
               source={require('../../Assets/images/structure_event.png')}
@@ -157,11 +111,11 @@ export const StructureFrontPage = () => {
               Fremtidige to-dos
             </Text>
             <Image
-              source={require('../../Assets/images/structure_event.png')}
+              source={require('../../Assets/images/CalenderMini.png')}
               style={[
                 styles.images,
                 {
-                  width: 80 * scaleFactor,
+                  width: 70 * scaleFactor,
                   height: 70 * scaleFactor,
                 },
               ]}></Image>
