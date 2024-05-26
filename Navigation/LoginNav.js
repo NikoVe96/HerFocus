@@ -10,7 +10,6 @@ import {
 
 function LogInNav() {
   const Drawer = createDrawerNavigator();
-  const {colors} = useTheme();
   return (
     <Drawer.Navigator
       initialRouteName="Login"
@@ -22,6 +21,7 @@ function LogInNav() {
         name="Forgot password"
         component={ForgotPassword}></Drawer.Screen>
       <Drawer.Screen name="Sign up" component={SignUp}></Drawer.Screen>
+      <Drawer.Screen name="Front page" component={FrontPage}></Drawer.Screen>
     </Drawer.Navigator>
   );
 }

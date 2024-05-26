@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
    const [avatar, setAvatar] = useState('');
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
-   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
    const handleSignup = async (

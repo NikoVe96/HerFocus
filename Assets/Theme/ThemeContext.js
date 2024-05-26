@@ -2,6 +2,7 @@ import React, {createContext, useContext, useState, useEffect} from 'react';
 import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import Parse from 'parse/react-native';
 import {DefaultTheme} from '@react-navigation/native';
+import {useUser} from '../../Components/UserContext';
 
 const ThemeContext = createContext();
 
@@ -178,19 +179,21 @@ export function useThemeContext() {
 export const ThemeProvider = ({children}) => {
   const [theme, setTheme] = useState();
   const [ID, setID] = useState('');
+const {isLoggedIn} = useUser(); 
 
   useEffect(() => {
     const getTheme = async () => {
       try {
-        const currentUser = await Parse.User.currentAsync();
-        if (currentUser) {
-          setID(currentUser.id);
-          let themeQ = new Parse.Query('Settings');
-          themeQ.contains('user', ID);
-          console.log(ID);
-          const Result = await themeQ.find();
-          const chosenTheme = Result[0].get('theme');
-          setTheme(themes[chosenTheme] || themes.yellow);
+        if (isLoggedIn) {
+            let themeQ = new Parse.Query('Settings');
+            themeQ.contains('user', ID);
+            console.log(ID);
+            const Result = await themeQ.find();
+            const chosenTheme = Result[0].get('theme');
+            setTheme(themes[chosenTheme] || themes.yellow);
+          
+        } else {
+          setTheme(themes.yellow);
         }
       } catch (error) {
         console.error('Error fetching user theme:', error);
@@ -199,6 +202,7 @@ export const ThemeProvider = ({children}) => {
     };
     getTheme();
   }, []);
+
 
   const updateTheme = async newThemeName => {
      const currentUser = await Parse.User.currentAsync();
