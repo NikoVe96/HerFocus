@@ -1203,10 +1203,10 @@ export const Module = ({ route }) => {
           ref={swiperRef}>
           <ScrollView style={{flex: 1}}>
             <Image
-              source={require('../../Assets/images/frustrated_woman.png')}
+              source={require('../../Assets/images/LearningFirst.png')}
               style={{
-                width: width,
-                height: 270 * scaleFactor,
+                width: 200 * scaleFactor,
+                height: 200 * scaleFactor,
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
@@ -1237,10 +1237,10 @@ export const Module = ({ route }) => {
           </ScrollView>
           <ScrollView style={{flex: 1}}>
             <Image
-              source={require('../../Assets/images/woman_reflecting.png')}
+              source={require('../../Assets/images/LearningSecond.png')}
               style={{
-                width: width,
-                height: 270 * scaleFactor,
+                width: 200 * scaleFactor,
+                height: 200 * scaleFactor,
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
@@ -1283,10 +1283,10 @@ export const Module = ({ route }) => {
           </ScrollView>
           <ScrollView style={{flex: 1}}>
             <Image
-              source={require('../../Assets/images/woman_writing.png')}
+              source={require('../../Assets/images/LearningThird.png')}
               style={{
-                width: width,
-                height: 270 * scaleFactor,
+                width: 200 * scaleFactor,
+                height: 200 * scaleFactor,
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
@@ -1330,10 +1330,10 @@ export const Module = ({ route }) => {
           <ScrollView style={{flex: 1}}>
             <View>
               <Image
-                source={require('../../Assets/images/women_taking_quiz.png')}
+                source={require('../../Assets/images/LearningQuiz.png')}
                 style={{
-                  width: width,
-                  height: 270 * scaleFactor,
+                  width: 200 * scaleFactor,
+                  height: 200 * scaleFactor,
                   alignSelf: 'center',
                 }}></Image>
               <Text
@@ -1391,10 +1391,10 @@ export const Module = ({ route }) => {
           <ScrollView style={{flex: 1}}>
             <View style={{alignItems: 'center'}}>
               <Image
-                source={require('../../Assets/images/woman_doing_exercise.png')}
+                source={require('../../Assets/images/LearningFourth.png')}
                 style={{
-                  width: width,
-                  height: 270 * scaleFactor,
+                  width: 200 * scaleFactor,
+                  height: 200 * scaleFactor,
                   alignSelf: 'center',
                 }}></Image>
             </View>
@@ -1438,10 +1438,10 @@ export const Module = ({ route }) => {
           <ScrollView style={{flex: 1}}>
             <View style={{alignItems: 'center'}}>
               <Image
-                source={require('../../Assets/images/lightbulbs.png')}
+                source={require('../../Assets/images/LearningFifth.png')}
                 style={{
-                  width: width,
-                  height: 270 * scaleFactor,
+                  width: 200 * scaleFactor,
+                  height: 200 * scaleFactor,
                   alignSelf: 'center',
                 }}></Image>
               <Text
@@ -1510,70 +1510,72 @@ export const Module = ({ route }) => {
             </View>
           </ScrollView>
           <ScrollView>
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <Image
-              source={require('../../Assets/images/fireworks.png')}
-              style={{
-                width: width,
-                height: 270 * scaleFactor,
-                alignSelf: 'center',
-              }}></Image>
-            <Text
-              style={[
-                styles.takeawayHeader,
-                {fontSize: 22 * scaleFactor, color: colors.text},
-              ]}>
-              Tillykke!{' '}
-            </Text>
-            <Text style={[styles.text, {color: colors.text}]}>
-              Du har færdiggjort et læringsmodul!
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontStyle: 'italic',
-                marginTop: '15%',
-                color: colors.text,
-              }}>
-              Materialet fra dette modul er fundet i bogen "{book}", som er
-              skrevet af {author}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                alignItems: 'baseline',
-                marginVertical: '3%',
-              }}>
-              <TouchableOpacity
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <Image
+                source={require('../../Assets/images/fireworks.png')}
+                style={{
+                  width: width,
+                  height: 270 * scaleFactor,
+                  alignSelf: 'center',
+                }}></Image>
+              <Text
                 style={[
-                  styles.swiperBtn,
-                  {
-                    backgroundColor: colors.mainButton,
-                    borderColor: colors.mainButton,
-                  },
-                ]}
-                onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
-                  Tilbage
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor: colors.mainButton,
-                    borderColor: colors.mainButton,
-                  },
-                ]}
-                onPress={() => handleCompletion()}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
-                  Færdiggør modulet
-                </Text>
-              </TouchableOpacity>
+                  styles.takeawayHeader,
+                  {fontSize: 22 * scaleFactor, color: colors.text},
+                ]}>
+                Tillykke!{' '}
+              </Text>
+              <Text style={[styles.text, {color: colors.text}]}>
+                Du har færdiggjort et læringsmodul!
+              </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontStyle: 'italic',
+                  marginTop: '15%',
+                  color: colors.text,
+                }}>
+                Materialet fra dette modul er fundet i bogen "{book}", som er
+                skrevet af {author}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  alignItems: 'baseline',
+                  marginVertical: '3%',
+                }}>
+                <TouchableOpacity
+                  style={[
+                    styles.swiperBtn,
+                    {
+                      backgroundColor: colors.mainButton,
+                      borderColor: colors.mainButton,
+                    },
+                  ]}
+                  onPress={() => swiperRef.current.scrollBy(-1)}>
+                  <Text
+                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    Tilbage
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: colors.mainButton,
+                      borderColor: colors.mainButton,
+                    },
+                  ]}
+                  onPress={() => handleCompletion()}>
+                  <Text
+                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    Færdiggør modulet
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-      </ScrollView>
+          </ScrollView>
         </Swiper>
       </View>
       <BottomNavigation />

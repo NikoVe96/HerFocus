@@ -98,8 +98,6 @@ export const AddRoutine = ({ navigation }) => {
         setStepTime('');
         await routines();
         hideAddStepModal();
-
-        Alert.alert('Et nyt step er blevet tilføjet!');
     };
 
     async function saveRoutine() {
@@ -263,23 +261,13 @@ export const AddRoutine = ({ navigation }) => {
           </View>
           <TouchableOpacity
             onPress={() => showRoutineModal()}
-            style={{
-              backgroundColor: colors.mainButton,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderWidth: 1,
-              borderColor: colors.mainButton,
-              borderRadius: 10,
-              alignSelf: 'flex-end',
-              padding: 10,
-              marginVertical: '5%',
-              marginHorizontal: '5%',
-              elevation: 5,
-              shadowColor: 'grey',
-              shadowOffset: {width: 1, height: 2},
-              shadowOpacity: 0.8,
-              shadowRadius: 1,
-            }}>
+            style={[
+              styles.plusBtn,
+              {
+                backgroundColor: colors.mainButton,
+                borderColor: colors.mainButton,
+              },
+            ]}>
             <FontAwesomeIcon
               icon={faPlus}
               size={35 * scaleFactor}
@@ -296,25 +284,13 @@ export const AddRoutine = ({ navigation }) => {
                 emojiStyle={{fontSize: 35 * scaleFactor}}
                 titleStyle={{fontSize: 24 * scaleFactor, color: colors.border}}>
                 <View
-                  style={{
+                  style={[styles.outerView, {
                     backgroundColor: colors.mainButton,
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    padding: 5,
                     borderColor: colors.mainButton,
-                    elevation: 5,
-                    shadowColor: 'grey',
-                    shadowOffset: {width: 1, height: 2},
-                    shadowOpacity: 0.8,
-                    shadowRadius: 1,
-                  }}>
+                   
+                  }]}>
                   <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'flex-end',
-                      marginBottom: '2%',
-                    }}>
+                    style={styles.icons}>
                     <TouchableOpacity
                       style={{
                         marginHorizontal: '2%',
@@ -369,29 +345,21 @@ export const AddRoutine = ({ navigation }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                           }}>
-                          <BouncyCheckbox
-                            size={30 * scaleFactor}
-                            fillColor={colors.subButton}
-                            unfillColor="#FFFFFF"
-                            iconStyle={{borderColor: 'black'}}
-                            innerIconStyle={{borderWidth: 2}}
-                            textStyle={{fontFamily: 'JosefinSans-Regular'}}
-                            style={{marginLeft: '2%'}}
-                          />
+                            <BouncyCheckbox
+                              size={30 * scaleFactor}
+                              fillColor={colors.subButton}
+                              unfillColor="#FFFFFF"
+                              iconStyle={{borderColor: 'black'}}
+                              innerIconStyle={{borderWidth: 2}}
+                              textStyle={{fontFamily: 'JosefinSans-Regular'}}
+                              style={{marginLeft: '2%'}}
+                            />
                         </View>
                         <View
-                          style={{
-                            padding: 10,
-                            borderWidth: 1,
-                            borderRadius: 10,
-                            marginVertical: '2%',
-                            flexDirection: 'row',
+                          style={[styles.taskView, {
                             backgroundColor: colors.subButton,
                             borderColor: colors.subButton,
-                            elevation: 5,
-                            justifyContent: 'space-between',
-                            width: '80%',
-                          }}>
+                          }]}>
                           <View style={{justifyContent: 'center'}}>
                             <Text
                               style={{
@@ -1029,6 +997,48 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     textAlign: 'center',
+  },
+  plusBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    alignSelf: 'flex-end',
+    padding: 10,
+    marginVertical: '5%',
+    marginHorizontal: '5%',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 2,
+  },
+  outerView:{
+     borderWidth: 1,
+                    borderRadius: 10,
+                    padding: 5,
+                    elevation: 5,
+                    shadowColor: 'black',
+                    shadowOpacity: 0.5,
+                    shadowOffset: {width: 0, height: 2},
+                    shadowRadius: 2,
+  },
+  icons:
+  {
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      marginBottom: '2%',
+                    },
+  taskView: {
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginVertical: '2%',
+    flexDirection: 'row',
+    elevation: 5,
+    justifyContent: 'space-between',
+    width: '80%',
   },
 });
 
