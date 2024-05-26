@@ -21,11 +21,8 @@ import TopNavigation from './TopNav';
 import AddRoutine from '../Pages/Structure components/AddRoutine';
 import AddTask from '../Pages/Structure components/AddTask';
 import CalendarOverview from '../Pages/Structure components/CalendarOverview';
-import ForgotPassword from '../Pages/General components/ForgotPassword';
-import FrontPage from '../Pages/General components/FrontPage';
-import LogIn from '../Pages/General components/Login';
+import FrontPage from '../Pages/General components/FrontPage'
 import Profile from '../Pages/General components/Profile';
-import SignUp from '../Pages/General components/SignUp';
 import UserSettings from '../Pages/General components/UserSettings';
 import PickTopics from '../Pages/Knowledge base/PickTopic';
 import PickModule from '../Pages/Learning components/PickModule';
@@ -50,6 +47,8 @@ import { useUser } from '../Components/UserContext';
 import Notebook from '../Pages/Structure components/Notebook';
 import FutureTodo from '../Pages/Structure components/FutureTodo';
 import CompletedModules from '../Pages/Learning components/CompletedModules';
+import LogIn from '../Pages/General components/Login';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -368,26 +367,16 @@ function SideMenu() {
       <Drawer.Screen name="Add task" component={AddTask}></Drawer.Screen>
       <Drawer.Screen name="App history" component={AppHistory}></Drawer.Screen>
       <Drawer.Screen name="Future todo" component={FutureTodo}></Drawer.Screen>
-      <Drawer.Screen name="Completed modules" component={CompletedModules}></Drawer.Screen>
+      <Drawer.Screen
+        name="Completed modules"
+        component={CompletedModules}></Drawer.Screen>
+      <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
       <Drawer.Screen
         name="Contact information"
         component={ContactInformation}></Drawer.Screen>
       <Drawer.Screen
         name="Calendar"
         component={CalendarOverview}></Drawer.Screen>
-      <Drawer.Screen
-        name="Forgot password"
-        component={ForgotPassword}
-        options={{headerShown: false}}></Drawer.Screen>
-      <Drawer.Screen
-        name="Login"
-        component={LogIn}
-        options={{headerShown: false}}></Drawer.Screen>
-      <Drawer.Screen name="Profile" component={Profile}></Drawer.Screen>
-      <Drawer.Screen
-        name="Sign up"
-        component={SignUp}
-        options={{headerShown: false}}></Drawer.Screen>
       <Drawer.Screen name="Settings" component={UserSettings}></Drawer.Screen>
       <Drawer.Screen name="Pick topic" component={PickTopics}></Drawer.Screen>
       <Drawer.Screen name="Pick module" component={PickModule}></Drawer.Screen>

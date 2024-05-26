@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
    const [avatar, setAvatar] = useState('');
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
    const handleSignup = async (
@@ -77,6 +78,7 @@ export const UserProvider = ({ children }) => {
 
     try {
       const user = await Parse.User.logIn(lowerCaseEmail, password);
+      setIsLoggedIn(true);
       console.log('Success! User ID:', user.id);
       navigation.navigate('Front page');
        setUsername(user.getUsername());
@@ -89,6 +91,7 @@ export const UserProvider = ({ children }) => {
  const handleLogout = async (navigation) => {
    try {
      await Parse.User.logOut();
+     setIsLoggedIn(false);
      setUsername('');
      navigation.navigate('Login');
    } catch (error) {
@@ -108,7 +111,7 @@ export const UserProvider = ({ children }) => {
 
  return (
    <UserContext.Provider
-     value={{username, email, name, error, avatar, updateUserProfile, handleLogin, handleLogout, handleSignup}}>
+     value={{isLoggedIn, username, email, name, error, avatar, updateUserProfile, handleLogin, handleLogout, handleSignup}}>
      {children}
    </UserContext.Provider>
  );

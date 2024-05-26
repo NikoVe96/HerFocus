@@ -3,6 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigation from './Navigation/BottomNav';
 import SideMenu from './Navigation/SideMenu';
+import LoginNav from './Navigation/LoginNav'; 
 import { NavigationContainer, DefaultTheme, useTheme } from '@react-navigation/native';
 import { useColorScheme, Button } from 'react-native';
 import Parse from 'parse/react-native';
@@ -11,7 +12,7 @@ import { ThemeProvider, useThemeContext } from './Assets/Theme/ThemeContext';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import { UserProvider } from './Components/UserContext';
+import { UserProvider, useUser } from './Components/UserContext';
 
 
 Parse.setAsyncStorage(AsyncStorage);
@@ -85,6 +86,7 @@ function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
+  const {isLoggedIn} = useUser(); 
   //const [expoPushToken, setExpoPushToken] = useState('');
   //const [notification, setNotification] = useState(false);
   //const notificationListener = useRef();
@@ -131,25 +133,28 @@ function App() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, }}>
-
+    <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer theme={theme}>
-
-        <SafeAreaView style={{ flex: 1 }}>
-          <SideMenu />
-          {/*<Button
-            title="Press to Send Notification"
-            onPress={async () => {
-              await sendPushNotification(expoPushToken);
-            }}
-          />*/}
-          {/* <BottomNavigation /> */}
-        </SafeAreaView>
-
+        {isLoggedIn ? (
+          <SafeAreaView style={{flex: 1}}>
+            <SideMenu />
+          </SafeAreaView>
+        ) : (
+          <SafeAreaView style={{flex: 1}}>
+            <LoginNav />
+          </SafeAreaView>
+        )}
       </NavigationContainer>
     </GestureHandlerRootView>
   );
 }
+{/*<Button
+  title="Press to Send Notification"
+  onPress={async () => {
+    await sendPushNotification(expoPushToken);
+  }}
+/>*/}
+{/* <BottomNavigation /> */}
 
 function AppWrapper() {
   return (
