@@ -53,10 +53,18 @@ export const AddTask = ({ navigation }) => {
       const newTask = new Parse.Object('Task');
       const currentUser = await Parse.User.currentAsync();
 
+       const startDateTime = new Date(taskDate);
+       const [startHours, startMinutes] = taskStartTime.split(':');
+       startDateTime.setHours(startHours, startMinutes);
+
+       const endDateTime = new Date(taskDate);
+       const [endHours, endMinutes] = taskEndTime.split(':');
+       endDateTime.setHours(endHours, endMinutes);
+
       newTask.set('name', taskName);
       newTask.set('date', taskDate);
-      newTask.set('startTime', taskStartTime);
-      newTask.set('endTime', taskEndTime);
+      newTask.set('startTime', startDateTime); 
+      newTask.set('endTime', endDateTime);  
       newTask.set('emoji', emoji);
       newTask.set('user', currentUser);
       newTask.set('color', taskColor);
@@ -66,7 +74,7 @@ export const AddTask = ({ navigation }) => {
       await newTask.save();
       console.log('Success: task saved')
       Alert.alert('En ny to-do er blevet tilføjet til din kalender!');
-      clearInput();
+      //clearInput();
     } catch (error) {
       console.log('Error saving new task: ', error);
       Alert.alert('Hovsa!',
@@ -109,9 +117,10 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setStartTime(hours
+    setStartTime(hours 
       + ':' + minutes);
     hideStartTimePicker();
+    console.log('Selected time:', hours + ':' + minutes);
   };
 
   const showEndTimePicker = () => {
@@ -134,8 +143,9 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setEndTime(hours
+    setEndTime(hours 
       + ':' + minutes);
+    console.log('Selected time:', hours + ':' + minutes);
 
     hideEndTimePicker();
   };

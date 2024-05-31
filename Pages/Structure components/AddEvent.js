@@ -57,10 +57,20 @@ export const AddEvent = () => {
       const newEvent = new Parse.Object('Events');
       const currentUser = await Parse.User.currentAsync();
 
+      const eventDateObject = new Date(eventDate);
+
+      const startDateTime = new Date(eventDateObject);
+      const [startHours, startMinutes] = eventStartTime.split(':');
+      startDateTime.setHours(startHours, startMinutes);
+
+      const endDateTime = new Date(eventDateObject);
+      const [endHours, endMinutes] = eventEndTime.split(':');
+      endDateTime.setHours(endHours, endMinutes);
+
       newEvent.set('name', eventName);
       newEvent.set('date', eventDate);
-      newEvent.set('startTime', eventStartTime);
-      newEvent.set('endTime', eventEndTime);
+      newEvent.set('startTime', startDateTime);
+      newEvent.set('endTime', endDateTime);
       newEvent.set('emoji', emoji);
       newEvent.set('user', currentUser);
       newEvent.set('color', eventColor);
