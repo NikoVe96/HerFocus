@@ -3,7 +3,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigation from './Navigation/BottomNav';
 import SideMenu from './Navigation/SideMenu';
-import { NavigationContainer, DefaultTheme, useTheme, useNavigationState } from '@react-navigation/native';
+import LoginNav from './Navigation/LoginNav'; 
+import { NavigationContainer, DefaultTheme, useTheme } from '@react-navigation/native';
 import { useColorScheme, Button } from 'react-native';
 import Parse from 'parse/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -85,6 +86,7 @@ function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
+  const {isLoggedIn} = useUser(); 
   //const [expoPushToken, setExpoPushToken] = useState('');
   //const [notification, setNotification] = useState(false);
   //const notificationListener = useRef();
@@ -133,25 +135,28 @@ function App() {
   const { username } = useUser();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, }}>
-      <NavigationContainer
-        theme={theme}
-      //onStateChange={onStateChange}
-      >
-        <SafeAreaView style={{ flex: 1 }}>
-          <SideMenu />
-          {/*<Button
-            title="Press to Send Notification"
-            onPress={async () => {
-              await sendPushNotification(expoPushToken);
-            }}
-          />*/}
-          {username == '' ? null : <BottomNavigation />}
-        </SafeAreaView>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer theme={theme}>
+        {isLoggedIn ? (
+          <SafeAreaView style={{flex: 1}}>
+            <SideMenu />
+          </SafeAreaView>
+        ) : (
+          <SafeAreaView style={{flex: 1}}>
+            <LoginNav />
+          </SafeAreaView>
+        )}
       </NavigationContainer>
     </GestureHandlerRootView>
   );
 }
+{/*<Button
+  title="Press to Send Notification"
+  onPress={async () => {
+    await sendPushNotification(expoPushToken);
+  }}
+/>*/}
+{/* <BottomNavigation /> */}
 
 
 

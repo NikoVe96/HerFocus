@@ -15,6 +15,7 @@ export const UserProvider = ({ children }) => {
   const [taskProgress, setTaskProgress] = useState(0);
   const [remainingTasks, setRemainingTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -31,7 +32,7 @@ export const UserProvider = ({ children }) => {
 
   }, []);
 
-
+  
    const handleSignup = async (
      name,
      username,
@@ -97,6 +98,7 @@ export const UserProvider = ({ children }) => {
 
     try {
       const user = await Parse.User.logIn(lowerCaseEmail, password);
+      setIsLoggedIn(true);
       console.log('Success! User ID:', user.id);
       //navigation.navigate('Front page');
       setUsername(user.getUsername());
@@ -106,15 +108,16 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const handleLogout = async (navigation) => {
-    try {
-      await Parse.User.logOut();
-      setUsername('');
-      //navigation.navigate('Login');
-    } catch (error) {
-      console.error('Error logging out', error);
-    }
-  };
+ const handleLogout = async (navigation) => {
+   try {
+     await Parse.User.logOut();
+     setIsLoggedIn(false);
+     setUsername('');
+     navigation.navigate('Login');
+   } catch (error) {
+     console.error('Error logging out', error);
+   }
+ };
 
   const updateUserProfile = async () => {
     const currentUser = await Parse.User.currentAsync();
