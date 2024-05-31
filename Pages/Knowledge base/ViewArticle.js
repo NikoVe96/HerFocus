@@ -1,4 +1,4 @@
-import {Link} from '@react-navigation/native';
+import { Link } from '@react-navigation/native';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,35 +10,35 @@ import {
 } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import BottomNavigation from '../../Navigation/BottomNav';
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 
-export const ViewArticle = ({route}) => {
-  const {article} = route.params;
-   const {colors} = useTheme();
-   const {width, height} = Dimensions.get('window');
-   const scaleFactor = Math.min(width / 375, height / 667);
+export const ViewArticle = ({ route }) => {
+  const { article } = route.params;
+  const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
   const goToLink = () => {
     Linking.openURL(article.get('website'));
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <View style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+        <View style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
           <Text
             style={[
               styles.title,
-              {color: colors.text, fontSize: 25 * scaleFactor},
+              { color: colors.text, fontSize: 25 * scaleFactor },
             ]}>
             {article.get('title')}
           </Text>
           <View
-            style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+            style={[styles.seperator, { backgroundColor: colors.border }]}></View>
           <Text
             style={[
               styles.subTitle,
-              {color: colors.text, fontSize: 17 * scaleFactor},
+              { color: colors.text, fontSize: 17 * scaleFactor },
             ]}>
             {article.get('subHeader')}
           </Text>
@@ -46,8 +46,8 @@ export const ViewArticle = ({route}) => {
         <View style={styles.articleText}>
           <Markdown
             style={{
-              paragraph: {fontSize: 18 * scaleFactor, color: colors.text},
-              bullet_list: {fontSize: 18, color: colors.text},
+              paragraph: { fontSize: 18 * scaleFactor, color: colors.text },
+              bullet_list: { fontSize: 18, color: colors.text },
               heading3: {
                 color: colors.text,
                 fontSize: 20 * scaleFactor,
@@ -60,11 +60,11 @@ export const ViewArticle = ({route}) => {
                 paddingRight: 15,
                 padding: 2,
               },
-              list_item: {marginVertical: 5},
+              list_item: { marginVertical: 5 },
             }}>
             {article.get('text')}
           </Markdown>
-          <View style={{marginVertical: 30}}>
+          <View style={{ marginVertical: 30 }}>
             <View
               style={{
                 borderWidth: 0.2,
@@ -74,16 +74,16 @@ export const ViewArticle = ({route}) => {
                 width: 200,
                 alignSelf: 'center',
               }}></View>
-            <Text style={{color: colors.text}}>
+            <Text style={{ color: colors.text }}>
               Denne artikel er skrevet af
-              <Text style={{fontWeight: 'bold', color: colors.text}}>
+              <Text style={{ fontWeight: 'bold', color: colors.text }}>
                 {' '}
                 {article.get('author')}.
               </Text>
             </Text>
-            <Text style={{marginVertical: 10, color: colors.text}}>
+            <Text style={{ marginVertical: 10, color: colors.text }}>
               Hele artiklen samt mere info kan findes på
-              <Text style={{fontStyle: 'italic'}} onPress={goToLink}>
+              <Text style={{ fontStyle: 'italic' }} onPress={goToLink}>
                 {' '}
                 {article.get('website')}
               </Text>
@@ -91,7 +91,6 @@ export const ViewArticle = ({route}) => {
           </View>
         </View>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

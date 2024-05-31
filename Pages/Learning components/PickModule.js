@@ -161,7 +161,6 @@ export const PickModule = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

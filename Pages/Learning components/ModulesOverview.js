@@ -80,7 +80,7 @@ export const ModulesOverview = ({ route }) => {
     }, [navigation]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <Text
           style={[
@@ -99,15 +99,15 @@ export const ModulesOverview = ({ route }) => {
             height: 170 * scaleFactor,
             alignSelf: 'center',
           }}></Image>
-        <Text style={[styles.description, {fontSize: 16 * scaleFactor, color: colors.text}]}>
+        <Text style={[styles.description, { fontSize: 16 * scaleFactor, color: colors.text }]}>
           {description}
         </Text>
         <View
           style={[
             styles.border,
-            {backgroundColor: colors.border, borderColor: colors.border},
+            { backgroundColor: colors.border, borderColor: colors.border },
           ]}></View>
-        <View style={{marginTop: '4%'}}>
+        <View style={{ marginTop: '4%' }}>
           {modules.length == 0 ? (
             <Text>Loading...</Text>
           ) : (
@@ -152,13 +152,13 @@ export const ModulesOverview = ({ route }) => {
                           source={moduleImage}
                           style={[
                             styles.image,
-                            {height: 50 * scaleFactor, width: 50 * scaleFactor},
+                            { height: 50 * scaleFactor, width: 50 * scaleFactor },
                           ]}></Image>
-                        <View style={{width: '60%', marginLeft: '3%'}}>
+                        <View style={{ width: '60%', marginLeft: '3%' }}>
                           <Text
                             style={[
                               styles.moduleName,
-                              {fontSize: 16 * scaleFactor, color: colors.text},
+                              { fontSize: 16 * scaleFactor, color: colors.text },
                             ]}>
                             Modul {item.get('name')}
                           </Text>
@@ -174,7 +174,7 @@ export const ModulesOverview = ({ route }) => {
                     <FontAwesomeIcon
                       icon={faDownLong}
                       size={30 * scaleFactor}
-                      style={{marginVertical: 15}}
+                      style={{ marginVertical: 15 }}
                     />
                   ) : (
                     <Text></Text>
@@ -185,7 +185,6 @@ export const ModulesOverview = ({ route }) => {
           )}
         </View>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

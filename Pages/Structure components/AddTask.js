@@ -33,6 +33,7 @@ export const AddTask = ({ navigation }) => {
   const [recent, setRecent] = useState([]);
   const [emojiModalVisible, setEmojiModalVisible] = useState(false);
   const [emoji, setEmoji] = useState();
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -52,19 +53,28 @@ export const AddTask = ({ navigation }) => {
       const newTask = new Parse.Object('Task');
       const currentUser = await Parse.User.currentAsync();
 
+       const startDateTime = new Date(taskDate);
+       const [startHours, startMinutes] = taskStartTime.split(':');
+       startDateTime.setHours(startHours, startMinutes);
+
+       const endDateTime = new Date(taskDate);
+       const [endHours, endMinutes] = taskEndTime.split(':');
+       endDateTime.setHours(endHours, endMinutes);
+
       newTask.set('name', taskName);
       newTask.set('date', taskDate);
-      newTask.set('startTime', taskStartTime);
-      newTask.set('endTime', taskEndTime);
+      newTask.set('startTime', startDateTime); 
+      newTask.set('endTime', endDateTime);  
       newTask.set('emoji', emoji);
       newTask.set('user', currentUser);
       newTask.set('color', taskColor);
       newTask.set('type', 'task');
+      newTask.set('description', description);
       // If time, add recurring option
       await newTask.save();
       console.log('Success: task saved')
       Alert.alert('En ny to-do er blevet tilføjet til din kalender!');
-      clearInput();
+      //clearInput();
     } catch (error) {
       console.log('Error saving new task: ', error);
       Alert.alert('Hovsa!',
@@ -107,9 +117,10 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setStartTime(hours
+    setStartTime(hours 
       + ':' + minutes);
     hideStartTimePicker();
+    console.log('Selected time:', hours + ':' + minutes);
   };
 
   const showEndTimePicker = () => {
@@ -132,8 +143,9 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setEndTime(hours
+    setEndTime(hours 
       + ':' + minutes);
+    console.log('Selected time:', hours + ':' + minutes);
 
     hideEndTimePicker();
   };
@@ -145,6 +157,7 @@ export const AddTask = ({ navigation }) => {
     setTaskDate('');
     setEmoji();
     setTaskColor('');
+    setDescription('');
   }
 
   function showEmojiModal() {
@@ -164,17 +177,17 @@ export const AddTask = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <View style={{alignItems: 'center', padding: 10}}>
-          <Text style={{fontSize: 24, color: colors.text, marginTop: 15}}>
+        <View style={{ alignItems: 'center', padding: 10 }}>
+          <Text style={{ fontSize: 24, color: colors.text, marginTop: 15 }}>
             {' '}
             Tilføj en ny to-do{' '}
           </Text>
           <View
             style={[
               styles.border,
-              {backgroundColor: colors.border, borderColor: colors.border},
+              { backgroundColor: colors.border, borderColor: colors.border },
             ]}></View>
         </View>
         <View
@@ -183,7 +196,7 @@ export const AddTask = ({ navigation }) => {
             paddingHorizontal: 16,
           }}>
           <View>
-            <Text style={[styles.text, {color: colors.text}]}>
+            <Text style={[styles.text, { color: colors.text }]}>
               Hvad skal din to-do hedde?
             </Text>
             <TextInput
@@ -193,7 +206,7 @@ export const AddTask = ({ navigation }) => {
             />
           </View>
           <View>
-            <Text style={[styles.text, {color: colors.text}]}>
+            <Text style={[styles.text, { color: colors.text }]}>
               Vælg en farve
             </Text>
             <View style={styles.colorOptions}>
@@ -204,7 +217,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FAEDCB' ? 45 : 40,
                   height: taskColor === '#FAEDCB' ? 45 : 40,
                   backgroundColor: '#FAEDCB',
-                  borderColor: colors.border,
+                  borderColor: '#FAEDCB',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FAEDCB')}></TouchableOpacity>
               <TouchableOpacity
@@ -214,7 +232,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#C9E4DE' ? 45 : 40,
                   height: taskColor === '#C9E4DE' ? 45 : 40,
                   backgroundColor: '#C9E4DE',
-                  borderColor: colors.border,
+                  borderColor: '#C9E4DE',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#C9E4DE')}></TouchableOpacity>
               <TouchableOpacity
@@ -224,7 +247,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#C6DEF1' ? 45 : 40,
                   height: taskColor === '#C6DEF1' ? 45 : 40,
                   backgroundColor: '#C6DEF1',
-                  borderColor: colors.border,
+                  borderColor: '#C6DEF1',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#C6DEF1')}></TouchableOpacity>
               <TouchableOpacity
@@ -234,7 +262,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#DBCDF0' ? 45 : 40,
                   height: taskColor === '#DBCDF0' ? 45 : 40,
                   backgroundColor: '#DBCDF0',
-                  borderColor: colors.border,
+                  borderColor: '#DBCDF0',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#DBCDF0')}></TouchableOpacity>
               <TouchableOpacity
@@ -244,7 +277,12 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FFADAD' ? 45 : 40,
                   height: taskColor === '#FFADAD' ? 45 : 40,
                   backgroundColor: '#FFADAD',
-                  borderColor: colors.border,
+                  borderColor: '#FFADAD',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FFADAD')}></TouchableOpacity>
               <TouchableOpacity
@@ -254,12 +292,17 @@ export const AddTask = ({ navigation }) => {
                   width: taskColor === '#FFD6A5' ? 45 : 40,
                   height: taskColor === '#FFD6A5' ? 45 : 40,
                   backgroundColor: '#FFD6A5',
-                  borderColor: colors.border,
+                  borderColor: '#FFD6A5',
+                  elevation: 5,
+                  shadowColor: 'black',
+                  shadowOffset: { width: 1, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
                 }}
                 onPress={() => handleColorPick('#FFD6A5')}></TouchableOpacity>
             </View>
           </View>
-          <View style={{marginTop: '10%', flexDirection: 'row'}}>
+          <View style={{ marginTop: '10%', flexDirection: 'row' }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 onPress={showEmojiModal}
@@ -270,7 +313,7 @@ export const AddTask = ({ navigation }) => {
                     borderColor: colors.subButton,
                   },
                 ]}>
-                <Text style={[styles.buttonText, {color: colors.text}]}>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
                   Emoji
                 </Text>
               </TouchableOpacity>
@@ -283,7 +326,7 @@ export const AddTask = ({ navigation }) => {
                   <View
                     style={[
                       styles.emojiPickerContainer,
-                      {backgroundColor: colors.background},
+                      { backgroundColor: colors.background },
                     ]}>
                     <EmojiPicker
                       emojis={emojis}
@@ -309,16 +352,16 @@ export const AddTask = ({ navigation }) => {
                       },
                     ]}
                     onPress={hideEmojiModal}>
-                    <Text style={{fontWeight: 'bold', fontSize: 24}}>LUK</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>LUK</Text>
                   </TouchableOpacity>
                 </View>
               </Modal>
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
-              <Text style={{fontSize: 26}}> {emoji}</Text>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
+              <Text style={{ fontSize: 26 }}> {emoji}</Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 2}}>
+          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 style={[
@@ -329,7 +372,7 @@ export const AddTask = ({ navigation }) => {
                   },
                 ]}
                 onPress={showStartTimePicker}>
-                <Text style={[styles.buttonText, {color: colors.text}]}>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
                   Start tidspunkt
                 </Text>
               </TouchableOpacity>
@@ -340,13 +383,13 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideStartTimePicker}
               />
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
-              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
+              <Text style={[styles.text, { fontWeight: 'bold' }]}>
                 {taskStartTime === null ? '' : `${taskStartTime}`}
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 2}}>
+          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 style={[
@@ -357,7 +400,7 @@ export const AddTask = ({ navigation }) => {
                   },
                 ]}
                 onPress={showEndTimePicker}>
-                <Text style={[styles.buttonText, {color: colors.text}]}>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
                   Slut tidspunkt
                 </Text>
               </TouchableOpacity>
@@ -368,13 +411,13 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideEndTimePicker}
               />
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
-              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
+              <Text style={[styles.text, { fontWeight: 'bold' }]}>
                 {taskEndTime === null ? '' : `${taskEndTime}`}
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', marginVertical: 2}}>
+          <View style={{ flexDirection: 'row', marginVertical: 2 }}>
             <View style={styles.rowView}>
               <TouchableOpacity
                 style={[
@@ -385,7 +428,7 @@ export const AddTask = ({ navigation }) => {
                   },
                 ]}
                 onPress={showDatePicker}>
-                <Text style={[styles.buttonText, {color: colors.text}]}>
+                <Text style={[styles.buttonText, { color: colors.text }]}>
                   Dato
                 </Text>
               </TouchableOpacity>
@@ -396,12 +439,29 @@ export const AddTask = ({ navigation }) => {
                 onCancel={hideDatePicker}
               />
             </View>
-            <View style={[styles.rowView, {alignItems: 'center'}]}>
-              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+            <View style={[styles.rowView, { alignItems: 'center' }]}>
+              <Text style={[styles.text, { fontWeight: 'bold' }]}>
                 {`${taskDate}`}
               </Text>
             </View>
           </View>
+        </View>
+        <View
+          style={{
+            alignContent: 'center',
+            paddingHorizontal: 16,
+          }}>
+          <Text style={[styles.text, { color: colors.text }]}>
+            Tilføj en beskrivelse
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={text => setDescription(text)}
+            value={description}
+            multiline={true}
+            numberOfLines={8}
+            textAlignVertical={'top'}>
+          </TextInput>
         </View>
         <TouchableOpacity
           style={[
@@ -412,12 +472,11 @@ export const AddTask = ({ navigation }) => {
             },
           ]}
           onPress={newTask}>
-          <Text style={{fontSize: 26, fontWeight: 'bold', color: colors.text}}>
+          <Text style={{ fontSize: 26, fontWeight: 'bold', color: colors.text }}>
             Tilføj ny to-do
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation/>
     </SafeAreaView>
   );
 }
@@ -435,7 +494,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '3%',
     elevation: 5,
     shadowColor: 'black',
-    shadowOffset: {width: 1, height: 2},
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
@@ -446,8 +505,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     elevation: 5,
-    shadowColor: 'grey',
-    shadowOffset: {width: 1, height: 2},
+    shadowColor: 'black',
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 1,
     marginBottom: 8,
@@ -496,6 +555,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     borderColor: 'white',
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
   border: {
     borderWidth: 1,

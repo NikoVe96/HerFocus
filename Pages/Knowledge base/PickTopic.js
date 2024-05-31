@@ -103,7 +103,7 @@ export const PickTopics = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
-            navigation.navigate('Subject articles', {subject: 'adhd'})
+            navigation.navigate('Subject articles', { subject: 'adhd' })
           }>
           <View
             style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
@@ -121,7 +121,7 @@ export const PickTopics = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
-            navigation.navigate('Subject articles', {subject: 'mental'})
+            navigation.navigate('Subject articles', { subject: 'mental' })
           }>
           <View
             style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
@@ -138,7 +138,7 @@ export const PickTopics = () => {
         <TouchableOpacity
           style={styles.press}
           onPress={() =>
-            navigation.navigate('Subject articles', {subject: 'women'})
+            navigation.navigate('Subject articles', { subject: 'women' })
           }>
           <View
             style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
@@ -172,7 +172,6 @@ export const PickTopics = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,
   },
   press: {

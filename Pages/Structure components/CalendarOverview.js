@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, Component, useContext } from 'react';
+import React, { useEffect, useState, useMemo, Component, useContext, useCallback } from 'react';
 import { Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView, StyleSheet, Dimensions, Pressable, } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
@@ -22,6 +22,7 @@ import {
 import AccordionItem from '../../Components/AccordionItem';
 import DropDownPicker from 'react-native-dropdown-picker';
 import BottomNavigation from '../../Navigation/BottomNav';
+import {useFocusEffect} from '@react-navigation/native';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -35,6 +36,9 @@ export const CalendarOverview = ({ navigation }) => {
   const { colors } = useTheme();
   const [isModalVisible, setModalVisible] = useState(false);
   const [dayTasksArray, setDayTasksArray] = useState([]);
+  const [sortedTaskArray, setSortedTaskArray] = useState([]); 
+  const [sortedEventArray, setSortedEventArray] = useState([]); 
+  const [sortedRoutineArray, setSortedRoutineArray] = useState([]); 
   const [tasksArray, setTasksArray] = useState([]);
   const [eventsArray, setEventsArray] = useState([]);
   const [routinesArray, setRoutinesArray] = useState([]);
@@ -95,63 +99,100 @@ export const CalendarOverview = ({ navigation }) => {
     }
     getCurrentUser();
     setMarkedDays();
-  }, [chosenDate]);
+  }, []);
 
   async function showDayModal(day) {
     const formattedDate = `${day.year}-${day.month.toString().padStart(2, '0')}-${day.day.toString().padStart(2, '0')}`;
     setChosenDate(formattedDate);
 
-    await getDayEvents();
-    await allDayQuery();
+    await getDayEvents(formattedDate);
+    await allDayQuery(formattedDate);
     await getMarkedDates();
     setModalVisible(true);
-
   }
 
-  async function getDayEvents() {
+  async function getDayEvents(day) {
     let taskQuery = new Parse.Query('Task');
     let eventQuery = new Parse.Query('Events');
     let routineQuery = new Parse.Query('Routine');
 
     taskQuery.contains('user', ID);
-    taskQuery.equalTo('date', chosenDate);
-    taskQuery.ascending('startTime');
-    const tResult = await taskQuery.find();
-    setTasksArray(tResult);
+    taskQuery.equalTo('date', day);
 
     eventQuery.contains('user', ID);
-    eventQuery.contains('date', chosenDate);
-    eventQuery.notEqualTo('allDay', true);
-    const eResult = await eventQuery.find();
-    setEventsArray(eResult);
+    eventQuery.contains('date', day);
+    // eventQuery.notEqualTo('allDay', true); // kommenteret ud - skal man ikke også kunne se heldagsbegivenheder?
 
     routineQuery.contains('user', ID);
-    routineQuery.contains('calendarDate', chosenDate);
-    const rResult = await routineQuery.find();
-    setRoutinesArray(rResult);
+    routineQuery.contains('calendarDate', day);
 
-    let allEvents = tasksArray.concat(eventsArray);
-    allEvents = allEvents.concat(routinesArray);
-    allEvents.sort((a, b) => {
-      if (a.get('startTime') < b.get('startTime')) {
-        return -1;
-      }
-      if (a.startTime > b.startTime) {
-        return 1;
-      }
-      return 0;
-    });
+    Promise.all([taskQuery.find(), eventQuery.find(), routineQuery.find()])
+      .then(([tResult, eResult, rResult]) => {
+        setTasksArray(tResult);
+        setEventsArray(eResult);
+        setRoutinesArray(rResult);
 
-    setDayTasksArray(allEvents);
-    allDayQuery();
 
-    return allEvents;
+let allTaskEvents = tResult;
+allTaskEvents.sort((a, b) => {
+  let allTaskEventsA = a.get('startTime');
+  let allTaskEventB = b.get('startTime');
+  console.log('Tasks: aTid ' + allTaskEventsA + ' bTid ' + allTaskEventB); 
+ return new Date(allTaskEventsA) - new Date(allTaskEventB);
+}); 
+
+let allEventEvents = eResult;
+allEventEvents.sort((a, b) => {
+  let allEventEventsA = a.get('startTime');
+  let allEventEventsB = b.get('startTime');
+  return new Date(allEventEventsA) - new Date(allEventEventsB);
+}); 
+
+let allRoutineEvents = rResult;
+allRoutineEvents.sort((a, b) => {
+  let allRoutineEventsA = a.get('startTime');
+  let allRoutineEventsB = b.get('startTime');
+  return new Date(allRoutineEventsA) - new Date(allRoutineEventsB);
+}); 
+
+let allEvents = tResult.concat(eResult).concat(rResult); 
+allEvents = allEvents.map(event => {
+  let startTime = event.get('startTime');
+  let endTime = event.get('endTime');
+  if (startTime instanceof Date) {
+    event.set('startTime', startTime.toLocaleTimeString());
+  }
+  if (endTime instanceof Date) {
+    event.set('endTime', endTime.toLocaleTimeString());
+  }
+  return event;
+});
+
+  setDayTasksArray(allEvents);
+  setSortedEventArray(allEventEvents);
+  setSortedTaskArray(allTaskEvents);
+  setSortedRoutineArray(allRoutineEvents);
+
+  allDayQuery();
+      })
+      .catch(error => {
+        console.error('Error fetching data', error);
+      });
   }
 
-  async function allDayQuery() {
+//  useFocusEffect(
+//    useCallback(() => {
+//      const currentDate = new Date().toISOString().slice(0, 10); 
+//      getDayEvents(currentDate);
+//      return () => {};
+//    }, []),
+//  );
+
+
+  async function allDayQuery(day) {
     let query = new Parse.Query('Events');
     query.equalTo('allDay', true);
-    query.equalTo('date', chosenDate);
+    query.equalTo('date', day);
     const result = await query.find();
     setAllDayArray(result);
     console.log('all day array: ' + result)
@@ -164,7 +205,8 @@ export const CalendarOverview = ({ navigation }) => {
   async function dayTasks(date) {
     const formattedDate = date.toISOString().slice(0, 10);
     setChosenDate(formattedDate);
-    getDayEvents();
+    getDayEvents(formattedDate);
+    allDayQuery(formattedDate);
   }
 
   const radioButtons = useMemo(
@@ -172,7 +214,7 @@ export const CalendarOverview = ({ navigation }) => {
       {
         id: 'month',
         label: 'Måned',
-        labelStyle: {color: colors.text},
+        labelStyle: { color: colors.text },
         value: 'month',
         size: 30,
         color: colors.text,
@@ -180,7 +222,7 @@ export const CalendarOverview = ({ navigation }) => {
       {
         id: 'day',
         label: 'Dag',
-        labelStyle: {color: colors.text},
+        labelStyle: { color: colors.text },
         value: 'day',
         size: 30,
         color: colors.text,
@@ -349,111 +391,253 @@ export const CalendarOverview = ({ navigation }) => {
     } else {
       return (
         <View>
-          {allDayArray.length && dayTasksArray.length == 0 ?
-            <View style={{ marginHorizontal: 15, alignItems: 'center', marginVertical: '25%' }}>
-              <Text style={{ textAlign: 'center', fontSize: 18 }}>Der er ingen opgaver eller begivenheder i din kalender i dag!</Text>
+          {allDayArray.length && dayTasksArray.length == 0 ? (
+            <View
+              style={{
+                marginHorizontal: 15,
+                alignItems: 'center',
+                marginVertical: '25%',
+              }}>
+              <Text style={{textAlign: 'center', fontSize: 18}}>
+                Der er ingen opgaver eller begivenheder i din kalender i dag!
+              </Text>
             </View>
-            :
-            <View style={{ marginBottom: '5%' }}>
+          ) : (
+            <View style={{marginBottom: '5%'}}>
               {allDayArray.map((item, index) => (
-                <View key={index} style={{ alignItems: 'center', borderWidth: 1, padding: 5, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.get('color'), borderRadius: 10, borderColor: item.get('color'), }}>
-                  <Text style={{ fontSize: 20, marginRight: 10, marginLeft: 2 }}>{item.get('emoji')}</Text>
-                  <Text style={{ fontSize: 18, paddingRight: 5 }}>{item.get('name')}</Text>
+                <View
+                  key={index}
+                  style={{
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    padding: 5,
+                    marginVertical: 5,
+                    marginHorizontal: 15,
+                    flexDirection: 'row',
+                    backgroundColor: item.get('color'),
+                    borderRadius: 10,
+                    borderColor: item.get('color'),
+                  }}>
+                  <Text style={{fontSize: 20, marginRight: 10, marginLeft: 2}}>
+                    {item.get('emoji')}
+                  </Text>
+                  <Text style={{fontSize: 18, paddingRight: 5}}>
+                    {item.get('name')}
+                  </Text>
                 </View>
               ))}
-              {tasksArray.length == 0 ?
-                null
-                : <View>
-                  <View style={{ borderWidth: 1, marginHorizontal: 15, marginVertical: '2%', backgroundColor: colors.border, width: 250, alignSelf: 'center', borderColor: colors.border, borderRadius: 10 }}></View>
-                  <Text style={{ fontSize: 16, marginLeft: '2%', textAlign: 'center', marginTop: '5%' }}>To-do's</Text>
-                  {tasksArray.map((item, index) => (
-                    <View key={index} style={{ flexDirection: 'row', marginBottom: '5%' }}>
+              {dayTasksArray.length == 0 ? null : (
+                <View>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      marginHorizontal: 15,
+                      marginVertical: '2%',
+                      backgroundColor: colors.border,
+                      width: 250,
+                      alignSelf: 'center',
+                      borderColor: colors.border,
+                      borderRadius: 10,
+                    }}></View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginLeft: '2%',
+                      textAlign: 'center',
+                      marginTop: '5%',
+                    }}>
+                    To-do's
+                  </Text>
+                  {sortedTaskArray.map((item, index) => (
+                    <View
+                      key={index}
+                      style={{flexDirection: 'row', marginBottom: '5%'}}>
                       <BouncyCheckbox
                         size={30}
                         fillColor={colors.mainButton}
                         unfillColor="#FFFFFF"
-                        iconStyle={{ borderColor: "black", elevation: 5 }}
-                        innerIconStyle={{ borderWidth: 2 }}
-                        textStyle={{ fontFamily: "JosefinSans-Regular" }}
-                        onPress={() => { completeTask(item) }}
+                        iconStyle={{borderColor: 'black', elevation: 5}}
+                        innerIconStyle={{borderWidth: 2}}
+                        textStyle={{fontFamily: 'JosefinSans-Regular'}}
+                        onPress={() => {
+                          completeTask(item);
+                        }}
                         isChecked={item.get('completed')}
-                        style={{ marginHorizontal: 10, flex: 0.5 }}
+                        style={{marginHorizontal: 10, flex: 0.5}}
                       />
-                      <View style={{ flex: 7, padding: '3%', borderWidth: 1, marginVertical: 5, marginHorizontal: 15, backgroundColor: item.get('color'), borderRadius: 10, borderColor: item.get('color'), elevation: 5, flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 22, marginRight: 10, }}>{item.get('emoji')}</Text>
+                      <View
+                        style={{
+                          flex: 7,
+                          padding: '3%',
+                          borderWidth: 1,
+                          marginVertical: 5,
+                          marginHorizontal: 15,
+                          backgroundColor: item.get('color'),
+                          borderRadius: 10,
+                          borderColor: item.get('color'),
+                          elevation: 5,
+                          flexDirection: 'row',
+                        }}>
+                        <Text style={{fontSize: 22, marginRight: 10}}>
+                          {item.get('emoji')}
+                        </Text>
                         <View>
-                          <Text style={{ fontSize: 18, paddingRight: 5 }}>{item.get('name')}</Text>
-                          <Text style={{ marginHorizontal: 1, fontSize: 14 }}>{item.get('startTime')} - {item.get('endTime')}</Text>
+                          <Text style={{fontSize: 18, paddingRight: 5}}>
+                            {item.get('name')}
+                          </Text>
+                          <Text style={{marginHorizontal: 1, fontSize: 14}}>
+                            {item.get('startTime')} - {item.get('endTime')}
+                          </Text>
                         </View>
                       </View>
                     </View>
                   ))}
                 </View>
-              }
-              {eventsArray.length == 0 ?
-                null
-                : <View>
-                  <Text style={{ fontSize: 16, marginLeft: '2%', textAlign: 'center', marginTop: '5%' }}>Begivenheder</Text>
-                  {eventsArray.map((item, index) => (
-                    <View key={index}
-                      style={{ marginLeft: '15%', flex: 7, padding: '3%', borderWidth: 1, marginVertical: 5, marginHorizontal: 15, backgroundColor: item.get('color'), borderRadius: 10, borderColor: item.get('color'), elevation: 5, flexDirection: 'row' }}>
-                      <Text style={{ fontSize: 22, marginRight: 10, }}>{item.get('emoji')}</Text>
+              )}
+              {eventsArray.length == 0 ? null : (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginLeft: '2%',
+                      textAlign: 'center',
+                      marginTop: '5%',
+                    }}>
+                    Begivenheder
+                  </Text>
+                  {sortedEventArray.map((item, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        marginLeft: '15%',
+                        flex: 7,
+                        padding: '3%',
+                        borderWidth: 1,
+                        marginVertical: 5,
+                        marginHorizontal: 15,
+                        backgroundColor: item.get('color'),
+                        borderRadius: 10,
+                        borderColor: item.get('color'),
+                        elevation: 5,
+                        flexDirection: 'row',
+                      }}>
+                      <Text style={{fontSize: 22, marginRight: 10}}>
+                        {item.get('emoji')}
+                      </Text>
                       <View>
-                        <Text style={{ fontSize: 18, paddingRight: 5 }}>{item.get('name')}</Text>
-                        <Text style={{ marginHorizontal: 1, fontSize: 14 }}>{item.get('startTime')} - {item.get('endTime')}</Text>
+                        <Text style={{fontSize: 18, paddingRight: 5}}>
+                          {item.get('name')}
+                        </Text>
+                        <Text style={{marginHorizontal: 1, fontSize: 14}}>
+                          {item.get('startTime')} - {item.get('endTime')}
+                        </Text>
                       </View>
                     </View>
                   ))}
                 </View>
-              }
-              {routinesArray.length == 0 ?
-                null
-                : <View>
-                  <Text style={{ fontSize: 16, marginLeft: '2%', textAlign: 'center', marginTop: '5%' }}>Rutiner</Text>
-                  {routinesArray.map((item, index) => (
-                    <View key={index}
-                      style={{ marginLeft: '15%', flex: 1, alignItems: 'center', borderWidth: 1, marginVertical: 5, marginHorizontal: 15, flexDirection: 'row', backgroundColor: item.get('color'), borderRadius: 10, borderColor: item.get('color'), elevation: 5 }}>
+              )}
+              {routinesArray.length == 0 ? null : (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginLeft: '2%',
+                      textAlign: 'center',
+                      marginTop: '5%',
+                    }}>
+                    Rutiner
+                  </Text>
+                  {sortedRoutineArray.map((item, index) => (
+                    <View
+                      key={index}
+                      style={{
+                        marginLeft: '15%',
+                        flex: 1,
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        marginVertical: 5,
+                        marginHorizontal: 15,
+                        flexDirection: 'row',
+                        backgroundColor: item.get('color'),
+                        borderRadius: 10,
+                        borderColor: item.get('color'),
+                        elevation: 5,
+                      }}>
                       <AccordionItem
                         title={item.get('name')}
-                        time={item.get('startTime') + ' - ' + item.get('endTime')}
+                        time={
+                          item.get('startTime') + ' - ' + item.get('endTime')
+                        }
                         icon={null}
                         emoji={item.get('emoji')}
-                        titleStyle={{ fontSize: 18, color: 'black', fontWeight: 'normal' }}
-                        emojiStyle={{ fontSize: 22 }}
+                        titleStyle={{
+                          fontSize: 18,
+                          color: 'black',
+                          fontWeight: 'normal',
+                        }}
+                        emojiStyle={{fontSize: 22}}
                         toggleStyle={'black'}>
                         {item.get('routineSteps').map((step, index) => (
-                          <View key={index} style={{ flexDirection: 'row' }}>
-                            <View style={{ justifyContent: 'center' }}>
+                          <View key={index} style={{flexDirection: 'row'}}>
+                            <View style={{justifyContent: 'center'}}>
                               <BouncyCheckbox
                                 size={30}
                                 fillColor={colors.mainButton}
                                 unfillColor="#FFFFFF"
-                                iconStyle={{ borderColor: "black", elevation: 5 }}
-                                innerIconStyle={{ borderWidth: 2 }}
-                                textStyle={{ fontFamily: "JosefinSans-Regular" }}
-                                onPress={(isChecked) => { }}
-                                style={{ flex: 0.5 }}
+                                iconStyle={{borderColor: 'black', elevation: 5}}
+                                innerIconStyle={{borderWidth: 2}}
+                                textStyle={{fontFamily: 'JosefinSans-Regular'}}
+                                onPress={isChecked => {}}
+                                style={{flex: 0.5}}
                               />
                             </View>
-                            <View style={{ padding: 10, borderWidth: 1, borderRadius: 10, marginVertical: 5, flexDirection: 'row', backgroundColor: colors.subButton, borderColor: colors.subButton, elevation: 10, justifyContent: 'space-between', width: '80%' }}>
-                              <View style={{ justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 18, paddingRight: 5 }}>{step.stepName}</Text>
+                            <View
+                              style={{
+                                padding: 10,
+                                borderWidth: 1,
+                                borderRadius: 10,
+                                marginVertical: 5,
+                                flexDirection: 'row',
+                                backgroundColor: colors.subButton,
+                                borderColor: colors.subButton,
+                                elevation: 10,
+                                justifyContent: 'space-between',
+                                width: '80%',
+                              }}>
+                              <View style={{justifyContent: 'center'}}>
+                                <Text style={{fontSize: 18, paddingRight: 5}}>
+                                  {step.stepName}
+                                </Text>
                               </View>
-                              {step.stepTime !== null ?
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                  <FontAwesomeIcon icon={faStopwatch} style={{ marginHorizontal: 5 }} size={20} color={colors.border} />
-                                  <Text style={{ fontSize: 18 }}>{step.stepTime}</Text>
+                              {step.stepTime !== null ? (
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <FontAwesomeIcon
+                                    icon={faStopwatch}
+                                    style={{marginHorizontal: 5}}
+                                    size={20}
+                                    color={colors.border}
+                                  />
+                                  <Text style={{fontSize: 18}}>
+                                    {step.stepTime}
+                                  </Text>
                                 </View>
-                                : <Text></Text>}
+                              ) : (
+                                <Text></Text>
+                              )}
                             </View>
                           </View>
                         ))}
                       </AccordionItem>
                     </View>
                   ))}
-                </View>}
+                </View>
+              )}
             </View>
-          }
+          )}
         </View>
       );
     }
@@ -498,7 +682,7 @@ export const CalendarOverview = ({ navigation }) => {
           <CalendarStrip
             calendarAnimation={{ type: 'sequence', duration: 30 }}
             daySelectionAnimation={{ type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white', }}
-            style={{ height: 100, padding: 5, marginTop: '2%', marginHorizontal: 10, borderWidth: 1, borderColor: 'colors.border', borderTopRightRadius: 10, borderTopLeftRadius: 10, elevation: 5 }}
+            style={{ height: 100, padding: 5, marginTop: '2%', marginHorizontal: 10, borderWidth: 1, borderColor: colors.mainButton, borderTopRightRadius: 10, borderTopLeftRadius: 10, elevation: 5 }}
             calendarHeaderStyle={{ color: 'white', fontSize: 20 }}
             calendarColor={colors.mainButton}
             dateNumberStyle={{ color: 'white', fontSize: 18 }}
@@ -544,171 +728,168 @@ export const CalendarOverview = ({ navigation }) => {
 
   return (
     <MenuProvider>
-      <SafeAreaView style={{flex: 1}}>
-        <ScrollView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '2%',
+          }}>
+          <Text style={{ fontSize: 26, marginTop: 15, color: colors.text }}>
+            Kalender
+          </Text>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            marginHorizontal: 15,
+            marginBottom: 20,
+            backgroundColor: colors.border,
+            borderRadius: 10,
+            borderColor: colors.border,
+          }}></View>
+        <RadioGroup
+          radioButtons={radioButtons}
+          onPress={setSelectedId}
+          selectedId={selectedId}
+          layout="row"
+          containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+          size={30}
+        />
+        <View>{calendarLayout()}</View>
+        <View
+          style={{
+            alignItems: 'flex-end',
+            backgroundColor: colors.background,
+            marginRight: '5%',
+            marginTop: '5%',
+          }}>
+          <Menu>
+            <MenuTrigger
+              style={{
+                backgroundColor: colors.mainButton,
+                padding: 10,
+                borderWidth: 1,
+                borderColor: colors.mainButton,
+                borderRadius: 10,
+                elevation: 5,
+                marginBottom: '2%',
+                elevation: 5,
+                shadowColor: 'grey',
+                shadowOffset: { width: 1, height: 2 },
+                shadowOpacity: 0.8,
+                shadowRadius: 1,
+              }}>
+              <FontAwesomeIcon icon={faPlus} size={30} color={colors.text} />
+            </MenuTrigger>
+            <MenuOptions
+              customStyles={{ optionsContainer: styles.menuOptionsContainer }}>
+              <MenuOption
+                onSelect={() => navigation.navigate('Add task')}
+                style={[
+                  styles.menuOptionStyle,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}>
+                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
+                  Tilføj en ny to-do
+                </Text>
+                <FontAwesomeIcon
+                  icon={faListCheck}
+                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
+                />
+              </MenuOption>
+              <MenuOption
+                onSelect={() => navigation.navigate('Add routine')}
+                style={[
+                  styles.menuOptionStyle,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}>
+                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
+                  Tilføj en ny rutine
+                </Text>
+                <FontAwesomeIcon
+                  icon={faClockRotateLeft}
+                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
+                />
+              </MenuOption>
+              <MenuOption
+                onSelect={() => navigation.navigate('Add event')}
+                style={[
+                  styles.menuOptionStyle,
+                  {
+                    backgroundColor: colors.subButton,
+                    borderColor: colors.subButton,
+                  },
+                ]}>
+                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
+                  Tilføj et nyt event
+                </Text>
+                <FontAwesomeIcon
+                  icon={faCalendarXmark}
+                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
+                />
+              </MenuOption>
+            </MenuOptions>
+          </Menu>
+        </View>
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={() => setModalVisible(false)}>
           <View
             style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '2%',
-            }}>
-            <Text style={{fontSize: 26, marginTop: 15, color: colors.text}}>
-              Kalender
-            </Text>
-          </View>
-          <View
-            style={{
-              borderWidth: 1,
-              marginHorizontal: 15,
-              marginBottom: 20,
-              backgroundColor: colors.border,
-              borderRadius: 10,
-              borderColor: colors.border,
-            }}></View>
-          <RadioGroup
-            radioButtons={radioButtons}
-            onPress={setSelectedId}
-            selectedId={selectedId}
-            layout="row"
-            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
-            size={30}
-          />
-          <View>{calendarLayout()}</View>
-          <View
-            style={{
-              alignItems: 'flex-end',
               backgroundColor: colors.background,
-              marginRight: '5%',
-              marginTop: '5%',
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: colors.background,
+              borderRadius: 10,
             }}>
-            <Menu>
-              <MenuTrigger
-                style={{
-                  backgroundColor: colors.mainButton,
-                  padding: 10,
-                  borderWidth: 1,
-                  borderColor: colors.mainButton,
-                  borderRadius: 10,
-                  elevation: 5,
-                  marginBottom: '2%',
-                  elevation: 5,
-                  shadowColor: 'grey',
-                  shadowOffset: {width: 1, height: 2},
-                  shadowOpacity: 0.8,
-                  shadowRadius: 1,
-                }}>
-                <FontAwesomeIcon icon={faPlus} size={30} color={colors.text} />
-              </MenuTrigger>
-              <MenuOptions
-                customStyles={{optionsContainer: styles.menuOptionsContainer}}>
-                <MenuOption
-                  onSelect={() => navigation.navigate('Add task')}
-                  style={[
-                    styles.menuOptionStyle,
-                    {
-                      backgroundColor: colors.subButton,
-                      borderColor: colors.subButton,
-                    },
-                  ]}>
-                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
-                    Tilføj en ny to-do
-                  </Text>
-                  <FontAwesomeIcon
-                    icon={faListCheck}
-                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
-                  />
-                </MenuOption>
-                <MenuOption
-                  onSelect={() => navigation.navigate('Add routine')}
-                  style={[
-                    styles.menuOptionStyle,
-                    {
-                      backgroundColor: colors.subButton,
-                      borderColor: colors.subButton,
-                    },
-                  ]}>
-                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
-                    Tilføj en ny rutine
-                  </Text>
-                  <FontAwesomeIcon
-                    icon={faClockRotateLeft}
-                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
-                  />
-                </MenuOption>
-                <MenuOption
-                  onSelect={() => navigation.navigate('Add event')}
-                  style={[
-                    styles.menuOptionStyle,
-                    {
-                      backgroundColor: colors.subButton,
-                      borderColor: colors.subButton,
-                    },
-                  ]}>
-                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
-                    Tilføj et nyt event
-                  </Text>
-                  <FontAwesomeIcon
-                    icon={faCalendarXmark}
-                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
-                  />
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
-          </View>
-          <Modal
-            isVisible={isModalVisible}
-            onBackdropPress={() => setModalVisible(false)}>
             <View
               style={{
-                backgroundColor: colors.background,
+                justifyContent: 'center',
                 alignItems: 'center',
-                borderWidth: 1,
-                borderColor: colors.background,
-                borderRadius: 10,
+                marginVertical: 10,
               }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginVertical: 10,
-                }}>
-                <Text style={{fontSize: 24}}>Tasks and events on</Text>
-                <Text style={{fontSize: 24, fontWeight: 'bold'}}>
-                  {chosenDate}
-                </Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  borderColor: 'white',
-                  marginHorizontal: 10,
-                  width: '90%',
-                }}>
-                <ScrollView style={{height: 250}}>{sortEventView()}</ScrollView>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    backgroundColor: colors.subButton,
-                    padding: 10,
-                    alignItems: 'center',
-                    marginHorizontal: 5,
-                    borderWidth: 1,
-                    borderColor: colors.border,
-                    borderRadius: 10,
-                    marginVertical: 10,
-                  }}
-                  onPress={hideDayModel}>
-                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>Close</Text>
-                </TouchableOpacity>
-              </View>
+              <Text style={{ fontSize: 24 }}>Tasks and events on</Text>
+              <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+                {chosenDate}
+              </Text>
             </View>
-          </Modal>
-        </ScrollView>
-        <BottomNavigation />
+            <View
+              style={{
+                backgroundColor: 'white',
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: 'white',
+                marginHorizontal: 10,
+                width: '90%',
+              }}>
+              <ScrollView style={{ height: 250 }}>{sortEventView()}</ScrollView>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: colors.subButton,
+                  padding: 10,
+                  alignItems: 'center',
+                  marginHorizontal: 5,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  borderRadius: 10,
+                  marginVertical: 10,
+                }}
+                onPress={hideDayModel}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     </MenuProvider>
   );

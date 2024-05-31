@@ -8,16 +8,16 @@ import {
   Image,
   Dimensions
 } from 'react-native';
-import {useNavigation, useTheme} from '@react-navigation/native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { useNavigation, useTheme } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import BottomNavigation from '../../Navigation/BottomNav';
 import Swiper from 'react-native-swiper';
 
 export const PickSubject = () => {
   const navigation = useNavigation();
-  const {colors} = useTheme();
-   const {width, height} = Dimensions.get('window');
-   const scaleFactor = Math.min(width / 375, height / 667);
+  const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,7 @@ export const PickSubject = () => {
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           Hvilket emne vil du dykke ned i?
         </Text>
@@ -148,7 +148,6 @@ export const PickSubject = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation />
     </View>
   );
 };
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: 'black',
     shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import BottomNavigation from '../../Navigation/BottomNav';
 
 function IndividualPost({ route }) {
@@ -21,7 +21,7 @@ function IndividualPost({ route }) {
   const [postContent, setPostContent] = useState('');
   const [numberOfComments, setCommentCount] = useState(0);
   const [allComments, setAllComments] = useState([]);
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   useEffect(() => {
     fetchComments();
@@ -64,7 +64,6 @@ function IndividualPost({ route }) {
           />
         </View>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 }

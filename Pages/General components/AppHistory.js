@@ -6,15 +6,15 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBoxArchive} from '@fortawesome/free-solid-svg-icons/faBoxArchive';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBoxArchive } from '@fortawesome/free-solid-svg-icons/faBoxArchive';
 import BottomNavigation from '../../Navigation/BottomNav';
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 
 export const AppHistory = () => {
-    const {colors} = useTheme();
-      const {width, height} = Dimensions.get('window');
-      const scaleFactor = Math.min(width / 375, height / 667);
+  const { colors } = useTheme();
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -22,16 +22,16 @@ export const AppHistory = () => {
           <Text
             style={[
               styles.textStyle,
-              {color: colors.text, fontSize: 30 * scaleFactor}
+              { color: colors.text, fontSize: 30 * scaleFactor }
             ]}>
             Om herfocus
           </Text>
         </View>
-        <View style={[styles.seperator, {backgroundColor: colors.border}]}></View>
+        <View style={[styles.seperator, { backgroundColor: colors.border }]}></View>
         <Text
           style={[
             styles.aboutText,
-            {color: colors.text, fontSize: 16 * scaleFactor}
+            { color: colors.text, fontSize: 16 * scaleFactor }
           ]}>
           herfocus er en app af kvinder, for kvinder med ADHD. Vi er to
           kvindelige IT-studerende fra IT-Universitetet i København, drevet af
@@ -40,7 +40,7 @@ export const AppHistory = () => {
         <Text
           style={[
             styles.aboutText,
-            {color: colors.text, fontSize: 16 * scaleFactor}
+            { color: colors.text, fontSize: 16 * scaleFactor }
           ]}>
           Vores rejse startede, da en af os så, hvordan hendes lillesøster
           kæmpede med de daglige udfordringer ADHD medførte. Dette inspirerede
@@ -50,7 +50,7 @@ export const AppHistory = () => {
         <Text
           style={[
             styles.aboutText,
-            {color: colors.text, fontSize: 16 * scaleFactor}
+            { color: colors.text, fontSize: 16 * scaleFactor }
           ]}>
           I samarbejde med kvinder, der lever med ADHD, har vi designet herfocus
           til at være et støttende værktøj, hvor kvinder med ADHD kan finde
@@ -59,13 +59,12 @@ export const AppHistory = () => {
         <Text
           style={[
             styles.aboutText,
-            {color: colors.text, fontSize: 16 * scaleFactor}
+            { color: colors.text, fontSize: 16 * scaleFactor }
           ]}>
           Tak fordi du vælger at være en del af vores fællesskab. Sammen gør vi
           en forskel!
         </Text>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

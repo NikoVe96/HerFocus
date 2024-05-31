@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useMemo, Component } from 'react';
+import React, { useEffect, useState, useMemo, Component, useContext, useCallback } from 'react';
 import { SafeAreaView, Text, View, Dimensions, ScrollView, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPenToSquare, faPlusSquare, faFloppyDisk, faFaceTired, faFaceSmileBeam, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faStopwatch, faTrashCan, faCircleArrowRight, faSpinner, faShoppingCart, faKitchenSet } from '@fortawesome/free-solid-svg-icons';
-import Carousel from "react-native-reanimated-carousel";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
 import CircularProgress from 'react-native-circular-progress-indicator';
@@ -13,6 +12,8 @@ import { useTheme } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from "react-native-modal";
 import BottomNavigation from '../../Navigation/BottomNav';
+import { useUser } from '../../Components/UserContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -42,6 +43,14 @@ export const DailyOverview = () => {
     { label: '4 time', value: 4 },
   ];
 
+  useFocusEffect(
+    useCallback(() => {
+      remainingTasks();
+      updateTaskProgress();
+      return () => { };
+    }, []),
+  );
+
   useEffect(() => {
     async function getCurrentUser() {
       if (username === '') {
@@ -49,21 +58,17 @@ export const DailyOverview = () => {
         if (currentUser !== null) {
           setUsername(currentUser.getUsername());
           setID(currentUser.id);
-          const completed = await completedTasks();
-          const remaining = await remainingTasks();
-          taskPercentage(completed, remaining);
         }
       }
     }
     getCurrentUser();
+    console.log(remainingTasks)
   }, []);
 
   const taskCompleted = async function (task) {
     task.set('completed', true);
     await task.save();
-    const completed = await completedTasks();
-    const remaining = await remainingTasks();
-    taskPercentage(completed, remaining);
+    updateTaskProgress();
     setChecked(false);
   }
 
@@ -90,9 +95,7 @@ export const DailyOverview = () => {
 */
     wallTask.set('futureTask', true);
     await wallTask.save();
-    const completed = await completedTasks();
-    const remaining = await remainingTasks();
-    taskPercentage(completed, remaining);
+    updateTaskProgress();
 
     setWallModalVisible(false);
     Alert.alert(wallTask.get('name') + ' er nu blevet flyttet til fremtidige to-dos!');
@@ -102,6 +105,12 @@ export const DailyOverview = () => {
     const totalTasks = remainingTasks.length + completedTasks.length;
     const completedPercentage = totalTasks > 0 ? (completedTasks.length / totalTasks * 100).toFixed(0) : 0;
     setTaskProgress(completedPercentage);
+  }
+
+  const updateTaskProgress = async function () {
+    const completed = await completedTasks(); // Fetch new completed tasks
+    const remaining = await remainingTasks(); // Fetch new remaining tasks
+    taskPercentage(completed, remaining); // Recalculate progress
   }
 
   async function remainingTasks() {
@@ -159,372 +168,394 @@ export const DailyOverview = () => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView>
-        <View style={{flex: 1}}>
-          <Text style={{fontSize: 24, textAlign: 'center', marginVertical: 10}}>
-            Hvordan har du det i dag {username}?
-          </Text>
-          <View style={{alignItems: 'center'}}>
-            <CircularProgress
-              value={taskProgress}
-              inActiveStrokeColor={colors.subButton}
-              inActiveStrokeOpacity={0.3}
-              progressValueColor={colors.mainButton}
-              valueSuffix={'%'}
-              activeStrokeColor={colors.border}
-              activeStrokeSecondaryColor={colors.subButton}
-              radius={90}
-            />
-          </View>
-          {taskProgress == 0 ? (
-            <Text style={styles.text}>
-              Velkommen til en ny dag. Check din første to-do af for at få en
-              god start på dagen!
-            </Text>
-          ) : taskProgress == 100 ? (
-            <Text
-              style={{fontSize: 18, textAlign: 'center', marginVertical: 10}}>
-              Du har klaret alle dine to-do's i dag. Godt arbejde! Nu kan du
-              holde fri med god samvittighed.
-            </Text>
-          ) : (
-            <Text
-              style={{fontSize: 18, textAlign: 'center', marginVertical: 10}}>
-              Du har klaret {taskProgress}% af dine opgaver i dag. Godt arbejde!
-            </Text>
-          )}
-          <View
-            style={[
-              styles.divider,
-              {backgroundColor: colors.border, borderColor: colors.border},
-            ]}></View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{}}>
+        <Text style={{ fontSize: 24, textAlign: 'center', marginVertical: 10 }}>
+          Hvordan har du det i dag {username}?
+        </Text>
+        <View style={{ alignItems: 'center' }}>
+          <CircularProgress
+            value={taskProgress}
+            inActiveStrokeColor={colors.subButton}
+            inActiveStrokeOpacity={0.3}
+            progressValueColor={colors.mainButton}
+            valueSuffix={'%'}
+            activeStrokeColor={colors.border}
+            activeStrokeSecondaryColor={colors.subButton}
+            radius={90}
+          />
         </View>
+        {taskProgress == 0 ? (
+          <Text style={styles.text}>
+            Velkommen til en ny dag. Check din første to-do af for at få en
+            god start på dagen!
+          </Text>
+        ) : taskProgress == 100 ? (
+          <Text
+            style={{ fontSize: 18, textAlign: 'center', marginVertical: 10 }}>
+            Du har klaret alle dine to-do's i dag. Godt arbejde! Nu kan du
+            holde fri med god samvittighed.
+          </Text>
+        ) : (
+          <Text
+            style={{ fontSize: 18, textAlign: 'center', marginVertical: 10 }}>
+            Du har klaret {taskProgress}% af dine opgaver i dag. Godt arbejde!
+          </Text>
+        )}
         <View
           style={[
-            styles.upNext,
-            {
-              shadowColor: colors.border,
-              borderColor: colors.subButton,
-              backgroundColor: colors.subButton,
-            },
-          ]}>
-          <Swiper
-            loop={false}
-            showsPagination={true}
-            dotStyle={{
-              backgroundColor: colors.mainButton,
-              width: 150,
-              height: 8,
-              borderRadius: 4,
-              marginHorizontal: 4,
-            }}
-            activeDotStyle={{
-              backgroundColor: colors.border,
-              width: 150,
-              height: 8,
-              borderRadius: 4,
-              marginHorizontal: 4,
-            }}
-            paginationStyle={{bottom: 10}}>
-            <View
-              style={{
-                flex: 1,
-              }}>
-              {remainingTasksArray.length < 1 ? (
-                <View
+            styles.divider,
+            { backgroundColor: colors.border, borderColor: colors.border },
+          ]}></View>
+      </View>
+      <View
+        style={[
+          styles.upNext,
+          {
+            shadowColor: colors.border,
+            borderColor: colors.subButton,
+            backgroundColor: colors.subButton,
+          },
+        ]}>
+        <Swiper
+          loop={false}
+          showsPagination={true}
+          dotStyle={{
+            backgroundColor: colors.mainButton,
+            width: '40%',
+            height: '100%',
+            borderRadius: 4,
+            marginHorizontal: 4,
+          }}
+          activeDotStyle={{
+            backgroundColor: colors.border,
+            width: '40%',
+            height: '100%',
+            borderRadius: 4,
+            marginHorizontal: 4,
+          }}
+          paginationStyle={{ bottom: 10 }}>
+          <View
+            style={{
+              flex: 1,
+            }}>
+            {remainingTasksArray.length < 1 ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{ fontSize: 20 }}>
+                  Du har ingen to-do's på din liste
+                </Text>
+              </View>
+            ) : (
+              <>
+                <Text
                   style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    fontSize: 28,
+                    fontWeight: 'bold',
+                    alignSelf: 'center',
+                    marginVertical: 10,
+                    marginBottom: 10,
                   }}>
-                  <Text style={{fontSize: 20}}>
-                    Du har ingen to-do's på din liste
+                  Næste to-do
+                </Text>
+                <View style={styles.rowView}>
+                  <Text style={{ fontSize: 36 }}>
+                    {remainingTasksArray[0].get('emoji')}
+                  </Text>
+                  <Text style={{ fontSize: 26, marginHorizontal: 10 }}>
+                    {remainingTasksArray[0].get('name')}
                   </Text>
                 </View>
-              ) : (
-                <>
-                  <Text
-                    style={{
-                      fontSize: 28,
-                      fontWeight: 'bold',
-                      alignSelf: 'center',
-                      marginVertical: 10,
-                      marginBottom: 30,
-                    }}>
-                    Næste to-do
+                <View style={styles.rowView}>
+                  <FontAwesomeIcon
+                    icon={faStopwatch}
+                    size={25}
+                    style={{ marginHorizontal: 5 }}
+                    color={colors.border}
+                  />
+                  <Text style={{ fontSize: 18 }}>
+                    Fra {remainingTasksArray[0].get('startTime')} til{' '}
+                    {remainingTasksArray[0].get('endTime')}
                   </Text>
-
-                  <View style={styles.rowView}>
-                    <Text style={{fontSize: 36}}>
-                      {remainingTasksArray[0].get('emoji')}
-                    </Text>
-                    <Text style={{fontSize: 26, marginHorizontal: 10}}>
-                      {remainingTasksArray[0].get('name')}
-                    </Text>
-                  </View>
-                  <View style={styles.rowView}>
-                    <FontAwesomeIcon
-                      icon={faStopwatch}
+                </View>
+                {remainingTasksArray[0].get('description') == '' ?
+                  null
+                  : <ScrollView
+                    style={{
+                      borderWidth: 1,
+                      borderColor: colors.border,
+                      borderRadius: 10,
+                      padding: 10,
+                      marginHorizontal: 10,
+                    }}>
+                    <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[0].get('description')}</Text>
+                  </ScrollView>
+                }
+                <View style={styles.rowView}>
+                  <View
+                    style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
+                    <BouncyCheckbox
+                      key={remainingTasksArray[0].id}
                       size={25}
-                      style={{marginHorizontal: 5}}
+                      fillColor={colors.mainButton}
+                      unfillColor={colors.background}
+                      iconStyle={{ borderColor: colors.subButton }}
+                      innerIconStyle={{ borderWidth: 2 }}
+                      onPress={() => taskCompleted(remainingTasksArray[0])}
+                      isChecked={checked}
+                    />
+                    <Text style={{ fontSize: 18 }}>Fuldført?</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}
+                    onPress={() => showWallModal(remainingTasksArray[0])}>
+                    <FontAwesomeIcon
+                      icon={faFaceTired}
+                      size={25}
                       color={colors.border}
                     />
-                    <Text style={{fontSize: 18}}>
-                      Fra {remainingTasksArray[0].get('startTime')} til{' '}
-                      {remainingTasksArray[0].get('endTime')}
+                    <Text style={{ fontSize: 18, marginLeft: 12 }}>
+                      Ramt væggen?
                     </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+          <View
+            style={{
+              flex: 1,
+            }}>
+            {remainingTasksArray.length < 2 ? (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{ fontSize: 20 }}>
+                  Du har ingen to-do's på din liste
+                </Text>
+              </View>
+            ) : (
+              <>
+                <Text
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 'bold',
+                    alignSelf: 'center',
+                    marginVertical: 10,
+                    marginBottom: 10,
+                  }}>
+                  Næste to-do
+                </Text>
+
+                <View style={styles.rowView}>
+                  <Text style={{ fontSize: 36 }}>
+                    {remainingTasksArray[1].get('emoji')}
+                  </Text>
+                  <Text style={{ fontSize: 26, marginHorizontal: 10 }}>
+                    {remainingTasksArray[1].get('name')}
+                  </Text>
+                </View>
+                <View style={styles.rowView}>
+                  <FontAwesomeIcon
+                    icon={faStopwatch}
+                    size={25}
+                    style={{ marginHorizontal: 5 }}
+                    color={colors.border}
+                  />
+                  <Text style={{ fontSize: 18 }}>
+                    Fra {remainingTasksArray[1].get('startTime')} til{' '}
+                    {remainingTasksArray[1].get('endTime')}
+                  </Text>
+                </View>
+                {remainingTasksArray[1].get('description') == '' ?
+                  null
+                  : <ScrollView
+                    contentContainerStyle={{
+                      borderWidth: 1,
+                      borderColor: colors.border,
+                      borderRadius: 10,
+                      padding: 10,
+                      marginHorizontal: 10,
+                    }}>
+                    <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[1].get('description')}</Text>
+                  </ScrollView>
+                }
+                <View style={styles.rowView}>
+                  <View
+                    style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
+                    <BouncyCheckbox
+                      key={remainingTasksArray[0].id}
+                      size={25}
+                      fillColor={colors.border}
+                      unfillColor={colors.background}
+                      iconStyle={{ borderColor: 'black' }}
+                      innerIconStyle={{ borderWidth: 2 }}
+                      onPress={() => taskCompleted(remainingTasksArray[1])}
+                      isChecked={checked}
+                    />
+                    <Text style={{ fontSize: 18 }}>Fuldført?</Text>
                   </View>
-                  <View style={styles.rowView}>
-                    <View
-                      style={[styles.rowView, {marginHorizontal: 15, flex: 1}]}>
-                      <BouncyCheckbox
-                        key={remainingTasksArray[0].id}
-                        size={25}
-                        fillColor={colors.mainButton}
-                        unfillColor={colors.background}
-                        iconStyle={{borderColor: colors.subButton}}
-                        innerIconStyle={{borderWidth: 2}}
-                        onPress={() => taskCompleted(remainingTasksArray[0])}
-                        isChecked={checked}
-                      />
-                      <Text style={{fontSize: 18}}>Fuldført?</Text>
-                    </View>
-                    <TouchableOpacity
-                      style={[styles.rowView, {marginHorizontal: 15, flex: 1}]}
-                      onPress={() => showWallModal(remainingTasksArray[0])}>
-                      <FontAwesomeIcon
-                        icon={faFaceTired}
-                        size={25}
-                        color={colors.border}
-                      />
-                      <Text style={{fontSize: 18, marginLeft: 12}}>
-                        Ramt væggen?
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )}
+                  <TouchableOpacity
+                    style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}
+                    onPress={() => showWallModal(remainingTasksArray[1])}>
+                    <FontAwesomeIcon
+                      icon={faFaceTired}
+                      size={25}
+                      color={colors.border}
+                    />
+                    <Text style={{ fontSize: 18, marginLeft: 12 }}>
+                      Ramt væggen?
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+        </Swiper>
+        <Modal
+          isVisible={isWallModalVisible}
+          onBackdropPress={() => setWallModalVisible(false)}>
+          <View
+            style={{
+              backgroundColor: colors.background,
+              padding: 10,
+              borderWidth: 1,
+              borderColor: colors.background,
+              borderRadius: 10,
+            }}>
+            <View
+              style={{
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  fontSize: 24,
+                  marginLeft: '12%',
+                  marginBottom: '10%',
+                }}>
+                {' '}
+                Har du ramt væggen?
+              </Text>
+              <TouchableOpacity onPress={() => setWallModalVisible(false)}>
+                <FontAwesomeIcon icon={faCircleXmark} size={25} />
+              </TouchableOpacity>
             </View>
             <View
               style={{
-                flex: 1,
-              }}>
-              {remainingTasksArray.length < 2 ? (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{fontSize: 20}}>
-                    Du har ingen to-do's på din liste
-                  </Text>
-                </View>
-              ) : (
-                <>
-                  <Text
-                    style={{
-                      fontSize: 28,
-                      fontWeight: 'bold',
-                      alignSelf: 'center',
-                      marginVertical: 10,
-                      marginBottom: 30,
-                    }}>
-                    Næste to-do
-                  </Text>
-
-                  <View style={styles.rowView}>
-                    <Text style={{fontSize: 36}}>
-                      {remainingTasksArray[1].get('emoji')}
-                    </Text>
-                    <Text style={{fontSize: 26, marginHorizontal: 10}}>
-                      {remainingTasksArray[1].get('name')}
-                    </Text>
-                  </View>
-                  <View style={styles.rowView}>
-                    <FontAwesomeIcon
-                      icon={faStopwatch}
-                      size={25}
-                      style={{marginHorizontal: 5}}
-                      color={colors.border}
-                    />
-                    <Text style={{fontSize: 18}}>
-                      Fra {remainingTasksArray[1].get('startTime')} til{' '}
-                      {remainingTasksArray[1].get('endTime')}
-                    </Text>
-                  </View>
-                  <View style={styles.rowView}>
-                    <View
-                      style={[styles.rowView, {marginHorizontal: 15, flex: 1}]}>
-                      <BouncyCheckbox
-                        key={remainingTasksArray[0].id}
-                        size={25}
-                        fillColor={colors.border}
-                        unfillColor={colors.background}
-                        iconStyle={{borderColor: 'black'}}
-                        innerIconStyle={{borderWidth: 2}}
-                        onPress={() => taskCompleted(remainingTasksArray[1])}
-                        isChecked={checked}
-                      />
-                      <Text style={{fontSize: 18}}>Fuldført?</Text>
-                    </View>
-                    <TouchableOpacity
-                      style={[styles.rowView, {marginHorizontal: 15, flex: 1}]}
-                      onPress={() => showWallModal(remainingTasksArray[1])}>
-                      <FontAwesomeIcon
-                        icon={faFaceTired}
-                        size={25}
-                        color={colors.border}
-                      />
-                      <Text style={{fontSize: 18, marginLeft: 12}}>
-                        Ramt væggen?
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )}
-            </View>
-          </Swiper>
-          <Modal
-            isVisible={isWallModalVisible}
-            onBackdropPress={() => setWallModalVisible(false)}>
-            <View
-              style={{
-                backgroundColor: colors.background,
-                padding: 10,
-                borderWidth: 1,
-                borderColor: colors.background,
-                borderRadius: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: '1%',
               }}>
               <View
                 style={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex: 7,
+                  alignSelf: 'flex-start',
                 }}>
                 <Text
                   style={{
-                    fontSize: 24,
-                    marginLeft: '12%',
-                    marginBottom: '10%',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    marginVertical: '10%',
                   }}>
-                  {' '}
-                  Har du ramt væggen?
+                  Udskyd
                 </Text>
-                <TouchableOpacity onPress={() => setWallModalVisible(false)}>
-                  <FontAwesomeIcon icon={faCircleXmark} size={25} />
+                <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                  Hvor meget vil du udskyde din to-do?
+                </Text>
+                <DropDownPicker
+                  open={openTodoTime}
+                  value={todoTime}
+                  items={todoTimes}
+                  setOpen={setOpenTodoTime}
+                  setValue={value => setTodoTime(value)}
+                  placeholder="Vælg tid"
+                  onChangeValue={value => {
+                    setTodoTime(value);
+                  }}
+                  style={{ borderColor: 'white', marginTop: '15%' }}
+                />
+                <TouchableOpacity
+                  style={{
+                    borderWidth: 1,
+                    borderColor: colors.mainButton,
+                    backgroundColor: colors.mainButton,
+                    padding: '5%',
+                    borderRadius: 10,
+                    marginTop: '40%',
+                    height: '40%',
+                    justifyContent: 'center',
+                    elevation: 10,
+                  }}
+                  onPress={() => postpone()}>
+                  <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                    Udskyd din to-do
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View
                 style={{
-                  flexDirection: 'row',
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  width: '5%',
+                  height: '140%',
+                  marginHorizontal: '5%',
+                  flex: 0.1,
+                  backgroundColor: colors.border,
+                  borderRadius: 10,
+                  alignSelf: 'flex-start',
+                  elevation: 5,
+                }}
+              />
+              <View
+                style={{
                   alignItems: 'center',
-                  height: '40%',
+                  flex: 7,
+                  alignSelf: 'flex-start',
                 }}>
-                <View
+                <Text
                   style={{
-                    alignItems: 'center',
-                    flex: 7,
-                    alignSelf: 'flex-start',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    marginVertical: '10%',
+                    textAlign: 'center',
                   }}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      marginVertical: '10%',
-                    }}>
-                    Udskyd
-                  </Text>
-                  <Text style={{textAlign: 'center', fontSize: 16}}>
-                    Hvor meget vil du udskyde din to-do?
-                  </Text>
-                  <DropDownPicker
-                    open={openTodoTime}
-                    value={todoTime}
-                    items={todoTimes}
-                    setOpen={setOpenTodoTime}
-                    setValue={value => setTodoTime(value)}
-                    placeholder="Vælg tid"
-                    onChangeValue={value => {
-                      setTodoTime(value);
-                    }}
-                    style={{borderColor: 'white', marginTop: '15%'}}
-                  />
-                  <TouchableOpacity
-                    style={{
-                      borderWidth: 1,
-                      borderColor: colors.mainButton,
-                      backgroundColor: colors.mainButton,
-                      padding: '5%',
-                      borderRadius: 10,
-                      marginTop: '40%',
-                      height: '40%',
-                      justifyContent: 'center',
-                      elevation: 10,
-                    }}
-                    onPress={() => postpone()}>
-                    <Text style={{textAlign: 'center', fontSize: 16}}>
-                      Udskyd din to-do
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View
+                  Fremtidig to-do
+                </Text>
+                <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                  Du kan finde listen over dine fremtidige to-do's i din
+                  notesbog
+                </Text>
+                <TouchableOpacity
                   style={{
                     borderWidth: 1,
-                    borderColor: colors.border,
-                    width: '5%',
-                    height: '140%',
-                    marginHorizontal: '5%',
-                    flex: 0.1,
-                    backgroundColor: colors.border,
+                    borderColor: colors.mainButton,
+                    backgroundColor: colors.mainButton,
+                    padding: '5%',
                     borderRadius: 10,
-                    alignSelf: 'flex-start',
-                    elevation: 5,
+                    marginTop: '63%',
+                    height: '40%',
+                    justifyContent: 'center',
+                    elevation: 10,
                   }}
-                />
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flex: 7,
-                    alignSelf: 'flex-start',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      marginVertical: '10%',
-                      textAlign: 'center',
-                    }}>
-                    Fremtidig to-do
+                  onPress={() => futureTodo()}>
+                  <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                    Flyt til fremtidige to-do's
                   </Text>
-                  <Text style={{textAlign: 'center', fontSize: 16}}>
-                    Du kan finde listen over dine fremtidige to-do's i din
-                    notesbog
-                  </Text>
-                  <TouchableOpacity
-                    style={{
-                      borderWidth: 1,
-                      borderColor: colors.mainButton,
-                      backgroundColor: colors.mainButton,
-                      padding: '5%',
-                      borderRadius: 10,
-                      marginTop: '63%',
-                      height: '40%',
-                      justifyContent: 'center',
-                      elevation: 10,
-                    }}
-                    onPress={() => futureTodo()}>
-                    <Text style={{textAlign: 'center', fontSize: 16}}>
-                      Flyt til fremtidige to-do's
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
-          </Modal>
-        </View>
-      </ScrollView>
-      <BottomNavigation />
+          </View>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 
@@ -551,7 +582,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 15
+    marginVertical: 5
   },
   text: {
     fontSize: 18,

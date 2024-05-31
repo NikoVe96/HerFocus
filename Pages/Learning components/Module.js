@@ -42,6 +42,7 @@ export const Module = ({ route }) => {
   const {width, height} = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
   const [saved, setSaved] = useState({});
+  const [notebookExercises, setNotebookExercises] = useState({});
 
   const handleSlide = index => {
     Animated.parallel([
@@ -150,7 +151,7 @@ export const Module = ({ route }) => {
         const tænkefejl6 = 'Følelses ræsonnement';
 
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={[
                 styles.title,
@@ -409,7 +410,7 @@ export const Module = ({ route }) => {
         const overspringshandling2 = 'Giv et eksempel på hvornår, du har lavet en overspringshandling af denne type';
         const overspringshandling3 = 'Hvad kan du gøre for at lave færre overspringshandlinger af denne type?';
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={[
                 styles.title,
@@ -577,7 +578,7 @@ export const Module = ({ route }) => {
         const steps6 = 'f.  ';
         const steps7 = 'g. ';
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={[
                 styles.title,
@@ -610,7 +611,7 @@ export const Module = ({ route }) => {
               i din notesbog.
             </Text>
             <Text
-              style={{fontWeight: 'bold', marginBottom: 5, color: colors.text}}>
+              style={{ fontWeight: 'bold', marginBottom: 5, color: colors.text }}>
               Rutine
             </Text>
             <View
@@ -934,7 +935,7 @@ export const Module = ({ route }) => {
         const beskriv2 = '2. Beskriv hvordan det gik';
         const beskriv3 = '3. Beskriv hvordan det gik';
         return (
-          <View style={{backgroundColor: colors.background, padding: '2%'}}>
+          <View style={{ backgroundColor: colors.background, padding: '2%' }}>
             <Text
               style={[
                 styles.title,
@@ -1186,7 +1187,7 @@ export const Module = ({ route }) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LearningProgressHeader
         progress={progress}
         moduleLength={moduleLength}
@@ -1194,14 +1195,14 @@ export const Module = ({ route }) => {
         description={description}
         image={image}
       />
-      <View style={{flex: 8, backgroundColor: colors.background}}>
+      <View style={{ flex: 8, backgroundColor: colors.background }}>
         <Swiper
           loop={false}
           showsPagination={false}
           onIndexChanged={index => handleSlide(index)}
           scrollEnabled={false}
           ref={swiperRef}>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/LearningFirst.png')}
               style={{
@@ -1210,7 +1211,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro1}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro1}</Text>
             </View>
             <View
               style={{
@@ -1219,7 +1220,7 @@ export const Module = ({ route }) => {
                 alignItems: 'baseline',
                 marginVertical: '3%',
               }}>
-              <View style={{marginTop: '3%', marginRight: '5%'}}></View>
+              <View style={{ marginTop: '3%', marginRight: '5%' }}></View>
               <TouchableOpacity
                 style={[
                   styles.swiperBtn,
@@ -1229,13 +1230,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/LearningSecond.png')}
               style={{
@@ -1244,7 +1245,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro2}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro2}</Text>
             </View>
             <View
               style={{
@@ -1262,7 +1263,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1275,13 +1276,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <Image
               source={require('../../Assets/images/LearningThird.png')}
               style={{
@@ -1290,7 +1291,7 @@ export const Module = ({ route }) => {
                 alignSelf: 'center',
               }}></Image>
             <View style={styles.textContainer}>
-              <Text style={[styles.text, {color: colors.text}]}>{intro3}</Text>
+              <Text style={[styles.text, { color: colors.text }]}>{intro3}</Text>
             </View>
             <View
               style={{
@@ -1308,7 +1309,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1321,13 +1322,13 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <View>
               <Image
                 source={require('../../Assets/images/LearningQuiz.png')}
@@ -1339,7 +1340,7 @@ export const Module = ({ route }) => {
               <Text
                 style={[
                   styles.takeawayHeader,
-                  {fontSize: 22 * scaleFactor, color: colors.text},
+                  { fontSize: 22 * scaleFactor, color: colors.text },
                 ]}>
                 Lad os tage en quiz for at hjælpe dig med at huske, hvad du har
                 lært!
@@ -1348,7 +1349,7 @@ export const Module = ({ route }) => {
                 key={module.id}
                 subject={subject}
                 module={module.get('name')}
-                style={{color: colors.text}}
+                style={{ color: colors.text }}
               />
               <View
                 style={{
@@ -1367,7 +1368,7 @@ export const Module = ({ route }) => {
                   ]}
                   onPress={() => swiperRef.current.scrollBy(-1)}>
                   <Text
-                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                     Tilbage
                   </Text>
                 </TouchableOpacity>
@@ -1381,15 +1382,15 @@ export const Module = ({ route }) => {
                   ]}
                   onPress={() => swiperRef.current.scrollBy(1)}>
                   <Text
-                    style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                    style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                     Næste
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/LearningFourth.png')}
                 style={{
@@ -1416,7 +1417,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1429,14 +1430,14 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <ScrollView style={{flex: 1}}>
-            <View style={{alignItems: 'center'}}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center' }}>
               <Image
                 source={require('../../Assets/images/LearningFifth.png')}
                 style={{
@@ -1447,7 +1448,7 @@ export const Module = ({ route }) => {
               <Text
                 style={[
                   styles.takeawayHeader,
-                  {fontSize: 22 * scaleFactor, color: colors.text},
+                  { fontSize: 22 * scaleFactor, color: colors.text },
                 ]}>
                 Her er der {keyPoints.length} takeaways fra dette modul
               </Text>
@@ -1465,7 +1466,7 @@ export const Module = ({ route }) => {
                     <Text
                       style={[
                         styles.takeawayHeader,
-                        {fontSize: 22 * scaleFactor, color: colors.text},
+                        { fontSize: 22 * scaleFactor, color: colors.text },
                       ]}>
                       Takeaway {index + 1}
                     </Text>
@@ -1490,7 +1491,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(-1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Tilbage
                 </Text>
               </TouchableOpacity>
@@ -1503,7 +1504,7 @@ export const Module = ({ route }) => {
                   },
                 ]}
                 onPress={() => swiperRef.current.scrollBy(1)}>
-                <Text style={{fontSize: 20 * scaleFactor, color: colors.text}}>
+                <Text style={{ fontSize: 20 * scaleFactor, color: colors.text }}>
                   Næste
                 </Text>
               </TouchableOpacity>
@@ -1578,7 +1579,6 @@ export const Module = ({ route }) => {
           </ScrollView>
         </Swiper>
       </View>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

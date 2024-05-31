@@ -20,11 +20,11 @@ export const StructureFrontPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{paddingBottom: 20}}>
+      <ScrollView style={{ paddingBottom: 20 }}>
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           Hvad skal der planlægges i dag? 
         </Text>
@@ -122,7 +122,6 @@ export const StructureFrontPage = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-      <BottomNavigation />
     </SafeAreaView>
   );
 };

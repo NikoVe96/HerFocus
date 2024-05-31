@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useCallback} from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,40 +19,40 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import PickAvatar from './PickAvatar';
 import getAvatarImage from './AvatarUtils';
-import { useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import BottomNavigation from '../../Navigation/BottomNav';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {useUser} from '../../Components/UserContext';
-import {useFocusEffect} from '@react-navigation/native';
+import { useUser } from '../../Components/UserContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const Profile = () => {
   let [avatar, setAvatar] = useState('');
-  const {colors} = useTheme();
-  const {username, name, email, updateUserProfile} = useUser();
-   const {width, height} = Dimensions.get('window');
-   const scaleFactor = Math.min(width / 375, height / 667);
+  const { colors } = useTheme();
+  const { username, name, email, updateUserProfile } = useUser();
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
-    useFocusEffect(
-      useCallback(() => {
-        updateUserProfile();
-        return () => {};
-      }, []),
-    );
+  useFocusEffect(
+    useCallback(() => {
+      updateUserProfile();
+      return () => { };
+    }, []),
+  );
 
   useEffect(() => {
     async function getCurrentUser() {
-        const currentUser = await Parse.User.currentAsync();
-        if (currentUser !== null) {
-          setAvatar(currentUser.get('avatar'));
-        }
+      const currentUser = await Parse.User.currentAsync();
+      if (currentUser !== null) {
+        setAvatar(currentUser.get('avatar'));
+      }
     }
     getCurrentUser();
   }, [username]);
 
-const handleAvatarSelect = selectedAvatar => {
-  setAvatar(selectedAvatar);
-};
+  const handleAvatarSelect = selectedAvatar => {
+    setAvatar(selectedAvatar);
+  };
 
   const avatarImageSource = getAvatarImage(avatar);
 
@@ -61,11 +61,11 @@ const handleAvatarSelect = selectedAvatar => {
       <ScrollView>
         <View style={styles.userNameContainer}>
           <View
-            style={[styles.styling, {backgroundColor: colors.border}]}></View>
+            style={[styles.styling, { backgroundColor: colors.border }]}></View>
           <Text
             style={[
               styles.user,
-              {color: colors.text, fontSize: 25 * scaleFactor},
+              { color: colors.text, fontSize: 25 * scaleFactor },
             ]}>
             {username}
           </Text>
@@ -75,16 +75,16 @@ const handleAvatarSelect = selectedAvatar => {
           </View>
         </View>
         <View style={styles.seperator}></View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faUser}
-            style={[styles.icons, {color: colors.text}]}
+            style={[styles.icons, { color: colors.text }]}
             size={20}
           />
           <Text
             style={[
               styles.userInfo,
-              {color: colors.text, fontSize: 18 * scaleFactor},
+              { color: colors.text, fontSize: 18 * scaleFactor },
             ]}>
             {' '}
             {name}{' '}
@@ -93,7 +93,7 @@ const handleAvatarSelect = selectedAvatar => {
         <View
           style={[
             styles.seperator,
-            {backgroundColor: colors.mainButton},
+            { backgroundColor: colors.mainButton },
           ]}></View>
         <View style={styles.userContainer}>
           <View
@@ -103,13 +103,13 @@ const handleAvatarSelect = selectedAvatar => {
             }}>
             <FontAwesomeIcon
               icon={faEnvelope}
-              style={[styles.icons, {color: colors.text}]}
+              style={[styles.icons, { color: colors.text }]}
               size={20}
             />
             <Text
               style={[
                 styles.userInfo,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               {email}
             </Text>
@@ -118,18 +118,18 @@ const handleAvatarSelect = selectedAvatar => {
         <View
           style={[
             styles.seperator,
-            {backgroundColor: colors.mainButton},
+            { backgroundColor: colors.mainButton },
           ]}></View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FontAwesomeIcon
             icon={faImage}
-            style={[styles.icons, {color: colors.text}]}
+            style={[styles.icons, { color: colors.text }]}
             size={20}
           />
           <Text
             style={[
               styles.userInfo,
-              {color: colors.text, fontSize: 18 * scaleFactor},
+              { color: colors.text, fontSize: 18 * scaleFactor },
             ]}>
             Skift avatar
           </Text>
@@ -140,7 +140,6 @@ const handleAvatarSelect = selectedAvatar => {
             picked={avatar}></PickAvatar>
         </View>
       </ScrollView>
-      <BottomNavigation />
     </View>
   );
 };
