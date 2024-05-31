@@ -356,21 +356,21 @@ function CustomDrawerContent({ navigation }) {
 
 function SideMenu() {
 
-  const { updateUserProfile, username } = useUser();
+  // const { updateUserProfile, username } = useUser();
 
-  const initialRouteName = username != '' ? 'Front page' : 'Login';
+  // const initialRouteName = username != '' ? 'Front page' : 'Login';
 
-  useFocusEffect(
-    useCallback(() => {
-      updateUserProfile();
-      return () => { };
-    }, [username]),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     updateUserProfile();
+  //     return () => { };
+  //   }, [username]),
+  // );
 
   return (
     <Drawer.Navigator
+      initialRouteName="Front page"
       backBehavior="history"
-      //initialRouteName={username == '' ? 'Login' : 'Front page'}
       screenOptions={{
         drawerPosition: 'right',
         header: props => <TopNavigation {...props} />,

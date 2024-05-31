@@ -91,7 +91,7 @@ function App() {
   //const [notification, setNotification] = useState(false);
   //const notificationListener = useRef();
   //const responseListener = useRef();
-  const [currentRouteName, setCurrentRouteName] = useState('');
+  //const [currentRouteName, setCurrentRouteName] = useState('');
 
   useEffect(() => {
     const getTheme = async () => {
@@ -121,18 +121,28 @@ function App() {
        Notifications.removeNotificationSubscription(notificationListener.current);
        Notifications.removeNotificationSubscription(responseListener.current);
      }; */
+       getTheme();
   }, []);
 
-  const onStateChange = (state) => {
-    const activeRouteName = state.routes[state.index].name;
-    setCurrentRouteName(activeRouteName);
-  };
+  // const onStateChange = (state) => {
+  //   const activeRouteName = state.routes[state.index].name;
+  //   setCurrentRouteName(activeRouteName);
+  // };
 
-  // Screens where the bottom navigation should be hidden
-  const hiddenScreens = ['Login', 'Sign up', 'Forgot password'];
-  const shouldDisplayBottomNav = !hiddenScreens.includes(currentRouteName);
+  // // Screens where the bottom navigation should be hidden
+  // const hiddenScreens = ['Login', 'Sign up', 'Forgot password'];
+  // const shouldDisplayBottomNav = !hiddenScreens.includes(currentRouteName);
 
-  const { username } = useUser();
+  // const { username } = useUser();
+
+
+  async function themeQuery() {
+    let themeQ = new Parse.Query('Settings');
+    themeQ.contains('user', ID);
+    const Result = await themeQ.find();
+    const chosenTheme = Result[0].get('theme');
+    //setTheme(themes[chosenTheme]);
+  }
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>

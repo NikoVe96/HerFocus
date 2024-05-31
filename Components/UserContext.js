@@ -17,20 +17,20 @@ export const UserProvider = ({ children }) => {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const currentUser = await Parse.User.currentAsync();
-      if (currentUser) {
-        setUsername(currentUser.getUsername());
-        console.log('username success: ' + username);
-      } else {
-        setUsername(''); // Ensure username is empty if no user is logged in
-        console.log('username fail: ' + username);
-      }
-    };
-    checkUser();
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     const currentUser = await Parse.User.currentAsync();
+  //     if (currentUser) {
+  //       setUsername(currentUser.getUsername());
+  //       console.log('username success: ' + username);
+  //     } else {
+  //       setUsername(''); // Ensure username is empty if no user is logged in
+  //       console.log('username fail: ' + username);
+  //     }
+  //   };
+  //   checkUser();
 
-  }, []);
+  // }, []);
 
   
    const handleSignup = async (
@@ -100,7 +100,7 @@ export const UserProvider = ({ children }) => {
       const user = await Parse.User.logIn(lowerCaseEmail, password);
       setIsLoggedIn(true);
       console.log('Success! User ID:', user.id);
-      //navigation.navigate('Front page');
+      navigation.navigate('Front page');
       setUsername(user.getUsername());
     } catch (error) {
       console.error('Error while logging in user', error);
@@ -170,7 +170,7 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        username, email, name, error, avatar, taskProgress, remainingTasks, completedTasks,
+        username, email, name, error, avatar, taskProgress, remainingTasks, completedTasks, isLoggedIn,
         updateUserProfile, handleLogin, handleLogout, handleSignup, updateTaskProgress, getRemainingTasks, getCompletedTasks
       }}>
       {children}
