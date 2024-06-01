@@ -46,7 +46,7 @@ export const FrontPage = () => {
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           Hvad vil du gerne lave i dag?
         </Text>
@@ -54,46 +54,46 @@ export const FrontPage = () => {
           style={styles.press}
           onPress={() => navigation.navigate('Structure')}>
           <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Planlægning
             </Text>
-                <Image
-                  source={require('../../Assets/images/2-removebg-preview.png')}
-                  style={[
-                    styles.images,
-                    {
-                      width: 80 * scaleFactor,
-                      height: 70 * scaleFactor,
-                    },
-                  ]}></Image>
+            <Image
+              source={require('../../Assets/images/2-removebg-preview.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Pick module')}>
           <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Læringsmoduler
             </Text>
-                <Image
-                  source={require('../../Assets/images/4-removebg-preview.png')}
-                  style={[
-                    styles.images,
-                    {
-                      width: 70 * scaleFactor,
-                      height: 70 * scaleFactor,
-                    },
-                  ]}></Image>
+            <Image
+              source={require('../../Assets/images/4-removebg-preview.png')}
+              style={[
+                styles.images,
+                {
+                  width: 70 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
 
@@ -101,46 +101,46 @@ export const FrontPage = () => {
           style={styles.press}
           onPress={() => navigation.navigate('Pick subject')}>
           <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Forum
             </Text>
-                <Image
-                  source={require('../../Assets/images/1-removebg-preview.png')}
-                  style={[
-                    styles.images,
-                    {
-                      width: 80 * scaleFactor,
-                      height: 70 * scaleFactor,
-                    },
-                  ]}></Image>
+            <Image
+              source={require('../../Assets/images/1-removebg-preview.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Pick topic')}>
           <View
-            style={[styles.buttonGrad, {backgroundColor: colors.mainButton}]}>
+            style={[styles.buttonGrad, { backgroundColor: colors.mainButton }]}>
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Vidensbank
             </Text>
-                <Image
-                  source={require('../../Assets/images/3-removebg-preview.png')}
-                  style={[
-                    styles.images,
-                    {
-                      width: 80 * scaleFactor,
-                      height: 70 * scaleFactor,
-                    },
-                  ]}></Image>
+            <Image
+              source={require('../../Assets/images/3-removebg-preview.png')}
+              style={[
+                styles.images,
+                {
+                  width: 80 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -149,24 +149,24 @@ export const FrontPage = () => {
           <View
             style={[
               styles.buttonGrad,
-              {backgroundColor: colors.mainButton},
+              { backgroundColor: colors.mainButton },
             ]}>
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Notesbog
             </Text>
-                <Image
-                  source={require('../../Assets/images/structure_notebook.png')}
-                  style={[
-                    styles.images,
-                    {
-                      width: 100 * scaleFactor,
-                      height: 70 * scaleFactor,
-                    },
-                  ]}></Image>
+            <Image
+              source={require('../../Assets/images/structure_notebook.png')}
+              style={[
+                styles.images,
+                {
+                  width: 100 * scaleFactor,
+                  height: 70 * scaleFactor,
+                },
+              ]}></Image>
           </View>
         </TouchableOpacity>
       </ScrollView>
