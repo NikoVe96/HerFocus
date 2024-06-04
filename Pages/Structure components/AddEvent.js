@@ -69,8 +69,8 @@ export const AddEvent = () => {
 
       newEvent.set('name', eventName);
       newEvent.set('date', eventDate);
-      newEvent.set('startTime', startDateTime);
-      newEvent.set('endTime', endDateTime);
+      newEvent.set('startTime', eventStartTime);
+      newEvent.set('endTime', eventEndTime);
       newEvent.set('emoji', emoji);
       newEvent.set('user', currentUser);
       newEvent.set('color', eventColor);

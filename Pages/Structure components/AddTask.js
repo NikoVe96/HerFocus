@@ -53,18 +53,18 @@ export const AddTask = ({ navigation }) => {
       const newTask = new Parse.Object('Task');
       const currentUser = await Parse.User.currentAsync();
 
-       const startDateTime = new Date(taskDate);
-       const [startHours, startMinutes] = taskStartTime.split(':');
-       startDateTime.setHours(startHours, startMinutes);
+      const startDateTime = new Date(taskDate);
+      const [startHours, startMinutes] = taskStartTime.split(':');
+      startDateTime.setHours(startHours, startMinutes);
 
-       const endDateTime = new Date(taskDate);
-       const [endHours, endMinutes] = taskEndTime.split(':');
-       endDateTime.setHours(endHours, endMinutes);
+      const endDateTime = new Date(taskDate);
+      const [endHours, endMinutes] = taskEndTime.split(':');
+      endDateTime.setHours(endHours, endMinutes);
 
       newTask.set('name', taskName);
       newTask.set('date', taskDate);
-      newTask.set('startTime', startDateTime); 
-      newTask.set('endTime', endDateTime);  
+      newTask.set('startTime', taskStartTime);
+      newTask.set('endTime', taskEndTime);
       newTask.set('emoji', emoji);
       newTask.set('user', currentUser);
       newTask.set('color', taskColor);
@@ -73,6 +73,7 @@ export const AddTask = ({ navigation }) => {
       // If time, add recurring option
       await newTask.save();
       console.log('Success: task saved')
+      clearInput();
       Alert.alert('En ny to-do er blevet tilføjet til din kalender!');
       //clearInput();
     } catch (error) {
@@ -117,7 +118,7 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setStartTime(hours 
+    setStartTime(hours
       + ':' + minutes);
     hideStartTimePicker();
     console.log('Selected time:', hours + ':' + minutes);
@@ -143,7 +144,7 @@ export const AddTask = ({ navigation }) => {
       hours = '0' + date.getHours();
     }
 
-    setEndTime(hours 
+    setEndTime(hours
       + ':' + minutes);
     console.log('Selected time:', hours + ':' + minutes);
 

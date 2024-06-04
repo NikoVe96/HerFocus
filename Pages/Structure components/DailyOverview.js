@@ -23,7 +23,7 @@ Parse.serverURL = 'https://parseapi.back4app.com/'
 export const DailyOverview = () => {
   const today = new Date;
   const currentDate = today.toISOString().slice(0, 10);
-  const width = Dimensions.get('window').width;
+  const { width, height } = Dimensions.get('window');
   const [username, setUsername] = useState('');
   const [taskProgress, setTaskProgress] = useState(0);
   const [ID, setID] = useState('');
@@ -36,6 +36,7 @@ export const DailyOverview = () => {
   const [toDoList, setToDoList] = useState([]);
   const [todoTime, setTodoTime] = useState(0);
   const [openTodoTime, setOpenTodoTime] = useState(false);
+  const scaleFactor = Math.min(width / 375, height / 667);
   const todoTimes = [
     { label: '1 time', value: 1 },
     { label: '2 time', value: 2 },
@@ -182,7 +183,7 @@ export const DailyOverview = () => {
             valueSuffix={'%'}
             activeStrokeColor={colors.border}
             activeStrokeSecondaryColor={colors.subButton}
-            radius={90}
+            radius={90 * scaleFactor}
           />
         </View>
         {taskProgress == 0 ? (
@@ -278,8 +279,9 @@ export const DailyOverview = () => {
                     color={colors.border}
                   />
                   <Text style={{ fontSize: 18 }}>
-                    Fra {remainingTasksArray[0].get('startTime')} til{' '}
-                    {remainingTasksArray[0].get('endTime')}
+                    Fra {remainingTasksArray[0].get('startTime').toISOString().slice(11, 16)}
+                    {' '}til {remainingTasksArray[0].get('endTime').toISOString().slice(11, 16)}
+
                   </Text>
                 </View>
                 {remainingTasksArray[0].get('description') == '' ?
@@ -370,8 +372,8 @@ export const DailyOverview = () => {
                     color={colors.border}
                   />
                   <Text style={{ fontSize: 18 }}>
-                    Fra {remainingTasksArray[1].get('startTime')} til{' '}
-                    {remainingTasksArray[1].get('endTime')}
+                    Fra {remainingTasksArray[1].get('startTime').toISOString().slice(11, 16)}
+                    {' '}til {remainingTasksArray[1].get('endTime').toISOString().slice(11, 16)}
                   </Text>
                 </View>
                 {remainingTasksArray[1].get('description') == '' ?

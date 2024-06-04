@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigation from './Navigation/BottomNav';
 import SideMenu from './Navigation/SideMenu';
-import LoginNav from './Navigation/LoginNav'; 
+import LoginNav from './Navigation/LoginNav';
 import { NavigationContainer, DefaultTheme, useTheme } from '@react-navigation/native';
 import { useColorScheme, Button } from 'react-native';
 import Parse from 'parse/react-native';
@@ -86,7 +86,7 @@ function App() {
 
   const { theme } = useThemeContext();
   const [ID, setID] = useState('');
-  const {isLoggedIn} = useUser(); 
+  const { isLoggedIn } = useUser();
   //const [expoPushToken, setExpoPushToken] = useState('');
   //const [notification, setNotification] = useState(false);
   //const notificationListener = useRef();
@@ -121,7 +121,7 @@ function App() {
        Notifications.removeNotificationSubscription(notificationListener.current);
        Notifications.removeNotificationSubscription(responseListener.current);
      }; */
-       getTheme();
+    getTheme();
   }, []);
 
   // const onStateChange = (state) => {
@@ -145,14 +145,15 @@ function App() {
   }
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer theme={theme}>
         {isLoggedIn ? (
-          <SafeAreaView style={{flex: 1}}>
+          <SafeAreaView style={{ flex: 1 }}>
             <SideMenu />
+            <BottomNavigation />
           </SafeAreaView>
         ) : (
-          <SafeAreaView style={{flex: 1}}>
+          <SafeAreaView style={{ flex: 1 }}>
             <LoginNav />
           </SafeAreaView>
         )}
@@ -166,7 +167,7 @@ function App() {
     await sendPushNotification(expoPushToken);
   }}
 />*/}
-{/* <BottomNavigation /> */}
+{/* <BottomNavigation /> */ }
 
 
 

@@ -1,4 +1,4 @@
-import {useNavigation, useTheme} from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -9,27 +9,27 @@ import {
   Dimensions
 } from 'react-native';
 import AccordionItem from '../../Components/AccordionItem';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faAngleRight,
   faAngleLeft,
   faPencil,
   faListCheck,
 } from '@fortawesome/free-solid-svg-icons';
-import {faNoteSticky, faCircleXmark} from '@fortawesome/free-regular-svg-icons';
-import {useEffect, useState, useCallback} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import { faNoteSticky, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { useEffect, useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import AddTask from './AddTask';
 import Parse from 'parse/react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {TextInput} from 'react-native-gesture-handler';
-import {icon} from '@fortawesome/fontawesome-svg-core';
-import {DateTimePickerModal} from 'react-native-modal-datetime-picker';
+import { TextInput } from 'react-native-gesture-handler';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { DateTimePickerModal } from 'react-native-modal-datetime-picker';
 import BottomNavigation from '../../Navigation/BottomNav';
 
-export const FutureTodo = ({navigation}) => {
-  const {colors} = useTheme();
+export const FutureTodo = ({ navigation }) => {
+  const { colors } = useTheme();
   const [toDoList, setToDoList] = useState([]);
   const [toDoDate, setToDoDate] = useState('');
   const [todoStartTime, setTodoStartTime] = useState('');
@@ -42,8 +42,8 @@ export const FutureTodo = ({navigation}) => {
     useState(false);
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-        const {width, height} = Dimensions.get('window');
-        const scaleFactor = Math.min(width / 375, height / 667);
+  const { width, height } = Dimensions.get('window');
+  const scaleFactor = Math.min(width / 375, height / 667);
 
   useEffect(() => {
     ToDoQuery();
@@ -146,21 +146,21 @@ export const FutureTodo = ({navigation}) => {
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 30 * scaleFactor},
+            { color: colors.text, fontSize: 30 * scaleFactor },
           ]}>
           Fremtidige to-dos
         </Text>
         {toDoList.map((item, index) => (
-          <View key={index} style={{flexDirection: 'row'}}>
+          <View key={index} style={{ flexDirection: 'row' }}>
             <BouncyCheckbox
               size={30}
               fillColor={colors.mainButton}
               unfillColor="#FFFFFF"
-              iconStyle={{borderColor: 'black'}}
-              innerIconStyle={{borderWidth: 2}}
-              textStyle={{fontFamily: 'JosefinSans-Regular'}}
-              onPress={isChecked => {}}
-              style={{marginHorizontal: 10, flex: 0.5}}
+              iconStyle={{ borderColor: 'black' }}
+              innerIconStyle={{ borderWidth: 2 }}
+              textStyle={{ fontFamily: 'JosefinSans-Regular' }}
+              onPress={isChecked => { }}
+              style={{ marginHorizontal: 10, flex: 0.5 }}
             />
             <TouchableOpacity
               style={{
@@ -178,23 +178,23 @@ export const FutureTodo = ({navigation}) => {
                 elevation: 10,
               }}
               onLongPress={() => toCalendarModal(item)}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{fontSize: 20, marginRight: 10}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ fontSize: 20, marginRight: 10 }}>
                   {item.get('emoji')}
                 </Text>
-                <Text style={{marginHorizontal: 1, fontSize: 14}}>
+                <Text style={{ marginHorizontal: 1, fontSize: 14 }}>
                   {item.get('startTime')} - {item.get('endTime')}
                 </Text>
               </View>
-              <Text style={{fontSize: 24, marginHorizontal: 5}}>|</Text>
-              <Text style={{fontSize: 18}}>{item.get('name')}</Text>
+              <Text style={{ fontSize: 24, marginHorizontal: 5 }}>|</Text>
+              <Text style={{ fontSize: 18 }}>{item.get('name')}</Text>
             </TouchableOpacity>
           </View>
         ))}
         <TouchableOpacity
-          style={[styles.addTodo, {backgroundColor: colors.mainButton}]}
+          style={[styles.addTodo, { backgroundColor: colors.mainButton }]}
           onPress={() => setToDoModalVisible(true)}>
-          <Text style={{fontSize: 18}}>Tilføj en ny to-do</Text>
+          <Text style={{ fontSize: 18 }}>Tilføj en ny to-do</Text>
         </TouchableOpacity>
 
         <Modal
@@ -208,6 +208,7 @@ export const FutureTodo = ({navigation}) => {
               borderColor: colors.background,
               borderTopRightRadius: 10,
               borderTopLeftRadius: 10,
+              height: 500
             }}>
             <AddTask />
           </View>
@@ -221,7 +222,7 @@ export const FutureTodo = ({navigation}) => {
               borderBottomLeftRadius: 10,
             }}
             onPress={() => setToDoModalVisible(false)}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
               LUK
             </Text>
           </TouchableOpacity>
@@ -240,7 +241,7 @@ export const FutureTodo = ({navigation}) => {
               borderTopLeftRadius: 10,
             }}>
             <View>
-              <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
                     style={[
@@ -260,13 +261,13 @@ export const FutureTodo = ({navigation}) => {
                     onCancel={() => setStartTimePickerVisibility(false)}
                   />
                 </View>
-                <View style={[styles.rowView, {alignItems: 'center'}]}>
-                  <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                <View style={[styles.rowView, { alignItems: 'center' }]}>
+                  <Text style={[styles.text, { fontWeight: 'bold' }]}>
                     {todoStartTime}
                   </Text>
                 </View>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
                     style={[
@@ -286,13 +287,13 @@ export const FutureTodo = ({navigation}) => {
                     onCancel={() => setEndTimePickerVisibility(false)}
                   />
                 </View>
-                <View style={[styles.rowView, {alignItems: 'center'}]}>
-                  <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                <View style={[styles.rowView, { alignItems: 'center' }]}>
+                  <Text style={[styles.text, { fontWeight: 'bold' }]}>
                     {todoEndTime}
                   </Text>
                 </View>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View style={{ flexDirection: 'row', marginVertical: 2 }}>
                 <View style={styles.rowView}>
                   <TouchableOpacity
                     style={[
@@ -312,8 +313,8 @@ export const FutureTodo = ({navigation}) => {
                     onCancel={() => setDatePickerVisibility(false)}
                   />
                 </View>
-                <View style={[styles.rowView, {alignItems: 'center'}]}>
-                  <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                <View style={[styles.rowView, { alignItems: 'center' }]}>
+                  <Text style={[styles.text, { fontWeight: 'bold' }]}>
                     {toDoDate}
                   </Text>
                 </View>
@@ -341,7 +342,7 @@ export const FutureTodo = ({navigation}) => {
               borderBottomLeftRadius: 10,
             }}
             onPress={() => setToCalendarModalVisible(false)}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
               LUK
             </Text>
           </TouchableOpacity>
