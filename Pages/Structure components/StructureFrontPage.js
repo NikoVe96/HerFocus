@@ -7,34 +7,46 @@ import {
   ImageBackground,
   Image,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Button
 } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import BottomNavigation from '../../Navigation/BottomNav';
+import firestore from '@react-native-firebase/firestore';
 
 export const StructureFrontPage = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width / 375, height / 667);
+  const ref = firestore().collection('Users');
+
+  async function addUser() {
+    await ref.add({
+      username: 'Niko',
+      email: 'nive@test.dk',
+    });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{paddingBottom: 20}}>
+      <ScrollView style={{ paddingBottom: 20 }}>
         <Text
           style={[
             styles.title,
-            {color: colors.text, fontSize: 22 * scaleFactor},
+            { color: colors.text, fontSize: 22 * scaleFactor },
           ]}>
           Hvad vil du gerne lave i dag?
         </Text>
+        <Button
+          onPress={addUser()} />
         <TouchableOpacity
           style={styles.press}
           onPress={() => navigation.navigate('Calendar')}>
           <View
             style={[
               styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
+              { backgroundColor: colors.mainButton, width: '90%' },
             ]}>
             <Image
               source={require('../../Assets/images/structure_calendar.png')}
@@ -48,7 +60,7 @@ export const StructureFrontPage = () => {
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Kalender
             </Text>
@@ -60,7 +72,7 @@ export const StructureFrontPage = () => {
           <View
             style={[
               styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
+              { backgroundColor: colors.mainButton, width: '90%' },
             ]}>
             <Image
               source={require('../../Assets/images/structure_dailyOverview.png')}
@@ -74,7 +86,7 @@ export const StructureFrontPage = () => {
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Dags oversigt
             </Text>
@@ -87,7 +99,7 @@ export const StructureFrontPage = () => {
           <View
             style={[
               styles.buttonGrad,
-              {backgroundColor: colors.mainButton, width: '90%'},
+              { backgroundColor: colors.mainButton, width: '90%' },
             ]}>
             <Image
               source={require('../../Assets/images/structure_notebook.png')}
@@ -101,7 +113,7 @@ export const StructureFrontPage = () => {
             <Text
               style={[
                 styles.text,
-                {color: colors.text, fontSize: 18 * scaleFactor},
+                { color: colors.text, fontSize: 18 * scaleFactor },
               ]}>
               Notesbog
             </Text>
@@ -121,7 +133,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_todo.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{ fontSize: 18 * scaleFactor, marginTop: '1%' }}>
               Ny to-do
             </Text>
           </TouchableOpacity>
@@ -138,7 +150,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_routine.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{ fontSize: 18 * scaleFactor, marginTop: '1%' }}>
               Ny rutine
             </Text>
           </TouchableOpacity>
@@ -155,7 +167,7 @@ export const StructureFrontPage = () => {
             <Image
               source={require('../../Assets/images/structure_event.png')}
               style={styles.imageSmall}></Image>
-            <Text style={{fontSize: 18 * scaleFactor, marginTop: '1%'}}>
+            <Text style={{ fontSize: 18 * scaleFactor, marginTop: '1%' }}>
               Nyt event
             </Text>
           </TouchableOpacity>
@@ -169,7 +181,7 @@ export const StructureFrontPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+
   },
   helloUser: {
     paddingLeft: 60,
