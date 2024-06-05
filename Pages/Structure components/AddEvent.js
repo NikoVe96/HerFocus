@@ -161,6 +161,8 @@ export const AddEvent = () => {
     setEmoji('');
     setEventColor('');
     setDescription('');
+    setDayEvent(false);
+    setIsAllDayEnabled(false);
   }
 
   function showEmojiModal() {

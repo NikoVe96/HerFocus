@@ -149,7 +149,6 @@ export const CalendarOverview = ({ navigation }) => {
       });
 
       setDayTasksArray(allEvents);
-      allDayQuery();
 
     }).catch(error => {
       console.error('Error fetching data', error);
@@ -281,7 +280,7 @@ export const CalendarOverview = ({ navigation }) => {
                     </View>
                   ))}
                   {dayTasksArray.length == 0 ?
-                    <Text></Text>
+                    null
                     : <View style={{ borderWidth: 1, marginHorizontal: 15, marginVertical: 20, backgroundColor: colors.border, width: 250, alignSelf: 'center', borderColor: colors.border, borderRadius: 10 }}></View>
                   }
                 </View>
