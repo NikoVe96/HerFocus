@@ -12,7 +12,7 @@ import AccordionItem from '../../Components/AccordionItem';
 import {useEffect, useState, useCallback} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import Parse from 'parse/react-native';
-import BottomNavigation from '../../Navigation/BottomNav';
+
 
 
 export const CompletedModules = () => {
@@ -98,7 +98,6 @@ export const CompletedModules = () => {
            </AccordionItem>
          ))}
        </ScrollView>
-       <BottomNavigation />
      </View>
    );
 }

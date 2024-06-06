@@ -26,7 +26,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { TextInput } from 'react-native-gesture-handler';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { DateTimePickerModal } from 'react-native-modal-datetime-picker';
-import BottomNavigation from '../../Navigation/BottomNav';
+
 
 export const FutureTodo = ({ navigation }) => {
   const { colors } = useTheme();
@@ -348,7 +348,6 @@ export const FutureTodo = ({ navigation }) => {
           </TouchableOpacity>
         </Modal>
       </ScrollView>
-      <BottomNavigation />
     </View>
   );
 };

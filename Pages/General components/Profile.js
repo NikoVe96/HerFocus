@@ -60,8 +60,7 @@ export const Profile = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.userNameContainer}>
-          <View
-            style={[styles.styling, { backgroundColor: colors.border }]}></View>
+          <Image source={avatarImageSource} style={styles.avatarImage} />
           <Text
             style={[
               styles.user,
@@ -69,10 +68,6 @@ export const Profile = () => {
             ]}>
             {username}
           </Text>
-          <Image source={avatarImageSource} style={styles.avatarImage} />
-          <View style={styles.avatar}>
-            <View style={styles.avatar}></View>
-          </View>
         </View>
         <View style={styles.seperator}></View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -150,30 +145,15 @@ const styles = StyleSheet.create({
   },
   userNameContainer: {
     alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 10,
   },
   avatarImage: {
-    marginTop: 10,
-    width: 60,
-    height: 60,
-  },
-  styling: {
-    width: '100%',
+    width: 80,
     height: 80,
-    borderBottomEndRadius: 100,
-    borderBottomStartRadius: 100,
-  },
-  avatar: {
-    alignSelf: 'center',
-    marginTop: 10,
   },
   user: {
-    paddingLeft: 60,
-    paddingRight: 60,
-    textAlign: 'center',
-    fontSize: 30,
-    zIndex: 2,
-    position: 'absolute',
-    marginTop: 40,
+    marginTop: 20,
   },
   seperator: {
     width: '100%',

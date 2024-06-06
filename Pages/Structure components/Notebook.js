@@ -24,7 +24,6 @@ import {useEffect, useState, useCallback} from 'react';
 import Modal from "react-native-modal";
 import Parse from 'parse/react-native';
 import { TextInput } from "react-native-gesture-handler";
-import BottomNavigation from "../../Navigation/BottomNav";
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 export const Notebook = () => {
@@ -269,7 +268,6 @@ export const Notebook = () => {
           style={styles.icon}
         />
       </TouchableOpacity>
-      <BottomNavigation />
     </View>
   );
 }

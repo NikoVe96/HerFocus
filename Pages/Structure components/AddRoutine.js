@@ -291,7 +291,7 @@ export const AddRoutine = ({ navigation }) => {
           ]}>
           <FontAwesomeIcon
             icon={faPlus}
-            size={35 * scaleFactor}
+            size={25 * scaleFactor}
             color={colors.text}
           />
         </TouchableOpacity>

@@ -553,168 +553,173 @@ export const CalendarOverview = ({ navigation }) => {
 
   return (
     <MenuProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '2%',
-          }}>
-          <Text style={{ fontSize: 26, marginTop: 15, color: colors.text }}>
-            Kalender
-          </Text>
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            marginHorizontal: 15,
-            marginBottom: 20,
-            backgroundColor: colors.border,
-            borderRadius: 10,
-            borderColor: colors.border,
-          }}></View>
-        <RadioGroup
-          radioButtons={radioButtons}
-          onPress={setSelectedId}
-          selectedId={selectedId}
-          layout="row"
-          containerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-          size={30}
-        />
-        <View>{calendarLayout()}</View>
-        <View
-          style={{
-            alignItems: 'flex-end',
-            backgroundColor: colors.background,
-            marginRight: '5%',
-            marginTop: '5%',
-          }}>
-          <Menu>
-            <MenuTrigger
-              style={{
-                backgroundColor: colors.mainButton,
-                padding: 10,
-                borderWidth: 1,
-                borderColor: colors.mainButton,
-                borderRadius: 10,
-                elevation: 5,
-                marginBottom: '2%',
-                elevation: 5,
-                shadowColor: 'grey',
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.8,
-                shadowRadius: 1,
-              }}>
-              <FontAwesomeIcon icon={faPlus} size={30} color={colors.text} />
-            </MenuTrigger>
-            <MenuOptions
-              customStyles={{ optionsContainer: styles.menuOptionsContainer }}>
-              <MenuOption
-                onSelect={() => navigation.navigate('Add task')}
-                style={[
-                  styles.menuOptionStyle,
-                  {
-                    backgroundColor: colors.subButton,
-                    borderColor: colors.subButton,
-                  },
-                ]}>
-                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
-                  Tilføj en ny to-do
-                </Text>
-                <FontAwesomeIcon
-                  icon={faListCheck}
-                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
-                />
-              </MenuOption>
-              <MenuOption
-                onSelect={() => navigation.navigate('Add routine')}
-                style={[
-                  styles.menuOptionStyle,
-                  {
-                    backgroundColor: colors.subButton,
-                    borderColor: colors.subButton,
-                  },
-                ]}>
-                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
-                  Tilføj en ny rutine
-                </Text>
-                <FontAwesomeIcon
-                  icon={faClockRotateLeft}
-                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
-                />
-              </MenuOption>
-              <MenuOption
-                onSelect={() => navigation.navigate('Add event')}
-                style={[
-                  styles.menuOptionStyle,
-                  {
-                    backgroundColor: colors.subButton,
-                    borderColor: colors.subButton,
-                  },
-                ]}>
-                <Text style={{ fontSize: 18, flex: 3, color: colors.text }}>
-                  Tilføj et nyt event
-                </Text>
-                <FontAwesomeIcon
-                  icon={faCalendarXmark}
-                  style={{ flex: 1, marginHorizontal: 5, color: colors.text }}
-                />
-              </MenuOption>
-            </MenuOptions>
-          </Menu>
-        </View>
-        <Modal
-          isVisible={isModalVisible}
-          onBackdropPress={() => setModalVisible(false)}>
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView>
           <View
             style={{
-              backgroundColor: colors.background,
+              justifyContent: 'center',
               alignItems: 'center',
-              borderWidth: 1,
-              borderColor: colors.background,
-              borderRadius: 10,
+              padding: '2%',
             }}>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginVertical: 10,
-              }}>
-              <Text style={{ fontSize: 24 }}>Tasks and events on</Text>
-              <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
-                {chosenDate}
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: 'white',
-                borderWidth: 1,
-                borderRadius: 10,
-                borderColor: 'white',
-                marginHorizontal: 10,
-                width: '90%',
-              }}>
-              <ScrollView style={{ height: 250 }}>{sortEventView()}</ScrollView>
-            </View>
-            <View>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  backgroundColor: colors.subButton,
-                  padding: 10,
-                  alignItems: 'center',
-                  marginHorizontal: 5,
-                  borderWidth: 1,
-                  borderColor: colors.border,
-                  borderRadius: 10,
-                  marginVertical: 10,
-                }}
-                onPress={hideDayModel}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Close</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={{fontSize: 26, marginTop: 15, color: colors.text}}>
+              Kalender
+            </Text>
           </View>
-        </Modal>
+          <View
+            style={{
+              borderWidth: 1,
+              marginHorizontal: 15,
+              marginBottom: 20,
+              backgroundColor: colors.border,
+              borderRadius: 10,
+              borderColor: colors.border,
+            }}></View>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <RadioGroup
+            radioButtons={radioButtons}
+            onPress={setSelectedId}
+            selectedId={selectedId}
+            layout="row"
+            containerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            size={30}
+          />
+            <Menu>
+              <MenuTrigger
+                style={{
+                  backgroundColor: colors.mainButton,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: colors.mainButton,
+                  borderRadius: 10,
+                  alignSelf: 'center',
+                  marginLeft: 5,
+                  elevation: 5,
+                  marginTop: '2%',
+                  elevation: 5,
+                  shadowColor: 'grey',
+                  shadowOffset: {width: 1, height: 2},
+                  shadowOpacity: 0.8,
+                  shadowRadius: 1,
+                }}>
+                <FontAwesomeIcon icon={faPlus} size={20} color={colors.text} />
+              </MenuTrigger>
+              <MenuOptions
+                customStyles={{optionsContainer: styles.menuOptionsContainer}}>
+                <MenuOption
+                  onSelect={() => navigation.navigate('Add task')}
+                  style={[
+                    styles.menuOptionStyle,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.subButton,
+                    },
+                  ]}>
+                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
+                    Tilføj en ny to-do
+                  </Text>
+                  <FontAwesomeIcon
+                    icon={faListCheck}
+                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
+                  />
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => navigation.navigate('Add routine')}
+                  style={[
+                    styles.menuOptionStyle,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.subButton,
+                    },
+                  ]}>
+                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
+                    Tilføj en ny rutine
+                  </Text>
+                  <FontAwesomeIcon
+                    icon={faClockRotateLeft}
+                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
+                  />
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => navigation.navigate('Add event')}
+                  style={[
+                    styles.menuOptionStyle,
+                    {
+                      backgroundColor: colors.subButton,
+                      borderColor: colors.subButton,
+                    },
+                  ]}>
+                  <Text style={{fontSize: 18, flex: 3, color: colors.text}}>
+                    Tilføj et nyt event
+                  </Text>
+                  <FontAwesomeIcon
+                    icon={faCalendarXmark}
+                    style={{flex: 1, marginHorizontal: 5, color: colors.text}}
+                  />
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
+          </View>
+          <View>{calendarLayout()}</View>
+          <View
+            style={{
+              alignItems: 'flex-end',
+              backgroundColor: colors.background,
+              marginRight: '5%',
+              marginTop: '5%',
+            }}></View>
+          <Modal
+            isVisible={isModalVisible}
+            onBackdropPress={() => setModalVisible(false)}>
+            <View
+              style={{
+                backgroundColor: colors.background,
+                alignItems: 'center',
+                borderWidth: 1,
+                borderColor: colors.background,
+                borderRadius: 10,
+              }}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginVertical: 10,
+                }}>
+                <Text style={{fontSize: 24}}>Tasks and events on</Text>
+                <Text style={{fontSize: 24, fontWeight: 'bold'}}>
+                  {chosenDate}
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: 'white',
+                  marginHorizontal: 10,
+                  width: '90%',
+                }}>
+                <ScrollView style={{height: 250}}>{sortEventView()}</ScrollView>
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    backgroundColor: colors.subButton,
+                    padding: 10,
+                    alignItems: 'center',
+                    marginHorizontal: 5,
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                    borderRadius: 10,
+                    marginVertical: 10,
+                  }}
+                  onPress={hideDayModel}>
+                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </ScrollView>
       </SafeAreaView>
     </MenuProvider>
   );

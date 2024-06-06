@@ -5,7 +5,7 @@ import {
 import React, { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, View, StyleSheet } from 'react-native';
+import {Text, View, StyleSheet, Dimensions} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faListCheck,
@@ -67,73 +67,75 @@ const moduleSubjects = [
 function CustomDrawerContent({ navigation }) {
   const { colors } = useTheme();
   const { handleLogout } = useUser();
+   const {width, height} = Dimensions.get('window');
+   const scaleFactor = Math.min(width / 375, height / 667);
 
   return (
-    <DrawerContentScrollView style={{ backgroundColor: colors.background }}>
+    <DrawerContentScrollView style={{backgroundColor: colors.background}}>
       <AccordionItem
         title="Planlægning"
         icon={faListCheck}
-        titleStyle={[{ color: colors.text }]}>
+        titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Add routine')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            style={{ marginRight: 10 }}
+            style={{marginRight: 10}}
             color={colors.text}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
             Tilføj en ny rutine{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Add task')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
-            style={{ marginRight: 10 }}
+            style={{marginRight: 10}}
             color={colors.text}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
             Tilføj en ny opgave{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Calendar')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
             Kalender oversigt{' '}
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Daily overview')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
             Dagligt overblik{' '}
           </Text>
         </TouchableOpacity>
@@ -141,9 +143,9 @@ function CustomDrawerContent({ navigation }) {
       <AccordionItem
         title="Forum"
         icon={faComments}
-        titleStyle={[{ color: colors.text }]}>
+        titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() =>
             navigation.navigate('Forum', {
               forumTitle: 'Familie',
@@ -155,16 +157,18 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Familie </Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Familie{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() =>
             navigation.navigate('Forum', {
               forumTitle: 'Relationer',
@@ -176,16 +180,18 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Relationer </Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Relationer{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() =>
             navigation.navigate('Forum', {
               forumTitle: 'Medicin',
@@ -197,16 +203,18 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Medicin </Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Medicin{' '}
+          </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() =>
             navigation.navigate('Forum', {
               forumTitle: 'Gode tips',
@@ -218,16 +226,18 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Gode tips </Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Gode tips{' '}
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <AccordionItem
         title="Læringsmoduler"
         icon={faGraduationCap}
-        titleStyle={[{ color: colors.text }]}>
+        titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() =>
             navigation.navigate('Module overview', {
               subject: moduleSubjects[0].subject,
@@ -239,13 +249,22 @@ function CustomDrawerContent({ navigation }) {
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
+            style={{marginRight: 10}}></FontAwesomeIcon>
           <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
+              style={{
+                fontSize: 18 * scaleFactor,
+                fontWeight: 'bold',
+                color: colors.text,
+              }}>
               Modul 1
             </Text>
-            <Text style={{ fontSize: 18, color: colors.text, paddingRight: 5 }}>
+            <Text
+              style={{
+                fontSize: 18 * scaleFactor,
+                color: colors.text,
+                paddingRight: 5,
+              }}>
               Strukturering og planlægning af dagligdagen{' '}
             </Text>
           </View>
@@ -254,30 +273,36 @@ function CustomDrawerContent({ navigation }) {
       <AccordionItem
         title="Vidensbank"
         icon={faBrain}
-        titleStyle={[{ color: colors.text }]}>
+        titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Pick topic')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Artikeltemaer </Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Artikeltemaer{' '}
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <View style={styles.accordContainer}>
         <TouchableOpacity
           style={styles.accordHeader}
           onPress={() => navigation.navigate('Profile')}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <FontAwesomeIcon
               icon={faUser}
               size={20}
               color={colors.text}
-              style={{ marginRight: 10 }}
+              style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, { color: colors.text }]}>
+            <Text
+              style={[
+                styles.accordTitle,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               Profil
             </Text>
           </View>
@@ -287,14 +312,18 @@ function CustomDrawerContent({ navigation }) {
         <TouchableOpacity
           style={styles.accordHeader}
           onPress={() => navigation.navigate('Settings')}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <FontAwesomeIcon
               icon={faUser}
               size={20}
               color={colors.text}
-              style={{ marginRight: 10 }}
+              style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, { color: colors.text }]}>
+            <Text
+              style={[
+                styles.accordTitle,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               Indstillinger
             </Text>
           </View>
@@ -303,47 +332,53 @@ function CustomDrawerContent({ navigation }) {
       <AccordionItem
         title="Om herfocus"
         icon={faUsers}
-        titleStyle={[{ color: colors.text }]}>
+        titleStyle={[{color: colors.text}]}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('App history')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
             Historien om herfocus
           </Text>
         </TouchableOpacity>
         <View
           style={[
             styles.divider,
-            { backgroundColor: colors.text, textColor: colors.text },
+            {backgroundColor: colors.text, textColor: colors.text},
           ]}></View>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginLeft: 30, alignItems: 'center' }}
+          style={{flexDirection: 'row', marginLeft: 30, alignItems: 'center'}}
           onPress={() => navigation.navigate('Contact information')}>
           <FontAwesomeIcon
             icon={faCircle}
             size={13}
             color={colors.text}
-            style={{ marginRight: 10 }}></FontAwesomeIcon>
-          <Text style={{ fontSize: 18, color: colors.text }}>Kontakt os</Text>
+            style={{marginRight: 10}}></FontAwesomeIcon>
+          <Text style={{fontSize: 18 * scaleFactor, color: colors.text}}>
+            Kontakt os
+          </Text>
         </TouchableOpacity>
       </AccordionItem>
       <View style={styles.accordContainer}>
         <TouchableOpacity
           style={styles.accordHeader}
           onPress={() => handleLogout(navigation)}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size={20}
               color={colors.text}
-              style={{ marginRight: 10 }}
+              style={{marginRight: 10}}
             />
-            <Text style={[styles.accordTitle, { color: colors.text }]}>
+            <Text
+              style={[
+                styles.accordTitle,
+                {color: colors.text, fontSize: 18 * scaleFactor},
+              ]}>
               Log ud
             </Text>
           </View>

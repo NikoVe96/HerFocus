@@ -279,8 +279,8 @@ export const DailyOverview = () => {
                     color={colors.border}
                   />
                   <Text style={{ fontSize: 18 }}>
-                    Fra {remainingTasksArray[0].get('startTime').toISOString().slice(11, 16)}
-                    {' '}til {remainingTasksArray[0].get('endTime').toISOString().slice(11, 16)}
+                    Fra {remainingTasksArray[0].get('startTime')}
+                    {' '}til {remainingTasksArray[0].get('endTime')}
 
                   </Text>
                 </View>
