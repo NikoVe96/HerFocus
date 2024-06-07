@@ -1,15 +1,15 @@
 import Parse from 'parse/react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import {useTheme} from '@react-navigation/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
-function WriteComment({postId, onNewComment}) {
+function WriteComment({ postId, onNewComment }) {
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('');
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -63,7 +63,7 @@ function WriteComment({postId, onNewComment}) {
         style={styles.createComment}>
         <FontAwesomeIcon
           icon={faPaperPlane}
-          style={[styles.icon, {color: colors.iconDark}]}
+          style={[styles.icon, { color: colors.iconDark }]}
           size={25}
         />
       </TouchableOpacity>
@@ -73,7 +73,7 @@ function WriteComment({postId, onNewComment}) {
 
 const styles = StyleSheet.create({
   icon: {
-    transform: [{rotate: '50deg'}],
+    transform: [{ rotate: '50deg' }],
   },
   commentContainer: {
     flexDirection: 'row',
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   writeComment: {
-    height: 30,
-    width: 290,
+    height: 50,
+    width: '80%',
     backgroundColor: '#FFFFFF',
     borderColor: '#000000',
     borderWidth: 1,

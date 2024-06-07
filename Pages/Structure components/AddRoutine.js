@@ -155,7 +155,7 @@ export const AddRoutine = ({ navigation }) => {
     routine.set('stepsArray', newStepsArray);
     await routine.save();
 
-    routines();
+    await routines();
 
     Alert.alert('Dit rutine step er blevet fjernet!');
   }
@@ -394,7 +394,7 @@ export const AddRoutine = ({ navigation }) => {
                             {step.stepName}
                           </Text>
                         </View>
-                        {step.stepTime == (null || ' ' || '') ? (
+                        {step.stepTime !== '' ? (
                           <View
                             style={{
                               flexDirection: 'row',
