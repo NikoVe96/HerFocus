@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 /**
@@ -74,9 +73,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.herfocusandroid"
+    namespace "com.herfocus"
     defaultConfig {
-        applicationId "com.herfocusandroid"
+        applicationId "com.herfocus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -99,7 +98,7 @@ android {
         }
     }
     buildTypes {
-        debug {
+         debug {
             signingConfig signingConfigs.debug
         }
         release {

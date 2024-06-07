@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPenToSquare, faPlusSquare, faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 import { faPlus, faRotateRight, faStopwatch, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Modal from "react-native-modal";
-import { DateTimePickerModal } from "react-native-modal-datetime-picker";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -15,6 +14,8 @@ import AccordionItem from '../../Components/AccordionItem';
 import EmojiPicker, { emojiFromUtf16 } from "rn-emoji-picker"
 import { emojis } from "rn-emoji-picker/dist/data"
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import DatePicker from "react-native-date-picker";
 
 Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize('JgIXR8AGoB3f1NzklRf0k9IlIWLORS7EzWRsFIUb', 'NBIxAIeWCONMHjJRL96JpIFh9pRKzJgb6t4lQUJD');
@@ -47,6 +48,7 @@ export const AddRoutine = ({ navigation }) => {
   const [routineStartTime, setRoutineStartTime] = useState('');
   const [routineEndTime, setRoutineEndTime] = useState('');
   const [checked, setChecked] = useState(true);
+  const today = new Date;
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -847,11 +849,18 @@ export const AddRoutine = ({ navigation }) => {
                       Start tidspunkt
                     </Text>
                   </TouchableOpacity>
-                  <DateTimePickerModal
-                    isVisible={isStartTimePickerVisible}
+                  <DatePicker
                     mode="time"
-                    onConfirm={date => handleStartTimeConfirm(date)}
-                    onCancel={() => setStartTimePickerVisibility(false)}
+                    modal
+                    open={isStartTimePickerVisible}
+                    date={today}
+                    onConfirm={(date) => {
+                      setStartTimePickerVisibility(false)
+                      handleStartTimeConfirm(date)
+                    }}
+                    onCancel={() => {
+                      setStartTimePickerVisibility(false)
+                    }}
                   />
                 </View>
                 <View style={[styles.rowView, { alignItems: 'center' }]}>
@@ -878,11 +887,18 @@ export const AddRoutine = ({ navigation }) => {
                     onPress={() => setEndTimePickerVisibility(true)}>
                     <Text style={styles.buttonText}>Slut tidspunkt</Text>
                   </TouchableOpacity>
-                  <DateTimePickerModal
-                    isVisible={isEndTimePickerVisible}
+                  <DatePicker
                     mode="time"
-                    onConfirm={date => handleEndTimeConfirm(date)}
-                    onCancel={() => setEndTimePickerVisibility(false)}
+                    modal
+                    open={isEndTimePickerVisible}
+                    date={today}
+                    onConfirm={(date) => {
+                      setEndTimePickerVisibility(false)
+                      handleEndTimeConfirm(date)
+                    }}
+                    onCancel={() => {
+                      setEndTimePickerVisibility(false)
+                    }}
                   />
                 </View>
                 <View style={[styles.rowView, { alignItems: 'center' }]}>
@@ -909,11 +925,18 @@ export const AddRoutine = ({ navigation }) => {
                     onPress={() => setDatePickerVisibility(true)}>
                     <Text style={styles.buttonText}>Dato</Text>
                   </TouchableOpacity>
-                  <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
+                  <DatePicker
                     mode="date"
-                    onConfirm={date => handleDateConfirm(date)}
-                    onCancel={() => setDatePickerVisibility(false)}
+                    modal
+                    open={isDatePickerVisible}
+                    date={today}
+                    onConfirm={(date) => {
+                      setDatePickerVisibility(false)
+                      handleDateConfirm(date)
+                    }}
+                    onCancel={() => {
+                      setDatePickerVisibility(false)
+                    }}
                   />
                 </View>
                 <View style={[styles.rowView, { alignItems: 'center' }]}>
