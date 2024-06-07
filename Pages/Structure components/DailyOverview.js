@@ -285,7 +285,7 @@ export const DailyOverview = () => {
                   </Text>
                 </View>
                 {remainingTasksArray[0].get('description') == '' ?
-                  null
+                  <Text style={{ marginBottom: '10%' }}></Text>
                   : <ScrollView
                     style={{
                       borderWidth: 1,
@@ -297,7 +297,7 @@ export const DailyOverview = () => {
                     <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[0].get('description')}</Text>
                   </ScrollView>
                 }
-                <View style={styles.rowView}>
+                <View style={[styles.rowView, { paddingBottom: '5%' }]}>
                   <View
                     style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
                     <BouncyCheckbox
@@ -372,12 +372,12 @@ export const DailyOverview = () => {
                     color={colors.border}
                   />
                   <Text style={{ fontSize: 18 }}>
-                    Fra {remainingTasksArray[1].get('startTime').toISOString().slice(11, 16)}
-                    {' '}til {remainingTasksArray[1].get('endTime').toISOString().slice(11, 16)}
+                    Fra {remainingTasksArray[1].get('startTime')}
+                    {' '}til {remainingTasksArray[1].get('endTime')}
                   </Text>
                 </View>
                 {remainingTasksArray[1].get('description') == '' ?
-                  null
+                  <Text style={{ marginBottom: '10%' }}></Text>
                   : <ScrollView
                     contentContainerStyle={{
                       borderWidth: 1,
@@ -389,7 +389,7 @@ export const DailyOverview = () => {
                     <Text style={{ fontSize: 16, marginBottom: 20 }}>{remainingTasksArray[1].get('description')}</Text>
                   </ScrollView>
                 }
-                <View style={styles.rowView}>
+                <View style={[styles.rowView, { paddingBottom: '5%' }]}>
                   <View
                     style={[styles.rowView, { marginHorizontal: 15, flex: 1 }]}>
                     <BouncyCheckbox
