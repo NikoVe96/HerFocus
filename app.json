@@ -1,5 +1,16 @@
 {
   "name": "HerFocus",
-  "displayName": "HerFocus"
-  
+  "displayName": "HerFocus",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "66b4ad77-72df-4a77-8f83-e5c5f7173adb"
+      }
+    }
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.herfocus",
+    "buildNumber": "1"
+  }
 }
