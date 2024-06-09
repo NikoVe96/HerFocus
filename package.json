@@ -46,6 +46,7 @@
     "react-native-calendars": "^1.1304.1",
     "react-native-checkbox-reanimated": "^0.1.1",
     "react-native-circular-progress-indicator": "^4.4.2",
+    "react-native-date-picker": "^5.0.4",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-emoji-modal": "^0.2.4",
     "react-native-emoji-selector": "^0.2.0",
